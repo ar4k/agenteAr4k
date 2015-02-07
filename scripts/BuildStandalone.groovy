@@ -112,7 +112,7 @@ buildJar = { File workDir, File jar, boolean jetty, File warfile = null ->
 			include(name: 'grails/plugin/standalone/JettyLauncher.java')
 		}
 		else {
-			include(name: 'rossonet/Launcher.java')
+			include(name: 'grails/plugin/standalone/Launcher.java')
 		}
 //		else {
 //			include(name: 'grails/plugin/standalone/Launcher.java')
