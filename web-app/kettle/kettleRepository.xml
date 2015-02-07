@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories>
+  <repository>    <id>KettleFileRepository</id>
+    <name>GrailsKettleRepo</name>
+    <description>Repository Base</description>
+    <base_directory>web-app&#47;kettle&#47;repository</base_directory>
+    <read_only>Y</read_only>
+    <hides_hidden_files>N</hides_hidden_files>
+  </repository>  </repositories>

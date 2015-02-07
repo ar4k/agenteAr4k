@@ -51,6 +51,9 @@ grails.project.dependency.resolution = {
         mavenRepo "http://repository.codehaus.org/"
         mavenRepo "http://download.java.net/maven/2/"
         mavenRepo "http://repository.jboss.com/maven2/"
+	// per Kettle
+	mavenRepo "http://repository.pentaho.org/artifactory/pentaho"
+	mavenRepo "https://repository.jboss.org/nexus/"
 
     }
 
@@ -66,7 +69,19 @@ grails.project.dependency.resolution = {
         	excludes 'slf4j-log4j12'
         }
 
-    }
+	// Kettle
+    	runtime 'pentaho-kettle:kettle-core:4.2.0-stable'
+	runtime 'pentaho-kettle:kettle-db:4.2.0-stable'
+	runtime 'pentaho-kettle:kettle-engine:4.2.0-stable'
+	runtime 'commons-vfs:commons-vfs:1.0'
+	runtime 'mysql:mysql-connector-java:5.1.27'
+	runtime 'com.healthmarketscience.jackcess:jackcess:1.2.4'
+        runtime 'javax.mail:mail:1.4.7'
+        runtime 'net.sourceforge.jexcelapi:jxl:2.6.12'
+	runtime 'commons-httpclient:commons-httpclient:3.1'
+
+	
+	}
 
     plugins {
         // plugins for the build system only
@@ -104,5 +119,8 @@ grails.project.dependency.resolution = {
 
 	// Standalone
 	compile ":standalone:1.3"
+
+	//Shell
+	compile ":crash:1.3.0"
     }
 }

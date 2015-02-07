@@ -117,3 +117,12 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+// Configurazioni Kettle
+kettle.repository = "GrailsKettleRepo"
+kettle.username = ""
+kettle.password = ""
+kettle.directory = "kettle"
+kettle.repoConfFile = "kettleRepository.xml"
+kettle.repoFS = "si" // Repository su filesytem in caso contrario su database
+
