@@ -32,7 +32,7 @@ grails.project.dependency.resolution = {
     }
     log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
-    legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
+    legacyResolve true // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
 
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
@@ -42,17 +42,11 @@ grails.project.dependency.resolution = {
         mavenLocal()
         grailsCentral()
         mavenCentral()
-        // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
-        // Per SSH
         mavenRepo "http://snapshots.repository.codehaus.org/"
         mavenRepo "http://repository.codehaus.org/"
         mavenRepo "http://download.java.net/maven/2/"
         mavenRepo "http://repository.jboss.com/maven2/"
-	// per Kettle
-	mavenRepo "http://repository.pentaho.org/artifactory/pentaho"
+	mavenRepo "http://repository.pentaho.org/artifactory/repo/"
 	mavenRepo "https://repository.jboss.org/nexus/"
 
     }
@@ -69,10 +63,13 @@ grails.project.dependency.resolution = {
         	excludes 'slf4j-log4j12'
         }
 
-	// Kettle
-    	runtime 'pentaho-kettle:kettle-core:4.2.0-stable'
+	//Kettle
+	runtime 'pentaho-kettle:kettle-core:4.2.0-stable'
 	runtime 'pentaho-kettle:kettle-db:4.2.0-stable'
 	runtime 'pentaho-kettle:kettle-engine:4.2.0-stable'
+	//runtime 'pentaho-kettle:kettle-core:5.0.1-stable'
+	//runtime 'pentaho-kettle:kettle-db:5.0.1-stable'
+	//runtime 'pentaho-kettle:kettle-engine:5.0.1-stable'
 	runtime 'commons-vfs:commons-vfs:1.0'
 	runtime 'mysql:mysql-connector-java:5.1.27'
 	runtime 'com.healthmarketscience.jackcess:jackcess:1.2.4'
@@ -80,7 +77,6 @@ grails.project.dependency.resolution = {
         runtime 'net.sourceforge.jexcelapi:jxl:2.6.12'
 	runtime 'commons-httpclient:commons-httpclient:3.1'
 
-	
 	}
 
     plugins {
