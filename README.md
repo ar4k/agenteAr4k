@@ -1,5 +1,3 @@
-![alt text]()
-
 # agenteAr4k
 Template applicazione AR4K
 by Rossonet s.c.a r.l.
@@ -71,9 +69,6 @@ da fare...
 ## TODO
 
 ..* Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=r47CTqU6F4g
-" target="_blank"><img src="http://img.youtube.com/vi/r47CTqU6F4g/0.jpg" 
-alt="Rossonet" width="240" height="180" border="10" /></a>
 
 ..* Creare file .spec per RPM integrando gli script base ( +tmux );
 
@@ -89,3 +84,6 @@ alt="Rossonet" width="240" height="180" border="10" /></a>
 
 ..* Maschere Angularjs/Twitter Bootstrap
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=r47CTqU6F4g
+" target="_blank"><img src="http://img.youtube.com/vi/r47CTqU6F4g/0.jpg" 
+alt="Rossonet" width="480" height="240" border="10" /></a>
