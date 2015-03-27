@@ -9,18 +9,28 @@ by Rossonet s.c.a r.l.
 ### Ambiente di sviluppo preconfigurato
 
 Per scaricare l'intero sistema:
-```git clone https://github.com/rossonet/agenteAr4k.git```
+```bash
+git clone https://github.com/rossonet/agenteAr4k.git
+```
 
 Per creare un'applicazione in un unico file .jar con tutte le librerie incluse:
-```./compila.sh```
+```bash
+./compila.sh
+```
 esecuzione:
-```./ar4k.sh```
+```bash
+./ar4k.sh
+```
 
 Per aggiornare tutto il progetto e eseguirlo in ambiente di sviluppo:
-```./rigenera.sh```
+```bash
+./rigenera.sh
+```
 
 Per creare un war installabile su Tomcat > 7
-```./grailsw war```
+```bash
+./grailsw war
+```
 
 ## Autenticazione demo: admin/rossonet2012
 
