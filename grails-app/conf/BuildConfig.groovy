@@ -146,5 +146,8 @@ grails.project.dependency.resolution = {
 		
 		// Aggiunge i plugin Jasper Report
 		compile ":jasper:1.11.0"
+		
+		// Jssh
+		compile ":jssh:1.8"
 	}
 }

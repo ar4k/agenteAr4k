@@ -13,12 +13,12 @@ class BootStrap {
 			case Environment.DEVELOPMENT:
 				println "Sistema in Sviluppo..."
 				ProcedureService.creaDemoUtente()
-				//startKettle()
+				startKettle()
 				break;
 			case Environment.PRODUCTION:
 				println "Sistema in produzione..."
 				ProcedureService.creaDemoUtente()
-				//startKettle()
+				startKettle()
 				break;
 		}
 		println "\nIn BootStrap.groovy:\n***  "
