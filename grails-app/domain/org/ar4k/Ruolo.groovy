@@ -1,0 +1,14 @@
+package org.ar4k
+
+class Ruolo {
+
+	String authority
+
+	static mapping = {
+		cache true
+	}
+
+	static constraints = {
+		authority blank: false, unique: true
+	}
+}
