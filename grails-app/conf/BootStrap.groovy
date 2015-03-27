@@ -6,6 +6,7 @@ class BootStrap {
 	
 	GrailsApplication grailsApplication
 	def ProcedureService
+	def KettleService
 
     def init = { servletContext ->
 		switch (Environment.current) {
@@ -13,13 +14,11 @@ class BootStrap {
 				println "Sistema in Sviluppo..."
 				ProcedureService.creaDemoUtente()
 				//startKettle()
-				//registraDNS()
 				break;
 			case Environment.PRODUCTION:
 				println "Sistema in produzione..."
 				ProcedureService.creaDemoUtente()
 				//startKettle()
-				//registraDNS()
 				break;
 		}
 		println "\nIn BootStrap.groovy:\n***  "
@@ -28,6 +27,18 @@ class BootStrap {
 		}
 		println "***\n"
     }
+	
+	def startKettle = {
+		println "Se esiste un job BootStrap lo eseguo.."
+		kettleService.initKettle()
+		if ( "BootStrap" in kettleService.listJobs()*.getName() ) {
+			println "Eseguo BootStrap"
+			kettleService.jobRun("BootStrap")
+		} else {
+			println "Non esiste il job BootStrap nella directory del repository.."
+		}
+	}
+	
     def destroy = {
     }
 }

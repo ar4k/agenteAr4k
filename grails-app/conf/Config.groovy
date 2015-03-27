@@ -286,5 +286,24 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
 	'/springSecurityOAuth/**':		  ['permitAll'],
+	'/app/codeqr':			  	      ['permitAll'],
+	// Accesso a Admin -per utente demo-
+	'/**':                            ['ROLE_ADMIN'],
+	// Accesso a tutti autenticati
+	//'/**':                            ['IS_AUTHENTICATED_REMEMBERED'],
+	// Accesso a tutti
+	//'/**':                            ['permitAll'],
+	// favicon
 	'/**/favicon.ico':                ['permitAll']]
 
+
+// Added by the Spring Security OAuth plugin:
+grails.plugin.springsecurity.oauth.domainClass = 'org.ar4k.OAuthID'
+
+// Testo per registrazione
+grails.plugin.springsecurity.ui.register.emailBody = 'Benvenuto $user,<br>per completare la procedura di registrazione in AR4K selezionare <a href="$url">questo link</a>.<br><br><bold>BOT AR4K</bold><br>(sistema automatico)'
+grails.plugin.springsecurity.ui.register.emailSubject = 'Completa la registrazione in AR4K'
+grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_REGISTRATO']
+
+grails.plugin.springsecurity.ui.forgotPassword.emailBody = 'Salve $user,<br>per completare la procedura di cambio della password AR4K selezionare <a href="$url">questo link</a>.<br><br><bold>BOT AR4K</bold><br>(sistema automatico)'
+grails.plugin.springsecurity.ui.forgotPassword.emailSubject = 'Completa il reset della password AR4K'
