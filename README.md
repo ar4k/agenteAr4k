@@ -86,4 +86,4 @@ da fare...
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=r47CTqU6F4g
 " target="_blank"><img src="http://img.youtube.com/vi/r47CTqU6F4g/0.jpg" 
-alt="Rossonet" width="480" height="240" border="10" /></a>
+alt="Rossonet" width="640" height="360" border="10" /></a>
