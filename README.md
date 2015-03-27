@@ -66,23 +66,23 @@ da fare...
 
 da fare...
 
+####SSH Olark
+
+da fare...
+
 ## TODO
 
-..* Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
-
-..* Creare file .spec per RPM integrando gli script base ( +tmux );
-
-..* File kickstart per installazione su CentOS 6.x CentOS 7.x Fedora 21 RHEL7;
-
-..* Validare il repository su OpenShift Origin e RH OpenShift Online;
-
-..* Consolidamento agente Kettle; ripristino job avvio;
-
-..* Import repository Kettle automaticamente da web in funzione dell'ID applicazione;
-
-..* Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
-
-..* Maschere Angularjs/Twitter Bootstrap
+1. Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
+2. Creare file .spec per RPM integrando gli script base ( +tmux );
+3. File kickstart per installazione su CentOS 6.x CentOS 7.x Fedora 21 RHEL7;
+4. Validare il repository su OpenShift Origin e RH OpenShift Online;
+5. Consolidamento agente Kettle; ripristino job avvio;
+6. Import repository Kettle automaticamente da web in funzione dell'ID applicazione;
+7. Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
+8. Maschere Angularjs/Twitter Bootstrap
+9. Integrare [noVNC](https://github.com/kanaka/noVNC)
+10. Integrare [tty.js](https://github.com/chjj/tty.js) o [GateOne](https://github.com/liftoff/GateOne)
+11. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org)
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=r47CTqU6F4g
 " target="_blank"><img src="http://img.youtube.com/vi/r47CTqU6F4g/0.jpg" 
