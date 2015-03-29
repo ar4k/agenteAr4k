@@ -102,7 +102,7 @@ grails.project.dependency.resolution = {
 
 		runtime ":aws-sdk:1.9.22"
 
-		//runtime ":jquery-ui:1.10.4"
+		runtime ":jquery-ui:1.10.4"
 		//runtime ":richui:0.8"
 
 		//runtime ":twitter-bootstrap:3.1.1"
@@ -112,7 +112,7 @@ grails.project.dependency.resolution = {
 		compile ":mail:1.0.7"
 
 		// SSH
-		compile ":jsch-ssh2:0.2"
+		//compile ":jsch-ssh2:0.2"
 
 		// Standalone
 		compile ":standalone:1.3"
@@ -121,7 +121,7 @@ grails.project.dependency.resolution = {
 		//compile ":crash:1.3.0"
 
 		//Angularjs risorse
-		runtime ":angularjs-resources:1.3.10"
+		//runtime ":angularjs-resources:1.3.10"
 		
 		// scheduler
 		compile ":quartz:1.0.2"
@@ -141,13 +141,14 @@ grails.project.dependency.resolution = {
 		
 		// Icone varie
 		compile ":fatcow-icons:0.1.0"
-		compile ":glyph-icons:0.1.0"
-		compile ":famfamfam:1.0.1"
+		//compile ":glyph-icons:0.1.0"
+		//compile ":famfamfam:1.0.1"
 		
 		// Aggiunge i plugin Jasper Report
 		compile ":jasper:1.11.0"
 		
 		// Jssh
 		compile ":jssh:1.8"
+
 	}
 }

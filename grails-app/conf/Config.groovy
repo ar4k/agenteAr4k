@@ -66,6 +66,7 @@ grails.views.default.codec = "html"
 // If unspecified, controllers are prototype scoped.
 grails.controllers.defaultScope = 'singleton'
 
+
 // GSP settings
 grails {
 	views {
@@ -307,3 +308,6 @@ grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_REGISTRATO']
 
 grails.plugin.springsecurity.ui.forgotPassword.emailBody = 'Salve $user,<br>per completare la procedura di cambio della password AR4K selezionare <a href="$url">questo link</a>.<br><br><bold>BOT AR4K</bold><br>(sistema automatico)'
 grails.plugin.springsecurity.ui.forgotPassword.emailSubject = 'Completa il reset della password AR4K'
+
+// Risorse 
+//grails.resources.adhoc.includes = ['/kettle/**', '/admin/**', '/images/**', '/css/**', '/js/**', '/img/**']

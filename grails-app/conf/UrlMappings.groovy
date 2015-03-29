@@ -13,9 +13,9 @@ class UrlMappings {
 			constraints { qrcode(matches:/[0-9a-f]{32}/) }
 		}
 
-        "/"(view:"/index")
-		"500"(view:'/error')
-		"404"(view:'/error')
-		"405"(view:'/error')
+        "/"(controller:"Admin")
+	"500"(view:'/error')
+	"404"(view:'/error')
+	"405"(view:'/error')
 	}
 }
