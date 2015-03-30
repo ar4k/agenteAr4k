@@ -63,3 +63,8 @@ grails {
 //                         "mail.smtp.socketFactory.fallback":"false"]
         }
 }
+
+plugin.crash.config = [
+	'crash.ssh.port': 2666,
+	'crash.auth.simple.password': 'secretPassword'
+	]

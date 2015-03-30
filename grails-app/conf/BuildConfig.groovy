@@ -78,6 +78,8 @@ grails.project.dependency.resolution = {
 		compile('com.evernote:evernote-api:1.25.1')
 		compile('org.jclouds:jclouds-all:1.6.0')
 
+		// Per includere in Crash telnet
+		runtime 'org.crashub:crash.connectors.telnet:1.3.0-cr7'
 	}
 
 	plugins {
@@ -118,7 +120,7 @@ grails.project.dependency.resolution = {
 		compile ":standalone:1.3"
 
 		//Shell
-		//compile ":crash:1.3.0"
+		compile ":crash:1.3.0"
 
 		//Angularjs risorse
 		//runtime ":angularjs-resources:1.3.10"
