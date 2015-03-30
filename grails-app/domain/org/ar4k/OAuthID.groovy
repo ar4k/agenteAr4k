@@ -15,6 +15,8 @@
  */
 package org.ar4k
 
+import java.util.Date;
+
 import org.ar4k.Utente
 
 /**
@@ -27,6 +29,8 @@ class OAuthID implements Serializable {
 
     String provider
     String accessToken
+	Date dateCreated
+	Date lastUpdated
 
     static belongsTo = [user: Utente]
 

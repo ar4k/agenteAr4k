@@ -1,0 +1,22 @@
+{"name": "Home",
+"children": [
+		{"name": "Preferenze Utente","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+      	{"name": "Strumenti Grails","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        {"name": "Kettle","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        {"name": "Rossonet","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        {"name": "AR4K","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        {"name": "ProcessMaker","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        {"name": "Usabilità","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+		{"name": "Test",
+		"children": [
+				{"name": "Preferenze Utente","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+      			{"name": "Strumenti Grails","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        		{"name": "Kettle","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        		{"name": "Rossonet","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        		{"name": "AR4K","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        		{"name": "ProcessMaker","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938},
+        		{"name": "Usabilità","link": "https://go.ar4k.eu/","tipo": "iframe","attenzione": "warn","controller": null,"action": null, "altezza": 650,"colore":"red","divLink":"https://go.ar4k.eu/Ar4kGO/ETL/listRun?jobName=BootStrap", "size": 30938}
+		
+		]}
+	]
+}

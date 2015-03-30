@@ -6,6 +6,12 @@ class Utente {
 
 	String username
 	String password
+	String email
+	String sms
+	String jabber
+	Date dateCreated
+	Date lastUpdated
+	byte[] avatar
 	boolean enabled = true
 	boolean accountExpired
 	boolean accountLocked
@@ -13,8 +19,14 @@ class Utente {
 
 	static transients = ['springSecurityService']
 
+	static hasMany = [oAuthIDs: OAuthID]
+
 	static constraints = {
 		username blank: false, unique: true
+		email email: true,nullable: true
+		sms nullable: true
+		jabber nullable: true
+		avatar(nullable:true, maxSize:1073741824) // max of 4GB
 		password blank: false
 	}
 
@@ -38,5 +50,9 @@ class Utente {
 
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+	}
+
+	String toString() {
+		return this.username
 	}
 }

@@ -160,7 +160,8 @@ demoUser.utente="admin" // Se vuoto non viene creato
 demoUser.password="rossonet2012"
 
 // Olark
-olark.key='1xx5-771-xx-xxxx'
+olark.key='1445-771-10-6904'
+google.analytics='UA-55822070-1'
 
 // Facebook sdk plugin
 //grails.plugin.facebooksdk.appPermissions = "email,read_friendlists,read_insights,read_mailbox,read_requests,read_stream,xmpp_login,user_online_presence,friends_online_presence,ads_management,create_event,manage_friendlists,manage_notifications,publish_actions,publish_stream,rsvp_event,user_actions.music,user_actions.news,user_actions.video,user_games_activity,friends_actions.news,friends_actions.music,friends_actions.video,friends_games_activity,user_about_me,friends_about_me,user_activities,user_birthday,user_checkins,user_education_history,user_events,user_groups,user_hometown,user_interests,user_likes,user_location,user_notes,user_photos,user_questions,user_relationships,user_relationship_details,user_religion_politics,user_status,user_subscriptions,user_videos,user_website,user_work_history,friends_work_history,friends_website,friends_videos,friends_subscriptions,friends_status,friends_religion_politics,friends_relationship_details,friends_relationships,friends_questions,friends_photos,friends_notes,friends_location,friends_likes,friends_interests,friends_hometown,friends_groups,friends_events,friends_education_history,friends_checkins,friends_birthday,friends_activities,friends_about_me"
@@ -290,6 +291,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/app/codeqr':			  	      ['permitAll'],
 	// Accesso a Admin -per utente demo-
 	'/**':                            ['ROLE_ADMIN'],
+	'/admin/**':                            ['ROLE_USER'],
+	'/admin/**':                            ['ROLE_REGISTRATO'],
 	// Accesso a tutti autenticati
 	//'/**':                            ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti
