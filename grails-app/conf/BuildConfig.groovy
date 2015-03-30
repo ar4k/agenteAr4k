@@ -148,7 +148,7 @@ grails.project.dependency.resolution = {
 		compile ":jasper:1.11.0"
 		
 		// Jssh
-		compile ":jssh:1.8"
+		//compile ":jssh:1.8"
 
 	}
 }
