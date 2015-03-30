@@ -76,7 +76,7 @@ public class Launcher extends AbstractLauncher {
 	 *           property (e.g. 'home.dir'), the system property value will be used.
 	 */
 	public static void main(String[] args) {
-		System.out.println("by Rossonet hhtp://www.rossonet.org");
+		System.out.println("by Rossonet http://www.rossonet.org");
 		try {
 			final Launcher launcher = new Launcher(args);
 			final File exploded = launcher.extractWar();

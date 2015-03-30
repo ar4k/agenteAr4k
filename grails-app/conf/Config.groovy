@@ -232,15 +232,6 @@ oauth {
 	}
 }
 
-// Per file uploader
-//imageUpload { temporaryFile = '/tmp/uploaded.file'}
-
-// Link console DB in produzione
-//db.manageLink = '/phpMyAdmin'
-
-// Link console DB in produzione
-//pmos.manageLink = 'https://go.ar4k.eu/sys/it-IT/uxmodern/login/login'
-
 // Configurazione invio mail
 grails {
 	mail {
@@ -284,19 +275,20 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                  ['permitAll'],
 	// by Andrea Ambrosini
 	'/register/**':                   ['permitAll'],
-	'/login/**':     			      ['permitAll'],
+	'/login/**':     		  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
-	'/springSecurityOAuth/**':		  ['permitAll'],
-	'/app/codeqr':			  	      ['permitAll'],
+	'/atterraggio/**':                ['permitAll'],
+	'/springSecurityOAuth/**':	  ['permitAll'],
+	'/app/codeqr':			  ['permitAll'],
 	// Accesso a Admin -per utente demo-
 	'/**':                            ['ROLE_ADMIN'],
-	'/admin/**':                            ['ROLE_USER'],
-	'/admin/**':                            ['ROLE_REGISTRATO'],
+	//'/admin/**':                    ['ROLE_USER'],
+	'/admin/**':                      ['ROLE_USER','ROLE_REGISTRATO'],
 	// Accesso a tutti autenticati
-	//'/**':                            ['IS_AUTHENTICATED_REMEMBERED'],
+	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti
-	//'/**':                            ['permitAll'],
+	//'/**':                          ['permitAll'],
 	// favicon
 	'/**/favicon.ico':                ['permitAll']]
 
@@ -311,6 +303,3 @@ grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_REGISTRATO']
 
 grails.plugin.springsecurity.ui.forgotPassword.emailBody = 'Salve $user,<br>per completare la procedura di cambio della password AR4K selezionare <a href="$url">questo link</a>.<br><br><bold>BOT AR4K</bold><br>(sistema automatico)'
 grails.plugin.springsecurity.ui.forgotPassword.emailSubject = 'Completa il reset della password AR4K'
-
-// Risorse 
-//grails.resources.adhoc.includes = ['/kettle/**', '/admin/**', '/images/**', '/css/**', '/js/**', '/img/**']

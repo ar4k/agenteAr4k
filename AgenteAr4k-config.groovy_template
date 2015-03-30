@@ -1,0 +1,65 @@
+/*
+Template configurazione applicativo Agente Ar4k
+by Ambrosini Rossonet s.c.a r.l.
+
+Queste le configurazioni minime, tutte le configurazioni in questo file sovrascrivono le predefinite.
+Il file va sistemato in ~/.rossonet/AgenteAr4k-config.groovy o <home utente>\.rossonet\AgenteAr4k-config.groovy 
+
+*/
+
+grails.plugin.springsecurity.ldap.context.managerDn = 'uid=oauth,cn=users,cn=accounts,dc=XXXXX,dc=net'
+grails.plugin.springsecurity.ldap.context.managerPassword = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+ar4k.agente.ssh.host="xxxxxxxxxxxxxxxxxxx"
+ar4k.agente.ssh.user="root"
+ar4k.agente.ssh.port=22
+ar4k.agente.ssh.password="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+olark.key='1445-xxx-xx-xxxx'
+grails.plugin.facebooksdk.app.id = xxxxxxxxxxx
+grails.plugin.facebooksdk.app.secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+
+// Per ogni provider di autenticazione bisogna registrare l'app di collegamento e riportare
+// le chiavi di autenticazione qui sotto.
+oauth {
+        providers {
+                twitter {
+                        key = 'xxxxxxxxxxxxxx'
+                        secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+			callback = "http://localhost:8080/oauth/twitter/callback"
+			//callback = "http://localhost:8080/AgenteAr4k/oauth/twitter/callback"
+                }
+                linkedin {
+                        key = 'xxxxxxxxxxxxxxxx'
+                        secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+			callback = "http://localhost:8080/oauth/linkedin/callback"
+			//callback = "http://localhost:8080/AgenteAr4k/oauth/linkedin/callback"
+                }
+                google {
+                        key = 'xxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com'
+                        secret = 'xxxxxxxxxxxxxxxxxxxxxxxx'
+			callback = "http://localhost:8080/oauth/google/callback"
+			//callback = "http://localhost:8080/AgenteAr4k/oauth/google/callback"
+                }
+                facebook {
+                        key = 'xxxxxxxxxxxxxxxxxxxxx'
+                        secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+			callback = "http://localhost:8080/oauth/facebook/callback"
+			//callback = "http://localhost:8080/AgenteAr4k/oauth/facebook/callback"
+                }
+        }
+}
+
+
+// Configurazione invio mail
+grails {
+        mail {
+//        host = "smtp.gmail.com"
+//        port = 465
+          username = "xxxxxxxxxx@gmail.com"
+          password = "xxxxxxxxxxxxxxxxx"
+//        props = ["mail.smtp.auth":"true",
+//                         "mail.smtp.socketFactory.port":"465",
+//                         "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+//                         "mail.smtp.socketFactory.fallback":"false"]
+        }
+}

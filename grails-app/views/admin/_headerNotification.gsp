@@ -195,7 +195,7 @@
             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            <li><a href="#"><i class="fa fa-user fa-fw"></i> Profilo Utente</a>
+            <li><g:link controller='user' absolute='true'></i> Profilo Utenti</g:link>
             </li>
             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Impostazioni</a>
             </li>

@@ -40,8 +40,10 @@ Versione Grails 2.4.4
 [Documentazione](https://grails.org/documentation.html)
 [IDE](http://spring.io/tools/ggts)
 
-Con ./compila.sh si ottiene un jar eseguibile con java -jar <nome file>.jar
+Con ./compila.sh si ottiene un jar eseguibile con java -jar (nome file).jar
 Per configurare il Launcher iniziale src/java/grails/plugin/standalone/Launcher.java
+
+Per configurare il prodotto, salvare nella directory home dell'utente che esegue Java il file di configurazione ottenuto compilando il template AgenteAr4k-config.groovy_template e posizionandolo in .rossonet/(nome app)-config.groovy
 
 ####Spring Security
 
@@ -54,7 +56,7 @@ Il servizio di utilità per l'autenticazione è ProcedureService.groovy.
 
 ####Mail Server
 
-in Config.groovy i parametri smtp per la posta in uscita.
+La posta in uscita si appoggia a un smtp esterno con eventuale autenticazione. In AgenteAr4k-config.groovy_template maggiori dettagli.
 
 ####Camel
 
