@@ -151,6 +151,7 @@ grails.project.dependency.resolution = {
 		
 		// Jssh
 		//compile ":jssh:1.8"
+		compile ":spring-websocket:1.2.0"
 
 	}
 }
