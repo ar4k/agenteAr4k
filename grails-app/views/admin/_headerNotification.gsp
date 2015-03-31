@@ -195,9 +195,9 @@
             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            <li><g:link controller='user' absolute='true'></i> Profilo Utenti</g:link>
+            <li><g:link controller='user' absolute='true'><i class="fa fa-user fa-fw"></i> Profilo Utenti</g:link>
             </li>
-            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Impostazioni</a>
+            <li><g:link controller='base' absolute='true'><i class="fa fa-gear fa-fw"></i> Impostazioni</g:link>
             </li>
             <li class="divider"></li>
             <li><a href="javascript:document.submitForm.submit()"><i class="fa fa-sign-out fa-fw"></i> Esci</a>
