@@ -1,0 +1,5 @@
+<decorators>
+    <excludes>
+        <pattern>/wsa/*</pattern>
+    </excludes>
+</decorators>

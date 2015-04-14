@@ -1,4 +1,5 @@
 grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
+grails.tomcat.nio = true
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
@@ -80,6 +81,12 @@ grails.project.dependency.resolution = {
 
 		// Per includere in Crash telnet
 		runtime 'org.crashub:crash.connectors.telnet:1.3.0-cr7'
+
+		bundle('javax.websocket:javax.websocket-api:1.1') {
+    		// This line is necessary for deployment to Tomcat, since
+    		// Tomcat comes with its own version of javax.websocket-api.
+    		export = false
+  		}
 	}
 
 	plugins {
@@ -94,7 +101,7 @@ grails.project.dependency.resolution = {
 		// plugins needed at runtime but not for compilation
 		runtime ":hibernate4:4.3.6.1" // or ":hibernate:3.6.10.18"
 		runtime ":database-migration:1.4.0"
-		//runtime ":jquery:1.11.1"
+		runtime ":jquery:1.11.1"
 
 		// Uncomment these to enable additional asset-pipeline capabilities
 		//compile ":sass-asset-pipeline:1.9.0"
@@ -104,17 +111,9 @@ grails.project.dependency.resolution = {
 
 		runtime ":aws-sdk:1.9.22"
 
-		//runtime ":jquery-ui:1.10.4"
-		//runtime ":richui:0.8"
-
-		//runtime ":twitter-bootstrap:3.1.1"
-
 		// Camel
 		compile ":routing:1.3.2"
 		compile ":mail:1.0.7"
-
-		// SSH
-		//compile ":jsch-ssh2:0.2"
 
 		// Standalone
 		compile ":standalone:1.3"
@@ -122,9 +121,6 @@ grails.project.dependency.resolution = {
 		//Shell
 		compile ":crash:1.3.0"
 
-		//Angularjs risorse
-		//runtime ":angularjs-resources:1.3.10"
-		
 		// scheduler
 		compile ":quartz:1.0.2"
 
@@ -135,23 +131,23 @@ grails.project.dependency.resolution = {
 		compile ":spring-security-oauth-google:0.3.1"
 		compile ":spring-security-oauth-linkedin:0.2"
 		compile ":spring-security-oauth-twitter:0.2"
-		//compile ':spring-security-ldap:2.0-RC2'
 		compile ':spring-security-appinfo:2.0-RC2'
 		compile ":spring-security-ui:1.0-RC2"
 		compile ":spring-security-acl:2.0-RC2"
+		//compile ':spring-security-ldap:2.0-RC2'
 		//compile ":spring-security-openid:2.0-RC2"
 		
 		// Icone varie
 		compile ":fatcow-icons:0.1.0"
-		//compile ":glyph-icons:0.1.0"
-		//compile ":famfamfam:1.0.1"
 		
 		// Aggiunge i plugin Jasper Report
 		compile ":jasper:1.11.0"
 		
-		// Jssh
-		//compile ":jssh:1.8"
-		compile ":spring-websocket:1.2.0"
+		// Per HttpBuilder
+		compile ":rest:0.8"
 
+		// Socket
+		compile ":atmosphere-meteor:1.0.4"
+		
 	}
 }

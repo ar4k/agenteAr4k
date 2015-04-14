@@ -289,7 +289,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	// Accesso a Admin -per utente demo-
 	'/**':                            ['ROLE_ADMIN'],
 	//'/admin/**':                    ['ROLE_USER'],
-	'/admin/**':                      ['ROLE_USER','ROLE_REGISTRATO'],
+	'/admin/**':                      [
+		'ROLE_USER',
+		'ROLE_REGISTRATO'
+	],
 	// Accesso a tutti autenticati
 	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti
@@ -308,3 +311,4 @@ grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_REGISTRATO']
 
 grails.plugin.springsecurity.ui.forgotPassword.emailBody = 'Salve $user,<br>per completare la procedura di cambio della password AR4K selezionare <a href="$url">questo link</a>.<br><br><bold>BOT AR4K</bold><br>(sistema automatico)'
 grails.plugin.springsecurity.ui.forgotPassword.emailSubject = 'Completa il reset della password AR4K'
+
