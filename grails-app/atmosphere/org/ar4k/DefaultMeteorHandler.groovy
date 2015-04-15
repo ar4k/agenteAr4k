@@ -23,7 +23,7 @@ import com.jcraft.jsch.*
 
 class DefaultMeteorHandler extends HttpServlet {
 	def atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
-	def sshService = Holders.applicationContext.getBean("sshService")
+	def accoppiatoreService = Holders.applicationContext.getBean("accoppiatoreService")
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,27 +44,21 @@ class DefaultMeteorHandler extends HttpServlet {
 		//mapping = URLDecoder.decode(request.getHeader("X-AtmosphereMeteor-Mapping"), "UTF-8")
 		mapping = "/wsa/def" + request.pathInfo
 
-		Channel channel = sshService.getChannel(1)
-		//sshService.setChannelOut(1,mapping)
-		//InputStream input=channel.getInputStream()
-		OutputStream out=channel.getOutputStream()
-
-		def richiesta = request.getInputStream().eachLine {it}
-
-		out << richiesta
-		out.flush()
-
 		Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, mapping)
 
-		//def risposta = ''
+		if (request.pathInfo == '/padrone') {
+			//println 'ok'
+			byte[] buf=new byte[1024]
+			int i=0
+			int o=0
+			Channel canale = accoppiatoreService.sessionePadrone()
 
-		//risposta = inputString(input)
+			InputStream richiesta = request.getInputStream()
+			OutputStream out=canale.getOutputStream()
 
-		//broadcaster.broadcast(risposta)
-		broadcaster.broadcast(richiesta)
-		
-		//println risposta
-		println richiesta
-
+			i=richiesta.read(buf,0,1024)
+			out << buf
+			out.flush()
+		}
 	}
 }

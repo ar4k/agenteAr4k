@@ -44,7 +44,7 @@ class BootStrap {
 	}
 	
 	def tunnelControllo = {
-		println AccoppiatoreService.configuraPadrone('utente','localhost',22,'westing')
+		println AccoppiatoreService.configuraPadrone()
 	}
 	
     def destroy = {

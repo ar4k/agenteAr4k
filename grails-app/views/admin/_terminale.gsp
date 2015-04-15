@@ -1,21 +1,6 @@
-<!doctype html>
-<title>Terminale</title>
-
-<style>
-html {
-	background: #555;
-}
-
-h1 {
-	margin-bottom: 20px;
-	font: 20px/1.5 sans-serif;
-}
-</style>
-<script src="jquery-1.11.2.js"></script>
-<script src="jquery.atmosphere.js"></script>
-<script src="term.js"></script>
-
-
+<script src="admin/jquery-1.11.2.js"></script>
+<script src="admin/jquery.atmosphere.js"></script>
+<script src="admin/term.js"></script>
 <script>
 	$(function() {
 		"use strict";
@@ -25,10 +10,10 @@ h1 {
 		var term = new Terminal();
 		
 		var request = {
-			url : 'http://localhost:8080/AgenteAr4k/wsa/def/${mappa}',
+			url : "http://localhost:8080/AgenteAr4k/wsa/def/${mappa}",
 			contentType : "application/json",
 			trackMessageLength : true,
-			logLevel : 'debug',
+			logLevel : 'error',
 			shared : true,
 			transport : transport,
 			fallbackTransport : 'long-polling'
@@ -38,17 +23,18 @@ h1 {
 
 		request.onOpen = function(response) {
 			term = new Terminal({
-				cols : 100,
-				rows : 40,
+				cols : 180,
+				rows : 90,
 				useStyle : true,
 				screenKeys : true,
-				cursorBlink : false
+				convertEol : true,
+				screenKeys : true
 			});
 		};
 
 		socket.onMessage = function(response) {
 			var message = response.responseBody;
-			console.log(response);
+			//console.log(response);
 			term.write(message);
 		};
 
@@ -60,12 +46,16 @@ h1 {
 			subSocket.push(data);
 		});
 
-		term.on('title', function(title) {
-			document.title = title;
-		});
+		term.open(document.getElementById("terminalWin"));
 
-		term.open(document.body);
+		//term.write('\x1b[31mPer attivare la sessione premere un tasto\x1b[m\r\n');
+		setTimeout(function() {
+			subSocket.push("export TERM=xterm-256color\n")
+			subSocket.push("sleep 5 && clear\n")
+			subSocket.push("tmux new -s ar4k\n")
+		}, 2000);
 
-		term.write('\x1b[31mWelcome to Rossonet!\x1b[m\r\n');
 	});
 </script>
+<div id="terminalWin" class="panel panel-primary"></div>
+

@@ -1,27 +1,43 @@
 package org.ar4k
 
+import static groovyx.gpars.dataflow.Dataflow.task
+import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.atmosphere.cpr.Broadcaster
+import org.atmosphere.cpr.DefaultBroadcaster
+
 import grails.transaction.Transactional
 import grails.util.Holders
+import com.jcraft.jsch.*
 
 @Transactional
 class AccoppiatoreService {
+	GrailsApplication grailsApplication
 	List<HostRemoto> macchine
+	HostRemoto masterIstanza
 
-	String configuraPadrone(String utente,String host,Integer porta,String password) {
+	String configuraPadrone() {
 		HostRemoto padrone = new HostRemoto()
 		padrone.etichetta = 'master'
-		padrone.nomeHost = host
-		padrone.portaSSH = porta
-		padrone.nomeUtente = utente
-		padrone.password = password
+		padrone.nomeHost = grailsApplication.config.padrone.host
+		padrone.portaSSH = grailsApplication.config.padrone.porta
+		padrone.nomeUtente = grailsApplication.config.padrone.utente
+		padrone.password = grailsApplication.config.padrone.password
 		padrone.tunnel('R','127.0.0.1',2666,'',6666)
 		padrone.tunnel('R','127.0.0.1',8080,'',6667)
 		padrone.tunnel('L','',6668,'127.0.0.1',22)
+		masterIstanza = padrone
+		//sessionePadrone()
 		return padrone.descrivi()
+	}
+
+	Channel sessionePadrone() {
+		Channel connesionePadrone = masterIstanza.sessioneMaster()
+		return connesionePadrone
 	}
 }
 
 class HostRemoto {
+	def atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
 	def sshService = Holders.applicationContext.getBean("sshService")
 	String etichetta = UUID.randomUUID()
 	String nomeHost = 'localhost'
@@ -30,6 +46,38 @@ class HostRemoto {
 	String password = ''
 	List<String> connessioni = []
 	List<String> tunnel = []
+	List<Channel> sessioni = []
+
+	Channel sessioneMaster() {
+		Channel canale
+		if ( sessioni.size() < 1) {
+			canale = sshService.console(collega())
+			((ChannelShell)canale).setPtySize(180,90,800,600)
+			sessioni.add(canale)
+			//Ciclo alimentazione service
+			task {
+				byte[] buf=new byte[1024]
+				int conto = 0
+				def canal = canale
+				InputStream input = canal.getInputStream()
+				Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/def/padrone')
+				while(!canal.isClosed()){
+					//broadcaster.broadcast("Stream: "+input+" input: "+input.available())
+					//println "Stream: "+input+" input: "+input.available()
+					while (input.available() > 0) {
+						conto = input.read(buf,0,1024)
+						broadcaster.broadcast(new String(buf,0,conto))
+					}
+					try{
+						Thread.sleep(200);
+					}catch(Exception ee){}
+				}
+			}
+			//
+		}
+		canale = sessioni[0]
+		return canale
+	}
 
 	String collega() {
 		if (connessioni.size() < 1) {

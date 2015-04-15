@@ -9,10 +9,10 @@ Il file va sistemato in ~/.rossonet/AgenteAr4k-config.groovy o <home utente>\.ro
 
 grails.plugin.springsecurity.ldap.context.managerDn = 'uid=oauth,cn=users,cn=accounts,dc=XXXXX,dc=net'
 grails.plugin.springsecurity.ldap.context.managerPassword = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-ar4k.agente.ssh.host="xxxxxxxxxxxxxxxxxxx"
-ar4k.agente.ssh.user="root"
-ar4k.agente.ssh.port=22
-ar4k.agente.ssh.password="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+padrone.utente='utente'
+padrone.host='localhost'
+padrone.porta=22
+padrone.password='xxxxxxxxxxx'
 olark.key='1445-xxx-xx-xxxx'
 grails.plugin.facebooksdk.app.id = xxxxxxxxxxx
 grails.plugin.facebooksdk.app.secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"

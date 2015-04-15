@@ -167,27 +167,17 @@ class SshService {
 	}
 
 	// connette la console
-	def int console(String ricerca) {
-		int risultato = 9
+	def Channel console(String ricerca) {
 		Channel channel
-		InputStream input = new PipedInputStream()
-		PipedOutputStream output = new PipedOutputStream((PipedInputStream) input);
-
 		for(Session sessione in connessioniSSH) {
 			if (sessione.getSessionId().encodeAsMD5() == ricerca) {
 				channel=sessione.openChannel("shell")
-				channel.setInputStream(input)
-				channel.setOutputStream(output)
 				channel.connect()
 				canaliSSH.add(channel)
-				risultato = channel.getId()
 			}
 			break
 		}
-		output.write(("uname -a\n").getBytes())
-		output.flush()
-
-		return risultato
+		return channel
 	}
 
 	def List<Integer> listChannel() {

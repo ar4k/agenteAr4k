@@ -259,6 +259,10 @@ grails.plugins.activemq.useJmx=true
 grails.plugins.activemq.persistent=false
 // toglie activemq integrato
 // grails.plugins.activemq.active = false
+padrone.utente='utente'
+padrone.host='localhost'
+padrone.porta=22
+padrone.password='xxxxxxxxxxx'
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////// FINE CONFIGURAZIONI ROSSONET ////////////////////////////////
