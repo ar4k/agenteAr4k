@@ -4,4 +4,4 @@
 ./grailsw stop-app
 ./grailsw clean-all
 ./grailsw refresh-dependencies
-./grailsw run-app
+#./grailsw run-app

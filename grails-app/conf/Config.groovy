@@ -140,6 +140,7 @@ log4j.main = {
 			'org.springframework',
 			'org.hibernate',
 			'net.sf.ehcache.hibernate'
+	//debug "org.grails.plugins.atmosphere_meteor"
 }
 
 plugin.crash.config = [

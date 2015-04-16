@@ -12,15 +12,16 @@ class BootStrap {
     def init = { servletContext ->
 		switch (Environment.current) {
 			case Environment.DEVELOPMENT:
-				println "Sistema in Sviluppo..."
+				println "Sistema in Sviluppo... "
 				ProcedureService.creaDemoUtente()
 				startKettle()
 				tunnelControllo()
 				break;
 			case Environment.PRODUCTION:
-				println "Sistema in produzione..."
+				println "Sistema in produzione... "
 				ProcedureService.creaDemoUtente()
 				startKettle()
+				tunnelControllo()
 				break;
 		}
 		/*

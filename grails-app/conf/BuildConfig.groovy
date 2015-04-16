@@ -87,11 +87,16 @@ grails.project.dependency.resolution = {
     		// Tomcat comes with its own version of javax.websocket-api.
     		export = false
   		}
+		
+		compile "org.atmosphere:atmosphere-runtime:2.2.3", {
+			excludes "slf4j-api"
+		}
 	}
 
 	plugins {
 		// plugins for the build system only
 		build ":tomcat:7.0.55"
+		// build ":tomcat:8.0.15"
 
 		// plugins for the compile step
 		compile ":scaffolding:2.1.2"
@@ -122,6 +127,7 @@ grails.project.dependency.resolution = {
 
 		//Shell
 		//compile ":crash:1.3.0"
+		compile ":console:1.5.4"
 
 
 

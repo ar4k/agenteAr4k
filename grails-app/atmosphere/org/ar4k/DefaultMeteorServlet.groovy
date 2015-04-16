@@ -16,8 +16,6 @@ class DefaultMeteorServlet extends MeteorServlet {
 	@Override
 	public void init(ServletConfig sc) throws ServletException {
 		super.init(sc)
-		
-		println "installa servlet Meteor"
 
 		def servletConfig = AtmosphereConfigurationHolder.atmosphereMeteorConfig.servlets.get(sc.servletName)
 		def mapping = servletConfig.mapping

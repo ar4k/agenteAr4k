@@ -197,7 +197,9 @@
         <ul class="dropdown-menu dropdown-user">
             <li><g:link controller='user' absolute='true'><i class="fa fa-user fa-fw"></i> Profilo Utenti</g:link>
             </li>
-            <li><g:link controller='base' absolute='true'><i class="fa fa-gear fa-fw"></i> Impostazioni</g:link>
+            <li><g:link controller='base' absolute='true'><i class="fa fa-gear fa-fw"></i> Pagina base Grails</g:link>
+            </li>
+            <li><g:link controller='console' absolute='true'><i class="fa fa-gear fa-fw"></i> Console Grails</g:link>
             </li>
             <li class="divider"></li>
             <li><a href="javascript:document.submitForm.submit()"><i class="fa fa-sign-out fa-fw"></i> Esci</a>
