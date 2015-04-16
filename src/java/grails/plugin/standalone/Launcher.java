@@ -142,7 +142,8 @@ public class Launcher extends AbstractLauncher {
 		boolean enableClientAuth = getBooleanArg("enableClientAuth", false);
 		int sessionTimeout = getIntArg("sessionTimeout", 30);
 		String nio = getArg("nio", getArg("tomcat.nio"));
-		boolean useNio = nio == null || nio.equalsIgnoreCase("true");
+		boolean useNio = getBooleanArg("useNio", true);
+		//boolean useNio = nio == null || nio.equalsIgnoreCase("true");
 
 		configureTomcat(tomcatDir, contextPath, exploded, host, port,
 				httpsPort, keystoreFile, keystorePassword, usingUserKeystore,

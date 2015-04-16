@@ -30,7 +30,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class KettleService {
 	def GrailsApplication grailsApplication
-	def servletContext
+	//def servletContext
 
 	Repository repository = null
 	RepositoryDirectoryInterface directory = null
@@ -51,7 +51,8 @@ class KettleService {
 	def repoInit() {
 		RepositoriesMeta repositoriesMeta = new RepositoriesMeta()
 		if  ( grailsApplication.config.kettle.repoConfFile != '' ) {
-			InputStream xmlFile = new FileInputStream(new File(servletContext.getRealPath('/kettle')+'/'+grailsApplication.config.kettle.repoConfFile))
+			InputStream xmlFile
+			xmlFile = new FileInputStream(new File(grailsApplication.parentContext.getResource("/kettle").file.toString()+'/'+grailsApplication.config.kettle.repoConfFile))
 			repositoriesMeta.readDataFromInputStream(xmlFile)
 		} else {
 			repositoriesMeta.readData()
@@ -59,6 +60,7 @@ class KettleService {
 		RepositoryMeta repositoryMeta = null
 		if (grailsApplication.config.kettle.repoFS == 'si') {
 			repositoryMeta = (KettleFileRepositoryMeta) repositoriesMeta.findRepository(grailsApplication.config.kettle.repository)
+			repositoryMeta.setBaseDirectory(grailsApplication.parentContext.getResource("/kettle/repository").file.toString())
 		} else {
 			repositoryMeta = (RepositoryMeta) repositoriesMeta.findRepository(grailsApplication.config.kettle.repository)
 		}
@@ -68,7 +70,11 @@ class KettleService {
 		repository.init(repositoryMeta)
 		repository.connect(grailsApplication.config.kettle.username, grailsApplication.config.kettle.password)
 		directory = repository.loadRepositoryDirectoryTree()
+
 		directory = directory.findDirectory(grailsApplication.config.kettle.directory)
+
+		directory = directory.findDirectory(grailsApplication.config.kettle.directory)
+
 	}
 
 	def verificaRipristina() {

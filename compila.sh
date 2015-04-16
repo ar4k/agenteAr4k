@@ -1,4 +1,5 @@
 #!/bin/bash
 # Compila il jar
 
-./grailsw build-standalone -Dbuild.compiler=javac1.7
+./grailsw prod build-standalone -Dbuild.compiler=javac1.7 -Dtomcat.nio=true
+#mv target/standalone-0.1.jar ar4k.jar

@@ -155,7 +155,7 @@ class SshService {
 					}
 					if(channel.isClosed()){
 						if(input.available()>0) continue
-							println("exit-status: "+channel.getExitStatus())
+							println("canale chiuso. Stato uscita: "+channel.getExitStatus())
 						break
 					}
 					try{Thread.sleep(1000);}catch(Exception ee){}

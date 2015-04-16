@@ -14,7 +14,7 @@ grails.project.fork = [
 	//  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
 
 	// configure settings for the test-app JVM, uses the daemon by default
-	test: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
+	test: [maxMemory: 1024, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
 	// configure settings for the run-app JVM
 	run: [maxMemory: 1024, minMemory: 256, debug: false, maxPerm: 256, forkReserve:false],
 	// configure settings for the run-war JVM
@@ -75,12 +75,12 @@ grails.project.dependency.resolution = {
 		runtime 'commons-httpclient:commons-httpclient:3.1'
 
 		// Vari ASP
-		compile('com.dropbox.core:dropbox-core-sdk:1.7.7')
-		compile('com.evernote:evernote-api:1.25.1')
+		//compile('com.dropbox.core:dropbox-core-sdk:1.7.7')
+		//compile('com.evernote:evernote-api:1.25.1')
 		compile('org.jclouds:jclouds-all:1.6.0')
 
 		// Per includere in Crash telnet
-		runtime 'org.crashub:crash.connectors.telnet:1.3.0-cr7'
+		//runtime 'org.crashub:crash.connectors.telnet:1.3.0-cr7'
 
 		bundle('javax.websocket:javax.websocket-api:1.1') {
     		// This line is necessary for deployment to Tomcat, since
@@ -114,15 +114,16 @@ grails.project.dependency.resolution = {
 		// Camel
 		compile ":routing:1.3.2"
 		compile ":mail:1.0.7"
+		// scheduler
+		compile ":quartz:1.0.2"
 
 		// Standalone
 		compile ":standalone:1.3"
 
 		//Shell
-		compile ":crash:1.3.0"
+		//compile ":crash:1.3.0"
 
-		// scheduler
-		compile ":quartz:1.0.2"
+
 
 		// autenticazione
 		compile ":spring-security-core:2.0-RC4"

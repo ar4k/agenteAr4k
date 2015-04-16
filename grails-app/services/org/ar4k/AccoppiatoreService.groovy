@@ -4,7 +4,7 @@ import static groovyx.gpars.dataflow.Dataflow.task
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.atmosphere.cpr.Broadcaster
 import org.atmosphere.cpr.DefaultBroadcaster
-
+import grails.converters.JSON
 import grails.transaction.Transactional
 import grails.util.Holders
 import com.jcraft.jsch.*
@@ -22,9 +22,9 @@ class AccoppiatoreService {
 		padrone.portaSSH = grailsApplication.config.padrone.porta
 		padrone.nomeUtente = grailsApplication.config.padrone.utente
 		padrone.password = grailsApplication.config.padrone.password
-		padrone.tunnel('R','127.0.0.1',2666,'',6666)
+		//padrone.tunnel('R','127.0.0.1',2666,'',6666)
 		padrone.tunnel('R','127.0.0.1',8080,'',6667)
-		padrone.tunnel('L','',6668,'127.0.0.1',22)
+		//padrone.tunnel('L','',6668,'127.0.0.1',22)
 		masterIstanza = padrone
 		//sessionePadrone()
 		return padrone.descrivi()
@@ -33,6 +33,10 @@ class AccoppiatoreService {
 	Channel sessionePadrone() {
 		Channel connesionePadrone = masterIstanza.sessioneMaster()
 		return connesionePadrone
+	}
+	
+	def freeMemory() {
+		sendMessage("seda:input", "Memoria libera: "+Runtime.getRuntime().freeMemory())
 	}
 }
 
@@ -52,9 +56,7 @@ class HostRemoto {
 		Channel canale
 		if ( sessioni.size() < 1) {
 			canale = sshService.console(collega())
-			((ChannelShell)canale).setPtySize(180,90,800,600)
 			sessioni.add(canale)
-			//Ciclo alimentazione service
 			task {
 				byte[] buf=new byte[1024]
 				int conto = 0
@@ -69,11 +71,10 @@ class HostRemoto {
 						broadcaster.broadcast(new String(buf,0,conto))
 					}
 					try{
-						Thread.sleep(200);
+						Thread.sleep(250);
 					}catch(Exception ee){}
 				}
 			}
-			//
 		}
 		canale = sessioni[0]
 		return canale

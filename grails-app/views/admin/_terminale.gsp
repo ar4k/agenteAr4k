@@ -10,7 +10,7 @@
 		var term = new Terminal();
 		
 		var request = {
-			url : "http://localhost:8080/AgenteAr4k/wsa/def/${mappa}",
+			url : "<g:createLink controller='wsa' action='def' absolute='true'/>/${mappa}",
 			contentType : "application/json",
 			trackMessageLength : true,
 			logLevel : 'error',
@@ -52,7 +52,6 @@
 		setTimeout(function() {
 			subSocket.push("export TERM=xterm-256color\n")
 			subSocket.push("sleep 5 && clear\n")
-			subSocket.push("tmux new -s ar4k\n")
 		}, 2000);
 
 	});
