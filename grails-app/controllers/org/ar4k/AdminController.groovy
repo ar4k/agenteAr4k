@@ -13,7 +13,7 @@ class AdminController {
 	}
 
 	def terminale() {
-		render(template: "terminale", model:[mappa: 'padrone'] )
+		render(template: "terminale", model:[mappa: 'padrone',comandoAvvio:'export TERM=xterm-256color; sleep 2 ; clear'] )
 	}
 }
 

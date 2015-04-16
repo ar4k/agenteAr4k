@@ -32,7 +32,7 @@
 				<%-- CONTACT DETAILS --%>
 				<div
 					class="contact-details contact-details col-xs-12 col-sm-12 col-md-3">
-					<p class="text-justify">Immetere e confermare la nuova
+					<p class="text-justify" style="text-align: justify;">Immetere e confermare la nuova
 						password. La password deve contenere almeno otto caraterri tra cui
 						un numero e un simbolo.</p>
 				</div>

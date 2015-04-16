@@ -53,7 +53,7 @@
 
 					<div class="tab-pane fade in active col-md-12" id="createAccount">
 						<div class="contact-details col-xs-12 col-sm-12 col-md-7">
-							<p class="text-justify">Scegliere il proprio nominativo sul
+							<p class="text-justify" style="text-align: justify;">Scegliere il proprio nominativo sul
 								sistema e un codice segreto. Il codice segreto servirà per
 								aggiungere altri fonti di autenticazione alla vostra
 								configurazione AR4K. Potete, per esempio, farvi riconoscere dal
@@ -117,7 +117,7 @@
 
 					<div class="tab-pane fade col-md-12" id="linkAccount">
 						<div class="contact-details col-xs-12 col-sm-12 col-md-7">
-							<p class="text-justify">E' la prima volta che entrate su
+							<p class="text-justify" style="text-align: justify;">E' la prima volta che entrate su
 								AR4K. Se avete già un utenza potete collegarvi ad essa
 								utilizzando il nome utente e il codice segreto (o password).
 								Altrimenti createne una selezionando il pannello "Crea nuova

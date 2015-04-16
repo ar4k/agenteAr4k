@@ -58,6 +58,7 @@
 
 <g:javascript library="jquery" />
 <r:require module="jquery-ui" />
+<link rel="stylesheet" href="${resource(dir: 'atterraggio', file: 'font-awesome/css/font-awesome.min.css')}" type="text/css">
 <r:layoutResources />
 
 <style>
@@ -65,9 +66,6 @@
 	visibility: hidden;
 }
 </style>
-
-<script type="text/javascript"
-	src="${resource(dir: 'js', file: 'd3/d3.js')}"></script>
 
 </head>
 
@@ -98,7 +96,7 @@
 			<!-- Menu Icon for smaller viewports -->
 			<div id="mobile-menu-icon" class="visible-xs"
 				onClick="toggle_main_menu();">
-				<span class="glyphicon glyphicon-th"></span>
+				<span class="fa fa-th fa-2x"></span>
 			</div>
 
 			<ul id="main-menu">
@@ -174,7 +172,7 @@
 						<!-- CONTACT DETAILS -->
 						<div
 							class="contact-details contact-details col-xs-12 col-sm-12 col-md-3">
-							<p class="text-justify">Utilizzando il nostro portale
+							<p class="text-justify" style="text-align: justify;">Utilizzando il nostro portale
 								internet acconsentite a farci rilevare determinati dati. Da
 								parte nostra ci impegniamo a prelevare e conservare soltanto le
 								informazioni strettamente necessarie e a proteggere sempre la
@@ -290,7 +288,7 @@
 						<section class="feature-text">
 							<h1>AR4K</h1>
 							<h2>Augmented Reality for Key</h2>
-							<p class="text-justify">La rivoluzione sociale di internet ha
+							<p class="text-justify" style="text-align: justify;">La rivoluzione sociale di internet ha
 								profondamente cambiato le abitudini delle persone, i modi di
 								acquisto e i processi aziendali. Di fatto si è creata
 								un'interazione sempre più dinamica e intensa tra il mondo reale
@@ -326,7 +324,7 @@
 						<section class="feature-text">
 							<h1>AR4K</h1>
 							<h2>tecnologia e metodi</h2>
-							<p class="text-justify">Per realizzare i nostri progetti
+							<p class="text-justify" style="text-align: justify;">Per realizzare i nostri progetti
 								abbiamo scelto gli strumenti più validi, prediligendo le
 								migliori tecnologie attualmente disponibili. Per scelta
 								costruiamo le nostre soluzioni utilizzando esclusivamente
@@ -359,7 +357,7 @@
 						<section class="feature-text">
 							<h1>AR4K</h1>
 							<h2>gestione processi aziendali</h2>
-							<p class="text-justify">AR4K è un nuovo orientamento nei
+							<p class="text-justify" style="text-align: justify;">AR4K è un nuovo orientamento nei
 								processi aziendali che si basa sulla centralità del collegamento
 								tra la realtà fisica aziendale e quella digitale.
 								Indipendentemente dal settore in cui opera l'azienda, grazie a
@@ -390,7 +388,7 @@
 						<section class="feature-text">
 							<h1>AR4K</h1>
 							<h2>Marketing one to one</h2>
-							<p class="text-justify">AR4K si basa sull'idea che nel
+							<p class="text-justify" style="text-align: justify;">AR4K si basa sull'idea che nel
 								rapporto tra l'azienda e i suoi clienti ci sia un link, un nuovo
 								tipo diconnessione che permette all'azienda di conoscere in modo
 								più approfondito i desideri, le necessità, le preferenze
@@ -406,7 +404,7 @@
 								eventuali campagne di marketing. Appare quindi come naturale una
 								prospettiva che vede la fidelizzazione del cliente avvenire
 								attraverso gli strumenti mobili di uso più comune come gli
-								smartphone, ipad o altri dispositivi. Grazie a AR4K l'aziendà
+								smartphone, ipad o altri dispositivi. Grazie a AR4K l'azienda
 								dialogherà con il cliente attraverso l'utilizzo di interfacce
 								uniche e fortemente personalizzabili, che racconteranno del
 								rapporto esclusivo e di fiducia che cliente potrà creare con
@@ -435,7 +433,7 @@
 
 			<!-- Go to Top -->
 			<div id="go-to-top" onclick="scroll_to_top();">
-				<span class="icon glyphicon glyphicon-chevron-up"></span>
+				<span class="fa fa-chevron-circle-up fa-3x"></span>
 			</div>
 
 			<ul class="social-icons">
@@ -633,11 +631,10 @@
 					methods : [ "configure", "extend", "declare", "identify" ]
 				});
 		/* custom configuration goes here (www.olark.com/documentation) */
-		olark.identify('${grailsApplication.config.olark.key}
-		');/*]]>*/
+		olark.identify('${grailsApplication.config.olark.key}');/*]]>*/
 	</script>
 	<noscript>
-		<a href="https://www.olark.com/site/1445-771-10-6904/contact"
+		<a href="https://www.olark.com/site/${grailsApplication.config.olark.key}/contact"
 			title="Contact us" target="_blank">Questions? Feedback?</a> powered
 		by <a href="http://www.olark.com?welcome"
 			title="Olark live chat software">Olark live chat software</a>

@@ -23,8 +23,8 @@
 
 		request.onOpen = function(response) {
 			term = new Terminal({
-				cols : 180,
-				rows : 90,
+				cols : 80,
+				rows : 40,
 				useStyle : true,
 				screenKeys : true,
 				convertEol : true,
@@ -46,15 +46,14 @@
 			subSocket.push(data);
 		});
 
-		term.open(document.getElementById("terminalWin"));
+		term.open(document.getElementById("terminal-${mappa}"));
 
-		//term.write('\x1b[31mPer attivare la sessione premere un tasto\x1b[m\r\n');
+		term.write('\x1b[31msessione in caricamento...\x1b[m\r\n');
 		setTimeout(function() {
-			subSocket.push("export TERM=xterm-256color\n")
-			subSocket.push("sleep 5 && clear\n")
+			subSocket.push("${comandoAvvio}\n")
 		}, 2000);
 
 	});
 </script>
-<div id="terminalWin" class="panel panel-primary"></div>
+<div id="terminal-${mappa}" class="panel panel-primary"></div>
 

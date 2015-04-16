@@ -47,7 +47,7 @@
 							deve contenere almeno otto caratteri tra cui un numero e un
 							simbolo tra i seguenti: ! @ # $ % ^ &</p>
 
-						<p style="font-size: 9px;" class="text-justify">PRIVACY POLICY
+						<p style="font-size: 9px;text-align: justify;" class="text-justify">PRIVACY POLICY
 							for www.ar4k.eu: At Ar4k we are committed to safeguarding and
 							preserving the privacy of our visitors. This Privacy Policy
 							explains what happens to any personal data that you provide to
