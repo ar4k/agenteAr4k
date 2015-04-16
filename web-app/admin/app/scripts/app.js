@@ -21,7 +21,7 @@ angular
       events:true,
     });
 
-    $urlRouterProvider.otherwise('/dashboard/home');
+    $urlRouterProvider.otherwise('/dashboard/rossonet');
 
     $stateProvider
       .state('dashboard', {
@@ -78,6 +78,25 @@ angular
         url:'/home',
         controller: 'MainCtrl',
         templateUrl:'admin/app/views/dashboard/home.html',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/app/scripts/controllers/main.js',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.rossonet',{
+        url:'/rossonet',
+        controller: 'MainCtrl',
+        templateUrl:'admin/rossonet',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({

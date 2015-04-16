@@ -60,5 +60,20 @@ class DefaultMeteorHandler extends HttpServlet {
 			out << buf
 			out.flush()
 		}
+		
+		if (request.pathInfo == '/mailtest') {
+			//println 'ok'
+			byte[] buf=new byte[1024]
+			int i=0
+			int o=0
+			Channel canale = accoppiatoreService.sessioneMailTest()
+
+			InputStream richiesta = request.getInputStream()
+			OutputStream out=canale.getOutputStream()
+
+			i=richiesta.read(buf,0,1024)
+			out << buf
+			out.flush()
+		}
 	}
 }

@@ -5,7 +5,7 @@ class AdminController {
 	SshService sshService
 
 	def index() {
-		[messaggioOlark: "Benvenuto nel template di sviluppo applicativo AR4K!"]
+		//[messaggioOlark: "Benvenuto nel template di sviluppo applicativo AR4K!"]
 	}
 
 	def headerNotification() {
@@ -14,6 +14,18 @@ class AdminController {
 
 	def terminale() {
 		render(template: "terminale", model:[mappa: 'padrone',comandoAvvio:'export TERM=xterm-256color; sleep 2 ; clear'] )
+	}
+	
+	def mailtest() {
+		render(template: "terminale", model:[mappa: 'mailtest'] )
+	}
+	
+	def sidebar() {
+		render(template: "sidebar")
+	}
+	
+	def rossonet() {
+		render(template: "rossonet")
 	}
 }
 

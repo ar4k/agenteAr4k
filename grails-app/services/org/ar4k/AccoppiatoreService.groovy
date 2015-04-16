@@ -35,6 +35,11 @@ class AccoppiatoreService {
 		return connesionePadrone
 	}
 	
+	Channel sessioneMailTest() {
+		Channel connesionePadrone = masterIstanza.sessioneMailTest()
+		return connesionePadrone
+	}
+	
 	def freeMemory() {
 		sendMessage("seda:input", "Memoria libera: "+Runtime.getRuntime().freeMemory())
 	}
@@ -77,6 +82,34 @@ class HostRemoto {
 			}
 		}
 		canale = sessioni[0]
+		return canale
+	}
+	
+	Channel sessioneMailTest() {
+		Channel canale
+		if ( sessioni.size() < 2) {
+			canale = sshService.stream(collega(),'mail.rossonet.net',25)
+			sessioni.add(canale)
+			task {
+				byte[] buf=new byte[1024]
+				int conto = 0
+				def canal = canale
+				InputStream input = canal.getInputStream()
+				Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/def/mailtest')
+				while(!canal.isClosed()){
+					//broadcaster.broadcast("Stream: "+input+" input: "+input.available())
+					//println "Stream: "+input+" input: "+input.available()
+					while (input.available() > 0) {
+						conto = input.read(buf,0,1024)
+						broadcaster.broadcast(new String(buf,0,conto))
+					}
+					try{
+						Thread.sleep(250);
+					}catch(Exception ee){}
+				}
+			}
+		}
+		canale = sessioni[1]
 		return canale
 	}
 

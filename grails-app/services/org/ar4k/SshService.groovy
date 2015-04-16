@@ -179,6 +179,20 @@ class SshService {
 		}
 		return channel
 	}
+	
+	// connette la console
+	def Channel stream(String ricerca,String hostTarget,Integer porta) {
+		Channel channel
+		for(Session sessione in connessioniSSH) {
+			if (sessione.getSessionId().encodeAsMD5() == ricerca) {
+				channel=sessione.getStreamForwarder(hostTarget, porta)
+				channel.connect()
+				canaliSSH.add(channel)
+			}
+			break
+		}
+		return channel
+	}
 
 	def List<Integer> listChannel() {
 		def lista = []
