@@ -54,8 +54,6 @@ grails.mime.types = [ // the first one is the default format
 		'application/xml']
 ]
 
-//grails.server.port.http = 6661
-
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
 

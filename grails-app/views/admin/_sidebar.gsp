@@ -2,10 +2,10 @@
 	<div class="sidebar-nav navbar-collapse">
 		<ul class="nav in" id="side-menu">
 			<!--  <sidebar-search></sidebar-search> -->
-			<li ui-sref-active="active"><a ui-sref="dashboard.home"><i
+			<li ui-sref-active="active"><a ui-sref="dashboard.dashrossonet"><i
 					class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
-			<li ui-sref-active="active"><a ui-sref="dashboard.rossonet"><i
+			<li ui-sref-active="active"><a ui-sref="dashboard.oggetto"><i
 					class="fa fa-server fa-fw"></i> Oggetti</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.kettle"><i
@@ -17,7 +17,7 @@
 			<li ui-sref-active="active"><a ui-sref="dashboard.quartz"><i
 					class="fa fa-clock-o fa-fw"></i> Schedulazione</a></li>
 
-			<li ui-sref-active="active"><a ui-sref="dashboard.ar4k"><i
+			<li ui-sref-active="active"><a ui-sref="dashboard.rossonet"><i
 					class="fa fa-cloud fa-fw"></i> AR4K Cloud Service</a></li>
 
 			<li ng-class="{active: collapseVar==1}"><a href=""

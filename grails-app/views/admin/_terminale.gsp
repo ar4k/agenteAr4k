@@ -24,7 +24,7 @@
 		request.onOpen = function(response) {
 			term = new Terminal({
 				cols : 80,
-				rows : 40,
+				rows : 24,
 				useStyle : true,
 				screenKeys : true,
 				convertEol : true,

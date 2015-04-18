@@ -21,7 +21,7 @@ angular
       events:true,
     });
 
-    $urlRouterProvider.otherwise('/dashboard/rossonet');
+    $urlRouterProvider.otherwise('/dashboard/dashrossonet');
 
     $stateProvider
       .state('dashboard', {
@@ -97,6 +97,101 @@ angular
         url:'/rossonet',
         controller: 'MainCtrl',
         templateUrl:'admin/rossonet',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/app/scripts/controllers/main.js',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.oggetto',{
+        url:'/oggetto',
+        controller: 'OggettoCtrl',
+        templateUrl:'admin/oggetto',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/oggettoCtrl',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+     .state('dashboard.dashrossonet',{
+        url:'/dashrossonet',
+        controller: 'MainCtrl',
+        templateUrl:'admin/dashrossonet',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/app/scripts/controllers/main.js',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.kettle',{
+        url:'/kettle',
+        controller: 'MainCtrl',
+        templateUrl:'admin/kettle',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/app/scripts/controllers/main.js',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.quartz',{
+        url:'/quartz',
+        controller: 'MainCtrl',
+        templateUrl:'admin/quartz',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/app/scripts/controllers/main.js',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.processi',{
+        url:'/processi',
+        controller: 'MainCtrl',
+        templateUrl:'admin/processi',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({

@@ -91,7 +91,7 @@ public class Launcher extends AbstractLauncher {
 		try {
 			if(Desktop.isDesktopSupported())
 			{
-			  Desktop.getDesktop().browse(new URI("http://127.0.0.1:8080"));
+			  Desktop.getDesktop().browse(new URI("http://127.0.0.1:6630"));
 			}
 		}
 		catch (Exception e) {
@@ -114,7 +114,7 @@ public class Launcher extends AbstractLauncher {
 			contextPath = '/' + contextPath;
 		}
 		String host = getArg("host", "localhost");
-		int port = getIntArg("port", 8080);
+		int port = getIntArg("port", 6630);
 		int httpsPort = getIntArg("httpsPort", 0);
 
 		String keystorePath = getArg("keystorePath", getArg("javax.net.ssl.keyStore", ""));
