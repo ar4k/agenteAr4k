@@ -15,8 +15,6 @@ Per lavorare con git in bash:
 git config --global push.default matching
 git config credential.helper store
 git config color.ui true
-git config --global user.name "Nome Cognome - Rossonet -"
-git config --global user.email "nome.cognome@rossonet.com"
 ```
 
 Per creare un'applicazione in un unico file .jar con tutte le librerie incluse:
