@@ -8,7 +8,15 @@ by Rossonet s.c.a r.l.
 
 Per scaricare l'intero sistema:
 ```bash
-git clone https://github.com/rossonet/agenteAr4k.git
+git clone https://github.com/rossonet/agentear4k.git
+```
+Per lavorare con git in bash:
+```bash
+git config --global push.default matching
+git config credential.helper store
+git config color.ui true
+git config --global user.name "Nome Cognome - Rossonet -"
+git config --global user.email "nome.cognome@rossonet.com"
 ```
 
 Per creare un'applicazione in un unico file .jar con tutte le librerie incluse:

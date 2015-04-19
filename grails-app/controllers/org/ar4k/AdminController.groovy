@@ -36,8 +36,8 @@ class AdminController {
 		render(template: "terminale", model:[mappa: 'padrone',comandoAvvio:'export TERM=xterm-256color; sleep 2 ; clear'] )
 	}
 	
-	def mailtest() {
-		render(template: "terminale", model:[mappa: 'mailtest'] )
+	def eseguiProcesso(String host,String comando) {
+		render accoppiatoreService.esegui(host,comando) as JSON
 	}
 	
 	def oggetto() {
@@ -47,7 +47,7 @@ class AdminController {
 	def oggettoCtrl() {
 		render(template: "oggettoCtrl")
 	}
-	
+
 	def sidebar() {
 		render(template: "sidebar")
 	}

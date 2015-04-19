@@ -1,12 +1,17 @@
 package org.ar4k
 
 import static groovyx.gpars.dataflow.Dataflow.task
+
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.atmosphere.cpr.Broadcaster
 import org.atmosphere.cpr.DefaultBroadcaster
+
 import grails.converters.JSON
 import grails.transaction.Transactional
 import grails.util.Holders
+
+import java.util.Formatter.DateTime
+
 import com.jcraft.jsch.*
 
 @Transactional
@@ -18,7 +23,7 @@ class AccoppiatoreService {
 	String configuraPadrone() {
 		HostRemoto padrone = nuovoSSH('master','Connessione configurata in file di configurazione iniziale (bootstrap)',grailsApplication.config.padrone.utente,grailsApplication.config.padrone.host,grailsApplication.config.padrone.porta,grailsApplication.config.padrone.password)
 		//padrone.tunnel('R','127.0.0.1',2666,'',6666)
-		padrone.tunnel('R','127.0.0.1',6630,'',6666)
+		//padrone.tunnel('R','127.0.0.1',6630,'',6666)
 		//padrone.tunnel('L','',6668,'127.0.0.1',22)
 		masterIstanza = padrone
 		return padrone.descrivi()
@@ -52,6 +57,7 @@ class AccoppiatoreService {
 	}
 
 	HostRemoto getHostRemoto(String etichetta) {
+		return macchine.find{it.etichetta==etichetta}
 	}
 
 	List<Oggetto> listaOggetti() {
@@ -60,6 +66,12 @@ class AccoppiatoreService {
 
 	Oggetto getOggetto(String etichetta) {
 		return macchine.find{it.etichetta==etichetta}
+	}
+	
+	String esegui(String etichetta,String comando) {
+		Processo processo = new Processo()
+		processo.comando = comando
+		processo.target = macchine.find{it.etichetta==etichetta}
 	}
 }
 
@@ -147,8 +159,8 @@ class HostRemoto extends Oggetto{
 		return connessioni[0]
 	}
 
-	String esegui(String comando) {
-		return sshService.esegui(collega(1),comando,null)
+	String esegui(String comando,InputStream erroreStream) {
+		return sshService.esegui(collega(1),comando,erroreStream)
 	}
 
 	String tunnel(String direzione,String hostLocale,Integer portaLocale,String hostTarget,Integer portaTarget) {
@@ -165,15 +177,14 @@ class HostRemoto extends Oggetto{
 
 	String descrivi() {
 		String ritorno = "----------------------------\n"
+		ritorno += esegui('uname -a',null) + "\n"
+		ritorno += "----------------------------\n"
 		ritorno += "tipo: "+etichetta+"\n"
 		ritorno += "tipo: "+tipo+"\n"
 		ritorno += "nome host: "+nomeHost+"\n"
 		ritorno += "porta host: "+portaSSH+"\n"
 		ritorno += "utente: "+nomeUtente+"\n"
 		ritorno += "identificativo connessione: "+connessioni[0]+"\n"
-		ritorno += "----------------------------\n"
-		ritorno += esegui('uname -a') + "\n"
-		ritorno += "----------------------------\n"
 		ritorno += "tunnel:\n"
 		tunnel.each {ritorno += it.toString()+"\n"}
 		ritorno += "----------------------------\n"
@@ -193,6 +204,7 @@ class TunnelSsh {
 	String hostTarget = ''
 	String identificatore = ''
 	Integer attiva = 0
+	
 	String crea() {
 		if (direzione == 'L') {
 			println "avvio tunnel: L:"+portaLocale+":"+hostTarget+":"+portaTarget
@@ -241,8 +253,8 @@ class Contesto {
 	List<Oggetto> oggetti = []
 	List<Rete> reti = []
 	// Oggetto necessario per un contesto
-	Oggetto memoriaAr4k
-}
+	String ambiente = "contesto="+etichetta+"\n"
+	}
 
 // Class funzionalità
 class Funzionalita {
@@ -253,10 +265,31 @@ class Funzionalita {
 	List<Funzionalita> dipendenze = []
 }
 
+// Class rete
 class Rete {
 	String etichetta = UUID.randomUUID()
 	String descrizione ='Rete gestita da AR4K by Rossonet\n'
 	String rete = '127.0.0.1/24'
-	Contesto contesto
 	List<Oggetto> accessi = []
+}
+
+// Class comando
+class Processo {
+	String etichetta = UUID.randomUUID()
+	String descrizione ='Processo AR4K by Rossonet\n'
+	Boolean persistente = false
+	DateTime scadenza = null
+	String tipoEsecuzione = 'bash'
+	Oggetto target = null
+	Boolean salvaRisultato = true
+	String comando = 'ls -a'
+	String codaAggiornamento = etichetta
+	String stato = 'Inizializzato'
+	
+	String esegui() {
+		stato = 'In esecuzione'
+		InputStream errore
+		return target.esegui(comando,errore)
+	}
+	
 }
