@@ -1,5 +1,6 @@
 package org.ar4k
 import javax.swing.text.html.HTML
+
 import grails.converters.JSON
 import groovy.json.*
 
@@ -33,11 +34,15 @@ class AdminController {
 	}
 
 	def terminale() {
-		render(template: "terminale", model:[mappa: 'padrone',comandoAvvio:'export TERM=xterm-256color; sleep 2 ; clear'] )
+		render(template: "terminale", model:[mappa: 'master',comandoAvvio:'sleep 3 ; clear'] )
 	}
 	
 	def eseguiProcesso(String host,String comando) {
-		render accoppiatoreService.esegui(host,comando) as JSON
+		render accoppiatoreService.esegui(host,comando)
+	}
+	
+	def parseRemote(String host,String target,String portaTarget,String query,String componente) {
+		render accoppiatoreService.remoteWeb(host,target,portaTarget,query,componente)
 	}
 	
 	def oggetto() {

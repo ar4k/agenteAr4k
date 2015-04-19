@@ -76,6 +76,7 @@ grails.project.dependency.resolution = {
 		runtime 'net.sourceforge.jexcelapi:jxl:2.6.12'
 		runtime 'commons-httpclient:commons-httpclient:3.1'
 
+		compile 'org.jsoup:jsoup:1.8.1'
 		// Vari ASP
 		//compile('com.dropbox.core:dropbox-core-sdk:1.7.7')
 		//compile('com.evernote:evernote-api:1.25.1')

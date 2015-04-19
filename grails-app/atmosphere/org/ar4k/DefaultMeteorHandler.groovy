@@ -46,27 +46,11 @@ class DefaultMeteorHandler extends HttpServlet {
 
 		Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, mapping)
 
-		if (request.pathInfo == '/padrone') {
+		if (request.pathInfo == '/master') {
 			//println 'ok'
 			byte[] buf=new byte[1024]
 			int i=0
-			int o=0
-			Channel canale = accoppiatoreService.sessionePadrone()
-
-			InputStream richiesta = request.getInputStream()
-			OutputStream out=canale.getOutputStream()
-
-			i=richiesta.read(buf,0,1024)
-			out << buf
-			out.flush()
-		}
-		
-		if (request.pathInfo == '/mailtest') {
-			//println 'ok'
-			byte[] buf=new byte[1024]
-			int i=0
-			int o=0
-			Channel canale = accoppiatoreService.sessioneMailTest()
+			Channel canale = accoppiatoreService.sessione('master')
 
 			InputStream richiesta = request.getInputStream()
 			OutputStream out=canale.getOutputStream()
