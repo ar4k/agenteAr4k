@@ -6,8 +6,6 @@ import groovy.json.*
 
 class AdminController {
 	AccoppiatoreService accoppiatoreService
-	
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index() {
 		//[messaggioOlark: "Benvenuto nel template di sviluppo applicativo AR4K!"]
@@ -15,6 +13,10 @@ class AdminController {
 
 	def headerNotification() {
 		render(template: "headerNotification")
+	}
+	
+	def sidebar() {
+		render(template: "sidebar")
 	}
 	
 	def listaoggetti(){
@@ -45,36 +47,52 @@ class AdminController {
 		render accoppiatoreService.remoteWeb(host,target,portaTarget,query,componente)
 	}
 	
-	def oggetto() {
-		render(template: "oggetto")
+	def oggetti() {
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/oggetti')
 	}
 	
 	def oggettoCtrl() {
-		render(template: "oggettoCtrl")
-	}
-
-	def sidebar() {
-		render(template: "sidebar")
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/oggettiCtrl')
 	}
 	
 	def rossonet() {
-		render(template: "rossonet")
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/rossonet')
+	}
+	
+	def rossonetCtrl() {
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/rossonetCtrl')
 	}
 	
 	def quartz() {
-		render(template: "quartz")
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/quartz')
+	}
+	
+	def quartzCtrl() {
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/quartzCtrl')
 	}
 	
 	def processi() {
-		render(template: "processi")
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/processi')
+	}
+	
+	def processiCtrl() {
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/processiCtrl')
 	}
 	
 	def kettle() {
-		render(template: "kettle")
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/kettle')
+	}
+	
+	def kettleCtrl() {
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/kettleCtrl')
 	}
 	
 	def dashrossonet() {
-		render(template: "dashrossonet")
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/dashboard')
+	}
+	
+	def dashrossonetCtrl() {
+		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/dashboardCtrl')
 	}
 }
 

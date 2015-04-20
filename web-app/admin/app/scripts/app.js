@@ -5,7 +5,7 @@
  * @description
  * # sbAdminApp
  *
- * Main module of the application.
+ * Modulo principale by Ambrosini
  */
 angular
   .module('sbAdminApp', [
@@ -95,14 +95,14 @@ angular
       })
       .state('dashboard.rossonet',{
         url:'/rossonet',
-        controller: 'MainCtrl',
+        controller: 'RossonetCtrl',
         templateUrl:'admin/rossonet',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/app/scripts/controllers/main.js',
+              'admin/rossonetCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',
@@ -112,16 +112,16 @@ angular
           }
         }
       })
-      .state('dashboard.oggetto',{
-        url:'/oggetto',
+      .state('dashboard.oggetti',{
+        url:'/oggetti',
         controller: 'OggettoCtrl',
-        templateUrl:'admin/oggetto',
+        templateUrl:'admin/oggetti',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/oggettoCtrl',
+              'admin/oggettiCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',
@@ -133,14 +133,14 @@ angular
       })
      .state('dashboard.dashrossonet',{
         url:'/dashrossonet',
-        controller: 'MainCtrl',
+        controller: 'DashRossonetCtrl',
         templateUrl:'admin/dashrossonet',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/app/scripts/controllers/main.js',
+              'admin/dashrossonetCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',
@@ -152,14 +152,14 @@ angular
       })
       .state('dashboard.kettle',{
         url:'/kettle',
-        controller: 'MainCtrl',
+        controller: 'KettleCtrl',
         templateUrl:'admin/kettle',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/app/scripts/controllers/main.js',
+              'admin/kettleCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',
@@ -171,14 +171,14 @@ angular
       })
       .state('dashboard.quartz',{
         url:'/quartz',
-        controller: 'MainCtrl',
+        controller: 'QuartzCtrl',
         templateUrl:'admin/quartz',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/app/scripts/controllers/main.js',
+              'admin/quartzCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',
@@ -190,14 +190,14 @@ angular
       })
       .state('dashboard.processi',{
         url:'/processi',
-        controller: 'MainCtrl',
+        controller: 'ProcessiCtrl',
         templateUrl:'admin/processi',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/app/scripts/controllers/main.js',
+              'admin/processiCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',

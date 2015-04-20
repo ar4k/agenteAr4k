@@ -5,7 +5,7 @@
 			<li ui-sref-active="active"><a ui-sref="dashboard.dashrossonet"><i
 					class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
-			<li ui-sref-active="active"><a ui-sref="dashboard.oggetto"><i
+			<li ui-sref-active="active"><a ui-sref="dashboard.oggetti"><i
 					class="fa fa-server fa-fw"></i> Oggetti</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.kettle"><i

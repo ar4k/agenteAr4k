@@ -12,10 +12,7 @@
    
     <body>
     <div ng-app="sbAdminApp">
-
         <div ui-view></div>
-
     </div>
     </body>
-
 </html>
