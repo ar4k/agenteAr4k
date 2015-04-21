@@ -21,7 +21,7 @@ import com.jcraft.jsch.*
 // Class comando
 class Processo {
 	String etichetta = UUID.randomUUID()
-	String descrizione ='Processo aggiornamento AR4K by Rossonet\n'
+	String descrizione ='Processo aggiornamento AR4K by Rossonet'
 	Boolean persistente = false
 	DateTime scadenza = null
 	String tipoEsecuzione = 'bash'
@@ -51,8 +51,7 @@ class Processo {
 
 	String esegui() {
 		stato = 'In esecuzione'
-		InputStream errore
-		return target.esegui('source ~/.bash_profile ; '+comando,errore)
+		return target.esegui('source ~/.bash_profile ; '+comando)
 	}
 
 }

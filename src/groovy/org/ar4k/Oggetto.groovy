@@ -22,7 +22,7 @@ abstract class Oggetto {
 	String etichetta = UUID.randomUUID()
 	String tipo = 'astratto'
 	String stato = 'Nuovo'
-	String descrizione ='Oggetto sistema AR4K by Rossonet\n'
+	String descrizione ='Oggetto sistema AR4K by Rossonet'
 	Boolean automatico = false
 	Oggetto padre = null
 	Contesto contestoMaster

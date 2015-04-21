@@ -134,7 +134,7 @@ class SshService {
 	}
 
 	// Gestisce l'esecuzione di comandi
-	def String esegui(String ricerca,String comando, def errore) {
+	def String esegui(String ricerca,String comando) {
 		String risultato = ""
 		Channel channel
 		for(Session sessione in connessioniSSH) {
@@ -143,7 +143,7 @@ class SshService {
 				channel=sessione.openChannel("exec")
 				((ChannelExec)channel).setCommand(comando)
 				channel.setInputStream(null)
-				((ChannelExec)channel).setErrStream(errore)
+				((ChannelExec)channel).setErrStream(System.err)
 				InputStream input=channel.getInputStream()
 				channel.connect()
 				byte[] tmp=new byte[1024]
@@ -155,7 +155,7 @@ class SshService {
 					}
 					if(channel.isClosed()){
 						if(input.available()>0) continue
-							log.info(comando+" [stato:"+channel.getExitStatus()+"]")
+							log.info("Comando: "+comando+" [stato:"+channel.getExitStatus()+"]")
 						break
 					}
 					try{Thread.sleep(500);}catch(Exception ee){}

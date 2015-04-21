@@ -21,7 +21,7 @@ import com.jcraft.jsch.*
 // Ricettario
 class Memoria {
 	String etichetta = UUID.randomUUID()
-	String descrizione ='Ricettario AR4K by Rossonet\n'
+	String descrizione ='Ricettario AR4K by Rossonet'
 	String repositoryGit = ''
 	String utente = 'agentear4k'
 	String password = ''

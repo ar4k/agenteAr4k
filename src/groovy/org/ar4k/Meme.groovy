@@ -21,7 +21,7 @@ import com.jcraft.jsch.*
 // Ricetta
 class Meme {
 	String etichetta = UUID.randomUUID()
-	String descrizione ='Meme predefinito AR4K by Rossonet\n'
+	String descrizione ='Meme predefinito AR4K by Rossonet'
 	Processo testPreparazione
 	Processo installazione
 	Processo monitoraggio

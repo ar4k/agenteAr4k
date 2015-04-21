@@ -30,6 +30,7 @@ class TunnelSsh {
 	String hostTarget = ''
 	String identificatore = ''
 	Integer attiva = 0
+	String stato = ''
 
 	def salvataggio() {
 		return [
@@ -41,25 +42,39 @@ class TunnelSsh {
 			hostlocale:hostLocale,
 			hosttarget:hostTarget,
 			identificatore:identificatore,
-			attiva:attiva
+			attiva:attiva,
+			stato:stato
 		]
 	}
-	
+
 	String crea() {
 		if (direzione == 'L') {
 			log.info("avvio tunnel: L:"+portaLocale+":"+hostTarget+":"+portaTarget)
-			sshService.addLTunnel(hostRemoto.collega(),portaLocale,hostTarget,portaTarget)
-			attiva = 1
+			try {
+				stato = sshService.addLTunnel(hostRemoto.collega(),portaLocale,hostTarget,portaTarget)
+				attiva = 1
+			} catch(e) {
+				attiva = 0
+				stato = e.toString()
+				log.error(stato)
+			}
 			identificatore = 'L:'+portaLocale+":"+hostTarget+":"+portaTarget
 		} else {
 			log.info("avvio tunnel: R:"+portaTarget+":"+hostLocale+":"+portaLocale)
-			sshService.addRTunnel(hostRemoto.collega(),portaTarget,hostLocale,portaLocale)
-			attiva = 1
+			try {
+				sshService.addRTunnel(hostRemoto.collega(),portaTarget,hostLocale,portaLocale)
+				attiva = 1
+			} catch(e) {
+				attiva = 0
+				stato = e.toString()
+				log.error(stato)
+			}
 			identificatore = 'R:'+portaTarget+":"+hostLocale+":"+portaLocale
+
 		}
 		return identificatore
 	}
-	
+
 	String toString(){
 		return "["+hostRemoto.etichetta+"] "+direzione+":"+hostLocale+":"+portaLocale+":"+hostTarget+":"+portaTarget
 	}

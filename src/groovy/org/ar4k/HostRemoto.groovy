@@ -38,12 +38,10 @@ class HostRemoto extends Oggetto{
 			tipo:tipo,
 			stato:stato,
 			descrizione:descrizione,
-			/*
-			automatico:automatico,
-			padre:padre.etichetta,
-						
+			automatico:automatico,	
+			padre:(padre?padre.etichetta:"nessuno"),	
 			contestomaster:contestoMaster.etichetta,
-			*/
+
 			funzionalita:funzionalita*.salvataggio(),
 			ricette:ricette*.salvataggio(),
 	
@@ -139,8 +137,8 @@ class HostRemoto extends Oggetto{
 		return ritorno
 	}
 
-	String esegui(String comando,InputStream erroreStream) {
-		return sshService.esegui(collega(),comando,erroreStream)
+	String esegui(String comando) {
+		return sshService.esegui(collega(),comando)
 	}
 
 	TunnelSsh tunnel(String direzione,String hostLocale,Integer portaLocale,String hostTarget,Integer portaTarget) {
@@ -160,7 +158,7 @@ class HostRemoto extends Oggetto{
 
 	String descrivi() {
 		String ritorno = "----------------------------\n"
-		ritorno += esegui('uname -a',null) + "\n"
+		ritorno += esegui('uname -a') + "\n"
 		ritorno += "----------------------------\n"
 		ritorno += "etichetta: "+etichetta+"\n"
 		ritorno += "tipo: "+tipo+"\n"

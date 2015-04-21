@@ -21,7 +21,7 @@ import com.jcraft.jsch.*
 // Class rete
 class Rete {
 	String etichetta = UUID.randomUUID()
-	String descrizione ='Rete gestita da AR4K by Rossonet\n'
+	String descrizione ='Rete gestita da AR4K by Rossonet'
 	String rete = '127.0.0.1/24'
 	List<Oggetto> presenti = []
 	

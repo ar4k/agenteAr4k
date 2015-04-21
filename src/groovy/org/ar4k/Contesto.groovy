@@ -21,7 +21,7 @@ import com.jcraft.jsch.*
 // Classe contesti (per i permessi sui tunnel)
 class Contesto {
 	String etichetta = UUID.randomUUID()
-	String descrizione ='Contesto sistema AR4K by Rossonet\n'
+	String descrizione ='Contesto sistema AR4K by Rossonet'
 	String cliente ='Rossonet'
 	String idContabilita = 'RIC_OpenSource'
 	List<Oggetto> oggetti = []

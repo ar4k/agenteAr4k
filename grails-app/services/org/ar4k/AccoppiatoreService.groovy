@@ -29,15 +29,17 @@ class AccoppiatoreService {
 		if ( configurazione.recupera(archivio)) configurazione.carica(macchine)
 	}
 	
-	Boolean salvaConfigurazione(String archivio) {
+	String salvaConfigurazione(String archivio) {
 		log.info("Salva la configurazione sul nodo Master via SSH")
 		Configurazione configurazione = new Configurazione()
 		log.info("Macchine da salvare: "+macchine*.etichetta)
 		log.info("Contesti da salvare: "+contesti*.etichetta)
+		String risultato
 		if (configurazione.prepara(macchine,contesti)) {
 			log.info("Preparazione completata correttamente")
-			configurazione.target(archivio)
+			risultato=configurazione.target(archivio)
 		}
+		return risultato
 	}
 
 	String configuraPadrone() {
@@ -77,10 +79,11 @@ class AccoppiatoreService {
 		contesto.oggetti.add(padrone)
 		contesto.reti.add(rete)
 		contesto.archiviMemi.add(memoria)
+		padrone.contestoMaster = contesto
 		
 		contesti.add(contesto)
 
-		padrone.tunnel('R','127.0.0.1',6630,null,6622)
+		padrone.tunnel('R','127.0.0.1',6630,null,6630)
 		return padrone.descrivi()
 	}
 

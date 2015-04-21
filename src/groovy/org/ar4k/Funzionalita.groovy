@@ -21,7 +21,7 @@ import com.jcraft.jsch.*
 // Class funzionalità
 class Funzionalita {
 	String etichetta = 'Gestione Master SSH'
-	String descrizione ='Funzionalità sistema AR4K by Rossonet\n'
+	String descrizione ='Funzionalità sistema AR4K by Rossonet'
 	String valoreUnico = UUID.randomUUID()
 	String icona = 'fa-neuter'
 	List<Funzionalita> dipendenze = []
