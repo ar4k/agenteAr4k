@@ -23,9 +23,22 @@ class Contesto {
 	String etichetta = UUID.randomUUID()
 	String descrizione ='Contesto sistema AR4K by Rossonet\n'
 	String cliente ='Rossonet'
-	String idContabilita = 'xx'
+	String idContabilita = 'RIC_OpenSource'
 	List<Oggetto> oggetti = []
 	List<Rete> reti = []
+	List<Memoria> archiviMemi = [] 
 	// Oggetto necessario per un contesto
 	String ambiente = "contesto="+etichetta+"\n"
+	
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			descrizione:descrizione,
+			cliente:cliente,
+			idcontabilita:idContabilita,
+			oggetti:oggetti*.etichetta,
+			reti:reti*.salvataggio(),
+			archivimemi:archiviMemi*.salvataggio()
+			]
+	}
 }

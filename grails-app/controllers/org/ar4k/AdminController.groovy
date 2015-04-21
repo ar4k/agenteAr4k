@@ -6,6 +6,10 @@ import groovy.json.*
 
 class AdminController {
 	AccoppiatoreService accoppiatoreService
+	
+	def salvaConfigurazione(String archivio) {
+		render accoppiatoreService.salvaConfigurazione(archivio)
+	}
 
 	def index() {
 		//[messaggioOlark: "Benvenuto nel template di sviluppo applicativo AR4K!"]
@@ -51,7 +55,7 @@ class AdminController {
 		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/oggetti')
 	}
 	
-	def oggettoCtrl() {
+	def oggettiCtrl() {
 		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/oggettiCtrl')
 	}
 	

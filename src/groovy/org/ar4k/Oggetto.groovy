@@ -26,10 +26,23 @@ abstract class Oggetto {
 	Boolean automatico = false
 	Oggetto padre = null
 	Contesto contestoMaster
-	List<Contesto> contesti = []
 	List<Funzionalita> funzionalita = []
 	List<Meme> ricette = []
 
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			tipo:tipo,
+			stato:stato,
+			descrizione:descrizione,
+			automatico:automatico,
+			padre:padre.etichetta,
+			contestomaster:contestoMaster.etichetta,
+			funzionalita:funzionalita*.salvataggio(),
+			ricette:ricette*.salvataggio()
+			]
+	}
+	
 	String descrivi() {
 		String ritorno = "----------------------------\n"
 		ritorno += "etichetta: "+etichetta+"\n"

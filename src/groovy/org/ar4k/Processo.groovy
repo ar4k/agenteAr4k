@@ -21,16 +21,33 @@ import com.jcraft.jsch.*
 // Class comando
 class Processo {
 	String etichetta = UUID.randomUUID()
-	String descrizione ='Processo AR4K by Rossonet\n'
+	String descrizione ='Processo aggiornamento AR4K by Rossonet\n'
 	Boolean persistente = false
 	DateTime scadenza = null
 	String tipoEsecuzione = 'bash'
 	Oggetto target = null
-	Boolean salvaRisultato = true
-	String comando = 'ls -a'
+	Boolean salvaRisultato = false
+	String comando = 'aggiornaNodo'
 	String codaAggiornamento = etichetta
 	String stato = 'Inizializzato'
 	List<Funzionalita> richieste = []
+
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			descrizione:descrizione,
+			persistente:persistente,
+			scadenza:scadenza,
+			tipoEsecuzione:tipoEsecuzione,
+			target:target.etichetta,
+			salvarisultato:salvaRisultato,
+			comando:comando,
+			codaaggiornamento:codaAggiornamento,
+			stato:stato,
+			richieste:richieste*.etichetta
+		
+			]
+	}
 
 	String esegui() {
 		stato = 'In esecuzione'

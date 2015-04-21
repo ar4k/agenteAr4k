@@ -3,51 +3,50 @@ import grails.util.Environment
 import org.ar4k.secure.*
 
 class BootStrap {
-	
+
 	GrailsApplication grailsApplication
 	def ProcedureService
 	def KettleService
 	def AccoppiatoreService
 
-    def init = { servletContext ->
+	def init = { servletContext ->
 		switch (Environment.current) {
 			case Environment.DEVELOPMENT:
-				println "Sistema in Sviluppo... "
+				log.info("Sistema in Sviluppo... ")
 				ProcedureService.creaDemoUtente()
-				startKettle()
+			//startKettle()
 				tunnelControllo()
 				break;
 			case Environment.PRODUCTION:
-				println "Sistema in produzione... "
+				log.info("Sistema in produzione... ")
 				ProcedureService.creaDemoUtente()
-				startKettle()
+			//startKettle()
 				tunnelControllo()
 				break;
 		}
-		/*
-		println "\nIn BootStrap.groovy:\n***  "
+
+		log.info("\nIn BootStrap.groovy:\n***  ")
 		for (String property: System.getProperty("java.class.path").split(";")) {
-			println property + "\n"
+			log.info(property + "\n")
 		}
-		println "***\n"
-		*/
-    }
-	
+		log.info("***\n")
+	}
+
 	def startKettle = {
-		println "Se esiste un job BootStrap lo eseguo.."
+		log.info("Se esiste un job BootStrap lo eseguo..")
 		kettleService.initKettle()
 		if ( "BootStrap" in kettleService.listJobs()*.getName() ) {
-			println "Eseguo BootStrap"
+			log.info("Eseguo BootStrap")
 			kettleService.jobRun("BootStrap")
 		} else {
-			println "Non esiste il job BootStrap nella directory del repository.."
+			log.warning("Non esiste il job BootStrap nella directory del repository..")
 		}
 	}
-	
+
 	def tunnelControllo = {
-		println AccoppiatoreService.configuraPadrone()
+		log.info(AccoppiatoreService.configuraPadrone())
 	}
-	
-    def destroy = {
-    }
+
+	def destroy = {
+	}
 }

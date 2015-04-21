@@ -21,6 +21,7 @@ import com.jcraft.jsch.*
 // Tunnel SSH
 class TunnelSsh {
 	def sshService = Holders.applicationContext.getBean("sshService")
+	String etichetta = UUID.randomUUID()
 	String direzione = 'L'
 	HostRemoto hostRemoto
 	Integer portaLocale = 22
@@ -30,20 +31,37 @@ class TunnelSsh {
 	String identificatore = ''
 	Integer attiva = 0
 
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			direzione:direzione,
+			etichetta:hostRemoto.etichetta,
+			portalocale:portaLocale,
+			portatarget:portaTarget,
+			hostlocale:hostLocale,
+			hosttarget:hostTarget,
+			identificatore:identificatore,
+			attiva:attiva
+		]
+	}
+	
 	String crea() {
 		if (direzione == 'L') {
-			println "avvio tunnel: L:"+portaLocale+":"+hostTarget+":"+portaTarget
+			log.info("avvio tunnel: L:"+portaLocale+":"+hostTarget+":"+portaTarget)
 			sshService.addLTunnel(hostRemoto.collega(),portaLocale,hostTarget,portaTarget)
 			attiva = 1
 			identificatore = 'L:'+portaLocale+":"+hostTarget+":"+portaTarget
 		} else {
-			println "avvio tunnel: R:"+portaTarget+":"+hostLocale+":"+portaLocale
+			log.info("avvio tunnel: R:"+portaTarget+":"+hostLocale+":"+portaLocale)
 			sshService.addRTunnel(hostRemoto.collega(),portaTarget,hostLocale,portaLocale)
 			attiva = 1
 			identificatore = 'R:'+portaTarget+":"+hostLocale+":"+portaLocale
 		}
-		hostRemoto.tunnel.add(identificatore)
 		return identificatore
+	}
+	
+	String toString(){
+		return "["+hostRemoto.etichetta+"] "+direzione+":"+hostLocale+":"+portaLocale+":"+hostTarget+":"+portaTarget
 	}
 }
 

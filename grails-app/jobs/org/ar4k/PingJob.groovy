@@ -7,7 +7,7 @@ class PingJob {
 	def accoppiatoreService
 	
 	static triggers = {
-		simple name: 'ping', startDelay: 60000, repeatInterval: 60000
+		simple name: 'ping', startDelay: 60000, repeatInterval: 300000
 	}
 
 	def execute() {

@@ -23,5 +23,14 @@ class Rete {
 	String etichetta = UUID.randomUUID()
 	String descrizione ='Rete gestita da AR4K by Rossonet\n'
 	String rete = '127.0.0.1/24'
-	List<Oggetto> accessi = []
+	List<Oggetto> presenti = []
+	
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			descrizione:descrizione,
+			rete:rete,
+			presenti:presenti*.etichetta
+			]
+	}
 }

@@ -138,7 +138,7 @@ class SshService {
 		String risultato = ""
 		Channel channel
 		for(Session sessione in connessioniSSH) {
-			//println "Test: "+sessione.getSessionId().encodeAsMD5() +' == ' + ricerca
+			log.debug("Test: "+sessione.getSessionId().encodeAsMD5() +' == ' + ricerca)
 			if (sessione.getSessionId().encodeAsMD5() == ricerca) {
 				channel=sessione.openChannel("exec")
 				((ChannelExec)channel).setCommand(comando)
@@ -155,7 +155,7 @@ class SshService {
 					}
 					if(channel.isClosed()){
 						if(input.available()>0) continue
-							println(comando+" [stato:"+channel.getExitStatus()+"]")
+							log.info(comando+" [stato:"+channel.getExitStatus()+"]")
 						break
 					}
 					try{Thread.sleep(500);}catch(Exception ee){}
@@ -218,7 +218,7 @@ public class SSHUserInfo implements UserInfo {
 	String passwd
 
 	public void showMessage(String message){
-		println message
+		log.info(message)
 	}
 
 	public String getPassword() {

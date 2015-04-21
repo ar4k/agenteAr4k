@@ -114,7 +114,7 @@ angular
       })
       .state('dashboard.oggetti',{
         url:'/oggetti',
-        controller: 'OggettoCtrl',
+        controller: 'OggettiCtrl',
         templateUrl:'admin/oggetti',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {

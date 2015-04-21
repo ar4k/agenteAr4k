@@ -1,9 +1,9 @@
 package org.ar4k
 
 import static groovyx.gpars.dataflow.Dataflow.task
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.atmosphere.cpr.Broadcaster
 import org.atmosphere.cpr.DefaultBroadcaster
@@ -12,6 +12,7 @@ import grails.converters.JSON
 import grails.transaction.Transactional
 import grails.util.Holders
 
+import java.util.List;
 import java.util.Formatter.DateTime
 
 import com.jcraft.jsch.*
@@ -20,16 +21,71 @@ import com.jcraft.jsch.*
 class AccoppiatoreService {
 	GrailsApplication grailsApplication
 	def macchine = []
+	def contesti = []
+	
+	Boolean caricaConfigurazione(String archivio) {
+		log.info("Carica la configurazione dal nodo Master via SSH")
+		Configurazione configurazione = new Configurazione()
+		if ( configurazione.recupera(archivio)) configurazione.carica(macchine)
+	}
+	
+	Boolean salvaConfigurazione(String archivio) {
+		log.info("Salva la configurazione sul nodo Master via SSH")
+		Configurazione configurazione = new Configurazione()
+		log.info("Macchine da salvare: "+macchine*.etichetta)
+		log.info("Contesti da salvare: "+contesti*.etichetta)
+		if (configurazione.prepara(macchine,contesti)) {
+			log.info("Preparazione completata correttamente")
+			configurazione.target(archivio)
+		}
+	}
 
 	String configuraPadrone() {
+		log.info("Configura il nodo Master")
+		
 		HostRemoto padrone = nuovoSSH('master','Connessione configurata in file di configurazione iniziale (bootstrap)',grailsApplication.config.padrone.utente,grailsApplication.config.padrone.host,grailsApplication.config.padrone.porta,grailsApplication.config.padrone.password)
-		//padrone.tunnel('R','127.0.0.1',2666,'',6666)
-		//padrone.tunnel('R','127.0.0.1',6630,'',6666)
-		//padrone.tunnel('L','',6668,'127.0.0.1',22)
+
+		Funzionalita funzionalita = new Funzionalita()
+		
+		Processo processo = new Processo()
+		processo.richieste.add(funzionalita)
+		processo.target = padrone
+		
+		Schedulazione schedulazione = new Schedulazione()
+		schedulazione.processo=processo
+		
+		Meme meme = new Meme()
+		meme.testPreparazione = processo 
+		meme.installazione = processo
+		meme.monitoraggio = processo
+		meme.rilevaStato = processo
+		meme.sospensione = processo
+		meme.avvio = processo
+		meme.distruzione = processo
+		meme.dump = processo
+		meme.schedulazioni.add(schedulazione)
+		meme.funzionalita.add(funzionalita)
+		meme.processi.add(processo)
+		
+		Memoria memoria = new Memoria()
+		memoria.memi.add(meme)
+
+		Rete rete = new Rete()
+		rete.presenti.add(padrone)
+		
+		Contesto contesto = new Contesto()
+		contesto.oggetti.add(padrone)
+		contesto.reti.add(rete)
+		contesto.archiviMemi.add(memoria)
+		
+		contesti.add(contesto)
+
+		padrone.tunnel('R','127.0.0.1',6630,null,6622)
 		return padrone.descrivi()
 	}
 
 	Oggetto nuovoSSH(String etichetta,String descrizione,String utente,String target,Integer porta,String password) {
+		log.info("Nuovo nodo SSH: "+etichetta)
 		HostRemoto macchina = new HostRemoto()
 		macchina.etichetta = etichetta
 		macchina.descrizione = descrizione
@@ -37,12 +93,18 @@ class AccoppiatoreService {
 		macchina.portaSSH = porta
 		macchina.nomeUtente = utente
 		macchina.password = password
-		macchina.tipo = 'SSHNODE'
+		if ( etichetta == 'master') {
+			macchina.tipo = 'MASTER'
+		} else {
+			macchina.tipo = 'SSH'
+		}
 		macchine.add(macchina)
+		log.info("Aggiunta macchina: "+macchina.etichetta)
 		return macchina
 	}
 
 	Channel sessione(String nome) {
+		log.info("Richiesta sessione: "+nome)
 		Channel connesione = macchine.find{it.etichetta==nome}.sessione(nome)
 		return connesione
 	}
@@ -52,11 +114,13 @@ class AccoppiatoreService {
 	}
 
 	HostRemoto creaHostRemoto() {
+		log.info("Richiesta creaHostRemoto")
 		HostRemoto nuovo = new HostRemoto()
 		macchine.add(nuovo)
 	}
 
 	HostRemoto getHostRemoto(String etichetta) {
+		log.info("Chiamata getHostRemoto"+etichetta)
 		return macchine.find{it.etichetta==etichetta}
 	}
 
@@ -72,10 +136,12 @@ class AccoppiatoreService {
 		Processo processo = new Processo()
 		processo.comando = comando
 		processo.target = macchine.find{it.etichetta==etichetta}
+		log.info(processo.comando +" su "+processo.target.etichetta)
 		return processo.esegui()
 	}
 
 	String remoteWeb(String etichetta,String target,String portaTarget,String query,String componente) {
+		log.info("Chiamata remoteWeb da host: "+etichetta+" verso target: "+target+":"+portaTarget+" (selezionando "+componente+")")
 		HostRemoto lanciatore = macchine.find{it.etichetta==etichetta}
 		return lanciatore.jsoupSshHttp(target,portaTarget,query,componente)
 	}

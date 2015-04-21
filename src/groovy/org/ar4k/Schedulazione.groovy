@@ -23,5 +23,14 @@ class Schedulazione {
 	String etichetta = UUID.randomUUID()
 	String descrizione ='Schedulazione AR4K by Rossonet\n'
 	Processo processo
-	String configurazione
+	String cronConf
+
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			descrizione:descrizione,
+			processo:processo.etichetta,
+			cronconf:cronConf
+		]
+	}
 }

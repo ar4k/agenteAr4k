@@ -1,9 +1,9 @@
 package org.ar4k
 
 import static groovyx.gpars.dataflow.Dataflow.task
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.atmosphere.cpr.Broadcaster
 import org.atmosphere.cpr.DefaultBroadcaster
@@ -28,9 +28,31 @@ class HostRemoto extends Oggetto{
 	String nomeUtente = 'root'
 	String password = ''
 	Integer timeout = 60000
-	List<String> connessioni = []
-	List<String> tunnel = []
+	def connessioni = []
+	def tunnels = []
 	def sessioni = []
+	
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			tipo:tipo,
+			stato:stato,
+			descrizione:descrizione,
+			/*
+			automatico:automatico,
+			padre:padre.etichetta,
+						
+			contestomaster:contestoMaster.etichetta,
+			*/
+			funzionalita:funzionalita*.salvataggio(),
+			ricette:ricette*.salvataggio(),
+	
+			nomeHost:nomeHost,
+			nomeUtente:nomeUtente,
+			password:password,
+			timeout:timeout,
+			tunnel:tunnels*.salvataggio()]
+	}
 
 	String jsoupSshHttp(String target,String porta,String query,String componente) {
 		Channel canale = sshService.stream(collega(),target,porta.toInteger())
@@ -58,7 +80,7 @@ class HostRemoto extends Oggetto{
 			}
 			if(canale.isClosed() || time > timeout || (ultimotime > 0 && ultimotime + 1000 < time )){
 				if(inputHtml.available()>0) continue
-					println("jsoupSshHttp eseguito: "+canale.getExitStatus())
+					log.info("jsoupSshHttp eseguito: "+canale.getExitStatus())
 				break
 			}
 			time += 50
@@ -71,7 +93,7 @@ class HostRemoto extends Oggetto{
 
 	Channel sessione(String etichetta) {
 		Channel canale
-		if (sessioni.find{it.etichetta == etichetta} && ! sessioni.find{it.etichetta == etichetta}.canale.closed) {
+		if (sessioni.find{it.etichetta == etichetta} && ! sessioni.find{it.etichetta == etichetta}.canale.isClosed()) {
 			canale = (sessioni.find{it.etichetta == etichetta}).canale
 		} else {
 			canale = sshService.console(collega())
@@ -92,24 +114,24 @@ class HostRemoto extends Oggetto{
 						Thread.sleep(250);
 					}catch(Exception ee){}
 				}
-				println "sessione "+etichetta+" chiusa"
+				log.info("sessione "+etichetta+" chiusa")
 			}
 		}
 		return canale
 	}
 
-	String collega() {
+	String collega() {	
 		String ritorno
 		List<String> attive = []
 		connessioni.each{
-			if( sshService.getSession(it).isConnected ) {
+			if( sshService.getSession(it).isConnected() ) {
 				attive.add(it)
 			}
 		}
 		connessioni = attive
 		if (connessioni.size() < 1) {
 			ritorno = sshService.addConnession(nomeUtente,nomeHost,portaSSH,password)
-			println "collego "+nomeUtente+"@"+nomeHost+":"+portaSSH+" : "+ritorno
+			log.info("collego "+nomeUtente+"@"+nomeHost+":"+portaSSH+" : "+ritorno)
 			connessioni.add(ritorno)
 		} else {
 			ritorno = connessioni[0]
@@ -121,7 +143,7 @@ class HostRemoto extends Oggetto{
 		return sshService.esegui(collega(),comando,erroreStream)
 	}
 
-	String tunnel(String direzione,String hostLocale,Integer portaLocale,String hostTarget,Integer portaTarget) {
+	TunnelSsh tunnel(String direzione,String hostLocale,Integer portaLocale,String hostTarget,Integer portaTarget) {
 		String ritorno
 		TunnelSsh tunnel = new TunnelSsh()
 		tunnel.hostRemoto = this
@@ -130,21 +152,24 @@ class HostRemoto extends Oggetto{
 		tunnel.portaLocale = portaLocale
 		tunnel.portaTarget = portaTarget
 		tunnel.direzione = direzione
-		return tunnel.crea()
+		tunnel.crea()
+		tunnels.add(tunnel)
+		return tunnel
+		
 	}
 
 	String descrivi() {
 		String ritorno = "----------------------------\n"
 		ritorno += esegui('uname -a',null) + "\n"
 		ritorno += "----------------------------\n"
-		ritorno += "tipo: "+etichetta+"\n"
+		ritorno += "etichetta: "+etichetta+"\n"
 		ritorno += "tipo: "+tipo+"\n"
 		ritorno += "nome host: "+nomeHost+"\n"
 		ritorno += "porta host: "+portaSSH+"\n"
 		ritorno += "utente: "+nomeUtente+"\n"
 		ritorno += "identificativo connessione: "+connessioni[0]+"\n"
 		ritorno += "tunnel:\n"
-		tunnel.each {ritorno += it.toString()+"\n"}
+		tunnels.each {ritorno += it.toString()+"\n"}
 		ritorno += "----------------------------\n"
 		return ritorno
 	}

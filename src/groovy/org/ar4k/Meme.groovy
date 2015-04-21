@@ -21,7 +21,7 @@ import com.jcraft.jsch.*
 // Ricetta
 class Meme {
 	String etichetta = UUID.randomUUID()
-	String descrizione ='Meme AR4K by Rossonet\n'
+	String descrizione ='Meme predefinito AR4K by Rossonet\n'
 	Processo testPreparazione
 	Processo installazione
 	Processo monitoraggio
@@ -31,7 +31,29 @@ class Meme {
 	Processo distruzione
 	Processo dump
 	List<Schedulazione> schedulazioni = []
-	String maschera = ''
+	List<Funzionalita> funzionalita = []
+	List<Processo> processi = []
+	String maschera = '<p>Maschera non presente</p>'
 	String stato = 'inattivo'
+	
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			descrizione:descrizione,
+			maschera:maschera,
+			testPreparazione:testPreparazione.etichetta,
+			installazione:installazione.etichetta,
+			monitoraggio:monitoraggio.etichetta,
+			rilevastato:rilevaStato.etichetta,
+			sospensione:sospensione.etichetta,
+			avvio:avvio.etichetta,
+			distruzione:distruzione.etichetta,
+			dump:dump.etichetta,
+			funzionalita:funzionalita*.salvataggio(),
+			schedulazioni:schedulazioni*.salvataggio(),
+			processi:processi*.salvataggio(),
+			stato:stato
+			]
+	}
 }
 

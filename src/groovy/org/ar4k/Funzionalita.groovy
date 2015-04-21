@@ -20,10 +20,20 @@ import com.jcraft.jsch.*
 
 // Class funzionalità
 class Funzionalita {
-	String etichetta = ''
+	String etichetta = 'Gestione Master SSH'
 	String descrizione ='Funzionalità sistema AR4K by Rossonet\n'
 	String valoreUnico = UUID.randomUUID()
 	String icona = 'fa-neuter'
 	List<Funzionalita> dipendenze = []
+	
+	def salvataggio() {
+		return [
+			etichetta:etichetta,
+			descrizione:descrizione,
+			valoreUnico:valoreUnico,
+			icona:icona,
+			dipendenze:dipendenze*.etichetta
+			]
+	}
 }
 
