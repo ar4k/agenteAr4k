@@ -1,10 +1,8 @@
 #agenteAr4k
 Template applicazione AR4K
-by Rossonet s.c.a r.l.
-
-[http://www.rossonet.org](http://www.rossonet.org)
 
 ![alt text](http://www.rossonet.org/wp-content/uploads/2015/01/logoRossonet4.png "Rossonet")
+[http://www.rossonet.org](http://www.rossonet.org)
 
 Licenza: [LGPL 3.0](https://www.gnu.org/licenses/lgpl.html)
 Per maggiori dettagli sulla licenza rimando a [questa voce](http://it.wikipedia.org/wiki/GNU_Lesser_General_Public_License) di Wikipedia
@@ -59,6 +57,10 @@ Per creare un war installabile su Tomcat >= 7
 > - modello di business cooperativa produzione lavoro e comunità.
 > - localizzazione territoriale ed eventuale partnership con associazioni.
 > - valorizzazione del modello open source nel contesto locale (con particolare attenzione ai vantaggi della scelta open nelle imprese)
+> - compatibilità RedHat
+> - integrazione Acantho
+> - integrazione CloudPlugs
+> - il mondo 3D
 >
 
 ####Storia del progetto
@@ -76,7 +78,8 @@ La classe principale su cui operare è [AccoppiatoreService.groovy](https://gith
 > - schema architettura da foto lavagna
 > - descrizione parte Angular
 > - descrizione parte Service Java
-> - descrizione parte SSH
+> - descrizione parte SSH e tunnel autossh
+> - integrazione noVNC e Term.js
 > - descrizione modello dati e sua gestione tramite ssh
 > - rimando a repository ssh
 >
@@ -89,18 +92,18 @@ La classe principale su cui operare è [AccoppiatoreService.groovy](https://gith
 > - agenteAr4k open source
 > - repository master ssh privato
 > - creazione repository base ssh su GitHub
-> - rendicontazione delle ore/lavoro con riferimento a git in Rossonet
-> - guida operativa su script in bin per la gestione di git
+> - rendicontazione delle ore/lavoro con riferimento a git
+> - guida operativa script in bin per la gestione di git
 >
 
 ###Descrizione ambiente di sviluppo
 
 ####Grails
 
-[Documentazione Grails](https://grails.org/single-page-documentation.html)
-
 Versione Grails 2.4.4
-[Documentazione](https://grails.org/documentation.html)
+
+[Documentazione](http://grails.github.io/grails-doc/2.4.4/)
+
 [IDE](http://spring.io/tools/ggts)
 
 Con ./compila.sh si ottiene un jar eseguibile con java -jar (nome file).jar
@@ -121,11 +124,11 @@ Il servizio di utilità per l'autenticazione è [ProcedureService.groovy](https:
 
 ####Mail Server
 
-La posta in uscita si appoggia a un smtp esterno con eventuale autenticazione. In AgenteAr4k-config.groovy_template maggiori dettagli.
+La posta in uscita si appoggia a un smtp esterno con eventuale autenticazione. In [AgenteAr4k-config.groovy_template](https://github.com/rossonet/agenteAr4k/blob/master/AgenteAr4k-config.groovy_template) maggiori dettagli.
 
 ####Apache Camel
 
-Implementato in Grails con [Apache Camel Plugin](https://grails.org/plugin/routing). Nel file [MasterCamelRoute.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/routes/org/ar4k/MasterCamelRoute.groovy) sono definite nel [linguaggio specifico di Camel](http://camel.apache.org/routes.html) le rotte in esecuzione.
+Implementato in Grails con [Apache Camel Plugin](https://grails.org/plugin/routing). Nel file [MasterCamelRoute.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/routes/org/ar4k/MasterCamelRoute.groovy) sono definite nel [linguaggio specifico di Camel](http://camel.apache.org/routes.html) le rotte istanziate da Grails.
 
 Importando le opportune dipendenze nel file [BuildConfig.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/conf/BuildConfig.groovy) è possibile utilizzare i [vari componenti di Camel](http://camel.apache.org/components.html)
 
@@ -134,35 +137,69 @@ Importando le opportune dipendenze nel file [BuildConfig.groovy](https://github.
 L'applicativo espone un orchestratore Kettle tramite il service [KettleService](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/rossonet/kettle/KettleService.groovy).
 
 >
-> da fare: l'orchestratore Kettle diverrà un interfaccia di lettura dei repository remoti tramite tunnel SSH
+> da fare: 
+> -l'orchestratore Kettle diverrà un interfaccia di lettura dei metadati dai repository remoti tramite tunnel SSH
+> -interfacciandosi con AccoppiatoreService eseguirà, tramite ssh le lavorazioni sui singoli nodi 
 >
 
 
 ####JasperReport
 
-da fare...
+Installato [il plugin Jasper](https://grails.org/plugin/jasper) in Grails. 
 
 ####SSH Tunnel, Esecuzione e Stream
 
 Il sistema agisce sui nodi attraverso il protocollo [SSH](http://it.wikipedia.org/wiki/Secure_shell), più nello specifico utilizzando la libreria Java [Jsch](http://www.jcraft.com/jsch/).
 
-Nel file []() 
+Il file [SshService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/SshService.groovy) sono implementati i servizi base di connessione SSH utilizzati dagli oggetti della piattaforma.
 
 ####WebSocket
 
+Integrato in Grails [atmosphere-meteor plugin](https://grails.org/plugin/atmosphere-meteor).
+
+Il file di configurazione principale per i websocket è [DefaultMeteorHandler.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/atmosphere/org/ar4k/DefaultMeteorHandler.groovy).
+
 ####Quartz (Schedulatore)
+
+Integrato in Grails il plugin [quartz](https://grails.org/plugin/quartz).
+
+Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [PingJob.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/jobs/org/ar4k/PingJob.groovy)
+
+####JCloud
+
+>
+> Da completare
+>
+
+####JSoup
+
+>
+> Da completare
+>
 
 ####Configurazione Oggetti e relazione con repository di progetto
 
-da fare...
-
-note:
+>
+> da fare. Javadoc?
+>
 
 ####FrontEnd Web in Angular.js
 
+>
+> In attesa di repository aggiuntivo con base sviluppo
+>
+
 ###Versioni
 
+>
+> In attesa di primo rilascio
+>
+
 ###Casi d'uso
+
+>
+> Da discutere in Rossonet e con clienti
+>
 
 
 ## TODO A FINE MAGGIO 2015
@@ -171,7 +208,7 @@ note:
 2. Creare file .spec per RPM integrando gli script base ( +tmux );
 3. File kickstart per installazione su CentOS 6.x CentOS 7.x Fedora 21 RHEL7;
 4. Validare il repository su OpenShift Origin e RH OpenShift Online;
-6. Import repository Kettle automaticamente da web in funzione dell'ID applicazione;
+6. Import repository remoti automaticamente da web in funzione dell'identificativo;
 7. Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
 9. Integrare [noVNC](https://github.com/kanaka/noVNC);
 10. Integrare [tty.js](https://github.com/chjj/tty.js) o [GateOne](https://github.com/liftoff/GateOne);
