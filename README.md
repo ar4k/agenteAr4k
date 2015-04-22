@@ -47,6 +47,11 @@ Per eseguirlo in ambiente di sviluppo (Ctrl-C per interrompere l'esecuzione):
 ./grailsw run-app
 ```
 
+Per eseguire i test:
+```bash
+./grailsw test-app
+```
+
 Per creare un war installabile su Tomcat >= 7
 ```bash
 ./grailsw war

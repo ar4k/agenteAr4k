@@ -3,18 +3,21 @@ package org.ar4k
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
+
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(AccoppiatoreService)
 class AccoppiatoreServiceSpec extends Specification {
 
-    def setup() {
-    }
+	def setup() {
+	}
 
-    def cleanup() {
-    }
+	def cleanup() {
+	}
 
-    void "test something"() {
-    }
+	void "Piattaforma di testing"() {
+		expect:
+		1 == 1
+	}
 }

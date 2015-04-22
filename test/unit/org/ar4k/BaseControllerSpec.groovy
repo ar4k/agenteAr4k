@@ -9,12 +9,14 @@ import spock.lang.Specification
 @TestFor(BaseController)
 class BaseControllerSpec extends Specification {
 
-    def setup() {
-    }
+	def setup() {
+	}
 
-    def cleanup() {
-    }
+	def cleanup() {
+	}
 
-    void "test something"() {
-    }
+	void "Piattaforma di testing"() {
+		expect:
+		1 == 1
+	}
 }

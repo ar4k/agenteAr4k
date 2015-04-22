@@ -9,12 +9,14 @@ import spock.lang.Specification
 @TestFor(SshService)
 class SshServiceSpec extends Specification {
 
-    def setup() {
-    }
+	def setup() {
+	}
 
-    def cleanup() {
-    }
+	def cleanup() {
+	}
 
-    void "test something"() {
-    }
+	void "Piattaforma di testing"() {
+		expect:
+		1 == 1
+	}
 }
