@@ -2,6 +2,7 @@
 Template applicazione AR4K
 
 ![alt text](http://www.rossonet.org/wp-content/uploads/2015/01/logoRossonet4.png "Rossonet")
+
 [http://www.rossonet.org](http://www.rossonet.org)
 
 Licenza: [LGPL 3.0](https://www.gnu.org/licenses/lgpl.html)
@@ -183,6 +184,14 @@ Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [Pi
 > da fare. Javadoc?
 >
 
+####Gestione DNS
+
+>
+> completamente da implementare 
+> integrazione OpenShift
+> integrazione provider esterni?
+>
+
 ####FrontEnd Web in Angular.js
 
 >
@@ -202,27 +211,113 @@ Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [Pi
 >
 
 
-## TODO A FINE MAGGIO 2015
+## TODO
 
-1. Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
-2. Creare file .spec per RPM integrando gli script base ( +tmux );
-3. File kickstart per installazione su CentOS 6.x CentOS 7.x Fedora 21 RHEL7;
-4. Validare il repository su OpenShift Origin e RH OpenShift Online;
-6. Import repository remoti automaticamente da web in funzione dell'identificativo;
-7. Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
-9. Integrare [noVNC](https://github.com/kanaka/noVNC);
-10. Integrare [tty.js](https://github.com/chjj/tty.js) o [GateOne](https://github.com/liftoff/GateOne);
-11. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org).
+###A FINE MAGGIO 2015
 
-## Prodotti open source utilizzati
+1. Completare integrazione Kettle
+2. Porting ambienti produzione Rossonet
+3. Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
+4. Import repository remoti automaticamente da web in funzione dell'identificativo;
+5. Integrare [noVNC](https://github.com/kanaka/noVNC);
+6. Integrare [tty.js](https://github.com/chjj/tty.js) o [GateOne](https://github.com/liftoff/GateOne);
+
+###SENZA SCADENZA
+
+1. File kickstart per installazione su CentOS 6.x CentOS 7.x Fedora 21 RHEL7;
+2. Validare il repository su OpenShift Origin e RH OpenShift Online;
+3. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org);
+4. Integrarare Activiti in AccoppiatoreService;
+5. Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
+6. Semplificazione boot di progetto;
+7. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org);
+
+## Prodotti open source integrati/integrabili nel sistema
+
+###Linux
+
+> Articoli Torvalds
+
+###Networking
+
+
+###Integrazione Microsof™
+
+> da definire con un amico inglese
+
+###Git
+
 
 ###Java
+
+
+###Groovy
+
+
+###CentOS
+
+
+###RedHat EL
+
+
+###OpenShift Origin
+
+
+###Openshift
+
+
 ###Spring
+
+
 ###Grails
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=XrDXqoomws4
 " target="_blank"><img src="http://img.youtube.com/vi/XrDXqoomws4/0.jpg" 
 alt="Rossonet" width="640" height="360" border="10" /></a>
 
-###Ssh
+
+###SSH
+
+
 ###Pentaho Data Integration (aka Kettle)
+
+
+###AngularJS
+
+
+###Twitter BootStrap
+
+
+###OpenLayers
+
+
+###D3.js
+
+
+###JasperReport
+
+
+###Bash e Chef
+
+
+###JSoup
+
+
+###JCloud
+
+
+###Integrazione VOIP
+
+> da definire
+
+###ImageMagic
+
+> da definire
+
+###Gestione QR
+
+> da definire
+
+###Proxy Apache
+
+> da definire
