@@ -12,6 +12,10 @@ Per maggiori dettagli sulla licenza rimando a [questa voce](http://it.wikipedia.
 
 ###Guida rapida per il deploy
 
+La [spin Rossonet](http://www.rossonet.org/archives/94) di [Fedora 21](http://it.wikipedia.org/wiki/Fedora_%28informatica%29) è predisposta per contenere tutti gli strumenti utili per lo sviluppo sulla piattaforma Ar4k.
+
+####Procedure ambiente di sviluppo agenteAr4k
+
 Per scaricare l'intero sistema:
 ```bash
 git clone https://github.com/rossonet/agentear4k.git
@@ -47,6 +51,11 @@ Per creare un war installabile su Tomcat >= 7
 ```bash
 ./grailsw war
 ```
+
+####Installazione automatica su sistema operativo esistente
+>
+> Da fare: script di installazione automatica su [RCloud](http://www.rossonet.org/archives/43)/CentOS e RedHat EL
+>
 
 ##Autenticazione demo: admin/rossonet2012
 
@@ -220,7 +229,7 @@ Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [Pi
 3. Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
 4. Import repository remoti automaticamente da web in funzione dell'identificativo;
 5. Integrare [noVNC](https://github.com/kanaka/noVNC);
-6. Integrare [tty.js](https://github.com/chjj/tty.js) o [GateOne](https://github.com/liftoff/GateOne);
+6. Integrare [tty.js](https://github.com/chjj/tty.js);
 
 ###SENZA SCADENZA
 
@@ -229,8 +238,7 @@ Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [Pi
 3. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org);
 4. Integrarare Activiti in AccoppiatoreService;
 5. Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
-6. Semplificazione boot di progetto;
-7. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org);
+6. Semplificazione inizio progetto con agenteAr4k (wizard bootstrap agenteAr4k);
 
 ## Prodotti open source integrati/integrabili nel sistema
 
