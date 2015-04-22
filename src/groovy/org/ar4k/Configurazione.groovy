@@ -13,6 +13,7 @@ import grails.converters.JSON
 import grails.transaction.Transactional
 import grails.util.Holders
 import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
 
 import java.util.Formatter.DateTime
 
@@ -30,6 +31,7 @@ class Configurazione {
 	def contesti
 	Date dataCreazione = new Date()
 	Date ultimaModifica = new Date()
+	
 
 
 	Boolean prepara(def macchine,def cont) {
@@ -43,13 +45,11 @@ class Configurazione {
 		if (!archivio) archivio = 'base'
 		log.info("Salva la configurazione su "+archivio)
 		log.debug("Lista oggetto: "+oggetti)
-		log.debug("Lista contesti: "+oggetti)
+		log.debug("Lista contesti: "+contesti)
 		String stringaBlocco = 'EOF_'+UUID.randomUUID()
-		String risultato = 'salvaConfigurazione << '+stringaBlocco+'\n'
-		risultato += [
-			nodi:new JsonBuilder(oggetti*.salvataggio()).toPrettyString(),
-			contesti:new JsonBuilder(contesti*.salvataggio()).toPrettyString()
-		]
+		def dati = [nodi:oggetti*.salvataggio(),contesti:contesti*.salvataggio()]
+		String risultato = 'salvaConfigurazione '+archivio+'<< '+stringaBlocco+'\n'
+		risultato += new JsonBuilder(dati).toPrettyString()
 		risultato += '\n'+stringaBlocco+'\n'
 		OutputStream errore = new PipedOutputStream()
 		log.debug(risultato)
@@ -58,6 +58,26 @@ class Configurazione {
 		processo.target = oggetti.find{it.etichetta == 'master'}
 		return processo.esegui()
 	}
-
+	
+	Boolean recupera(String archivio,HostRemoto target) {
+		if (!archivio) archivio = 'base'
+		String comando = 'caricaConfigurazione'+archivio
+		Processo processo = new Processo()
+		processo.comando = comando
+		processo.target = target
+		String risultato = processo.esegui()
+		def jsonSlurper = new JsonSlurper()
+		def configurazione = jsonSlurper.parseText(risultato)
+		oggetti=configurazione.nodi
+		contesti=configurazione.contesti
+		//println oggetti*.etichetta
+		return true
+	}
+	
+	Boolean carica(def macchine,def cont) {
+		macchine = oggetti
+		cont = contesti
+		return true
+	}
 
 }

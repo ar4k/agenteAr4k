@@ -22,13 +22,20 @@ class AccoppiatoreService {
 	GrailsApplication grailsApplication
 	def macchine = []
 	def contesti = []
-	
+
 	Boolean caricaConfigurazione(String archivio) {
 		log.info("Carica la configurazione dal nodo Master via SSH")
-		Configurazione configurazione = new Configurazione()
-		if ( configurazione.recupera(archivio)) configurazione.carica(macchine)
+		Boolean risultato = false
+		Configurazione configurazione = new Configurazione()		
+		if ( configurazione.recupera(archivio,macchine.find{it.etichetta=='master'})) {
+			if (configurazione.carica(macchine,contesti)) {
+				risultato = true
+			}
+		}
+		log.info([nodi:macchine*.etichetta,contesti:contesti*.etichetta])
+		return risultato
 	}
-	
+
 	String salvaConfigurazione(String archivio) {
 		log.info("Salva la configurazione sul nodo Master via SSH")
 		Configurazione configurazione = new Configurazione()
@@ -44,47 +51,53 @@ class AccoppiatoreService {
 
 	String configuraPadrone() {
 		log.info("Configura il nodo Master")
-		
-		HostRemoto padrone = nuovoSSH('master','Connessione configurata in file di configurazione iniziale (bootstrap)',grailsApplication.config.padrone.utente,grailsApplication.config.padrone.host,grailsApplication.config.padrone.porta,grailsApplication.config.padrone.password)
 
-		Funzionalita funzionalita = new Funzionalita()
-		
-		Processo processo = new Processo()
-		processo.richieste.add(funzionalita)
-		processo.target = padrone
-		
-		Schedulazione schedulazione = new Schedulazione()
-		schedulazione.processo=processo
-		
-		Meme meme = new Meme()
-		meme.testPreparazione = processo 
-		meme.installazione = processo
-		meme.monitoraggio = processo
-		meme.rilevaStato = processo
-		meme.sospensione = processo
-		meme.avvio = processo
-		meme.distruzione = processo
-		meme.dump = processo
-		meme.schedulazioni.add(schedulazione)
-		meme.funzionalita.add(funzionalita)
-		meme.processi.add(processo)
-		
-		Memoria memoria = new Memoria()
-		memoria.memi.add(meme)
+		if (!macchine.find{it.etichetta == 'master'}) {
 
-		Rete rete = new Rete()
-		rete.presenti.add(padrone)
-		
-		Contesto contesto = new Contesto()
-		contesto.oggetti.add(padrone)
-		contesto.reti.add(rete)
-		contesto.archiviMemi.add(memoria)
-		padrone.contestoMaster = contesto
-		
-		contesti.add(contesto)
+			HostRemoto padrone = nuovoSSH('master','Connessione configurata in file di configurazione iniziale (bootstrap)',grailsApplication.config.padrone.utente,grailsApplication.config.padrone.host,grailsApplication.config.padrone.porta,grailsApplication.config.padrone.password)
 
-		padrone.tunnel('R','127.0.0.1',6630,null,6630)
-		return padrone.descrivi()
+			Funzionalita funzionalita = new Funzionalita()
+
+			Processo processo = new Processo()
+			processo.richieste.add(funzionalita)
+			processo.target = padrone
+
+			Schedulazione schedulazione = new Schedulazione()
+			schedulazione.processo=processo
+
+			Meme meme = new Meme()
+			meme.testPreparazione = processo
+			meme.installazione = processo
+			meme.monitoraggio = processo
+			meme.rilevaStato = processo
+			meme.sospensione = processo
+			meme.avvio = processo
+			meme.distruzione = processo
+			meme.dump = processo
+			meme.schedulazioni.add(schedulazione)
+			meme.funzionalita.add(funzionalita)
+			meme.processi.add(processo)
+
+			Memoria memoria = new Memoria()
+			memoria.memi.add(meme)
+
+			Rete rete = new Rete()
+			rete.presenti.add(padrone)
+
+			Contesto contesto = new Contesto()
+			contesto.oggetti.add(padrone)
+			contesto.reti.add(rete)
+			contesto.archiviMemi.add(memoria)
+			padrone.contestoMaster = contesto
+
+			contesti.add(contesto)
+
+			padrone.funzionalita.add(funzionalita)
+			padrone.ricette.add(meme)
+
+			padrone.tunnel('R','127.0.0.1',6630,null,6630)
+		}
+		return macchine.find{it.etichetta == 'master'}.descrivi()
 	}
 
 	Oggetto nuovoSSH(String etichetta,String descrizione,String utente,String target,Integer porta,String password) {
@@ -129,6 +142,10 @@ class AccoppiatoreService {
 
 	List<Oggetto> listaOggetti() {
 		return macchine
+	}
+
+	List<Contesto> listaContesti() {
+		return contesti
 	}
 
 	Oggetto getOggetto(String etichetta) {

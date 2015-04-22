@@ -3,6 +3,7 @@ Template applicazione AR4K
 by Rossonet s.c.a r.l.
 [http://www.rossonet.org](http://www.rossonet.org)
 ![alt text](http://www.rossonet.org/wp-content/uploads/2015/01/logoRossonet4.png "Rossonet")
+Licenza: [https://www.gnu.org/licenses/lgpl.html](LGPL 3.0)
 
 ### Ambiente di sviluppo preconfigurato
 
@@ -66,7 +67,7 @@ La posta in uscita si appoggia a un smtp esterno con eventuale autenticazione. I
 
 ####Camel
 
-da fare...
+Con il plugin grailsroute
 
 ####Kettle
 

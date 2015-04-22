@@ -10,6 +10,10 @@ class AdminController {
 	def salvaConfigurazione(String archivio) {
 		render accoppiatoreService.salvaConfigurazione(archivio)
 	}
+	
+	def caricaConfigurazione(String archivio) {
+		render accoppiatoreService.caricaConfigurazione(archivio)
+	}
 
 	def index() {
 		//[messaggioOlark: "Benvenuto nel template di sviluppo applicativo AR4K!"]
@@ -32,15 +36,15 @@ class AdminController {
 		render (ritorno as JSON)
 	}
 	
-	def salvassh (){
+	def creaSshHost (){
 		Oggetto stato 
 		def jsonObject = request.JSON
 		stato = accoppiatoreService.nuovoSSH(jsonObject.etichetta,jsonObject.descrizione,jsonObject.utente,jsonObject.target,jsonObject.porta.toInteger(),jsonObject.password)
 		render (stato as JSON)
 	}
 
-	def terminale() {
-		render(template: "terminale", model:[mappa: 'master',comandoAvvio:'sleep 3 ; clear'] )
+	def terminale(String host) {
+		render(template: "terminale", model:[mappa: host?:'master',comandoAvvio:'sleep 3 ; clear'] )
 	}
 	
 	def eseguiProcesso(String host,String comando) {
