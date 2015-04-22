@@ -1,9 +1,13 @@
 package org.ar4k
 import javax.swing.text.html.HTML
-
 import grails.converters.JSON
 import groovy.json.*
 
+/**
+ * @author      Andrea Ambrosini -Rossonet-
+ * @version     0.1
+ * @since       2015-04-01
+ */
 class AdminController {
 	AccoppiatoreService accoppiatoreService
 	
