@@ -83,6 +83,15 @@ Per creare un war installabile su Tomcat >= 7
 
 La classe principale su cui operare è [AccoppiatoreService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/AccoppiatoreService.groovy). Il file è ampiamente commentato.
 
+> 
+> - Target del progetto
+> - Infrastuttura per lo sviluppo in cloud
+> - Curva di apprendimento
+> - Ambiente di sviluppo AngularJS
+> - Ambiente user space Linux
+> - Servizi SSH
+>
+
 >
 > Da fare: 
 > - schema architettura da foto lavagna
@@ -161,7 +170,7 @@ Installato [il plugin Jasper](https://grails.org/plugin/jasper) in Grails.
 
 Il sistema agisce sui nodi attraverso il protocollo [SSH](http://it.wikipedia.org/wiki/Secure_shell), più nello specifico utilizzando la libreria Java [Jsch](http://www.jcraft.com/jsch/).
 
-Il file [SshService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/SshService.groovy) sono implementati i servizi base di connessione SSH utilizzati dagli oggetti della piattaforma.
+Nel file [SshService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/SshService.groovy) sono implementati i servizi base di connessione SSH utilizzati dagli oggetti della piattaforma.
 
 ####WebSocket
 
@@ -196,9 +205,9 @@ Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [Pi
 ####Gestione DNS
 
 >
-> completamente da implementare 
-> integrazione OpenShift
-> integrazione provider esterni?
+> completamente da implementare...
+> - integrazione OpenShift
+> - integrazione provider esterni?
 >
 
 ####FrontEnd Web in Angular.js
