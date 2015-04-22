@@ -148,8 +148,8 @@ L'applicativo espone un orchestratore Kettle tramite il service [KettleService](
 
 >
 > da fare: 
-> -l'orchestratore Kettle diverrà un interfaccia di lettura dei metadati dai repository remoti tramite tunnel SSH
-> -interfacciandosi con AccoppiatoreService eseguirà, tramite ssh le lavorazioni sui singoli nodi 
+> - l'orchestratore Kettle diverrà un interfaccia di lettura dei metadati dai repository remoti tramite tunnel SSH
+> - interfacciandosi con AccoppiatoreService eseguirà, tramite ssh le lavorazioni sui singoli nodi 
 >
 
 
