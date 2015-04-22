@@ -88,6 +88,8 @@ Per creare un war installabile su Tomcat >= 7
 
 La classe principale su cui operare è [AccoppiatoreService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/AccoppiatoreService.groovy). Il file è ampiamente commentato.
 
+[**Documentazione completa delle classi e metodi**](http://rossonet.github.io/agenteAr4k/web-app/docs/gapi/index.html)
+
 > 
 > - Target del progetto
 > - Infrastuttura per lo sviluppo in cloud
