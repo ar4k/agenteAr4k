@@ -7,13 +7,22 @@ Il file va sistemato in ~/.rossonet/AgenteAr4k-config.groovy o <home utente>\.ro
 
 */
 
+// Configurazione eventuale integrazione LDAP per l'autenticazione
 grails.plugin.springsecurity.ldap.context.managerDn = 'uid=oauth,cn=users,cn=accounts,dc=XXXXX,dc=net'
 grails.plugin.springsecurity.ldap.context.managerPassword = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+// Configurazioni nodo SSH master
 padrone.utente='utente'
 padrone.host='localhost'
 padrone.porta=22
 padrone.password='xxxxxxxxxxx'
-olark.key='1445-xxx-xx-xxxx'
+
+// Chat Olark
+//olark.key='1445-xxx-xx-xxxx'
+
+// Account App Facebook per il recupero dei dati dalle utenze collegate in OAuth
+// con opportune configurazione l'applicativo è completamente integrabile con Facebook tramite
+// queste API
 grails.plugin.facebooksdk.app.id = xxxxxxxxxxx
 grails.plugin.facebooksdk.app.secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
@@ -63,8 +72,3 @@ grails {
 //                         "mail.smtp.socketFactory.fallback":"false"]
         }
 }
-
-plugin.crash.config = [
-	'crash.ssh.port': 2666,
-	'crash.auth.simple.password': 'secretPassword'
-	]
