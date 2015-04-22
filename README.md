@@ -1,4 +1,4 @@
-# agenteAr4k
+#agenteAr4k
 Template applicazione AR4K
 by Rossonet s.c.a r.l.
 
@@ -11,7 +11,7 @@ Per maggiori dettagli sulla licenza rimando a [questa voce](http://it.wikipedia.
 
 ![alt text](https://www.gnu.org/graphics/gplv3-88x31.png "LGPL Logo")
 
-### Guida rapida per il deploy
+###Guida rapida per il deploy
 
 Per scaricare l'intero sistema:
 ```bash
@@ -49,15 +49,55 @@ Per creare un war installabile su Tomcat >= 7
 ./grailsw war
 ```
 
-## Autenticazione demo: admin/rossonet2012
+##Autenticazione demo: admin/rossonet2012
 
-### Perchè questo progetto? Un po' di storia.
+###Perchè questo progetto?
 
-### Note sull'adozione di git come repository
+>
+> Da fare:
+> - scelte progettuali e sponsorship.
+> - modello di business cooperativa produzione lavoro e comunità.
+> - localizzazione territoriale ed eventuale partnership con associazioni.
+> - valorizzazione del modello open source nel contesto locale (con particolare attenzione ai vantaggi della scelta open nelle imprese)
+>
 
-### Descrizione ambiente di sviluppo
+####Storia del progetto
+
+>
+> Da fare: verificare chi vuole essere citato.
+>
+
+####L'architettura software (la nostra proposta)
+
+La classe principale su cui operare è [AccoppiatoreService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/AccoppiatoreService.groovy). Il file è ampiamente commentato.
+
+>
+> Da fare: 
+> - schema architettura da foto lavagna
+> - descrizione parte Angular
+> - descrizione parte Service Java
+> - descrizione parte SSH
+> - descrizione modello dati e sua gestione tramite ssh
+> - rimando a repository ssh
+>
+
+###Note sull'adozione di git come repository
+
+>
+> Da fare:
+> - separazione dell'infrastruttura e del codice progetto in due repository distinti
+> - agenteAr4k open source
+> - repository master ssh privato
+> - creazione repository base ssh su GitHub
+> - rendicontazione delle ore/lavoro con riferimento a git in Rossonet
+> - guida operativa su script in bin per la gestione di git
+>
+
+###Descrizione ambiente di sviluppo
 
 ####Grails
+
+[Documentazione Grails](https://grails.org/single-page-documentation.html)
 
 Versione Grails 2.4.4
 [Documentazione](https://grails.org/documentation.html)
@@ -85,11 +125,18 @@ La posta in uscita si appoggia a un smtp esterno con eventuale autenticazione. I
 
 ####Apache Camel
 
-Implementato in Grails con [Apache Camel Plugin](https://grails.org/plugin/routing). Nel file [MasterCamelRoute.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/routes/org/ar4k/MasterCamelRoute.groovy)
+Implementato in Grails con [Apache Camel Plugin](https://grails.org/plugin/routing). Nel file [MasterCamelRoute.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/routes/org/ar4k/MasterCamelRoute.groovy) sono definite nel [linguaggio specifico di Camel](http://camel.apache.org/routes.html) le rotte in esecuzione.
+
+Importando le opportune dipendenze nel file [BuildConfig.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/conf/BuildConfig.groovy) è possibile utilizzare i [vari componenti di Camel](http://camel.apache.org/components.html)
 
 ####Kettle
 
 L'applicativo espone un orchestratore Kettle tramite il service [KettleService](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/rossonet/kettle/KettleService.groovy).
+
+>
+> da fare: l'orchestratore Kettle diverrà un interfaccia di lettura dei repository remoti tramite tunnel SSH
+>
+
 
 ####JasperReport
 
@@ -113,12 +160,12 @@ note:
 
 ####FrontEnd Web in Angular.js
 
-### Versioni
+###Versioni
 
-### Casi d'uso
+###Casi d'uso
 
 
-## TODO
+## TODO A FINE MAGGIO 2015
 
 1. Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
 2. Creare file .spec per RPM integrando gli script base ( +tmux );
@@ -130,13 +177,15 @@ note:
 10. Integrare [tty.js](https://github.com/chjj/tty.js) o [GateOne](https://github.com/liftoff/GateOne);
 11. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org).
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=r47CTqU6F4g
-" target="_blank"><img src="http://img.youtube.com/vi/r47CTqU6F4g/0.jpg" 
+## Prodotti open source utilizzati
+
+###Java
+###Spring
+###Grails
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=XrDXqoomws4
+" target="_blank"><img src="http://img.youtube.com/vi/XrDXqoomws4/0.jpg" 
 alt="Rossonet" width="640" height="360" border="10" /></a>
 
-## Riferimenti bibbliografici e documentali
-
-Spring
-Grails
-Ssh
-Pentaho Data Integration (aka Kettle)
+###Ssh
+###Pentaho Data Integration (aka Kettle)
