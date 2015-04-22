@@ -8,6 +8,7 @@ grails.project.plugins.dir = 'target/plugins'
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}-${appVersion}.war"
+grails.project.docs.output.dir = 'web-app/docs'
 
 grails.server.port.http = 6630
 

@@ -1,0 +1,7 @@
+DefaultPackage
+grails.plugin.springsecurity.acl
+grails.plugin.standalone
+org.ar4k
+org.ar4k.secure
+org.rossonet.kettle
+spring
