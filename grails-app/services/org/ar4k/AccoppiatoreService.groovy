@@ -19,20 +19,8 @@ import com.jcraft.jsch.*
 
 @Transactional
 
-/**
- * Orchestratore attività
- *
- * Il Service rende disponibili tutte le chiamate
- *
- *
- *
- * @author      Andrea Ambrosini -Rossonet-
- * @version     0.1
- * @since       2015-04-01
- */
 class AccoppiatoreService {
-	
-	/** Contesto applicativo GRails */	
+	/** Contesto applicativo Grails */	
 	GrailsApplication grailsApplication
 	/** Host gestiti in memoria */
 	def macchine = []
@@ -44,9 +32,12 @@ class AccoppiatoreService {
 	 * 
 	 * Imposta gli host e i contesti in funzione della configurazione recuperata
 	 * 
+ 	 * @author      Andrea Ambrosini -Rossonet-
+  	 * @version     0.1
+ 	 * @since       2015-04-01
 	 * @see org.ar4k.Configurazione
 	 * @param archivio 	archivio
-	 * @return 			risultato operazione
+	 * @return 		risultato operazione
 	 */
 	Boolean caricaConfigurazione(String archivio) {
 		log.info("Carica la configurazione dal nodo Master via SSH")
