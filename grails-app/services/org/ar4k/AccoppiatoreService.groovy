@@ -25,6 +25,7 @@ import com.jcraft.jsch.*
  * @since       2015-04-01
  */
 class AccoppiatoreService {
+	
 	GrailsApplication grailsApplication
 	/** Host gestiti in memoria */
 	def macchine = []
