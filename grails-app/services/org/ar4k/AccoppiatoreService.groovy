@@ -20,6 +20,12 @@ import com.jcraft.jsch.*
 @Transactional
 
 /**
+ * Orchestratore attività
+ *
+ * Il Service rende disponibili tutte le chiamate
+ *
+ *
+ *
  * @author      Andrea Ambrosini -Rossonet-
  * @version     0.1
  * @since       2015-04-01
