@@ -40,9 +40,7 @@ class AccoppiatoreService {
 
 	/**
 	 * Carica la configurazione da via ssh dal nodo master.
-	 * <p>
-	 * Carica la configurazione dal nodo master
-	 * </p>
+	 * 
 	 * Imposta gli host e i contesti in funzione della configurazione recuperata
 	 * 
 	 * @see org.ar4k.Configurazione
