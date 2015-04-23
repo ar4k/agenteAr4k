@@ -18,11 +18,25 @@ import java.util.Formatter.DateTime
 import com.jcraft.jsch.*
 
 @Transactional
+
+/**
+ * @author      Andrea Ambrosini -Rossonet-
+ * @version     0.1
+ * @since       2015-04-01
+ */
 class AccoppiatoreService {
 	GrailsApplication grailsApplication
+	/** Host gestiti in memoria */
 	def macchine = []
+	/** Contesti operativi gestiti in memoria */
 	def contesti = []
 
+	/**
+	 * Carica la configurazione da via ssh dal nodo master.
+	 *
+	 * @param String denominazione archivio
+	 * @return Boolean risultato operazione
+	 */
 	Boolean caricaConfigurazione(String archivio) {
 		log.info("Carica la configurazione dal nodo Master via SSH")
 		Boolean risultato = false
