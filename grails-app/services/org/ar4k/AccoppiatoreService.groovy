@@ -33,14 +33,19 @@ class AccoppiatoreService {
 
 	/**
 	 * Carica la configurazione da via ssh dal nodo master.
-	 *
-	 * @param String denominazione archivio
-	 * @return Boolean risultato operazione
+	 * <p>
+	 * Carica la configurazione dal nodo master
+	 * </p>
+	 * Imposta gli host e i contesti in funzione della configurazione recuperata
+	 * 
+	 * @see org.ar4k.Configurazione
+	 * @param archivio 	archivio
+	 * @return 			risultato operazione
 	 */
 	Boolean caricaConfigurazione(String archivio) {
 		log.info("Carica la configurazione dal nodo Master via SSH")
 		Boolean risultato = false
-		Configurazione configurazione = new Configurazione()		
+		Configurazione configurazione = new Configurazione()
 		if ( configurazione.recupera(archivio,macchine.find{it.etichetta=='master'})) {
 			if (configurazione.carica(macchine,contesti)) {
 				risultato = true
