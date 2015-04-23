@@ -32,6 +32,7 @@ import com.jcraft.jsch.*
  */
 class AccoppiatoreService {
 	
+	/** Contesto applicativo GRails */	
 	GrailsApplication grailsApplication
 	/** Host gestiti in memoria */
 	def macchine = []
