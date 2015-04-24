@@ -1,13 +1,25 @@
+/**
+ * Controller interfaccia web Grails
+ * 
+ * <p>
+ * Il controller offre l'infrastruttura base web
+ * e l'intero set di API Ar4k all'interfaccia AngularJs
+ * </p>
+ * 
+ * In generale questo è il controller utilizzato dall'amministratore
+ * dell'applicativo, espone tutte le funzionalità, per eventuali affinamenti
+ * della sicurezza si può utilizzare le ACL su questo controller o utilizzarlo 
+ * come template per la costruzione di un'interfaccia utente specifica.
+ * 
+ * @author      Andrea Ambrosini -Rossonet-
+ * @version     0.1
+ * @since       2015-04-01
+ */
 package org.ar4k
 import javax.swing.text.html.HTML
 import grails.converters.JSON
 import groovy.json.*
 
-/**
- * @author      Andrea Ambrosini -Rossonet-
- * @version     0.1
- * @since       2015-04-01
- */
 class AdminController {
 	AccoppiatoreService accoppiatoreService
 	
