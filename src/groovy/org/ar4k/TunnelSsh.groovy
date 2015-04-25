@@ -1,3 +1,8 @@
+/**
+ * @deprecated vecchia implementazione
+ */
+
+
 package org.ar4k
 
 import static groovyx.gpars.dataflow.Dataflow.task
