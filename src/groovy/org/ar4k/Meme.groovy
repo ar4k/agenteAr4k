@@ -3,8 +3,8 @@
  * 
  * Meme contiene una ricetta eseguibile su nodi gestiti da Ar4k.
  * 
- * La parola <a href="http://it.wikipedia.org/wiki/Meme">Meme (simile a "seme")</a> si riferisce al concetto espresso
- * per la prima volta nel 1976 dall'evoluzionista <a href="http://it.wikipedia.org/wiki/Richard_Dawkins">Richard Dawkins</a> (rif: <a href="http://it.wikipedia.org/wiki/Il_gene_egoista">"Gene Egoista"</a>) 
+ * La parola <a href="http://it.wikipedia.org/wiki/Meme" target="_new">Meme (simile a "seme")</a> si riferisce al concetto espresso
+ * per la prima volta nel 1976 dall'evoluzionista <a href="http://it.wikipedia.org/wiki/Richard_Dawkins" target="_new">Richard Dawkins</a> (rif: <a href="http://it.wikipedia.org/wiki/Il_gene_egoista" target="_new">"Gene Egoista"</a>) 
  *
  * Per ogni ricetta sono definiti i requesiti del vaso, il consumo di risorse,
  * i connettori resi disponibili e la loro etichetta.
@@ -12,7 +12,17 @@
  * Un meme è parte di un ricettario (git), più memi possono svilupparsi
  * nello stesso vaso (compatibilmente con le risorse), per ogni meme, sul file system del vaso,
  * viene definita una variabile d'ambiente con la home. Partendo da questo percorso il meme utilizza script
- * nella directory <path_meme>/bin/<comando>
+ * nella directory <path_meme>/bin/<comando> e mappa tutte le risorse secondo questo schema:
+ * 
+ * / - directory base meme
+ * /bin/ - directory eseguibili del meme
+ * /data/ - parte rw per il meme
+ * /eventi/ - trigger per il vaso e il lifecycle
+ * /ambiente.conf - parametri aggiornati sul contesto ecc...
+ * /run/ - socket su file e annessi
+ * /cron/ - stringhe per crontab vaso
+ * /secret - i dati riservati -girano sul sistema criptografati-
+ * 
  * 
  * Nella directory web del meme sono presenti i file AngularJS per la rappresentazione in maschera.
  * 
