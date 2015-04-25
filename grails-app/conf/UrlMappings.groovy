@@ -8,12 +8,12 @@ class UrlMappings {
         }
 		
 		"/$qrcode" {
-			controller = "App"
+			controller = "Admin"
 			action = "codeQR"
 			constraints { qrcode(matches:/[0-9a-f]{32}/) }
 		}
 
-        "/"(controller:"Admin")
+    "/"(controller:"Admin")
 	"500"(view:'/error')
 	"404"(view:'/error')
 	"405"(view:'/error')

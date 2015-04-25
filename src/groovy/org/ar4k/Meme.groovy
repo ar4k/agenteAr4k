@@ -1,7 +1,7 @@
 /**
  * Meme (seme)
  * 
- * <p>Meme contiene una ricetta eseguibile su nodi gestiti da Ar4k.</p>
+ * <p>Meme contiene una ricetta eseguibile su nodi gestiti da Ar4k</p>
  * 
  * <p style="text-justify">
  * La parola <a href="http://it.wikipedia.org/wiki/Meme" target="_new">Meme (simile a "seme")</a> si riferisce al concetto espresso
@@ -42,17 +42,16 @@
  * - API recupero informazioni contesto e il suo stato -configurazione del contesto inline- (in particolare sulle sessioni -user space- connesse al contesto);</br>
  * - API messaggi,task(ciclo di interazione con utente) e log verso gli utenti;</br>
  * </br></br>
- * TODO:</br>
+ * <strong>TODO:</strong></br>
  * Verificare l'integrazione con Activiti</br>
  * Integrare rotte Camel tra i servizi erogati dai memi (come tunnel estensione delle connessioni)</br>
  * </p>
  * 
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  * @version 0.1-alpha
- * 
+ * @see org.ar4k.Ricettario
+ * @see org.ar4k.Vaso
  */
-
-
 
 package org.ar4k
 

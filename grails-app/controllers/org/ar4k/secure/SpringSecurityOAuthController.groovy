@@ -1,3 +1,7 @@
+/**
+ * Gestisce l'autenticazioni OAuth (Facebook,Google,LinkedIn,Twitter)
+ */
+
 package org.ar4k.secure
 
 import grails.plugin.springsecurity.oauth.OAuthToken

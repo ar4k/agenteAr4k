@@ -1,3 +1,7 @@
+/**
+ * Gestisce l'autenticazione
+ */
+
 package org.ar4k.secure
 
 import grails.converters.JSON

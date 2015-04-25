@@ -1,19 +1,19 @@
 /**
- * Controller interfaccia web Grails
+ * Controller interfaccia web contesto
  * 
  * <p>
- * Il controller offre l'infrastruttura base web
- * e l'intero set di API Ar4k all'interfaccia AngularJs
+ * AdminController gestisce tutte le richieste dell'interfaccia utente tranne autenticazione e bootstrap
  * </p>
  * 
+ * <p style="text-justify">
  * In generale questo è il controller utilizzato dall'amministratore
  * dell'applicativo, espone tutte le funzionalità, per eventuali affinamenti
- * della sicurezza si può utilizzare le ACL su questo controller o utilizzarlo 
- * come template per la costruzione di un'interfaccia utente specifica.
+ * della sicurezza, utilizzare i dati di Contesto
+ * </p>
  * 
- * @author      Andrea Ambrosini -Rossonet-
- * @version     0.1
- * @since       2015-04-01
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ * @version 0.1-alpha
+ * @see org.ar4k.Contesto
  */
 package org.ar4k
 import javax.swing.text.html.HTML
@@ -21,14 +21,14 @@ import grails.converters.JSON
 import groovy.json.*
 
 class AdminController {
-	AccoppiatoreService accoppiatoreService
+	InterfacciaContestoService interfacciaContestoService
 	
 	def salvaConfigurazione(String archivio) {
-		render accoppiatoreService.salvaConfigurazione(archivio)
+		render interfacciaContestoService.salvaConfigurazione(archivio)
 	}
 	
 	def caricaConfigurazione(String archivio) {
-		render accoppiatoreService.caricaConfigurazione(archivio)
+		render interfacciaContestoService.caricaConfigurazione(archivio)
 	}
 
 	def index() {
@@ -45,7 +45,7 @@ class AdminController {
 	
 	def listaoggetti(){
 		def ritorno = []
-		accoppiatoreService.listaOggetti().each{
+		interfacciaContestoService.listaOggetti().each{
 			//Strutturare qui la lista
 			ritorno.add([etichetta:it.etichetta,tipo:it.tipo])
 			}
@@ -55,7 +55,7 @@ class AdminController {
 	def creaSshHost (){
 		Oggetto stato 
 		def jsonObject = request.JSON
-		stato = accoppiatoreService.nuovoSSH(jsonObject.etichetta,jsonObject.descrizione,jsonObject.utente,jsonObject.target,jsonObject.porta.toInteger(),jsonObject.password)
+		stato = interfacciaContestoService.nuovoSSH(jsonObject.etichetta,jsonObject.descrizione,jsonObject.utente,jsonObject.target,jsonObject.porta.toInteger(),jsonObject.password)
 		render (stato as JSON)
 	}
 
@@ -64,59 +64,59 @@ class AdminController {
 	}
 	
 	def eseguiProcesso(String host,String comando) {
-		render accoppiatoreService.esegui(host,comando)
+		render interfacciaContestoService.esegui(host,comando)
 	}
 	
 	def parseRemote(String host,String target,String portaTarget,String query,String componente) {
-		render accoppiatoreService.remoteWeb(host,target,portaTarget,query,componente)
+		render interfacciaContestoService.remoteWeb(host,target,portaTarget,query,componente)
 	}
 	
 	def oggetti() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/oggetti')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/oggetti')
 	}
 	
 	def oggettiCtrl() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/oggettiCtrl')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/oggettiCtrl')
 	}
 	
 	def rossonet() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/rossonet')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/rossonet')
 	}
 	
 	def rossonetCtrl() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/rossonetCtrl')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/rossonetCtrl')
 	}
 	
 	def quartz() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/quartz')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/quartz')
 	}
 	
 	def quartzCtrl() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/quartzCtrl')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/quartzCtrl')
 	}
 	
 	def processi() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/processi')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/processi')
 	}
 	
 	def processiCtrl() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/processiCtrl')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/processiCtrl')
 	}
 	
 	def kettle() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/kettle')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/kettle')
 	}
 	
 	def kettleCtrl() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/kettleCtrl')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/kettleCtrl')
 	}
 	
 	def dashrossonet() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/dashboard')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/dashboard')
 	}
 	
 	def dashrossonetCtrl() {
-		render accoppiatoreService.esegui('master','bash $AR4K_ANGULAR/dashboardCtrl')
+		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/dashboardCtrl')
 	}
 }
 

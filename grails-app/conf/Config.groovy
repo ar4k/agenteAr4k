@@ -288,19 +288,16 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                  ['permitAll'],
 	// by Andrea Ambrosini
 	'/register/**':                   ['permitAll'],
-	'/login/**':     		  ['permitAll'],
+	'/login/**':    				  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
 	'/atterraggio/**':                ['permitAll'],
-	'/springSecurityOAuth/**':	  ['permitAll'],
-	'/app/codeqr':			  ['permitAll'],
+	'/springSecurityOAuth/**':	      ['permitAll'],
+	'/codeqr':			        	  ['permitAll'],
 	// Accesso a Admin -per utente demo-
 	'/**':                            ['ROLE_ADMIN'],
 	//'/admin/**':                    ['ROLE_USER'],
-	'/admin/**':                      [
-		'ROLE_USER',
-		'ROLE_REGISTRATO'
-	],
+	'/admin/**':                      ['ROLE_USER','ROLE_REGISTRATO'],
 	// Accesso a tutti autenticati
 	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti

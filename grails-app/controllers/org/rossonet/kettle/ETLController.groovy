@@ -1,3 +1,7 @@
+/**
+ * @deprecated vecchia implementazione
+ */
+
 package org.rossonet.kettle
 
 import org.rossonet.kettle.KettleService

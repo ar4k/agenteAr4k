@@ -1,3 +1,19 @@
+/**
+ * Utente
+ *
+ * <p>Utente</p>
+ *
+ * <p style="text-justify">
+ * I dati degli utenti sono caricati dal Contesto</br>
+ * </p>
+ *
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ * @version 0.1-alpha
+ * @see org.ar4k.Ruolo
+ * @see org.ar4k.UtenteRuolo
+ * @see org.ar4k.Contesto
+ */
+
 package org.ar4k
 
 class Utente {
