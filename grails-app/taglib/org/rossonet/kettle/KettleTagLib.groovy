@@ -4,7 +4,7 @@
 
 package org.rossonet.kettle
 
-import org.rossonet.kettle.KettleService
+import org.ar4k.KettleService
 import org.pentaho.di.core.logging.Log4jBufferAppender
 import org.pentaho.di.job.Job
 import org.pentaho.di.core.logging.CentralLogStore

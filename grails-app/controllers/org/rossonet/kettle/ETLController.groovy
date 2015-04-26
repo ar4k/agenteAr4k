@@ -4,7 +4,7 @@
 
 package org.rossonet.kettle
 
-import org.rossonet.kettle.KettleService
+import org.ar4k.KettleService
 import grails.converters.JSON
 import org.pentaho.di.job.Job;
 
