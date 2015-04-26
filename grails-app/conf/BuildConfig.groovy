@@ -118,7 +118,7 @@ grails.project.dependency.resolution = {
 		//compile ":coffee-asset-pipeline:1.8.0"
 		//compile ":handlebars-asset-pipeline:1.3.0.3"
 
-		runtime ":aws-sdk:1.9.22"
+		//runtime ":aws-sdk:1.9.22"
 
 		// Camel
 		compile ":routing:1.3.2"
@@ -152,7 +152,7 @@ grails.project.dependency.resolution = {
 		compile ":fatcow-icons:0.1.0"
 		
 		// Aggiunge i plugin Jasper Report
-		compile ":jasper:1.11.0"
+		//compile ":jasper:1.11.0"
 		
 		// Per HttpBuilder
 		compile ":rest:0.8"
