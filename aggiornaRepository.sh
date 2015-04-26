@@ -1,6 +1,7 @@
 #!/bin/bash
 # Salva il contenuto del repository in git
 #unset DISPLAY
+unset SSH_ASKPASS
 
 echo "Aggiorno la documentazione online"
 ./grailsw doc
