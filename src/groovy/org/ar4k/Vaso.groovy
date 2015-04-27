@@ -19,5 +19,11 @@
 package org.ar4k
 
 class Vaso {
+	/** id univoco vaso */
+	String idVaso = UUID.randomUUID()
+	/** etichetta vaso */
+	String etichetta = ''
+	/** descrizione vaso */
+	String descrizione ='Vaso AR4K by Rossonet'
 
 }

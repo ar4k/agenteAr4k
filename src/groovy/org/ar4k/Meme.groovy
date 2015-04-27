@@ -56,9 +56,9 @@
 package org.ar4k
 
 import static groovyx.gpars.dataflow.Dataflow.task
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.atmosphere.cpr.Broadcaster
 import org.atmosphere.cpr.DefaultBroadcaster
@@ -74,8 +74,12 @@ import com.jcraft.jsch.*
 
 // Ricetta
 class Meme {
-	String id = UUID.randomUUID()
-	String descrizione ='Meme predefinito AR4K by Rossonet'
+	/** id univoco meme */
+	String idMeme = UUID.randomUUID()
+	/** etichetta meme */
+	String etichetta = ''
+	/** descrizione meme */
+	String descrizione ='Meme AR4K by Rossonet'
 	Processo testPreparazione
 	Processo installazione
 	Processo monitoraggio

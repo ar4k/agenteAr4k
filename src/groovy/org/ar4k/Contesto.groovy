@@ -25,8 +25,6 @@
 
 package org.ar4k
 
-
-// Classe contesti (per i permessi sui tunnel)
 class Contesto {
 	/** id univoco contesto */
 	String idContesto = UUID.randomUUID()

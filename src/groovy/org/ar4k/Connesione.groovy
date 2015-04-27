@@ -20,5 +20,30 @@
 package org.ar4k
 
 class Connesione {
+	/** id univoco connessione */
+	String idConnesione = UUID.randomUUID()
+	/** etichetta connessione */
+	String etichetta = ''
+	/** descrizione connessione */
+	String descrizione ='Connessione AR4K by Rossonet'
+}
 
+/**
+ * Porta TCP su un vaso
+ *  
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ *
+ */
+
+class PortaVaso {
+	/** porta tcp */
+	Integer porta = 0
+	String etichetta = ''
+	/** vaso che ospita il servizio o il tunnel ssh verso un altro vaso */
+	Vaso vaso
+	Boolean installata = false
+	Boolean attiva = false
+	Boolean libera = false
+	/** vasi che raggiungono direttamente la porta (alimentato dal discovery) */
+	List<Vaso> connessi = []
 }

@@ -1,5 +1,5 @@
 /**
- * Controller interfaccia web contesto
+ * Controller interfaccia web del Contesto
  * 
  * <p>
  * AdminController gestisce tutte le richieste dell'interfaccia utente tranne autenticazione e bootstrap
@@ -15,6 +15,7 @@
  * @version 0.1-alpha
  * @see org.ar4k.Contesto
  */
+
 package org.ar4k
 import javax.swing.text.html.HTML
 import grails.converters.JSON

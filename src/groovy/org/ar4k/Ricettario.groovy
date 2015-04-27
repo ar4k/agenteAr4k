@@ -18,5 +18,17 @@
 package org.ar4k
 
 class Ricettario {
+	/** id univoco ricettario */
+	String idRicettario = UUID.randomUUID()
+	/** etichetta ricettario */
+	String etichetta = ''
+	/** descrizione ricettario */
+	String descrizione ='Ricettario (git) AR4K by Rossonet'
+	/** repository git */
+	String repositoryGit = 'https://github.com/rossonet/agenteAr4k.git'
+	/** utente git */
+	String utenteGit = 'utente'
+	/** password git */
+	String passwordGit = 'password'
 
 }

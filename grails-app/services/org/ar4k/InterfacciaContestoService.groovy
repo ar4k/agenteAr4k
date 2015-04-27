@@ -1,3 +1,18 @@
+/**
+ * Interfaccia Contesto
+ *
+ * <p>Gestisce il collegamento tra il Contesto e l'interfaccia</p>
+ *
+ * <p style="text-justify">
+ * ...</br>
+ * </p>
+ *
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ * @version 0.1-alpha
+ * @see org.ar4k.Interfaccia
+ * @see org.ar4k.Contesto
+ */
+
 package org.ar4k
 
 import static groovyx.gpars.dataflow.Dataflow.task

@@ -1,6 +1,17 @@
 /**
-* @deprecated vecchia implementazione
-*/
+ * Kettle Service
+ *
+ * <p>Gestisce le lavorazioni Kettle dei Memi</p>
+ *
+ * <p style="text-justify">
+ * ...</br>
+ * </p>
+ *
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ * @version 0.1-alpha
+ * @see org.ar4k.Meme
+ * @see org.ar4k.Interfaccia
+ */
 
 package org.ar4k
 

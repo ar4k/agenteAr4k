@@ -16,10 +16,29 @@
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  * @version 0.1-alpha
  * @see org.ar4k.Contesto
+ * @see org.ar4k.SshService
+ * @see org.ar4k.CamelService
  */
 
 package org.ar4k
 
 class Interfaccia {
-
+	/** id univoco interfaccia */
+	String idInterfaccia = UUID.randomUUID()
+	/** etichetta interfaccia */
+	String etichetta = ''
+	/** descrizione interfaccia */
+	String descrizione ='UI AR4K by Rossonet'
+	/** service per connessioni SSH utilizzato dall'interfaccia*/
+	SshService sshService
+	/** service Apache Camel utilizzato dall'interfaccia*/
+	CamelService camelService
+	/** service Kettle utilizzato dall'interfaccia*/
+	KettleService kettleService
+	/** service JCloud utilizzato dall'interfaccia*/
+	JCloudService jCloudService
+	/** service JSoup utilizzato dall'interfaccia*/
+	JSoupService jSoupService
+	/** service WebSocket utilizzato dall'interfaccia*/
+	WebSocketService webSocketService
 }
