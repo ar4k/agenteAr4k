@@ -159,6 +159,9 @@ grails.project.dependency.resolution = {
 
 		// Socket
 		compile ":atmosphere-meteor:1.0.4"
+
+		// WebFlow 
+		compile ":webflow:2.1.0"
 		
 	}
 }

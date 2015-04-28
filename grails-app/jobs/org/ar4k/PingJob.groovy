@@ -18,13 +18,13 @@ package org.ar4k
 class PingJob {
 	//def timeout = 5000 // execute job once in 5 seconds
 	
-	def accoppiatoreService
+	def interfacciaContestoService
 	
 	static triggers = {
 		simple name: 'ping', startDelay: 60000, repeatInterval: 300000
 	}
 
 	def execute() {
-		accoppiatoreService.freeMemory()
+		interfacciaContestoService.freeMemory()
 	}
 }

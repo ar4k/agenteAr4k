@@ -23,7 +23,7 @@ import com.jcraft.jsch.*
 
 class DefaultMeteorHandler extends HttpServlet {
 	def atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
-	def accoppiatoreService = Holders.applicationContext.getBean("accoppiatoreService")
+	def webSocketService = Holders.applicationContext.getBean("webSocketService")
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -50,7 +50,7 @@ class DefaultMeteorHandler extends HttpServlet {
 			//println 'ok'
 			byte[] buf=new byte[1024]
 			int i=0
-			Channel canale = accoppiatoreService.sessione('master')
+			Channel canale = webSocketServer.post()
 
 			InputStream richiesta = request.getInputStream()
 			OutputStream out=canale.getOutputStream()

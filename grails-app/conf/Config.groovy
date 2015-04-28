@@ -138,65 +138,30 @@ log4j.main = {
 			'org.springframework',
 			'org.hibernate',
 			'net.sf.ehcache.hibernate'
+	fatal	'org.hibernate.tool.hbm2ddl.SchemaExport' // bug grails 11198 work around by Ambrosini
 	environments {
 				development  {
 					info 'grails.app'
-					//debug "org.grails.plugins.atmosphere_meteor"
+					//debug 'org.grails.plugins.atmosphere_meteor'
+					warn 'org.codehaus.groovy.grails.web.servlet'
+					warn 'org.codehaus.groovy.grails.web.sitemesh'
+					warn 'org.codehaus.groovy.grails.plugins'
+					warn 'org.codehaus.groovy.grails.commons'
 				}
 	}
 }
 
-plugin.crash.config = [
-	'crash.ssh.port': 2666,
-	'crash.auth.simple.password': 'secretPassword'
-]
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////// INIZIO CONFIGURAZIONI ROSSONET //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-// Configurazioni Kettle
-kettle.repository = "GrailsKettleRepo"
-kettle.username = ""
-kettle.password = ""
-kettle.directory = "kettle"
-kettle.repoConfFile = "kettleRepository.xml"
-kettle.repoFS = "si" // Repository su filesytem in caso contrario su database
-
-
-// Utente
-demoUser.utente="admin" // Se vuoto non viene creato
-demoUser.password="rossonet2012"
-
-// Olark
-olark.key='1445-771-10-6904'
-google.analytics='UA-55822070-1'
-
-// Facebook sdk plugin
-//grails.plugin.facebooksdk.appPermissions = "email,read_friendlists,read_insights,read_mailbox,read_requests,read_stream,xmpp_login,user_online_presence,friends_online_presence,ads_management,create_event,manage_friendlists,manage_notifications,publish_actions,publish_stream,rsvp_event,user_actions.music,user_actions.news,user_actions.video,user_games_activity,friends_actions.news,friends_actions.music,friends_actions.video,friends_games_activity,user_about_me,friends_about_me,user_activities,user_birthday,user_checkins,user_education_history,user_events,user_groups,user_hometown,user_interests,user_likes,user_location,user_notes,user_photos,user_questions,user_relationships,user_relationship_details,user_religion_politics,user_status,user_subscriptions,user_videos,user_website,user_work_history,friends_work_history,friends_website,friends_videos,friends_subscriptions,friends_status,friends_religion_politics,friends_relationship_details,friends_relationships,friends_questions,friends_photos,friends_notes,friends_location,friends_likes,friends_interests,friends_hometown,friends_groups,friends_events,friends_education_history,friends_checkins,friends_birthday,friends_activities,friends_about_me"
 environments {
 	development {
-		grails.plugin.facebooksdk.appId = 33333333333
-		grails.plugin.facebooksdk.appPermissions = "email"
-		grails.plugin.facebooksdk.appSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 	}
 	production {
-		grails.plugin.facebooksdk.appId = 33333333333
-		grails.plugin.facebooksdk.appPermissions = "email"
-		grails.plugin.facebooksdk.appSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-		//grails.plugins.activemq.active = false
 	}
 }
-
-// Account globali AWS Amazon
-grails.plugin.awssdk.accessKey = "ACCESS_KEY"
-grails.plugin.awssdk.secretKey = "SECRET_KEY"
-
-// Per mappe google
-googleMap.key = "xxxxxxxxxxxxxxxxxxxxx"
-googleMap.demo0 = "via Farsetti 7, 40026 Imola, Bologna"
-googleMap.demo1 = "Stazione Imola, Bologna"
-googleMap.demo2 = "Via Mazzini 30, 40026 Imola, Bologna"
 
 oauth {
 	providers {
@@ -255,18 +220,6 @@ grails {
 	}
 }
 
-simpleCaptcha { chars = "ABCDEFGHIJKLMNPQRSTUVWXYZ23456789" }
-
-grails.camel.camelContextId = 'ar4k'
-
-grails.plugins.activemq.useJmx=true
-grails.plugins.activemq.persistent=false
-// toglie activemq integrato
-// grails.plugins.activemq.active = false
-padrone.utente='utente'
-padrone.host='localhost'
-padrone.porta=22
-padrone.password='xxxxxxxxxxx'
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////// FINE CONFIGURAZIONI ROSSONET ////////////////////////////////
@@ -288,6 +241,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                  ['permitAll'],
 	// by Andrea Ambrosini
 	'/register/**':                   ['permitAll'],
+	'/bootStrap/**':                  ['permitAll'], // Ricordarsi di bloccare la sicurezza sul Controller!
 	'/login/**':    				  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
@@ -301,7 +255,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	// Accesso a tutti autenticati
 	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti
-	//'/**':                          ['permitAll'],
+	//'/**':                            ['permitAll'],
 	// favicon
 	'/**/favicon.ico':                ['permitAll']]
 

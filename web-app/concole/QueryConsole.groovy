@@ -8,3 +8,4 @@
 //ctx.getBean('accoppiatoreService').sessione('master')
 //ctx.getBean('accoppiatoreService').freeMemory()
 //ctx.getBean('accoppiatoreService').remoteWeb('master','www.rossonet.org','80','/','focus')
+ctx.metaClass.methods*.name.sort().unique()

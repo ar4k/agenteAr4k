@@ -7,7 +7,7 @@
  * Il contesto rappresenta un progetto, un insieme di risorse, utenti e codice che interagiscono.</br>
  * E' compito del contesto esporre tutte le funzioni di coordinamento dei vasi per un progetto e la relativa maschera che parte di default in
  * un contesto locale, scaricando solo i ricettari base.</br>
- * il contesto espone la factory dei dns,QR e risorse di calcolo fornite da Provider.</br>
+ * il contesto espone la factory dei dns, QR e risorse di calcolo fornite da Provider.</br>
  * i memi possono associare degli eventi ai contesti.</br>
  * </br>
  * Un contesto parte sempre con un ricettario base che contiene i meme base per la gestione dei suoi eventi.
@@ -63,11 +63,6 @@ class Contesto {
 		
 	/** verifica ed eventualmente prova a riavviare tutti gli oggetti collegati*/
 	def Verifica() {
-		
-	}
-	
-	/** esporta l'intero contesto su un altro vaso*/
-	def costruisceVasoMaster() {
 		
 	}
 	

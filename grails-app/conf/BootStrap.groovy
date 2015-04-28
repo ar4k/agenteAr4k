@@ -13,15 +13,9 @@ class BootStrap {
 		switch (Environment.current) {
 			case Environment.DEVELOPMENT:
 				log.info("Sistema in Sviluppo... ")
-				ProcedureService.creaDemoUtente()
-			//startKettle()
-				tunnelControllo()
 				break;
 			case Environment.PRODUCTION:
 				log.info("Sistema in produzione... ")
-				ProcedureService.creaDemoUtente()
-			//startKettle()
-				tunnelControllo()
 				break;
 		}
 
@@ -30,21 +24,6 @@ class BootStrap {
 			log.info(property + "\n")
 		}
 		log.info("***\n")
-	}
-
-	def startKettle = {
-		log.info("Se esiste un job BootStrap lo eseguo..")
-		kettleService.initKettle()
-		if ( "BootStrap" in kettleService.listJobs()*.getName() ) {
-			log.info("Eseguo BootStrap")
-			kettleService.jobRun("BootStrap")
-		} else {
-			log.warning("Non esiste il job BootStrap nella directory del repository..")
-		}
-	}
-
-	def tunnelControllo = {
-		log.info(AccoppiatoreService.configuraPadrone())
 	}
 
 	def destroy = {

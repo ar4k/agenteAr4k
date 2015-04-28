@@ -14,6 +14,13 @@
 
 package org.ar4k
 
+import com.jcraft.jsch.*
+
 class WebSocketService {
+	
+	Channel post() {
+		Channel ritorno
+		return ritorno
+	}
 
 }
