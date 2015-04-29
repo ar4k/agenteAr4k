@@ -31,6 +31,7 @@ class BootStrapController {
 			on ("fallita").to "configurazioneFallita"
 		}
 		configurazioneCompleta {
+			redirect controller: 'admin'
 		}
 		configurazioneFallita {
 		}

@@ -49,7 +49,8 @@ class LoginController {
 		}
 
 		else {
-			if (bootStrapService.funzionante == false) {
+			if (bootStrapService.inAvvio) {
+				log.info("Attivata procedura di bootstrap Ar4k.")
 				redirect controller:'bootStrap'
 			} else {
 
@@ -79,7 +80,8 @@ class LoginController {
 			return
 		}
 
-		if (bootStrapService.funzionante == false) {
+		if (bootStrapService.inAvvio) {
+			log.info("Attivata procedura di bootstrap Ar4k.")
 			redirect controller:'bootStrap'
 		}
 

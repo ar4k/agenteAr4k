@@ -143,10 +143,11 @@ log4j.main = {
 				development  {
 					info 'grails.app'
 					//debug 'org.grails.plugins.atmosphere_meteor'
-					warn 'org.codehaus.groovy.grails.web.servlet'
-					warn 'org.codehaus.groovy.grails.web.sitemesh'
-					warn 'org.codehaus.groovy.grails.plugins'
-					warn 'org.codehaus.groovy.grails.commons'
+					info 'org.codehaus.groovy.grails.web.servlet'
+					info 'org.codehaus.groovy.grails.web.sitemesh'
+					info 'org.codehaus.groovy.grails.plugins'
+					info 'org.codehaus.groovy.grails.commons'
+					info 'org.ar4k'
 				}
 	}
 }
@@ -242,6 +243,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	// by Andrea Ambrosini
 	'/register/**':                   ['permitAll'],
 	'/bootStrap/**':                  ['permitAll'], // Ricordarsi di bloccare la sicurezza sul Controller!
+	'/console/**':                    ['permitAll'], // Solo per debug della sicurezza!!!
 	'/login/**':    				  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
@@ -255,7 +257,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	// Accesso a tutti autenticati
 	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti
-	//'/**':                            ['permitAll'],
+	//'/**':                            ['permitAll'], // Solo per debug!
 	// favicon
 	'/**/favicon.ico':                ['permitAll']]
 

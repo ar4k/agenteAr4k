@@ -60,10 +60,16 @@ class Contesto {
 		// Pulizia dei vasi
 	}
 	
+	/** aggiunge il vaso master alcontesto */
+	def avviaMaster(Vaso vaso) {
+		vasoMaster = vaso
+		vasi.add(vaso)
+	}
+	
 		
 	/** verifica ed eventualmente prova a riavviare tutti gli oggetti collegati*/
-	def Verifica() {
-		
+	def verifica() {
+		return false
 	}
 	
 	/** dump oggetto per funzioni di salvataggio*/

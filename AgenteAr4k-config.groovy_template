@@ -5,70 +5,23 @@ by Ambrosini Rossonet s.c.a r.l.
 Queste le configurazioni minime, tutte le configurazioni in questo file sovrascrivono le predefinite.
 Il file va sistemato in ~/.rossonet/AgenteAr4k-config.groovy o <home utente>\.rossonet\AgenteAr4k-config.groovy 
 
+Se le configurazioni per connettersi non sono presenti, l'applicativo presenta un'interfaccia di boot guidato.
 */
 
-// Configurazione eventuale integrazione LDAP per l'autenticazione
-grails.plugin.springsecurity.ldap.context.managerDn = 'uid=oauth,cn=users,cn=accounts,dc=XXXXX,dc=net'
-grails.plugin.springsecurity.ldap.context.managerPassword = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+master.host = '127.0.0.1'
+master.port = 22
+master.user = 'ar4k'
+// Iniziare la stringa chiave con """ e concludere con uguale combinazione
+master.key = """
+-----BEGIN RSA PRIVATE KEY-----
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+-----END RSA PRIVATE KEY-----
+"""
 
-// Configurazioni nodo SSH master
-padrone.utente='utente'
-padrone.host='localhost'
-padrone.porta=22
-padrone.password='xxxxxxxxxxx'
+proxyURL = ''
+proxyUser = ''
+proxyPassword = ''
 
-// Chat Olark
-//olark.key='1445-xxx-xx-xxxx'
-
-// Account App Facebook per il recupero dei dati dalle utenze collegate in OAuth
-// con opportune configurazione l'applicativo è completamente integrabile con Facebook tramite
-// queste API
-grails.plugin.facebooksdk.app.id = xxxxxxxxxxx
-grails.plugin.facebooksdk.app.secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-
-
-// Per ogni provider di autenticazione bisogna registrare l'app di collegamento e riportare
-// le chiavi di autenticazione qui sotto.
-oauth {
-        providers {
-                twitter {
-                        key = 'xxxxxxxxxxxxxx'
-                        secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-			callback = "http://localhost:8080/oauth/twitter/callback"
-			//callback = "http://localhost:8080/AgenteAr4k/oauth/twitter/callback"
-                }
-                linkedin {
-                        key = 'xxxxxxxxxxxxxxxx'
-                        secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-			callback = "http://localhost:8080/oauth/linkedin/callback"
-			//callback = "http://localhost:8080/AgenteAr4k/oauth/linkedin/callback"
-                }
-                google {
-                        key = 'xxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com'
-                        secret = 'xxxxxxxxxxxxxxxxxxxxxxxx'
-			callback = "http://localhost:8080/oauth/google/callback"
-			//callback = "http://localhost:8080/AgenteAr4k/oauth/google/callback"
-                }
-                facebook {
-                        key = 'xxxxxxxxxxxxxxxxxxxxx'
-                        secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-			callback = "http://localhost:8080/oauth/facebook/callback"
-			//callback = "http://localhost:8080/AgenteAr4k/oauth/facebook/callback"
-                }
-        }
-}
-
-
-// Configurazione invio mail
-grails {
-        mail {
-//        host = "smtp.gmail.com"
-//        port = 465
-          username = "xxxxxxxxxx@gmail.com"
-          password = "xxxxxxxxxxxxxxxxx"
-//        props = ["mail.smtp.auth":"true",
-//                         "mail.smtp.socketFactory.port":"465",
-//                         "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-//                         "mail.smtp.socketFactory.fallback":"false"]
-        }
-}
+rossonetKey = ''
