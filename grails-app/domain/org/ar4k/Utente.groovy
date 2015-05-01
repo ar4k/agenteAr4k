@@ -46,8 +46,25 @@ class Utente {
 		password blank: false
 	}
 
-	static mapping = {
-		password column: '`password`'
+	static mapping = { password column: '`password`' }
+
+	/** esporta gli utenti nel contesto */
+	def esporta() {
+		return [
+			username:username,
+			password:password,
+			email:email,
+			sms:sms,
+			jabber:jabber,
+			dateCreated:dateCreated,
+			lastUpdated:lastUpdated,
+			avatar:avatar,
+			enabled:enabled,
+			accountExpired:accountExpired,
+			accountLocked:accountLocked,
+			passwordExpired:passwordExpired,
+			oAuthIDs:oAuthIDs*.esporta()
+		]
 	}
 
 	Set<Ruolo> getAuthorities() {

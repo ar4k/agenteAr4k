@@ -37,6 +37,56 @@ import com.jcraft.jsch.*
 class InterfacciaContestoService {
 	/** Contesto applicativo Grails */	
 	GrailsApplication grailsApplication
+	/** servizio bootStrap attivato */
+	BootStrapService bootStrapService
+		
+	/** Stampa la memoria con Camel */
+	void freeMemory() {
+		sendMessage("seda:input", "Memoria libera: "+Runtime.getRuntime().freeMemory())
+	}
+	
+	/** esegue le procedura ogni 5 min. tramite Quartz */
+	void battito() {
+		if(!bootStrapService.contesto?.salva()) log.warn("Errore nel salvataggio del contesto!")
+		freeMemory()
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// Vecchia implementazione
+	
 	/** Host gestiti in memoria */
 	def macchine = []
 	/** Contesti operativi gestiti in memoria */
@@ -156,9 +206,6 @@ class InterfacciaContestoService {
 		return connesione
 	}
 
-	void freeMemory() {
-		sendMessage("seda:input", "Memoria libera: "+Runtime.getRuntime().freeMemory())
-	}
 
 	HostRemoto creaHostRemoto() {
 		log.info("Richiesta creaHostRemoto")

@@ -2,6 +2,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication;
 
 import grails.util.Environment
 
+import org.ar4k.Vaso;
 import org.ar4k.secure.*
 
 class BootStrap {
@@ -13,10 +14,10 @@ class BootStrap {
 		switch (Environment.current) {
 			case Environment.DEVELOPMENT:
 				log.info("Sistema in Sviluppo... ")
-				if ( verificaPresenzaConfigurazioni() ) log.info("Connesso a vaso master...")
+				if ( provaConfigurazioni() ) log.info("Sistema configurato e pronto...")
 				break;
 			case Environment.PRODUCTION:
-				if ( verificaPresenzaConfigurazioni() ) log.info("Connesso a vaso master...")
+				if ( provaPresenzaConfigurazioni() ) log.info("Sistema configurato e pronto...")
 				break;
 		}
 
@@ -30,14 +31,19 @@ class BootStrap {
 	def destroy = {
 	}
 	
-	Boolean verificaPresenzaConfigurazioni() {
+	Boolean provaConfigurazioni() {
 		if (grailsApplication.config.master.host) {
 			log.info("Configuro i parametri di configurazione trovati su file")
-			bootStrapService.macchinaMaster = grailsApplication.config.master.host
-			bootStrapService.portaMaster = grailsApplication.config.master.port
-			bootStrapService.utenteMaster = grailsApplication.config.master.user
-			bootStrapService.keyMaster = grailsApplication.config.master.key
-			return bootStrapService.provaConnessione()
+			bootStrapService.macchinaMaster = grailsApplication.config.master.host?:null
+			bootStrapService.portaMaster = grailsApplication.config.master.port?:null
+			bootStrapService.utenteMaster = grailsApplication.config.master.user?:null
+			bootStrapService.keyMaster = grailsApplication.config.master.key?:null
+			bootStrapService.idContestoScelto = grailsApplication.config.contesto?:null
+			bootStrapService.idInterfacciaScelta = grailsApplication.config.interfaccia?:null
+			bootStrapService.codiceAttivazioneAr4k = grailsApplication.config.codiceAttivazione?:null
+			bootStrapService.proxyVersoMaster = grailsApplication.config.proxyVersoMaster?:null
+			bootStrapService.proxyMasterInternet = grailsApplication.config.proxyMasterInternet?:null
+			return bootStrapService.avvia()
 		}
 	}
 }

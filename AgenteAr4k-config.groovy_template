@@ -20,8 +20,17 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 -----END RSA PRIVATE KEY-----
 """
 
-proxyURL = ''
-proxyUser = ''
-proxyPassword = ''
+// Contesto
+contesto = 'Bootstrap-Ar4k'
 
-rossonetKey = ''
+// Interfaccia
+interfaccia = 'Bootstrap-Ar4k'
+
+// Codice attivazione Ar4K (Attivazioni commerciali)
+//codiceAttivazione = ''
+
+// Configurazione proxy tra la JVM e il vaso master
+//proxyVersoMaster = ''
+
+// Configurazione proxy tra il vaso master e Internet
+//proxyMasterInternet = ''

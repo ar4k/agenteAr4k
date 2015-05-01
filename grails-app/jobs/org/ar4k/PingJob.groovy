@@ -25,6 +25,6 @@ class PingJob {
 	}
 
 	def execute() {
-		interfacciaContestoService.freeMemory()
+		interfacciaContestoService.battito()
 	}
 }

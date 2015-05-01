@@ -32,7 +32,11 @@ class BootStrapService {
 	String utenteMaster = null
 	/** certificato privato per accesso ssh */
 	String keyMaster = null
-	
+	/** contesto scelto */
+	String idContestoScelto = null
+	/** interfaccia scelta */
+	String idInterfacciaScelta = null
+
 	/** vasoMaster */
 	Vaso vasoMaster
 
@@ -41,9 +45,6 @@ class BootStrapService {
 
 	/** configurazione proxy tra Grails e il vaso master, se null assente */
 	String proxyVersoMaster = null
-
-	/** configurazione repository ricettari */
-	List<RepositoryGitBootStrap> ricettari = []
 
 	/** configurazione proxy tra il vaso e internet, se null assente */
 	String proxyMasterInternet = null
@@ -79,13 +80,19 @@ class BootStrapService {
 	Boolean inAvvio = true
 
 	/** contesto interfaccia */
-	Contesto contesto = new Contesto()
+	Contesto contesto
 
-	/** oggetto monitoraggio */
-	Stato stato = new Stato()
+	/** Interfaccia apllicativa del contesto */
+	Interfaccia interfaccia
+
+	/** contesti disponibili */
+	List<Contesto> contestiInMaster = []
+
+	/** interfacce disponibili nel contesto */
+	List<Interfaccia> interfacceInContesto = []
 
 	/** test parametri correnti */
-	Boolean provaConnessione() {
+	Boolean provaConnessioneMaster() {
 		vasoMaster= new Vaso(
 				etichetta:utenteMaster+'@'+macchinaMaster+':'+portaMaster,
 				descrizione:'Nodo Master Ar4k',
@@ -104,48 +111,108 @@ class BootStrapService {
 	}
 
 	/** avvia o ripristina */
-	Boolean provaVaso() {
+	Boolean caricaVasoMaster() {
 		Boolean risultato = false
-		if (provaConnessione()) risultato = vasoMaster.provaVaso()
+		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
 		if (risultato) {
 			vasoConnesso = true
-			contesto.avviaMaster(vasoMaster)
-			risultato = contesto.verifica()
+			contestiInMaster = vasoMaster.listaContesti()
+			Contesto demo = creaContestoAr4kBoot()
+			contestiInMaster.add(demo)
+			log.info("Contesti disponibili dopo la creazione del contesto demo: "+contestiInMaster)
 		}
 		return risultato
 	}
 
+	/** carica il contesto per id */
+	Boolean caricaContesto(String contestoSceltaConf) {
+		Boolean ritorno = false
+		if (caricaVasoMaster()) {
+			String primarioContesto = idContestoScelto
+			if (contestoSceltaConf) primarioContesto = contestoSceltaConf
+			log.info("Provo il caricamento di "+primarioContesto)
+			log.info("Contesti disponibili: "+contestiInMaster)
+			Contesto contestoTarget = contestiInMaster.find{it.idContesto==primarioContesto}
+			log.info("Trovato "+contestoTarget)
+			if (contestoTarget) {
+				contesto = contestoTarget
+				if(contesto.avviaContesto()) {
+					contestoScelto = true
+					ritorno = true
+					log.info("Attestato sul contesto "+contesto)
+					idContestoScelto = contesto.idContesto
+					interfacceInContesto = contesto.interfacce
+				}
+			}
+		}
+		return ritorno
+	}
+
+	/** carica tutto e avvia */
+	Boolean avvia(String contestoSceltaConf,String interfacciaSceltaConf) {
+		Boolean ritorno = false
+		if (caricaContesto(contestoSceltaConf)) {
+			String primarioInterfaccia = idInterfacciaScelta
+			if (interfacciaSceltaConf) primarioInterfaccia = interfacciaSceltaConf
+			log.info("Provo il caricamento dell'interfaccia "+primarioInterfaccia)
+			log.info("Interfacce disponibili: "+interfacceInContesto)
+			Interfaccia interfacciaTarget = interfacceInContesto.find{it.idInterfaccia==primarioInterfaccia}
+			if (interfacciaTarget) {
+				interfaccia = interfacciaTarget
+				if(interfaccia.avviaInterfaccia()) {
+					interfacciaScelta = true
+					inAvvio = false
+					ritorno = true
+					log.info("Attestato sull'interfaccia "+interfaccia)
+					idInterfacciaScelta = interfaccia.idInterfaccia
+				}
+			}
+		}
+		return ritorno
+	}
+	
+	/** metodo senza parametri avvia */
+	Boolean avvia() {
+		avvia(idContestoScelto,idInterfacciaScelta)
+	}
+
 	/** Esprime la situazione per il debug */
-	String rapporto() {
-		String risultato = ''
+	String toString() {
+		String risultato = '[ STATO ]\n'
 		risultato +='configurato: '+configurato+"\n"
 		risultato +='raggiungibile: '+raggiungibile+"\n"
-		risultato +='contesto scelto: '+contestoScelto+"\n"
-		risultato +='interfaccia scelta: '+interfacciaScelta+"\n"
-		risultato +='SISTEMA PRONTO: '+inAvvio+"\n"
-		risultato +='[ CONFIGURAZIONE SSH : '+utenteMaster+'@'+macchinaMaster+':'+portaMaster+' ]\n'
+		risultato +='contesto scelto: '+contestoScelto+" ("+idContestoScelto+")\n"
+		risultato +='interfaccia scelta: '+interfacciaScelta+" ("+idInterfacciaScelta+")\n"
+		risultato +='SISTEMA IN CONFIGURAZIONE: '+inAvvio+"\n"
+		risultato +='Codice commerciale Ar4k: '+codiceAttivazioneAr4k+"\n"
+		risultato +='Configurazione proxy Java -> Vaso Master: '+proxyVersoMaster+"\n"
+		risultato +='Configurazione proxy Vaso Master -> Internet: '+proxyMasterInternet+"\n"
+		risultato +='Contesto: '+contesto+"\n"
+		risultato +='[ VASO MASTER SSH : '+utenteMaster+'@'+macchinaMaster+':'+portaMaster+' ]\n'
 		risultato +=keyMaster+'\n'
 		return risultato
 	}
+
+	/** il contesto per il bootstrap AR4K */
+	Contesto creaContestoAr4kBoot() {
+		log.info("Creo il contesto di demo per il boot su "+vasoMaster)
+		Contesto contestoCreato = new Contesto(
+			idContesto:'Bootstrap-Ar4k',
+			etichetta:"Contesto generato per avvio Ar4k"
+			)
+		contestoCreato.configuraMaster(vasoMaster)
+		Interfaccia interfacciaDemo = creaInterfacciaAr4k()
+		contestoCreato.interfacce.add(interfacciaDemo)
+		log.info("Contesto demo creato: "+contestoCreato)
+		return contestoCreato
+	}
+
+	/** l'interfaccia per il boot */
+	Interfaccia creaInterfacciaAr4k() {
+		Interfaccia interfacciaCreata = new Interfaccia(idInterfaccia:'Bootstrap-Ar4k')
+		log.info("Ho creato l'interfaccia demo:"+interfacciaCreata)
+		return interfacciaCreata
+	}
 }
 
-/**
- * RepositoryGitBootStrap
- * 
- * Struttura dati per array repository GIT 
- * 
- * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- *
- */
-class RepositoryGitBootStrap {
-	/** utente, se null accesso anonimo */
-	String utente = null
-	/** password utente */
-	String password = null
-	/** URL Repository */
-	String indirizzo = 'da completare con github'
-	/** stato */
-	Boolean configurato = false
-	/** codice errore */
-	String codiceErrore = 'Nessun Errore'
-}
+

@@ -25,10 +25,38 @@ class Ricettario {
 	/** descrizione ricettario */
 	String descrizione ='Ricettario (git) AR4K by Rossonet'
 	/** repository git */
-	String repositoryGit = 'https://github.com/rossonet/agenteAr4k.git'
-	/** utente git */
-	String utenteGit = 'utente'
-	/** password git */
-	String passwordGit = 'password'
+	RepositoryGit repositoryGit = new RepositoryGit()
+	
+	/** esporta il ricettario */
+	def esporta() {
+		log.info("esporta() il ricettario: "+idRicettario)
+		return [
+			idRicettario:idRicettario,
+			etichetta:etichetta,
+			descrizione:descrizione,
+			repositoryGit:repositoryGit
+			]
+	}
 
+}
+
+/**
+ * RepositoryGit
+ *
+ * Struttura dati per array repository GIT
+ *
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ *
+ */
+class RepositoryGit {
+	/** utente, se null accesso anonimo */
+	String utente = null
+	/** password utente */
+	String password = null
+	/** URL Repository */
+	String indirizzo = 'https://github.com/rossonet/templateAr4k.git'
+	/** stato */
+	Boolean configurato = false
+	/** codice errore */
+	String codiceErrore = 'Nessun Errore'
 }

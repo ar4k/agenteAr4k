@@ -25,13 +25,22 @@ class UtenteRuolo implements Serializable {
 	Utente utente
 	Ruolo ruolo
 
+	/** esporta gli utenti nel contesto */
+	def esporta() {
+		log.info("Esporta UtenteRuolo: "+utente?.username+" nel ruolo "+ruolo?.authority)
+		return [
+			utente:utente.esporta(),
+			ruolo:ruolo.esporta()
+		]
+	}
+
 	boolean equals(other) {
 		if (!(other instanceof UtenteRuolo)) {
 			return false
 		}
 
 		other.utente?.id == utente?.id &&
-		other.ruolo?.id == ruolo?.id
+				other.ruolo?.id == ruolo?.id
 	}
 
 	int hashCode() {
@@ -44,14 +53,14 @@ class UtenteRuolo implements Serializable {
 	static UtenteRuolo get(long utenteId, long ruoloId) {
 		UtenteRuolo.where {
 			utente == Utente.load(utenteId) &&
-			ruolo == Ruolo.load(ruoloId)
+					ruolo == Ruolo.load(ruoloId)
 		}.get()
 	}
 
 	static boolean exists(long utenteId, long ruoloId) {
 		UtenteRuolo.where {
 			utente == Utente.load(utenteId) &&
-			ruolo == Ruolo.load(ruoloId)
+					ruolo == Ruolo.load(ruoloId)
 		}.count() > 0
 	}
 
@@ -66,10 +75,12 @@ class UtenteRuolo implements Serializable {
 
 		int rowCount = UtenteRuolo.where {
 			utente == Utente.load(u.id) &&
-			ruolo == Ruolo.load(r.id)
+					ruolo == Ruolo.load(r.id)
 		}.deleteAll()
 
-		if (flush) { UtenteRuolo.withSession { it.flush() } }
+		if (flush) {
+			UtenteRuolo.withSession { it.flush()
+			} }
 
 		rowCount > 0
 	}
@@ -77,27 +88,31 @@ class UtenteRuolo implements Serializable {
 	static void removeAll(Utente u, boolean flush = false) {
 		if (u == null) return
 
-		UtenteRuolo.where {
-			utente == Utente.load(u.id)
-		}.deleteAll()
+			UtenteRuolo.where {
+				utente == Utente.load(u.id)
+			}.deleteAll()
 
-		if (flush) { UtenteRuolo.withSession { it.flush() } }
+		if (flush) {
+			UtenteRuolo.withSession { it.flush()
+			} }
 	}
 
 	static void removeAll(Ruolo r, boolean flush = false) {
 		if (r == null) return
 
-		UtenteRuolo.where {
-			ruolo == Ruolo.load(r.id)
-		}.deleteAll()
+			UtenteRuolo.where {
+				ruolo == Ruolo.load(r.id)
+			}.deleteAll()
 
-		if (flush) { UtenteRuolo.withSession { it.flush() } }
+		if (flush) {
+			UtenteRuolo.withSession { it.flush()
+			} }
 	}
 
 	static constraints = {
 		ruolo validator: { Ruolo r, UtenteRuolo ur ->
 			if (ur.utente == null) return
-			boolean existing = false
+				boolean existing = false
 			UtenteRuolo.withNewSession {
 				existing = UtenteRuolo.exists(ur.utente.id, r.id)
 			}

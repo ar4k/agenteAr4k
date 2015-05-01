@@ -62,17 +62,12 @@ import org.jsoup.nodes.Document
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.atmosphere.cpr.Broadcaster
 import org.atmosphere.cpr.DefaultBroadcaster
-
 import grails.converters.JSON
 import grails.transaction.Transactional
 import grails.util.Holders
-
 import java.util.Formatter.DateTime
-
 import com.jcraft.jsch.*
 
-
-// Ricetta
 class Meme {
 	/** id univoco meme */
 	String idMeme = UUID.randomUUID()
@@ -80,36 +75,17 @@ class Meme {
 	String etichetta = ''
 	/** descrizione meme */
 	String descrizione ='Meme AR4K by Rossonet'
-	Processo testPreparazione
-	Processo installazione
-	Processo monitoraggio
-	Processo rilevaStato
-	Processo sospensione
-	Processo avvio
-	Processo distruzione
-	Processo dump
-	List<Schedulazione> schedulazioni = []
-	List<Funzionalita> funzionalita = []
-	List<Processo> processi = []
-	String maschera = '<p>Maschera non presente</p>'
+	String mascheraConfigurazione = '<p>Maschera non presente</p>'
 	String stato = 'inattivo'
-
-	def salvataggio() {
+	 
+	/** dump meme */
+	def esporta() {
+		log.info("esporta() il meme: "+idMeme)
 		return [
+			idMeme:idMeme,
 			etichetta:etichetta,
 			descrizione:descrizione,
-			maschera:maschera,
-			testPreparazione:testPreparazione.etichetta,
-			installazione:installazione.etichetta,
-			monitoraggio:monitoraggio.etichetta,
-			rilevastato:rilevaStato.etichetta,
-			sospensione:sospensione.etichetta,
-			avvio:avvio.etichetta,
-			distruzione:distruzione.etichetta,
-			dump:dump.etichetta,
-			funzionalita:funzionalita*.salvataggio(),
-			schedulazioni:schedulazioni*.salvataggio(),
-			processi:processi*.salvataggio(),
+			mascheraConfigurazione:mascheraConfigurazione,
 			stato:stato
 		]
 	}

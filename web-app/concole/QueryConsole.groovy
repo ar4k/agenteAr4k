@@ -2,6 +2,8 @@ rigenera = {
 ctx.getBean('bootStrapService').utenteMaster = 'rossonet'
 ctx.getBean('bootStrapService').macchinaMaster = 'lucifero.rossonet.net'
 ctx.getBean('bootStrapService').portaMaster = 22
+ctx.getBean('bootStrapService').idInterfacciaScelta = 'Bootstrap-Ar4k'
+ctx.getBean('bootStrapService').idContestoScelto = 'Bootstrap-Ar4k'
 ctx.getBean('bootStrapService').keyMaster = """-----BEGIN RSA PRIVATE KEY-----
 MIIEpQIBAAKCAQEAvFrGfpYBex2WCKuuPGk6D9Zpjwvz60MMfXDza1SlweFGZTMq
 0edGvrGv04PAXC2gPd5+zGaTbS19q4NkHb7fdFiA0AGhzv0LiV+2TwC8j9OcGeja
@@ -30,17 +32,23 @@ egoB1/Zp/a0Fo5elcntsqd36ssyJ1XwYVDIiB8qdO43hbZ+8U/CKZ6htWE3uSrKw
 mhsIc8K31IrWgutPgXfw84/vYzUgjrpUfqssYKbfN6g4wyumx2rLsaM=
 -----END RSA PRIVATE KEY-----"""
 
-ctx.getBean('bootStrapService').provaVaso()
+ctx.getBean('bootStrapService').avvia()
 }
 
 // Rigenera l'ambiente.
-rigenera()
+//rigenera()
 
 // Disabilita o abilita il bootstrap da web
 //ctx.getBean('bootStrapService').inAvvio = true
 
+// Simulazione battito di Quartz
+ctx.getBean('interfacciaContestoService').battito()
+
 // Rapporto
-println ctx.getBean('bootStrapService').rapporto()
+//println ctx.getBean('bootStrapService').toString()
+
+// Stampa configurazione contesto
+//println ctx.getBean('bootStrapService').contesto.esporta()
 
 // Esempio metalinguaggio
 //println ctx.metaClass.methods*.name.sort().unique()

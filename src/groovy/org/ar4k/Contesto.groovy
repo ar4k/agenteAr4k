@@ -25,6 +25,8 @@
 
 package org.ar4k
 
+import grails.converters.XML
+
 class Contesto {
 	/** id univoco contesto */
 	String idContesto = UUID.randomUUID()
@@ -36,12 +38,16 @@ class Contesto {
 	String idProgetto ='00 - LAB Rossonet'
 	/** campo per l'avanzamanto del bootstrap (boot,parametri collegamento ssh,parametri proxy interfaccia,parametri proxy vaso,funzionante,destruzione)*/
 	private String statoBootStrap = 'boot'
+	/** se salva il contesto su tutti i vasi connessi tranne i disabilitati */
+	Boolean clonaOvunque = false
 	/** ricettari a disposizione */
 	List<Ricettario> ricettari= []
 	/** interfacce collegate */
 	List<Interfaccia> interfacce= []
 	/** utenti del contesto da importare in configurazione*/
-	List<Utente> utenti = []
+	List<UtenteRuolo> utentiRuoli = []
+	/** memi attivi nel contesto */
+	List<Meme> memi = []
 	/** vasi disponibili nel contesto*/
 	List<Vaso> vasi =[]
 	/** connessioni tra i vasi disponibili nel contesto*/
@@ -49,42 +55,70 @@ class Contesto {
 	/** dati operativi situazione oggetti collegati in rete (a livello di porte e socket -mappa anche i dispositivi seriali collegati ai vasi-), reti e vasi,proxy e gw operativi, mappatura discovery*/
 	Stato statoRete = null
 	Vaso vasoMaster
-	
-	/** costruttore di classe (responsabile della costruzione di bootstrap del primo vaso)*/
-	def Contesto() {
-		// Attività di bootstrap
-	}
-	
+
 	/** ditruttore di classe (utile per la gestione della pulizia dei vasi)*/
 	def destroy() {
 		// Pulizia dei vasi
 	}
-	
-	/** aggiunge il vaso master alcontesto */
-	def avviaMaster(Vaso vaso) {
+
+	/** aggiunge il vaso master al contesto */
+	Boolean configuraMaster(Vaso vaso) {
 		vasoMaster = vaso
 		vasi.add(vaso)
+		return true
 	}
-	
-		
+
+
 	/** verifica ed eventualmente prova a riavviare tutti gli oggetti collegati*/
-	def verifica() {
-		return false
+	Boolean avviaContesto() {
+		Boolean risultato = true
+		for (Vaso vaso in vasi ) {
+			if (!vaso.provaVaso()) risultato = false
+			for (Ricettario ricettario in ricettari) {
+				if (!vaso.avviaRicettario(ricettario)) risultato = false
+			}
+		}
+		for (Connesione connessione in connessioni) {
+			if (!connessione.avvia()) risultato = false
+		}
+		for (Meme meme in memi) {
+			if (!meme.avvia()) risultato = false
+		}
+		if (risultato) statoBootStrap = 'avviato'
+		return risultato
 	}
-	
+
+	/** salva il contesto sul nodo master */
+	Boolean salva() {
+		Boolean risultato = false
+		if (clonaOvunque) {
+			vasi*.salvaContesto(this)
+			risultato = true // da definire
+		} else {
+			if (vasoMaster.salvaContesto(this)) risultato = true
+		}
+		return risultato
+	}
+
 	/** dump oggetto per funzioni di salvataggio*/
 	def esporta() {
+		log.info("esporta() il contesto: "+idContesto)
 		return [
-	idContesto:idContesto,
-	etichetta:etichetta,
-	descrizione:descrizione,
-	idProgetto:idProgetto,
-	ricettari:ricettari,
-	interfacce:interfacce,
-	utenti:utenti,
-	vasi:vasi,
-	connessioni:connessioni,
-	statoRete:statoRete
-			]
+			idContesto:idContesto,
+			etichetta:etichetta,
+			descrizione:descrizione,
+			idProgetto:idProgetto,
+			interfacce:interfacce*.esporta(),
+			memi:memi*.esporta(),
+			utentiRuoli:utentiRuoli*.esporta(),
+			vasi:vasi*.esporta(),
+			connessioni:connessioni*.esporta(),
+			vasoMaster:vasoMaster.esporta(),
+			ricettari:ricettari*.esporta()
+		]
+	}
+
+	String toString() {
+		return etichetta + " su "+vasoMaster+" ("+statoBootStrap+")"
 	}
 }

@@ -21,11 +21,20 @@ package org.ar4k
 
 class Connesione {
 	/** id univoco connessione */
-	String idConnesione = UUID.randomUUID()
+	String idConnessione = UUID.randomUUID()
 	/** etichetta connessione */
 	String etichetta = ''
 	/** descrizione connessione */
 	String descrizione ='Connessione AR4K by Rossonet'
+	
+	/** esporta la connessione*/
+	def esporta() {
+		return [
+			idConnessione:idConnessione,
+			etichetta:etichetta,
+			descrizione:descrizione
+			]
+	}
 }
 
 /**
@@ -44,6 +53,8 @@ class PortaVaso {
 	Boolean installata = false
 	Boolean attiva = false
 	Boolean libera = false
-	/** vasi che raggiungono direttamente la porta (alimentato dal discovery) */
-	List<Vaso> connessi = []
+	
+	def esporta() {
+		
+	}
 }

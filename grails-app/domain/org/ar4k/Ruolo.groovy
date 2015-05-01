@@ -20,9 +20,14 @@ class Ruolo {
 
 	String authority
 
-	static mapping = {
-		cache true
+	/** dump dati */
+	def esporta() {
+		return [
+			authority:authority
+		]
 	}
+
+	static mapping = { cache true }
 
 	static constraints = {
 		authority blank: false, unique: true

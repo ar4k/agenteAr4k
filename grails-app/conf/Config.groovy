@@ -13,9 +13,9 @@
 grails.config.locations = [
 	"classpath:${appName}-config.properties",
 	"classpath:${appName}-config.groovy",
-	"file:rossonet-config.groovy",
-	"file:${userHome}/.rossonet/${appName}-config.properties",
-	"file:${userHome}/.rossonet/${appName}-config.groovy"
+	"file:ar4k-config.groovy",
+	"file:${userHome}/.ar4k/${appName}-config.properties",
+	"file:${userHome}/.ar4k/${appName}-config.groovy"
 ]
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
@@ -221,6 +221,32 @@ grails {
 	}
 }
 
+master.host = '127.0.0.1'
+master.port = 22
+master.user = 'ar4k'
+// Iniziare la stringa chiave con """ e concludere con uguale combinazione
+master.key = """
+-----BEGIN RSA PRIVATE KEY-----
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+-----END RSA PRIVATE KEY-----
+"""
+
+// Contesto
+contesto = 'Bootstrap-Ar4k'
+
+// Interfaccia
+interfaccia = 'Bootstrap-Ar4k'
+
+// Codice attivazione Ar4K (Attivazioni commerciali)
+//codiceAttivazione = ''
+
+// Configurazione proxy tra la JVM e il vaso master
+//proxyVersoMaster = ''
+
+// Configurazione proxy tra il vaso master e Internet
+//proxyMasterInternet = ''
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////// FINE CONFIGURAZIONI ROSSONET ////////////////////////////////

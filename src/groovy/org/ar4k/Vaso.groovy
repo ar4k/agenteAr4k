@@ -19,6 +19,7 @@
 package org.ar4k
 
 import com.jcraft.jsch.*
+import grails.converters.XML
 
 class Vaso {
 	/** id univoco vaso */
@@ -39,8 +40,45 @@ class Vaso {
 	String path = '/usr/local/bin:/usr/bin:/bin'
 	/** sistema rilavato */
 	String uname = ''
-	/** indirizzi delle schede
-	List<puntoRete> indirizziFisici = []
+	/** indirizzi delle schede */
+	List<PuntoRete> indirizziFisici = []
+	/** Stringa proxy (esportata come http_proxy) */
+	String proxy = null
+	/** tollera errori nelle procedure */
+	Boolean tolleranza = false
+
+	/** esporta il vaso */
+	def esporta() {
+		return [
+			idVaso:idVaso,
+			descrizione:descrizione,
+			macchina:macchina,
+			porta:porta,
+			utente:utente,
+			key:key,
+			path:path,
+			uname:uname,
+			proxy:proxy,
+			tolleranza:tolleranza,
+			indirizziFisici:indirizziFisici*.esporta()
+		]
+	}
+
+	/** salva un contesto sul vaso*/
+	Boolean salvaContesto(Contesto contesto) {
+		String file = contesto.esporta() as XML
+		String interruzione = "EOF-"+UUID.randomUUID()+"-AR4K"
+		String comandoEsecuzione="cat > ~/.ar4k/contesti/"+contesto.idContesto+".xml << "+interruzione+"\n"+file+"\n"+interruzione+"\n"
+		String comandoControllo="cat ~/.ar4k/contesti/"+contesto.idContesto+".xml"
+		esegui(comandoEsecuzione)
+		String risultato=esegui(comandoControllo)
+		return risultato == file+"\n"?true:false
+	}
+
+	/** scrive un file */
+	Boolean scrivi(String file, String path) {
+		return false
+	}
 
 	/** esegui un comando ssh sul vaso */
 	String esegui(String comando) {
@@ -84,6 +122,10 @@ class Vaso {
 		return risultato
 	}
 
+	/** esegui comando nel contesto specifico*/
+	String esegui(Contesto contesto,String comando) {
+		return null
+	}
 
 	/** prova la connesione ssh al vaso */
 	Boolean provaConnessione() {
@@ -112,13 +154,28 @@ class Vaso {
 		fi
 		"""
 		String atteso = '42'
-		
+
 		esegui(creaDirectory)
 		esegui(battezza)
-		
+
 		String risultato=esegui(controllo)
 		log.info("risultato "+controllo+" = "+risultato+" (atteso: "+atteso+')')
 		return risultato == atteso?true:false
+	}
+
+	/** recupera i contesti salvati nel vaso */
+	List<Contesto> listaContesti() {
+		List<Contesto> contesti = []
+		String lista = esegui("listaContesti")
+		//for (String item in lista) {
+		Contesto creato = new Contesto()
+		contesti.add(creato)
+		//}
+		return contesti
+	}
+
+	String toString() {
+		return etichetta+" => "+utente+"@"+macchina+":"+porta
 	}
 
 }
@@ -129,8 +186,17 @@ class Vaso {
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  *
  */
-class puntoRete {
+class PuntoRete {
 	String indirizzoIp = ''
 	String sottoMaschera = ''
 	String mac = ''
+
+	/** Esporta per il salvataggio*/
+	def esporta() {
+		return [
+			indirizzoIp:indirizzoIp,
+			sottoMaschera:sottoMaschera,
+			mac:mac
+		]
+	}
 }

@@ -24,4 +24,7 @@ class Stato {
 	/** descrizione stato */
 	String descrizione ='Stato rete AR4K by Rossonet'
 
+	String toString() {
+		return etichetta
+	}
 }

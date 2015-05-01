@@ -23,12 +23,9 @@
 package org.ar4k
 
 class Interfaccia {
-	/** id univoco interfaccia */
-	String idInterfaccia = UUID.randomUUID()
-	/** etichetta interfaccia */
-	String etichetta = ''
-	/** descrizione interfaccia */
-	String descrizione ='UI AR4K by Rossonet'
+
+	// Oggetti iniettati da Grails - INIZIO -
+	
 	/** service per connessioni SSH utilizzato dall'interfaccia*/
 	SshService sshService
 	/** service Apache Camel utilizzato dall'interfaccia*/
@@ -41,4 +38,38 @@ class Interfaccia {
 	JSoupService jSoupService
 	/** service WebSocket utilizzato dall'interfaccia*/
 	WebSocketService webSocketService
+	/** service per interagire con il contesto */
+	InterfacciaContestoService interfacciaContestoService
+
+	// Oggetti iniettati da Grails - FINE -
+	
+	/** oggetto monitoraggio e stato reale*/
+	Stato stato = new Stato()
+	
+	/** id univoco interfaccia */
+	String idInterfaccia = UUID.randomUUID()
+	/** etichetta interfaccia */
+	String etichetta = ''
+	/** descrizione interfaccia */
+	String descrizione ='UI AR4K by Rossonet'
+	
+	/** esporta la configurazione dell'interfaccia */
+	def esporta() {
+		log.info("esporta() l'interfaccia: "+idInterfaccia)
+		return [
+			idInterfaccia:idInterfaccia,
+			etichetta:etichetta,
+			descrizione:descrizione
+			]
+	}
+	
+	/** metodo descrizione */
+	String toString() {
+		return "["+idInterfaccia+"] "+etichetta+" ("+stato+")"
+	}
+	
+	/** configura i service in funzione dell'interfaccia */
+	Boolean avviaInterfaccia() {
+		return true
+	}
 }

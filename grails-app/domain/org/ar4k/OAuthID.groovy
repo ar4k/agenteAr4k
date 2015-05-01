@@ -14,20 +14,27 @@ import org.ar4k.Utente
 
 class OAuthID implements Serializable {
 
-    String provider
-    String accessToken
+	String provider
+	String accessToken
 	Date dateCreated
 	Date lastUpdated
 
-    static belongsTo = [user: Utente]
+	static belongsTo = [user: Utente]
 
-    static constraints = {
-        accessToken unique: true
-    }
+	static constraints = { accessToken unique: true }
 
-    static mapping = {
-        provider    index: "identity_idx"
-        accessToken index: "identity_idx"
-    }
+	static mapping = {
+		provider    index: "identity_idx"
+		accessToken index: "identity_idx"
+	}
 
+	/** esporta la configurazione */
+	def esporta() {
+		return [
+			provider:provider,
+			accessToken:accessToken,
+			dateCreated:dateCreated,
+			lastUpdated:lastUpdated
+		]
+	}
 }
