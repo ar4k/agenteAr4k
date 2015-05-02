@@ -1,10 +1,11 @@
 /**
  * WebSocket Service
  *
- * <p>Gestisce le connessioni WebSocket attive</p>
+ * <p>Gestisce le connessioni WebSocket attive coordinandosi con SSHService e JSoupService.</p>
  *
  * <p style="text-justify">
- * ...</br>
+ * Il service mantiene gli stati relativi ai web socket configurati e la cache degli Stream. 
+ * Il service è strettamente correlato a DefaultMeteorHandler che lo invoca ad ogni richiesta.</br>
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)

@@ -4,7 +4,7 @@
  * <p>Configuraz i job Quartz</p>
  *
  * <p style="text-justify">
- * ...</br>
+ * Strettamente correlato a InterfacciaContestoService.</br>
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)

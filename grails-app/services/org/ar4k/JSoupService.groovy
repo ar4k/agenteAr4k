@@ -1,3 +1,11 @@
+/**
+ * Classe per la gestione dei Proxy semplici e filtrati da JSOUP.
+ * Sono configurati nei memi e attivabili per interfaccia.
+ * 
+ * da valutare la possibilità di proxy websocket
+ * 
+ */
+
 package org.ar4k
 
 import org.codehaus.groovy.grails.commons.GrailsApplication

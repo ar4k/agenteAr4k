@@ -1,7 +1,7 @@
 /**
- * Ruolo
+ * Ruolo interfaccia Ar4k
  *
- * <p>Ruolo utente</p>
+ * <p>Ruolo Utente</p>
  *
  * <p style="text-justify">
  * Il ruolo utente viene caricato dal contesto Ar4k</br>
@@ -17,10 +17,11 @@
 package org.ar4k
 
 class Ruolo {
-
+	
+	/** etichetta per la definizione del ruolo */
 	String authority
 
-	/** dump dati */
+	/** dump dati verso Ar4k */
 	def esporta() {
 		return [
 			authority:authority

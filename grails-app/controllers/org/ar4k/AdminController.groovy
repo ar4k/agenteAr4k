@@ -1,5 +1,5 @@
 /**
- * Controller interfaccia web del Contesto
+ * Controller interfaccia web principale
  * 
  * <p>
  * AdminController gestisce tutte le richieste dell'interfaccia utente tranne autenticazione e bootstrap

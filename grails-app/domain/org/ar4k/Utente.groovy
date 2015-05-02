@@ -1,10 +1,14 @@
 /**
- * Utente
+ * Utente Ar4k
  *
  * <p>Utente</p>
  *
  * <p style="text-justify">
- * I dati degli utenti sono caricati dal Contesto</br>
+ * Gli utenti possono avere più ruoli (tramite UtenteRuolo) e possono
+ * essere agganciati a più utenti su fonti di autenticazione OAuth.
+ * In pratica ad un utente Ar4k possono corrispondere più account social. 
+ * L'interfaccia grafica di ar4k guida l'utente nelle procedure di gestione 
+ * necessarie.</br>
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
@@ -25,8 +29,11 @@ class Utente {
 	String email
 	String sms
 	String jabber
+	/** Stringa per rappresentare i periodi in cui gli allert sono attivi -A tendere potrebbe diventare un json con le configurazioni per classe di log-*/
+	String workingTime = 'h24'
 	Date dateCreated
 	Date lastUpdated
+	/** Immagine avatar utente -da valutare l'autogenerazione algoritmica-*/
 	byte[] avatar
 	boolean enabled = true
 	boolean accountExpired
@@ -56,6 +63,7 @@ class Utente {
 			email:email,
 			sms:sms,
 			jabber:jabber,
+			workingTime:workingTime,
 			dateCreated:dateCreated,
 			lastUpdated:lastUpdated,
 			avatar:avatar,

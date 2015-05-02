@@ -40,8 +40,10 @@ class Vaso {
 	String path = '/usr/local/bin:/usr/bin:/bin'
 	/** sistema rilavato */
 	String uname = ''
+	/** da definire: rappresenta le funzionalità del vaso root/user space, memoria,capacità computazionale,spazio store. */
+	def funzionalita
 	/** indirizzi delle schede */
-	List<PuntoRete> indirizziFisici = []
+	List<PuntoRete> porte = []
 	/** Stringa proxy (esportata come http_proxy) */
 	String proxy = null
 	/** tollera errori nelle procedure */
@@ -60,7 +62,7 @@ class Vaso {
 			uname:uname,
 			proxy:proxy,
 			tolleranza:tolleranza,
-			indirizziFisici:indirizziFisici*.esporta()
+			porte:porte*.esporta()
 		]
 	}
 
@@ -181,7 +183,7 @@ class Vaso {
 }
 
 /**
- * PuntoRete rappresenta un interfaccia di rete su un vaso
+ * PuntoRete rappresenta una porta di rete su un vaso
  * 
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  *
@@ -190,6 +192,11 @@ class PuntoRete {
 	String indirizzoIp = ''
 	String sottoMaschera = ''
 	String mac = ''
+	Integer porta = null
+	/** protocollo parlato dalla porta */
+	String protocollo = 'Telnet'
+	/** eventuale meme assegnatario della porta */
+	Meme memeGestore = null
 
 	/** Esporta per il salvataggio*/
 	def esporta() {

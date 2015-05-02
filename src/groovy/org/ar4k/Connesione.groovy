@@ -10,6 +10,8 @@
  * 
  * <strong>TODO:</strong>
  * Connessione stealth (tramite TOR)
+ * Estendere il concetto di connesione alla gestione del file System (è possibile fare un proxy HTTP di un intero filesytem utilizzabile con FUSE?);
+ * eventualmente rsync via ssh periodico?
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)

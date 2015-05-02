@@ -26,6 +26,8 @@ class Ricettario {
 	String descrizione ='Ricettario (git) AR4K by Rossonet'
 	/** repository git */
 	RepositoryGit repositoryGit = new RepositoryGit()
+	/** semi disponibili sul ricettario */
+	List<Seme> semi = []
 	
 	/** esporta il ricettario */
 	def esporta() {
@@ -59,4 +61,17 @@ class RepositoryGit {
 	Boolean configurato = false
 	/** codice errore */
 	String codiceErrore = 'Nessun Errore'
+}
+
+/**
+ * Classe store per il meme, rappresenta una directory nel ricettario.
+ *
+ * in particolare mette a disposizione del sistema i metadati per la gestione
+ * dei memi istanziabili.
+ *
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ *
+ */
+class Seme {
+	
 }

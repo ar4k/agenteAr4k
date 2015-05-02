@@ -10,7 +10,8 @@
  * Ogni interfaccia dispone di propria associazione a gli account social in funzione delle password centrali, un contesto può ospitare più interfacce
  * ed ha un unico store degli utenti (con nome assoluto) e dei relativi ruoli.</br>
  * </br>
- * Un interfaccia recupera le informazioni del suo funzionamento dal contesto a cui è collegata.</br>
+ * Un interfaccia recupera le informazioni del suo funzionamento dal contesto a cui è collegata ed espone al contesto i metodi per operare
+ * sui service</br>
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)

@@ -3,6 +3,8 @@
  * 
  * <p>Meme contiene una ricetta eseguibile su nodi gestiti da Ar4k</p>
  * 
+ * <strong>valutare Docker, il seme contiene un template per la directory (come openshift)</strong>
+ * 
  * <p style="text-justify">
  * La parola <a href="http://it.wikipedia.org/wiki/Meme" target="_new">Meme (simile a "seme")</a> si riferisce al concetto espresso
  * per la prima volta nel 1976 dall'evoluzionista <a href="http://it.wikipedia.org/wiki/Richard_Dawkins" target="_new">Richard Dawkins</a> (rif: <a href="http://it.wikipedia.org/wiki/Il_gene_egoista" target="_new">"Gene Egoista"</a>) 
@@ -42,8 +44,6 @@
  * - API recupero informazioni contesto e il suo stato -configurazione del contesto inline- (in particolare sulle sessioni -user space- connesse al contesto);</br>
  * - API messaggi,task(ciclo di interazione con utente) e log verso gli utenti;</br>
  * </br></br>
- * <strong>TODO:</strong></br>
- * Verificare l'integrazione con Activiti</br>
  * Integrare rotte Camel tra i servizi erogati dai memi (come tunnel estensione delle connessioni)</br>
  * </p>
  * 

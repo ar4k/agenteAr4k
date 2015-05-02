@@ -4,7 +4,7 @@
  * <p>Gestisce le lavorazioni Kettle dei Memi</p>
  *
  * <p style="text-justify">
- * ...</br>
+ * Da valutare l'integrazione con la factory di controller AngularJS</br>
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)

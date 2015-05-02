@@ -1,3 +1,11 @@
+/**
+ * Per la gestione dei WebSocket con Meteor
+ * 
+ * Strettamente correlato a WebSocketService.
+ * 
+ */
+
+
 package org.ar4k
 
 

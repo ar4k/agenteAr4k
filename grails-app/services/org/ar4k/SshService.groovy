@@ -1,10 +1,12 @@
 /**
  * SSH Service
  *
- * <p>Gestisce le connessioni SSH dalla maschera</p>
+ * <p>Gestisce il recupero delle pagine generate da AngularJS e le sessioni Stream SSH</p>
  *
  * <p style="text-justify">
- * ...</br>
+ * Permette l'esecuzione di comandi (metodi) bash eventualmente integrati da altri framework (Chef/Puppet) sui Vasi. 
+ * Gestisce il recupero dell pagine generate da comand line per AngularJS e gestisce gli oggetti con scope session legati 
+ * a gli stream SSH.</br>
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)

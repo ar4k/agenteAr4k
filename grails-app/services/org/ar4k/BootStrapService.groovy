@@ -6,7 +6,12 @@
  * <p style="text-justify">
  * Questo service istanzia il primo vaso a cui si collega l'interfaccia via SSH.
  * Questo vaso, per l'interfaccia è considerato master, il bootstrap permette la creazione di
- * un vaso su OpenShift,Factory Rossonet,AWS (tramite immagine) per poi utilizzarlo</br>
+ * un vaso su OpenShift,Factory Rossonet,AWS (tramite immagine) per poi utilizzarlo.</br>
+ * 
+ * Il service, per tutto il ciclo di vita dell'interfaccia grafica, conserva lo stato e rende disponibili 
+ * i metodi per cambiare il vaso master e/o il contesto chiudendo correttamente il precedente.</b>
+ * 
+ * Questo service è invocato nel bootstrap per avviare l'interfaccia.</b>
  *
  * <strong>TODO:</strong>
  * Immagine macchina base su ks e OVA
@@ -91,7 +96,7 @@ class BootStrapService {
 	/** interfacce disponibili nel contesto */
 	List<Interfaccia> interfacceInContesto = []
 
-	/** test parametri correnti */
+	/** test parametri correnti e connesione al vaso master*/
 	Boolean provaConnessioneMaster() {
 		vasoMaster= new Vaso(
 				etichetta:utenteMaster+'@'+macchinaMaster+':'+portaMaster,
@@ -110,7 +115,7 @@ class BootStrapService {
 		return risultato
 	}
 
-	/** avvia o ripristina */
+	/** avvia o ripristina la connesione ssh al vaso master*/
 	Boolean caricaVasoMaster() {
 		Boolean risultato = false
 		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
@@ -124,7 +129,7 @@ class BootStrapService {
 		return risultato
 	}
 
-	/** carica il contesto per id */
+	/** carica il contesto per id contesto*/
 	Boolean caricaContesto(String contestoSceltaConf) {
 		Boolean ritorno = false
 		if (caricaVasoMaster()) {
@@ -148,7 +153,12 @@ class BootStrapService {
 		return ritorno
 	}
 
-	/** carica tutto e avvia */
+	/** 
+	 * carica tutto e avvia
+	 * 
+	 * @param contestoSceltaConf Contesto scelto per l'avvio (id)
+	 * @param interfacciaSceltaConf Interfaccia scelta per l'avvio (id)
+	 */
 	Boolean avvia(String contestoSceltaConf,String interfacciaSceltaConf) {
 		Boolean ritorno = false
 		if (caricaContesto(contestoSceltaConf)) {
@@ -176,7 +186,6 @@ class BootStrapService {
 		avvia(idContestoScelto,idInterfacciaScelta)
 	}
 
-	/** Esprime la situazione per il debug */
 	String toString() {
 		String risultato = '[ STATO ]\n'
 		risultato +='configurato: '+configurato+"\n"
@@ -193,7 +202,7 @@ class BootStrapService {
 		return risultato
 	}
 
-	/** il contesto per il bootstrap AR4K */
+	/** Crea il contesto iniziale per il bootstrap AR4K */
 	Contesto creaContestoAr4kBoot() {
 		log.info("Creo il contesto di demo per il boot su "+vasoMaster)
 		Contesto contestoCreato = new Contesto(
@@ -207,7 +216,7 @@ class BootStrapService {
 		return contestoCreato
 	}
 
-	/** l'interfaccia per il boot */
+	/** Crea l'interfaccia iniziale per il boot */
 	Interfaccia creaInterfacciaAr4k() {
 		Interfaccia interfacciaCreata = new Interfaccia(idInterfaccia:'Bootstrap-Ar4k')
 		log.info("Ho creato l'interfaccia demo:"+interfacciaCreata)

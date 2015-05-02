@@ -1,10 +1,13 @@
 /**
  * Interfaccia Contesto
  *
- * <p>Gestisce il collegamento tra il Contesto e l'interfaccia</p>
+ * <p>Gestisce la factory centrale dell'interfaccia per la costruzione dei servizi.</p>
  *
  * <p style="text-justify">
- * ...</br>
+ * Tutti gli eventi passano per questo service (una volta completato il bootstrap), in particolare questo service distribuisce gli eventi ai memi e alle code 
+ * utente (messaggi, task, eventi)</br>
+ * Questa interfaccia permette ai memi la gestione di operazioni complesse quali il load balancer, i dns e i QR</br>
+ * La configurazione di Quartz è in PingJob.
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
@@ -39,6 +42,8 @@ class InterfacciaContestoService {
 	GrailsApplication grailsApplication
 	/** servizio bootStrap attivato */
 	BootStrapService bootStrapService
+	/** eventi in controllo */
+	List<Evento> eventi = []
 		
 	/** Stampa la memoria con Camel */
 	void freeMemory() {
@@ -50,6 +55,28 @@ class InterfacciaContestoService {
 		if(!bootStrapService.contesto?.salva()) log.warn("Errore nel salvataggio del contesto!")
 		freeMemory()
 	}
+	
+/**
+ * Eventi Monitorati	
+ * 
+ * <p style="text-justify">
+ * La gestione degli eventi è la base per la propagazione delle informazioni di configurazione (aggiornamento ruoli autenticazioni in particolare), 
+ * di monitoraggio e segnalazione e per l'autoscale dei memi</br>
+ * </p>
+ * 
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ *
+ */
+class Evento {
+	/** check attivatori */
+	def testTrigger = [] // closure ?
+	/** azione se trigger positivo */
+	def listaAzioni = []
+	/** frequenza controllo */ 
+	String frequenza = '5 minuti'
+	/** controllo eventi attivato ? */
+	Boolean attivato = false
+}
 	
 	
 	
