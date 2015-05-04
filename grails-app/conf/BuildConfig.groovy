@@ -53,6 +53,8 @@ grails.project.dependency.resolution = {
 		mavenRepo "http://repository.pentaho.org/artifactory/repo/"
 		mavenRepo "https://repository.jboss.org/nexus/"
 		mavenRepo 'http://repo.spring.io/milestone'
+		// Per activiti
+		mavenRepo "https://maven.alfresco.com/nexus/content/groups/public/"
 
 	}
 
@@ -87,14 +89,14 @@ grails.project.dependency.resolution = {
 		//runtime 'org.crashub:crash.connectors.telnet:1.3.0-cr7'
 
 		bundle('javax.websocket:javax.websocket-api:1.1') {
-    		// This line is necessary for deployment to Tomcat, since
-    		// Tomcat comes with its own version of javax.websocket-api.
-    		export = false
-  		}
-		
-		compile "org.atmosphere:atmosphere-runtime:2.2.3", {
-			excludes "slf4j-api"
+			// This line is necessary for deployment to Tomcat, since
+			// Tomcat comes with its own version of javax.websocket-api.
+			export = false
 		}
+
+		compile "org.atmosphere:atmosphere-runtime:2.2.3", { excludes "slf4j-api" }
+
+		compile 'org.activiti:activiti-engine:5.17.0', { excludes "spring-beans" }
 	}
 
 	plugins {
@@ -147,21 +149,21 @@ grails.project.dependency.resolution = {
 		//compile ":spring-security-acl:2.0-RC2"
 		//compile ':spring-security-ldap:2.0-RC2'
 		//compile ":spring-security-openid:2.0-RC2"
-		
+
 		// Icone varie
 		compile ":fatcow-icons:0.1.0"
-		
+
 		// Aggiunge i plugin Jasper Report
 		//compile ":jasper:1.11.0"
-		
+
 		// Per HttpBuilder
 		compile ":rest:0.8"
 
 		// Socket
 		compile ":atmosphere-meteor:1.0.4"
 
-		// WebFlow 
+		// WebFlow
 		compile ":webflow:2.1.0"
-		
+
 	}
 }

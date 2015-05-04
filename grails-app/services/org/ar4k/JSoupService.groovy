@@ -4,6 +4,8 @@
  * 
  * da valutare la possibilità di proxy websocket
  * 
+ * Esempio implementazione proxy: http://www.sw-engineering-candies.com/blog-1/how-to-tunnel-http-protocol-with-a-simple-java-proxy-server-through-a-firewall
+ * 
  */
 
 package org.ar4k

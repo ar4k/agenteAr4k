@@ -269,7 +269,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	// by Andrea Ambrosini
 	'/register/**':                   ['permitAll'],
 	'/bootStrap/**':                  ['permitAll'], // Ricordarsi di bloccare la sicurezza sul Controller!
-	'/console/**':                    ['permitAll'], // Solo per debug della sicurezza!!!
+	'/console/**':                    ['permitAll'], // Solo per debug della sicurezza!!! 
+	'/plugins/console-1.5.4/**':      ['permitAll'], // Solo per debug della sicurezza!!!
 	'/login/**':    				  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],

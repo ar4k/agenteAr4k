@@ -41,13 +41,13 @@ class Vaso {
 	/** sistema rilavato */
 	String uname = ''
 	/** da definire: rappresenta le funzionalità del vaso root/user space, memoria,capacità computazionale,spazio store. */
-	def funzionalita
-	/** indirizzi delle schede */
-	List<PuntoRete> porte = []
+	List<String> funzionalita = []
 	/** Stringa proxy (esportata come http_proxy) */
 	String proxy = null
 	/** tollera errori nelle procedure */
 	Boolean tolleranza = false
+	/** indirizzi delle schede */
+	List<PuntoRete> porte = []
 
 	/** esporta il vaso */
 	def esporta() {

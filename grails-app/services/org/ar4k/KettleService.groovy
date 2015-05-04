@@ -6,6 +6,11 @@
  * <p style="text-justify">
  * Da valutare l'integrazione con la factory di controller AngularJS</br>
  * </p>
+ * 
+ * valutare l'inserimento di activity qui.
+ * http://alfrescoblog.com/2014/06/07/angular-js-activiti-webapp-part-i/
+ * http://alfrescoblog.com/2014/06/17/angular-js-activiti-webapp-part-ii/
+ * http://alfrescoblog.com/2014/09/04/angular-js-activiti-webapp-part-iii-final/
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  * @version 0.1-alpha
@@ -41,9 +46,14 @@ import org.w3c.dom.Document
 import org.w3c.dom.Node
 import org.w3c.dom.Element
 
+//import org.activiti.engine.ProcessEngine
+
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class KettleService {
+	
+	//ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine()
+	
 	def GrailsApplication grailsApplication
 	//def servletContext
 

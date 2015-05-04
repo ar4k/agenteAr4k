@@ -50,7 +50,7 @@ class LoginController {
 
 		else {
 			if (bootStrapService.inAvvio) {
-				log.info("Attivata procedura di bootstrap Ar4k.")
+				log.info("Iniziata procedura di bootstrap Ar4k.")
 				redirect controller:'bootStrap'
 			} else {
 

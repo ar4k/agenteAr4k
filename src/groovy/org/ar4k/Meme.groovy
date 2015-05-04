@@ -75,8 +75,24 @@ class Meme {
 	String etichetta = ''
 	/** descrizione meme */
 	String descrizione ='Meme AR4K by Rossonet'
-	String mascheraConfigurazione = '<p>Maschera non presente</p>'
+	String autore = 'Andrea Ambrosini'
+	String gestore = 'Rossonet s.c.a r.l.'
+	String versione = ''
+	List<String> versioniCompatibili = []
+	String mascheraAvvio = '<p>Maschera non presente</p>'
+	String mascheraBanner = '<p>Maschera non presente</p>'
+	String icona = ''
 	String stato = 'inattivo'
+	List<String> fileGestiti = []
+	List<String> metodiGestiti = []
+	List<String> dipendenze = []
+	List<String> funzionalita = []
+	List<String> variabiliAmbiente = []
+	String verificaMd5Sum = 'xxx'
+	
+	// Come gestire le chiamate del ciclo di vita? Per esempio prima del backup di un MySQL lo script per il dump del db.
+	// Come gestire la registrazione di eventi su altre cartucce durante il ciclo di vita?
+	// Elencare i vari servizi (JCloud,JSoup & Proxy ecc..). Da valutare bene la generazione di controller Angular.
 	 
 	/** dump meme */
 	def esporta() {

@@ -33,7 +33,7 @@ class Utente {
 	String workingTime = 'h24'
 	Date dateCreated
 	Date lastUpdated
-	/** Immagine avatar utente -da valutare l'autogenerazione algoritmica-*/
+	/** Immagine avatar utente -da valutare l'autogenerazione algoritmica- */
 	byte[] avatar
 	boolean enabled = true
 	boolean accountExpired
