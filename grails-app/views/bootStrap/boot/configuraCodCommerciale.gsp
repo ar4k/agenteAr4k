@@ -30,10 +30,19 @@
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
-					<h1>Inizio Ar4k</h1>
+					<h2>Inserisci codice di configurazione Ar4k</h2>
+					<p class="text-justify" style="text-align: justify;">
+						<a href="http://www.rossonet.org" target="_new">Rossonet</a> offre
+						servizi cloud e assistenza sul prodotto Ar4k. Per registrare
+						l'interfaccia <a href="http://www.rossonet.org/negozio" target="_new">acquistare un codice valido</a>
 					<p>
-						<a href="${resource(dir: '/')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Benvenuti nel boot Ar4k</a>
+					<p>
+						<a href="${createLink(event: 'completata')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Conferma</a>
+					</p>
+					<p>
+						<a href="${createLink(event: 'fallita')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Annulla</a>
 					</p>
 				</section>
 

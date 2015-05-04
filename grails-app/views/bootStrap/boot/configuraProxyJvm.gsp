@@ -30,10 +30,25 @@
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
-					<h1>Inizio Ar4k</h1>
+					<h2>Configurazione il proxy verso l'esterno</h2>
+					<p class="text-justify" style="text-align: justify;">Inserire i
+						dati di configurazione del proxy tra la JVM su cui è in esecuzione
+						questa interfaccia e Internet.
 					<p>
-						<a href="${resource(dir: '/')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Benvenuti nel boot Ar4k</a>
+					<p>
+						<a href="${createLink(event: 'indietro')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Torna alla
+							maschera di benvenuto</a>
+					</p>
+					<p>
+						<a href="${createLink(event: 'configuraCodCommerciale')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Inserisci
+							codice Ar4k Rossonet</a>
+					</p>
+					<p>
+						<a href="${createLink(event: 'configuraMaster')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Configura
+							l'accesso SSH al vaso master</a>
 					</p>
 				</section>
 

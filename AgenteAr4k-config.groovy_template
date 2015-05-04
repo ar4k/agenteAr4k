@@ -8,6 +8,8 @@ Il file va sistemato in ~/.rossonet/AgenteAr4k-config.groovy o <home utente>\.ro
 Se le configurazioni per connettersi non sono presenti, l'applicativo presenta un'interfaccia di boot guidato.
 */
 
+olark.key='1445-771-10-6904' //Per assistenza remota
+
 master.host = '127.0.0.1'
 master.port = 22
 master.user = 'ar4k'

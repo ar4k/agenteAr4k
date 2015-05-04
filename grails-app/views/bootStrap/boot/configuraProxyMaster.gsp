@@ -30,10 +30,19 @@
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
-					<h1>Inizio Ar4k</h1>
+					<h2>Parametri del proxy tra il vaso master e Internet</h2>
+					<p class="text-justify" style="text-align: justify;">Inserire i
+						parametri del proxy.
 					<p>
-						<a href="${resource(dir: '/')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Benvenuti nel boot Ar4k</a>
+					<p>
+						<a href="${createLink(event: 'indietro')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Torna alla
+							configurazione SSH del vaso master</a>
+					</p>
+					<p>
+						<a href="${createLink(event: 'scegliContesto')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Scegli il
+							contesto applicativo</a>
 					</p>
 				</section>
 

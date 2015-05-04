@@ -30,10 +30,19 @@
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
-					<h1>Inizio Ar4k</h1>
+					<h2>Configura un accesso amministrativo</h2>
+					<p class="text-justify" style="text-align: justify;">Per
+						accedere ad un contesto nuovo bisogna creare un'utenza
 					<p>
-						<a href="${resource(dir: '/')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Benvenuti nel boot Ar4k</a>
+					<p>
+						<a href="${createLink(event: 'completata')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Attiva
+							Ar4k</a>
+					</p>
+					<p>
+						<a href="${createLink(event: 'fallita')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Interrompi
+							la procedura</a>
 					</p>
 				</section>
 

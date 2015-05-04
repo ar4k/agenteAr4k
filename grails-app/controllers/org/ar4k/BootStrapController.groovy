@@ -29,27 +29,19 @@ class BootStrapController {
 		showBenvenuto {
 			on ("configuraProxyJvm").to "configuraProxyJvm"
 			on ("configuraCodCommerciale").to "configuraCodCommerciale"
-			on ("configuraMaster").to "configurazioneCompletata"
-			/**
-			 on ("configuraProxyMaster").to "configuraProxyMaster"
-			 on ("scegliContesto").to "scegliContesto"
-			 on ("scegliInterfaccia").to "scegliInterfaccia"
-			 on ("configuraAmministratore").to "configuraAmministratore"
-			 on ("completata").to("completata")
-			 on ("fallita").to("fallita")
-			 */
+			on ("configuraMaster").to "configuraMaster"
 		}
 
 		configuraProxyJvm {
 			on ("indietro").to "showBenvenuto"
 			on ("configuraCodCommerciale").to "configuraCodCommerciale"
-			on ("configuraMaster").to "configurazioneCompletata"
+			on ("configuraMaster").to "configuraMaster"
 		}
 
 		configuraCodCommerciale {
 			on ("indietro").to "showBenvenuto"
 			on ("completata").to("completata")
-			on ("fallita").to("fallita")
+			on ("fallita"){[messaggioOlark:"Qualcosa non funziona bene nella configurazione. Serve aiuto per configurare la piattaforma?"]}.to("fallita")
 		}
 
 		configuraMaster {
@@ -73,17 +65,19 @@ class BootStrapController {
 		scegliInterfaccia {
 			on ("configuraAmministratore").to "configuraAmministratore"
 			on ("completata").to("completata")
-			on ("fallita").to("fallita")
+			on ("fallita"){[messaggioOlark:"Qualcosa non funziona bene nella configurazione. Serve aiuto per configurare la piattaforma?"]}.to("fallita")
 		}
 
 		configuraAmministratore {
 			on ("completata").to("completata")
-			on ("fallita").to("fallita")
+			on ("fallita"){[messaggioOlark:"Qualcosa non funziona bene nella configurazione. Serve aiuto per configurare la piattaforma?"]}.to("fallita")
 		}
 
 		completata { redirect controller: 'admin' }
 
 		fallita {
+			on ("indietro").to "showBenvenuto"
+			on ("configuraCodCommerciale").to "configuraCodCommerciale"
 		}
 	}
 }

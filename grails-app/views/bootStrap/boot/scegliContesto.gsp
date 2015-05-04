@@ -30,10 +30,18 @@
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
-					<h1>Inizio Ar4k</h1>
+					<h2>Scegli il contesto applicativo</h2>
+					<p class="text-justify" style="text-align: justify;">...
 					<p>
-						<a href="${resource(dir: '/')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Benvenuti nel boot Ar4k</a>
+					<p>
+						<a href="${createLink(event: 'indietro')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Torna alla
+							configurazione SSH del vaso master</a>
+					</p>
+					<p>
+						<a href="${createLink(event: 'scegliInterfaccia')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Scegli
+							l'interfaccia applicativa</a>
 					</p>
 				</section>
 

@@ -30,10 +30,13 @@
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
-					<h1>Inizio Ar4k</h1>
-					<p>
-						<a href="${resource(dir: '/')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Benvenuti nel boot Ar4k</a>
+					<h2>Scegli l'interfaccia applicativa</h2>
+					<p class="text-justify" style="text-align: justify;">Ogni
+						contesto dispone di varie interfacce, scegli quale associare a
+						questa maschera Java.<p>
+					
+						<a href="${createLink(event: 'fallita')}"
+							class="link-scroll btn btn-outline-inverse btn-lg">Interrompi la procedura</a>
 					</p>
 				</section>
 

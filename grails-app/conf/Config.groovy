@@ -221,6 +221,9 @@ grails {
 	}
 }
 
+// Per l'assistenza remota
+olark.key='1445-771-10-6904'
+
 master.host = '127.0.0.1'
 master.port = 22
 master.user = 'ar4k'
