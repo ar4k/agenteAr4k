@@ -20,6 +20,8 @@ package org.ar4k
 
 class BootStrapController {
 
+	BootStrapService bootStrapService
+
 	def index() {
 		redirect action:'boot'
 	}
@@ -28,14 +30,26 @@ class BootStrapController {
 	def bootFlow = {
 		showBenvenuto {
 			on ("configuraProxyJvm").to "configuraProxyJvm"
-			on ("configuraCodCommerciale").to "configuraCodCommerciale"
-			on ("configuraMaster").to "configuraMaster"
+			on ("configuraCodCommerciale").to "inizioCod"
+			on ("configuraMaster").to "inizio"
+		}
+
+		inizioCod {
+			action { bootStrapService.verificaConnettivitaInterfaccia() }
+			on ("success").to "configuraCodCommerciale"
+			on (Exception).to "configuraProxyJvm"
+		}
+		
+		inizio {
+			action { bootStrapService.verificaConnettivitaInterfaccia() }
+			on ("success").to "configuraMaster"
+			on (Exception).to "configuraProxyJvm"
 		}
 
 		configuraProxyJvm {
 			on ("indietro").to "showBenvenuto"
-			on ("configuraCodCommerciale").to "configuraCodCommerciale"
-			on ("configuraMaster").to "configuraMaster"
+			on ("configuraCodCommerciale").to "inizioCod"
+			on ("configuraMaster").to "inizio"
 		}
 
 		configuraCodCommerciale {

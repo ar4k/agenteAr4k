@@ -28,12 +28,10 @@
 		<div class="content-wrapper clearfix">
 			<div class="col-sm-10 col-md-9 pull-right">
 				<section class="feature-text">
-					<h2>Configurazione Ar4k</h2>
+					<h2>Configurazione iniziale Ar4k</h2>
 					<p class="text-justify" style="text-align: justify;">La
 						piattaforma Ar4k necessità di alcune informazioni per la
-						configurazione iniziale. [Aggiungere macrospiegazione]
-					<p>
-					<p>
+						configurazione iniziale. 
 						<a href="${createLink(event: 'configuraProxyJvm')}"
 							class="link-scroll btn btn-outline-inverse btn-lg">Configura
 							Proxy tra l'interfaccia e il vaso master</a>

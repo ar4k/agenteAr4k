@@ -25,7 +25,6 @@ Per lavorare con git in bash:
 ```bash
 git config --global push.default matching
 git config credential.helper store
-git config color.ui true
 ```
 
 Per creare un'applicazione in un unico file .jar con tutte le librerie incluse e Tomcat 7 integrato:

@@ -122,7 +122,7 @@ class Vaso {
 			}
 			canale.disconnect()
 		}catch(JSchException e) {
-			log.warn("Errore connesione SSH: "+e.toString())
+			log.warn("Errore connesione SSH: "+e.printStackTrace())
 		}
 		return risultato
 	}

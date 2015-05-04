@@ -96,6 +96,24 @@ class BootStrapService {
 	/** interfacce disponibili nel contesto */
 	List<Interfaccia> interfacceInContesto = []
 
+	/** verifica se l'interfaccia raggiunge il gw ar4k */
+	Boolean verificaConnettivitaInterfaccia() {
+		String indirizzoTest='http://ipa.ar4k.net'
+		Boolean risultato=false
+		log.info("Prova la connessione a "+indirizzoTest)
+		try {
+			URL url = new URL(indirizzoTest)
+			HttpURLConnection con = (HttpURLConnection)url.openConnection()
+			if (con.connected) risultato = true
+			con.disconnect()
+		} catch (MalformedURLException e) {
+			log.warn(e.printStackTrace())
+		} catch (IOException e) {
+			log.warn(e.printStackTrace())
+		}
+		return risultato
+	}
+
 	/** test parametri correnti e connesione al vaso master*/
 	Boolean provaConnessioneMaster() {
 		vasoMaster= new Vaso(
@@ -180,7 +198,7 @@ class BootStrapService {
 		}
 		return ritorno
 	}
-	
+
 	/** metodo senza parametri avvia */
 	Boolean avvia() {
 		avvia(idContestoScelto,idInterfacciaScelta)
@@ -206,9 +224,9 @@ class BootStrapService {
 	Contesto creaContestoAr4kBoot() {
 		log.info("Creo il contesto di demo per il boot su "+vasoMaster)
 		Contesto contestoCreato = new Contesto(
-			idContesto:'Bootstrap-Ar4k',
-			etichetta:"Contesto generato per avvio Ar4k"
-			)
+				idContesto:'Bootstrap-Ar4k',
+				etichetta:"Contesto generato per avvio Ar4k"
+				)
 		contestoCreato.configuraMaster(vasoMaster)
 		Interfaccia interfacciaDemo = creaInterfacciaAr4k()
 		contestoCreato.interfacce.add(interfacciaDemo)
