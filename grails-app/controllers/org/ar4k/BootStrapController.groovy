@@ -20,20 +20,70 @@ package org.ar4k
 
 class BootStrapController {
 
-    def index() { 
+	def index() {
 		redirect action:'boot'
 	}
-	
-	
+
+	/** Gestisce il workflow di bootstrap */
 	def bootFlow = {
 		showBenvenuto {
-			on ("completato").to "configurazioneCompletata"
-			on ("fallita").to "configurazioneFallita"
+			on ("configuraProxyJvm").to "configuraProxyJvm"
+			on ("configuraCodCommerciale").to "configuraCodCommerciale"
+			on ("configuraMaster").to "configurazioneCompletata"
+			/**
+			 on ("configuraProxyMaster").to "configuraProxyMaster"
+			 on ("scegliContesto").to "scegliContesto"
+			 on ("scegliInterfaccia").to "scegliInterfaccia"
+			 on ("configuraAmministratore").to "configuraAmministratore"
+			 on ("completata").to("completata")
+			 on ("fallita").to("fallita")
+			 */
 		}
-		configurazioneCompleta {
-			redirect controller: 'admin'
+
+		configuraProxyJvm {
+			on ("indietro").to "showBenvenuto"
+			on ("configuraCodCommerciale").to "configuraCodCommerciale"
+			on ("configuraMaster").to "configurazioneCompletata"
 		}
-		configurazioneFallita {
+
+		configuraCodCommerciale {
+			on ("indietro").to "showBenvenuto"
+			on ("completata").to("completata")
+			on ("fallita").to("fallita")
+		}
+
+		configuraMaster {
+			on ("indietro").to "showBenvenuto"
+			on ("configuraProxyJvm").to "configuraProxyJvm"
+			on ("configuraCodCommerciale").to "configuraCodCommerciale"
+			on ("configuraProxyMaster").to "configuraProxyMaster"
+			on ("scegliContesto").to "scegliContesto"
+		}
+
+		configuraProxyMaster {
+			on ("indietro").to "configuraMaster"
+			on ("scegliContesto").to "scegliContesto"
+		}
+
+		scegliContesto {
+			on ("indietro").to "configuraMaster"
+			on ("scegliInterfaccia").to "scegliInterfaccia"
+		}
+
+		scegliInterfaccia {
+			on ("configuraAmministratore").to "configuraAmministratore"
+			on ("completata").to("completata")
+			on ("fallita").to("fallita")
+		}
+
+		configuraAmministratore {
+			on ("completata").to("completata")
+			on ("fallita").to("fallita")
+		}
+
+		completata { redirect controller: 'admin' }
+
+		fallita {
 		}
 	}
 }

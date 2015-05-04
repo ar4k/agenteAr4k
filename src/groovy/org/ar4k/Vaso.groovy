@@ -48,6 +48,8 @@ class Vaso {
 	Boolean tolleranza = false
 	/** indirizzi delle schede */
 	List<PuntoRete> porte = []
+	/** l'utenza ha l'accesso sudo sulla macchina */
+	Boolean sudo = false
 
 	/** esporta il vaso */
 	def esporta() {
@@ -58,6 +60,7 @@ class Vaso {
 			porta:porta,
 			utente:utente,
 			key:key,
+			sudo:sudo,
 			path:path,
 			uname:uname,
 			proxy:proxy,
