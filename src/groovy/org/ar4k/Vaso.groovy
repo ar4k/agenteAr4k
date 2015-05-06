@@ -69,6 +69,16 @@ class Vaso {
 		]
 	}
 
+	/** verifica la raggiungibilità di internet dal vaso */
+	Boolean verificaConnettivita() {
+		log.info("Verifico se "+etichetta+" raggiunge l'esterno.")
+		String comando = 'wget hc.rossonet.name -O - 2>/dev/null | grep hera | wc -l'
+		String atteso = '1\n'
+		String risultato = esegui(comando)
+		log.info("risultato "+comando+" = "+risultato+" (atteso: "+atteso+')')
+		return risultato == atteso?true:false
+	}
+
 	/** salva un contesto sul vaso*/
 	Boolean salvaContesto(Contesto contesto) {
 		String file = contesto.esporta() as XML

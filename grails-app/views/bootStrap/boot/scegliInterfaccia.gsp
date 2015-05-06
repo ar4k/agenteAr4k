@@ -25,19 +25,26 @@
 	</script>
 
 	<article id="bootstrap" class="section-wrapper clearfix"
-		data-custom-background-img="${resource(dir: 'atterraggio', file: 'images/other_images/bg5.jpg')}">
+		data-custom-background-img="${resource(dir: 'atterraggio', file: 'images/other_images/bg4.jpg')}">
 		<div class="content-wrapper clearfix">
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
 					<h2>Scegli l'interfaccia applicativa</h2>
 					<p class="text-justify" style="text-align: justify;">Ogni
-						contesto dispone di varie interfacce, scegli quale associare a
-						questa maschera Java.<p>
-					
-						<a href="${createLink(event: 'fallita')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Interrompi la procedura</a>
-					</p>
+						contesto dispone di varie interfacce, scegli quale utilizzare tra
+						quelle diponibili.</p>
+					<g:each in="${listaInterfacce}">
+						<g:if test="${it}">
+							<p>
+								<a
+									href="${createLink(event: 'provaUtente')}&interfaccia=${it.id}"
+									class="link-scroll btn btn-outline-inverse btn-lg">Scegli
+									l'interfaccia "${it.descrizione?:it.id}"
+								</a>
+							</p>
+						</g:if>
+					</g:each>
 				</section>
 
 			</div>

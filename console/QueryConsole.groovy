@@ -42,7 +42,7 @@ ctx.getBean('bootStrapService').avvia()
 //ctx.getBean('bootStrapService').inAvvio = true
 
 // Simulazione battito di Quartz
-ctx.getBean('interfacciaContestoService').battito()
+//ctx.getBean('interfacciaContestoService').battito()
 
 // Rapporto
 //println ctx.getBean('bootStrapService').toString()

@@ -95,16 +95,23 @@ class BootStrapService {
 
 	/** interfacce disponibili nel contesto */
 	List<Interfaccia> interfacceInContesto = []
+	
+	/** utenti disponibili nel contesto */
+	List<Utente> utentiInContesto = []
 
 	/** verifica se l'interfaccia raggiunge il gw ar4k */
 	Boolean verificaConnettivitaInterfaccia() {
-		String indirizzoTest='http://ipa.ar4k.net'
+		String indirizzoTest='http://hc.rossonet.name'
 		Boolean risultato=false
 		log.info("Prova la connessione a "+indirizzoTest)
 		try {
 			URL url = new URL(indirizzoTest)
 			HttpURLConnection con = (HttpURLConnection)url.openConnection()
-			if (con.connected) risultato = true
+			log.debug(con.responseCode)
+			if (con.responseCode==200){
+				risultato = true
+				log.info(indirizzoTest+": Connessione OK")
+			}
 			con.disconnect()
 		} catch (MalformedURLException e) {
 			log.warn(e.printStackTrace())
@@ -147,6 +154,18 @@ class BootStrapService {
 		return risultato
 	}
 
+	/** cerifica la connettività verso internet del vaso master */
+	Boolean verificaConnettivitaVasoMaster() {
+		Boolean risultato = false
+		if(vasoMaster.verificaConnettivita()) {
+			risultato = true
+			log.info("Il vaso master accede ad Internet")
+		} else {
+			log.info("Il vaso master NON accede ad Internet")
+		}
+		return risultato
+	}
+
 	/** carica il contesto per id contesto*/
 	Boolean caricaContesto(String contestoSceltaConf) {
 		Boolean ritorno = false
@@ -165,6 +184,7 @@ class BootStrapService {
 					log.info("Attestato sul contesto "+contesto)
 					idContestoScelto = contesto.idContesto
 					interfacceInContesto = contesto.interfacce
+					utentiInContesto = contesto.utentiRuoli*.utente
 				}
 			}
 		}
@@ -204,6 +224,7 @@ class BootStrapService {
 		avvia(idContestoScelto,idInterfacciaScelta)
 	}
 
+	/** ritorna il rapporto della situazione del processo di boot */
 	String toString() {
 		String risultato = '[ STATO ]\n'
 		risultato +='configurato: '+configurato+"\n"

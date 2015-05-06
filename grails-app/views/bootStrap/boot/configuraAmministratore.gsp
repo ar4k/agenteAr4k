@@ -25,14 +25,16 @@
 	</script>
 
 	<article id="bootstrap" class="section-wrapper clearfix"
-		data-custom-background-img="${resource(dir: 'atterraggio', file: 'images/other_images/bg5.jpg')}">
+		data-custom-background-img="${resource(dir: 'atterraggio', file: 'images/other_images/bg6.jpg')}">
 		<div class="content-wrapper clearfix">
 			<div class="col-sm-10 col-md-9 pull-right">
 
 				<section class="feature-text">
-					<h2>Configura un accesso amministrativo</h2>
-					<p class="text-justify" style="text-align: justify;">Per
-						accedere ad un contesto nuovo bisogna creare un'utenza
+					<h2>Configura un accesso amministrativo per Ar4k</h2>
+					<p class="text-justify" style="text-align: justify;">Il
+						contesto scelto non ha nessun accesso configurato. Per completare
+						la procedura è necessario configurare un'utenza che svolgerà
+						la funzione di amministratore per questo contesto.
 					<p>
 					<p>
 						<a href="${createLink(event: 'completata')}"
@@ -42,7 +44,7 @@
 					<p>
 						<a href="${createLink(event: 'fallita')}"
 							class="link-scroll btn btn-outline-inverse btn-lg">Interrompi
-							la procedura</a>
+							la procedura di configurazione della maschera</a>
 					</p>
 				</section>
 
