@@ -37,7 +37,7 @@
 				</p>
 				<p>
 					<a href="${createLink(event: 'configuraCodCommerciale')}"
-						class="link-scroll btn btn-outline-inverse btn-lg">Utilizza un
+						class="link-scroll btn-success btn btn-outline-inverse btn-lg">Utilizza un
 						codice attivazione Rossonet</a>
 				</p>
 				<p class="text-justify" style="text-align: justify;">
@@ -52,7 +52,7 @@
 				</p>
 			</div>
 			<div class="col-md-10 col-xs-12 col-sm-12 pull-right">
-				<form class="form-style validate-form clearfix" autocomplete='on'
+				<form class="form-style validate-form clearfix" autocomplete='off'
 					action="${createLink(event: 'verificaMaster')}" name="vasoMaster"
 					method="post">
 					<div class="form-group">
@@ -60,21 +60,20 @@
 							nome)</label> <input type="text" name="indirizzoMaster"
 							class="text-field form-control validate-field required"
 							data-validation-type="string" id="indirizzoMaster"
-							placeholder="127.0.0.1" name="indirizzoMaster">
+							placeholder="ess. 127.0.0.1">
 					</div>
 					<div class="form-group">
 						<label for="portaMaster">Porta accesso SSH</label> <input
 							type="text" name="portaMaster"
 							class="text-field form-control validate-field required"
-							data-validation-type="required" id="portaMaster" placeholder="22"
-							name="portaMaster">
+							data-validation-type="required" id="portaMaster" placeholder="ess. 22">
 					</div>
 					<div class="form-group">
 						<label for="utenteMaster">Utente accesso SSH</label> <input
 							type="text" name="utenteMaster"
 							class="text-field form-control validate-field required"
 							data-validation-type="required" id="utenteMaster"
-							placeholder="root" name="utenteMaster">
+							placeholder="ess. root">
 					</div>
 					<div class="form-group">
 						<label for="chiaveMaster">Chiave privata per autenticare</label>

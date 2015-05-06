@@ -27,23 +27,43 @@
 	<article id="bootstrap" class="section-wrapper clearfix"
 		data-custom-background-img="${resource(dir: 'atterraggio', file: 'images/other_images/bg5.jpg')}">
 		<div class="content-wrapper clearfix">
-			<div class="col-sm-10 col-md-9 pull-right">
+			<div class="col-md-10 col-xs-12 col-sm-12 pull-right">
 
 				<section class="feature-text">
-					<h2>Parametri del proxy tra il vaso master e Internet</h2>
-					<p class="text-justify" style="text-align: justify;">Inserire i
-						parametri del proxy.
-					<p>
-					<p>
-						<a href="${createLink(event: 'indietro')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Torna alla
-							configurazione SSH del vaso master</a>
-					</p>
-					<p>
-						<a href="${createLink(event: 'scegliContesto')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Scegli il
-							contesto applicativo</a>
-					</p>
+					<h2>Configurazione proxy vaso master</h2>
+					<!-- Se il server non è connesso direttamente a internet -->
+					<p class="text-justify" style="text-align: justify;">Il vaso
+						master non è in grado di comunicare direttamente con Internet.
+						Potrebbe essere necessario l'utilizzo di un proxy (http o socks)
+						per permettere alla macchina di raggiungere le reti esterni. Per
+						evitare che la piattaforma faccia ulteriori test sulla
+						raggiungibilità di rete inserire "NO NETWORK TEST" nel campo
+						proxy.</p>
+					<form class="form-style validate-form clearfix" autocomplete='off'
+						action="${createLink(event: 'success')}"
+						name="configuraProxyJvm" method="post">
+						<div class="form-group">
+							<label for="proxyMaster">Indirizzo e utente</label> <input
+								type="text" name="proxyMaster"
+								class="text-field form-control validate-field required"
+								data-validation-type="string" id="proxyMaster"
+								placeholder="<http/socks5>://<utente>@<macchina>:<porta>">
+						</div>
+						<div class="form-group">
+							<label for="passwordProxyMaster">Password</label> <input
+								type="password" name="passwordProxyMaster"
+								class="text-field form-control validate-field"
+								data-validation-type="string" id="passwordProxyMaster"
+								placeholder="Password del proxy">
+						</div>
+						<div class="form-group">
+							<button name="_eventId" class="btn btn-sm btn-outline-inverse"
+								value="configuraProxyMaster"
+								onClick="document.forms['configuraProxyJvm'].submit();">Configura
+								i parametri del proxy sul vaso</button>
+						</div>
+					</form>
+
 				</section>
 
 			</div>

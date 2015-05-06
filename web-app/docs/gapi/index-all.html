@@ -127,6 +127,8 @@ if (location.href.indexOf('is-external=true') == -1) {
 </dt><dd><div class="block">Controller interfaccia web principale</div></dd>
 <dt><span class="strong"><a href="org/ar4k/AdminController.html#AdminController()" title="Constructor in AdminController">AdminController()</a></span> - Constructor in <a href="org/ar4k/AdminController.html">AdminController</a>
 </dt><dd> <div class="block"></div></dd>
+<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#aggiungiUtente(java.lang.String, java.lang.String)" title="Method in BootStrapService">aggiungiUtente(String, String)</a></span> - Method in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
+</dt><dd> <div class="block">Aggiunge un utente al contesto</div></dd>
 <dt><span class="strong"><a href="org/ar4k/secure/LoginController.html#ajaxDenied()" title="Method in LoginController">ajaxDenied()</a></span> - Method in <a href="org/ar4k/secure/LoginController.html">LoginController</a>
 </dt><dd> <div class="block">The Ajax denied redirect url.</div></dd>
 <dt><span class="strong"><a href="org/ar4k/secure/LoginController.html#ajaxSuccess()" title="Method in LoginController">ajaxSuccess()</a></span> - Method in <a href="org/ar4k/secure/LoginController.html">LoginController</a>
@@ -431,6 +433,10 @@ if (location.href.indexOf('is-external=true') == -1) {
 </dt><dd> <div class="block"></div></dd>
 <dt><span class="strong"><a href="org/ar4k/UtenteRuolo.html#equals(def)" title="Method in UtenteRuolo">equals(def)</a></span> - Method in <a href="org/ar4k/UtenteRuolo.html">UtenteRuolo</a>
 </dt><dd> <div class="block"></div></dd>
+<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#escludiProveConnessione" title="Property in BootStrapService">escludiProveConnessione</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
+</dt><dd> <div class="block">se vero esclude i controlli di raggiungibilità</div></dd>
+<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#escludiProveConnessioneVaso" title="Property in BootStrapService">escludiProveConnessioneVaso</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
+</dt><dd> <div class="block">se vero esclude i controlli di raggiungibilità del vaso</div></dd>
 <dt><span class="strong"><a href="org/rossonet/kettle/ETLController.html#esegui(java.lang.String)" title="Method in ETLController">esegui(String)</a></span> - Method in <a href="org/rossonet/kettle/ETLController.html">ETLController</a>
 </dt><dd> <div class="block"></div></dd>
 <dt><span class="strong"><a href="org/ar4k/HostRemoto.html#esegui(java.lang.String)" title="Method in HostRemoto">esegui(String)</a></span> - Method in <a href="org/ar4k/HostRemoto.html">HostRemoto</a>
@@ -567,8 +573,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 </dt><dd> <div class="block"></div></dd>
 <dt><span class="strong"><a href="org/ar4k/SshService.html#getSession(java.lang.String)" title="Method in SshService">getSession(String)</a></span> - Method in <a href="org/ar4k/SshService.html">SshService</a>
 </dt><dd> <div class="block"></div></dd>
-<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#googleAnalytics" title="Property in BootStrapService">googleAnalytics</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
-</dt><dd> <div class="block">eventuale chat Google Analytics interfaccia</div></dd>
 <dt><span class="strong"><a href="DefaultPackage/BootStrap.html#grailsApplication" title="Property in BootStrap">grailsApplication</a></span> - Property in <a href="DefaultPackage/BootStrap.html">BootStrap</a>
 </dt><dd> <div class="block"></div></dd>
 <dt><span class="strong"><a href="org/rossonet/kettle/ETLController.html#grailsApplication" title="Property in ETLController">grailsApplication</a></span> - Property in <a href="org/rossonet/kettle/ETLController.html">ETLController</a>
@@ -899,8 +903,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 </dt><dd><div class="block">@deprecated vecchia implementazione</div></dd>
 <dt><span class="strong"><a href="org/ar4k/Oggetto.html#Oggetto()" title="Constructor in Oggetto">Oggetto()</a></span> - Constructor in <a href="org/ar4k/Oggetto.html">Oggetto</a>
 </dt><dd> <div class="block"></div></dd>
-<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#olarkKey" title="Property in BootStrapService">olarkKey</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
-</dt><dd> <div class="block">eventuale chat Olark interfaccia</div></dd>
 <dt><span class="strong"><a href="org/ar4k/secure/SpringSecurityOAuthController.html#onFailure" title="Property in SpringSecurityOAuthController">onFailure</a></span> - Property in <a href="org/ar4k/secure/SpringSecurityOAuthController.html">SpringSecurityOAuthController</a>
 </dt><dd> <div class="block"></div></dd>
 <dt><span class="strong"><a href="org/ar4k/secure/SpringSecurityOAuthController.html#onSuccess" title="Property in SpringSecurityOAuthController">onSuccess</a></span> - Property in <a href="org/ar4k/secure/SpringSecurityOAuthController.html">SpringSecurityOAuthController</a>
@@ -933,10 +935,12 @@ if (location.href.indexOf('is-external=true') == -1) {
 </dt><dd> <div class="block">password utente</div></dd>
 <dt><span class="strong"><a href="org/ar4k/Utente.html#password" title="Property in Utente">password</a></span> - Property in <a href="org/ar4k/Utente.html">Utente</a>
 </dt><dd> <div class="block"></div></dd>
-<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#passwordAmministratore" title="Property in BootStrapService">passwordAmministratore</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
-</dt><dd> <div class="block">password utente amministratore applicativo</div></dd>
 <dt><span class="strong"><a href="org/ar4k/Utente.html#passwordExpired" title="Property in Utente">passwordExpired</a></span> - Property in <a href="org/ar4k/Utente.html">Utente</a>
 </dt><dd> <div class="block"></div></dd>
+<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#passwordProxyMasterInternet" title="Property in BootStrapService">passwordProxyMasterInternet</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
+</dt><dd> <div class="block">configurazione proxy tra il vaso e internet password</div></dd>
+<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#passwordProxyVersoMaster" title="Property in BootStrapService">passwordProxyVersoMaster</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
+</dt><dd> <div class="block">configurazione proxy tra Grails e il vaso master password</div></dd>
 <dt><span class="strong"><a href="org/ar4k/Vaso.html#path" title="Property in Vaso">path</a></span> - Property in <a href="org/ar4k/Vaso.html">Vaso</a>
 </dt><dd> <div class="block">variabile PATH sulla macchina</div></dd>
 <dt><span class="strong"><a href="org/rossonet/kettle/ETLController.html#pausa(java.lang.String)" title="Method in ETLController">pausa(String)</a></span> - Method in <a href="org/rossonet/kettle/ETLController.html">ETLController</a>
@@ -1314,8 +1318,6 @@ if (location.href.indexOf('is-external=true') == -1) {
 </dt><dd> <div class="block"></div></dd>
 <dt><span class="strong"><a href="org/ar4k/Vaso.html#utente" title="Property in Vaso">utente</a></span> - Property in <a href="org/ar4k/Vaso.html">Vaso</a>
 </dt><dd> <div class="block">utente vaso</div></dd>
-<dt><span class="strong"><a href="org/ar4k/BootStrapService.html#utenteAmministratore" title="Property in BootStrapService">utenteAmministratore</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
-</dt><dd> <div class="block">utente amministratore applicativo -se non configurato nel reposirory-</div></dd>
 <dt><span class="strong"><a href="org/ar4k/BootStrapService.html#utenteMaster" title="Property in BootStrapService">utenteMaster</a></span> - Property in <a href="org/ar4k/BootStrapService.html">BootStrapService</a>
 </dt><dd> <div class="block">utente ssh</div></dd>
 <dt><span class="strong"><a href="org/ar4k/UtenteRuolo.html" title="Class in org.ar4k">UtenteRuolo</a></span> - Class in <a href="./org/ar4k/package-summary.html">org.ar4k</a>

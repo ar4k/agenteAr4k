@@ -38,6 +38,9 @@ ctx.getBean('bootStrapService').avvia()
 // Rigenera l'ambiente.
 //rigenera()
 
+// Attiva/disattiva prove raggiungibilità di rete
+//ctx.getBean('bootStrapService').escludiProveConnessione = false
+
 // Disabilita o abilita il bootstrap da web
 //ctx.getBean('bootStrapService').inAvvio = true
 
@@ -45,7 +48,7 @@ ctx.getBean('bootStrapService').avvia()
 //ctx.getBean('interfacciaContestoService').battito()
 
 // Rapporto
-//println ctx.getBean('bootStrapService').toString()
+println ctx.getBean('bootStrapService').toString()
 
 // Stampa configurazione contesto
 //println ctx.getBean('bootStrapService').contesto.esporta()

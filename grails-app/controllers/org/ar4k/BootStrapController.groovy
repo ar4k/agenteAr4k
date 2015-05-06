@@ -37,7 +37,7 @@ class BootStrapController {
 		}
 
 		showBenvenuto {
-			on ("configuraProxyJvm").to "configuraProxyJvm"
+			on ("configuraProxyJvm").to "aggiungiProxy"
 			on ("configuraCodCommerciale").to "inizioCod"
 			on ("configuraMaster").to "inizio"
 		}
@@ -45,25 +45,39 @@ class BootStrapController {
 		inizioCod {
 			action { bootStrapService.verificaConnettivitaInterfaccia() }
 			on ("success").to "configuraCodCommerciale"
-			on (Exception).to "configuraProxyJvm"
+			on (Exception).to "showBenvenuto"
 		}
 
 		inizio {
 			action { bootStrapService.verificaConnettivitaInterfaccia() }
 			on ("success").to "configuraMaster"
-			on (Exception).to "configuraProxyJvm"
+			on (Exception).to "showBenvenuto"
 		}
 
-		configuraProxyJvm {
-			on ("indietro").to "showBenvenuto"
-			on ("configuraCodCommerciale").to "inizioCod"
-			on ("configuraMaster").to "inizio"
+		aggiungiProxy {
+			action {
+				bootStrapService.proxyVersoMaster=params.proxyJvm?:''
+				bootStrapService.passwordProxyVersoMaster=params.passwordJvm?:''
+				if (bootStrapService.proxyVersoMaster=='NO NETWORK TEST') bootStrapService.escludiProveConnessione = true // per disabilitare test di rete
+			}
+			on ("success").to "entrata"
+			on (Exception).to "showBenvenuto"
 		}
 
 		configuraCodCommerciale {
 			on ("indietro").to "showBenvenuto"
+			on ("completata").to("provaCodiceCommerciale")
+			on ("fallita"){ [messaggioOlark:"Salve. Serve aiuto per configurare la piattaforma?"] }.to("fallita")
+		}
+
+		provaCodiceCommerciale {
+			action {
+				bootStrapService.codiceAttivazioneAr4k=params.codCommerciale?:''
+				// da implementare il test e l'azione
+				return completata()
+			}
 			on ("completata").to("completata")
-			on ("fallita"){ [messaggioOlark:"Qualcosa non funziona bene nella configurazione. Serve aiuto per configurare la piattaforma?"] }.to("fallita")
+			on ("errore").to("configuraCodCommerciale")
 		}
 
 		configuraMaster {
@@ -102,8 +116,28 @@ class BootStrapController {
 		}
 
 		configuraProxyMaster {
-			on ("indietro").to "configuraMaster"
-			on ("scegliContesto").to "scegliContesto"
+			on ("success").to "testProxyMaster"
+		}
+
+		testProxyMaster {
+			action {
+				bootStrapService.proxyMasterInternet=params.proxyMaster?:''
+				bootStrapService.passwordProxyMasterInternet=params.passwordProxyMaster?:''
+				Boolean risultato = false
+				if (bootStrapService.proxyMasterInternet=='NO NETWORK TEST') {
+					bootStrapService.escludiProveConnessioneVaso = true // per disabilitare test di rete
+					risultato= true
+				} else {
+					risultato = bootStrapService.verificaConnettivitaVasoMaster()
+				}
+				if (risultato == true ) {
+					return success() }
+				else {
+					return sconnesso()
+				}
+			}
+			on ("success").to "scegliContesto"
+			on ("sconnesso").to "configuraProxyMaster"
 		}
 
 		scegliContesto {
@@ -146,10 +180,17 @@ class BootStrapController {
 
 		configuraAmministratore {
 			on ("completata").to("testFinale")
+			on ("fallita"){ [messaggioOlark:"Salve. Serve aiuto per configurare la piattaforma?"] }.to("fallita")
 		}
 
 		testFinale {
 			action {
+				if ( params.passwordDemo1 == params.passwordDemo2 && params.passwordDemo1 != '') {
+					bootStrapService.aggiungiUtente(params.utenteDemo,params.passwordDemo1)
+				} else {
+					log.info("Le password NON corrispondo per creare l'utente "+params.utenteDemo)
+				}
+
 				if(bootStrapService.avvia()) {
 					return completata()
 				} else {
@@ -160,8 +201,9 @@ class BootStrapController {
 			on ("fallita"){[rapporto:bootStrapService.toString()]}.to("fallita")
 		}
 
-		completata {  redirect controller: 'admin'  }
+		completata {  redirect controller: 'login',action:'auth' }
 
+		// Implementare pagina aiuto via Olark
 		fallita {
 			on ("indietro").to "showBenvenuto"
 			on ("configuraCodCommerciale").to "configuraCodCommerciale"

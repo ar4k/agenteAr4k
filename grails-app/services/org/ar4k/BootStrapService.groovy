@@ -45,6 +45,12 @@ class BootStrapService {
 	/** vasoMaster */
 	Vaso vasoMaster
 
+	/** se vero esclude i controlli di raggiungibilità */
+	Boolean escludiProveConnessione = false
+
+	/** se vero esclude i controlli di raggiungibilità del vaso */
+	Boolean escludiProveConnessioneVaso = false
+
 	/** codice attivazione ar4k, se null assente */
 	String codiceAttivazioneAr4k = null
 
@@ -54,17 +60,11 @@ class BootStrapService {
 	/** configurazione proxy tra il vaso e internet, se null assente */
 	String proxyMasterInternet = null
 
-	/** utente amministratore applicativo -se non configurato nel reposirory- */
-	String utenteAmministratore = 'admin'
+	/** configurazione proxy tra Grails e il vaso master password*/
+	String passwordProxyVersoMaster = null
 
-	/** password utente amministratore applicativo */
-	String passwordAmministratore = 'rossonet2012'
-
-	/** eventuale chat Olark interfaccia */ 
-	String olarkKey='1445-771-10-6904'
-
-	/** eventuale chat Google Analytics interfaccia */
-	String googleAnalytics='UA-55822070-1'
+	/** configurazione proxy tra il vaso e internet password */
+	String passwordProxyMasterInternet = null
 
 	/** vero se tutti i parametri per accedere sono configurati */
 	Boolean configurato = false
@@ -95,7 +95,7 @@ class BootStrapService {
 
 	/** interfacce disponibili nel contesto */
 	List<Interfaccia> interfacceInContesto = []
-	
+
 	/** utenti disponibili nel contesto */
 	List<Utente> utentiInContesto = []
 
@@ -103,20 +103,25 @@ class BootStrapService {
 	Boolean verificaConnettivitaInterfaccia() {
 		String indirizzoTest='http://hc.rossonet.name'
 		Boolean risultato=false
-		log.info("Prova la connessione a "+indirizzoTest)
-		try {
-			URL url = new URL(indirizzoTest)
-			HttpURLConnection con = (HttpURLConnection)url.openConnection()
-			log.debug(con.responseCode)
-			if (con.responseCode==200){
-				risultato = true
-				log.info(indirizzoTest+": Connessione OK")
+		if (escludiProveConnessione==true) {
+			log.info("Test di rete esclusi!")
+			risultato=true
+		} else {
+			log.info("Prova la connessione a "+indirizzoTest)
+			try {
+				URL url = new URL(indirizzoTest)
+				HttpURLConnection con = (HttpURLConnection)url.openConnection()
+				log.debug(con.responseCode)
+				if (con.responseCode==200){
+					risultato = true
+					log.info(indirizzoTest+": Connessione OK")
+				}
+				con.disconnect()
+			} catch (MalformedURLException e) {
+				log.warn(e.printStackTrace())
+			} catch (IOException e) {
+				log.warn(e.printStackTrace())
 			}
-			con.disconnect()
-		} catch (MalformedURLException e) {
-			log.warn(e.printStackTrace())
-		} catch (IOException e) {
-			log.warn(e.printStackTrace())
 		}
 		return risultato
 	}
@@ -136,6 +141,9 @@ class BootStrapService {
 		if (risultato) {
 			configurato = true
 			raggiungibile = true
+		} else {
+			configurato = false
+			raggiungibile = false
 		}
 		return risultato
 	}
@@ -150,6 +158,8 @@ class BootStrapService {
 			Contesto demo = creaContestoAr4kBoot()
 			contestiInMaster.add(demo)
 			log.info("Contesti disponibili dopo la creazione del contesto demo: "+contestiInMaster)
+		} else {
+			vasoConnesso = false
 		}
 		return risultato
 	}
@@ -162,6 +172,10 @@ class BootStrapService {
 			log.info("Il vaso master accede ad Internet")
 		} else {
 			log.info("Il vaso master NON accede ad Internet")
+		}
+		if (escludiProveConnessioneVaso==true) {
+			log.info("Escluso il test di configurazione del vaso")
+			risultato = true
 		}
 		return risultato
 	}
@@ -233,6 +247,7 @@ class BootStrapService {
 		risultato +='interfaccia scelta: '+interfacciaScelta+" ("+idInterfacciaScelta+")\n"
 		risultato +='SISTEMA IN CONFIGURAZIONE: '+inAvvio+"\n"
 		risultato +='Codice commerciale Ar4k: '+codiceAttivazioneAr4k+"\n"
+		risultato +='Escludi prove di raggiungibilità della rete: '+escludiProveConnessione+"\n"
 		risultato +='Configurazione proxy Java -> Vaso Master: '+proxyVersoMaster+"\n"
 		risultato +='Configurazione proxy Vaso Master -> Internet: '+proxyMasterInternet+"\n"
 		risultato +='Contesto: '+contesto+"\n"
@@ -260,6 +275,20 @@ class BootStrapService {
 		Interfaccia interfacciaCreata = new Interfaccia(idInterfaccia:'Bootstrap-Ar4k')
 		log.info("Ho creato l'interfaccia demo:"+interfacciaCreata)
 		return interfacciaCreata
+	}
+
+	/** Aggiunge un utente al contesto */
+	Boolean aggiungiUtente(String nome,String password) {
+		log.info("Creo l'utente "+nome)
+		Boolean risultato = false
+		def adminRole = new Ruolo(authority:'ROLE_ADMIN')
+		def testUser = new Utente(username:nome, password:password)
+		UtenteRuolo utenteRuolo = new UtenteRuolo(utente:testUser,ruolo:adminRole)
+		contesto.utentiRuoli.add(utenteRuolo)
+		if (contesto.utentiRuoli.size() > 0) {
+			risultato = true
+		}
+		return risultato
 	}
 }
 
