@@ -11,10 +11,6 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 grails.config.locations = [
-	"classpath:${appName}-config.properties",
-	"classpath:${appName}-config.groovy",
-	"file:ar4k-config.groovy",
-	"file:${userHome}/.ar4k/${appName}-config.properties",
 	"file:${userHome}/.ar4k/${appName}-config.groovy"
 ]
 

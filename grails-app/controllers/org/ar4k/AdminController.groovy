@@ -23,14 +23,6 @@ import groovy.json.*
 
 class AdminController {
 	InterfacciaContestoService interfacciaContestoService
-	
-	def salvaConfigurazione(String archivio) {
-		render interfacciaContestoService.salvaConfigurazione(archivio)
-	}
-	
-	def caricaConfigurazione(String archivio) {
-		render interfacciaContestoService.caricaConfigurazione(archivio)
-	}
 
 	def index() {
 		//[messaggioOlark: "Benvenuto nel template di sviluppo applicativo AR4K!"]
@@ -40,84 +32,68 @@ class AdminController {
 		render(template: "headerNotification")
 	}
 	
+	def headerHtml() {
+		render(template: "headerHtml")
+	}
+	
+	def appjs() {
+		render(template: "appjs")
+	}
+	
 	def sidebar() {
 		render(template: "sidebar")
-	}
-	
-	def listaoggetti(){
-		def ritorno = []
-		interfacciaContestoService.listaOggetti().each{
-			//Strutturare qui la lista
-			ritorno.add([etichetta:it.etichetta,tipo:it.tipo])
-			}
-		render (ritorno as JSON)
-	}
-	
-	def creaSshHost (){
-		Oggetto stato 
-		def jsonObject = request.JSON
-		stato = interfacciaContestoService.nuovoSSH(jsonObject.etichetta,jsonObject.descrizione,jsonObject.utente,jsonObject.target,jsonObject.porta.toInteger(),jsonObject.password)
-		render (stato as JSON)
 	}
 
 	def terminale(String host) {
 		render(template: "terminale", model:[mappa: host?:'master',comandoAvvio:'sleep 3 ; clear'] )
 	}
 	
-	def eseguiProcesso(String host,String comando) {
-		render interfacciaContestoService.esegui(host,comando)
-	}
-	
-	def parseRemote(String host,String target,String portaTarget,String query,String componente) {
-		render interfacciaContestoService.remoteWeb(host,target,portaTarget,query,componente)
-	}
-	
 	def oggetti() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/oggetti')
+		render(template: "oggetti")
 	}
 	
 	def oggettiCtrl() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/oggettiCtrl')
+		render(template: "oggettiCtrl")
 	}
 	
 	def rossonet() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/rossonet')
+		render(template: "rossonet")
 	}
 	
 	def rossonetCtrl() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/rossonetCtrl')
+		render(template: "rossonetCtrl")
 	}
 	
 	def quartz() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/quartz')
+		render(template: "quartz")
 	}
 	
 	def quartzCtrl() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/quartzCtrl')
+		render(template: "quartzCtrl")
 	}
 	
 	def processi() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/processi')
+		render(template: "processi")
 	}
 	
 	def processiCtrl() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/processiCtrl')
+		render(template: "processiCtrl")
 	}
 	
 	def kettle() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/kettle')
+		render(template: "kettle")
 	}
 	
 	def kettleCtrl() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/kettleCtrl')
+		render(template: "kettleCtrl")
 	}
 	
 	def dashrossonet() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/dashboard')
+		render(template: "dashRossonet")
 	}
 	
 	def dashrossonetCtrl() {
-		render interfacciaContestoService.esegui('master','bash $AR4K_ANGULAR/dashboardCtrl')
+		render(template: "dashRossonetCtrl")
 	}
 }
 

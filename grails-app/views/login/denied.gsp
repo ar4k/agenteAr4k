@@ -84,7 +84,7 @@
 		<section id="left-sidebar">
 
 			<div class="logo">
-				<g:link controller='go' absolute='true'>
+				<g:link controller='admin' absolute='true'>
 					<img
 						<%-- 		src="${resource(dir: 'atterraggio', file: 'images/other_images/logo.png')}" --%>
 						 		src="${resource(dir: 'images', file: '75.png')}"

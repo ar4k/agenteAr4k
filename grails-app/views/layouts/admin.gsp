@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title><g:layoutTitle default="AR4K Augmented Reality For Key" /></title>
+    <base href="${g.createLink(absolute:true,uri:'/')}"/>
     <meta name="author" content="Rossonet s.c.a r.l (Imola) - Italy">
     <meta name="description" content="Template applicativo per App in Grails AngularJS Twitter BootStrap con supporto Kettle SSH Spring Auth">
     <meta name="viewport" content="width=device-width">
