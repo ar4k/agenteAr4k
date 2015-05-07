@@ -30,10 +30,15 @@ class BootStrapController {
 	def bootFlow = {
 		entrata {
 			action {
-				[verifica:bootStrapService.verificaConnettivitaInterfaccia()]
+				if (bootStrapService.inAvvio == false) {
+					return completata()
+				} else {
+					return success()
+				}
 			}
-			on ("success").to "showBenvenuto"
+			on ("success"){[verifica:bootStrapService.verificaConnettivitaInterfaccia()]}.to "showBenvenuto"
 			on (Exception).to "showBenvenuto"
+			on ("completata").to("completata")
 		}
 
 		showBenvenuto {
@@ -186,6 +191,7 @@ class BootStrapController {
 		testFinale {
 			action {
 				if ( params.passwordDemo1 == params.passwordDemo2 && params.passwordDemo1 != '') {
+					log.info("Creo l'utente "+params.utenteDemo)
 					bootStrapService.aggiungiUtente(params.utenteDemo,params.passwordDemo1)
 				} else {
 					log.info("Le password NON corrispondo per creare l'utente "+params.utenteDemo)
@@ -201,7 +207,9 @@ class BootStrapController {
 			on ("fallita"){[rapporto:bootStrapService.toString()]}.to("fallita")
 		}
 
-		completata {  redirect controller: 'login',action:'auth' }
+		completata {
+			redirect controller:'login',action:'auth'
+		}
 
 		// Implementare pagina aiuto via Olark
 		fallita {

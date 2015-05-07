@@ -84,6 +84,13 @@ class Contesto {
 		for (Meme meme in memi) {
 			if (!meme.avvia()) risultato = false
 		}
+		log.info("Importa "+utentiRuoli.size()+" utenti/ruoli")
+		for (UtenteRuolo utenteRuolo in utentiRuoli) {
+			utenteRuolo.utente.save(flush:true)
+			utenteRuolo.ruolo.save(flush:true)
+			utenteRuolo.save(flush:true)
+		}
+		log.info("Importati utenti e ruoli")
 		if (risultato) statoBootStrap = 'avviato'
 		return risultato
 	}

@@ -35,6 +35,22 @@ mhsIc8K31IrWgutPgXfw84/vYzUgjrpUfqssYKbfN6g4wyumx2rLsaM=
 ctx.getBean('bootStrapService').avvia()
 }
 
+// Per verificare i domini
+//grailsApplication.domainClasses.each {
+//    println "Ci sono ${it.clazz.count()} istanze di $it.clazz.simpleName"
+//}
+
+// Per verificare i parametri di sessione
+//def params = ['requestURI', 'requestURL', 'forwardURI']
+//params.each {
+//    println it + "\t" + request."$it"
+//}
+
+// Dati di sessione
+//session.attributeNames.each { name ->
+//    println name.padRight(40) + session.getAttribute(name)
+//}
+
 // Rigenera l'ambiente.
 //rigenera()
 
@@ -46,6 +62,9 @@ ctx.getBean('bootStrapService').avvia()
 
 // Simulazione battito di Quartz
 //ctx.getBean('interfacciaContestoService').battito()
+
+// Avvia Applicativo con dati di bootstrap
+ctx.getBean('bootStrapService').avvia()
 
 // Rapporto
 println ctx.getBean('bootStrapService').toString()

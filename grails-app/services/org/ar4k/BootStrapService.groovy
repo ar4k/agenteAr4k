@@ -97,7 +97,7 @@ class BootStrapService {
 	List<Interfaccia> interfacceInContesto = []
 
 	/** utenti disponibili nel contesto */
-	List<Utente> utentiInContesto = []
+	List<UtenteRuolo> utentiInContesto = []
 
 	/** verifica se l'interfaccia raggiunge il gw ar4k */
 	Boolean verificaConnettivitaInterfaccia() {
@@ -198,7 +198,8 @@ class BootStrapService {
 					log.info("Attestato sul contesto "+contesto)
 					idContestoScelto = contesto.idContesto
 					interfacceInContesto = contesto.interfacce
-					utentiInContesto = contesto.utentiRuoli*.utente
+					contesto.utentiRuoli.each{utentiInContesto.add(it)}
+					utentiInContesto.each{contesto.utentiRuoli.add(it)}
 				}
 			}
 		}
@@ -281,11 +282,20 @@ class BootStrapService {
 	Boolean aggiungiUtente(String nome,String password) {
 		log.info("Creo l'utente "+nome)
 		Boolean risultato = false
-		def adminRole = new Ruolo(authority:'ROLE_ADMIN')
-		def testUser = new Utente(username:nome, password:password)
-		UtenteRuolo utenteRuolo = new UtenteRuolo(utente:testUser,ruolo:adminRole)
-		contesto.utentiRuoli.add(utenteRuolo)
-		if (contesto.utentiRuoli.size() > 0) {
+		def adminRole = Ruolo.create()
+		adminRole.authority='ROLE_ADMIN'
+		def testUser = Utente.create()
+		testUser.username=nome
+		testUser.password=password
+		UtenteRuolo utenteRuolo = UtenteRuolo.create()
+		utenteRuolo.utente=testUser
+		utenteRuolo.ruolo=adminRole
+		testUser.save(flush:true)
+		adminRole.save(flush:true)
+		utenteRuolo.save(flush:true)
+		utentiInContesto.add(utenteRuolo)
+		if (utentiInContesto.size() > 0) {
+			log.info("Creato l'utente "+nome)
 			risultato = true
 		}
 		return risultato
