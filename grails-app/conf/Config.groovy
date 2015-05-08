@@ -268,8 +268,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	// by Andrea Ambrosini
 	'/register/**':                   ['permitAll'],
 	'/bootStrap/**':                  ['permitAll'], // Ricordarsi di bloccare la sicurezza sul Controller!
-	'/console/**':                    ['permitAll'], // Solo per debug della sicurezza!!! 
-	'/plugins/console-1.5.4/**':      ['permitAll'], // Solo per debug della sicurezza!!!
+//	'/console/**':                    ['permitAll'], // Solo per debug della sicurezza!!! 
+//	'/plugins/console-1.5.4/**':      ['permitAll'], // Solo per debug della sicurezza!!!
 	'/login/**':    				  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
@@ -279,7 +279,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	// Accesso a Admin -per utente demo-
 	'/**':                            ['ROLE_ADMIN'],
 	//'/admin/**':                    ['ROLE_USER'],
-	'/admin/**':                      ['ROLE_ADMIN'],
+	'/admin/**':                      ['ROLE_ADMIN','ROLE_USER'],
 	// Accesso a tutti autenticati
 	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti

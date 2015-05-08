@@ -36,3 +36,7 @@ interfaccia = 'Bootstrap-Ar4k'
 
 // Configurazione proxy tra il vaso master e Internet
 //proxyMasterInternet = ''
+
+// Utenza da aggiungere
+//utente='rossonet'
+//password='password'

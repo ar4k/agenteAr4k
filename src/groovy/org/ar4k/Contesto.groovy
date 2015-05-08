@@ -36,8 +36,8 @@ class Contesto {
 	String descrizione ='Contesto operativo AR4K by Rossonet'
 	/** campo per link a CRM (progetto)*/
 	String idProgetto ='00 - LAB Rossonet'
-	/** campo per l'avanzamanto del bootstrap (boot,parametri collegamento ssh,parametri proxy interfaccia,parametri proxy vaso,funzionante,destruzione)*/
-	private String statoBootStrap = 'boot'
+	/** campo per l'avanzamanto del bootstrap (nascita,vita,virus,morte)*/
+	private String statoBootStrap = 'nascita'
 	/** se salva il contesto su tutti i vasi connessi tranne i disabilitati */
 	Boolean clonaOvunque = false
 	/** ricettari a disposizione */
@@ -52,8 +52,6 @@ class Contesto {
 	List<Vaso> vasi =[]
 	/** connessioni tra i vasi disponibili nel contesto*/
 	List<Connesione> connessioni =[]
-	/** dati operativi situazione oggetti collegati in rete (a livello di porte e socket -mappa anche i dispositivi seriali collegati ai vasi-), reti e vasi,proxy e gw operativi, mappatura discovery*/
-	Stato statoRete = null
 	Vaso vasoMaster
 
 	/** ditruttore di classe (utile per la gestione della pulizia dei vasi)*/

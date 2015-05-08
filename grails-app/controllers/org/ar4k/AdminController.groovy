@@ -31,69 +31,105 @@ class AdminController {
 	def headerNotification() {
 		render(template: "headerNotification")
 	}
-	
+
 	def headerHtml() {
 		render(template: "headerHtml")
 	}
-	
+
 	def appjs() {
 		render(template: "appjs")
 	}
-	
+
 	def sidebar() {
 		render(template: "sidebar")
 	}
 
-	def terminale(String host) {
-		render(template: "terminale", model:[mappa: host?:'master',comandoAvvio:'sleep 3 ; clear'] )
+	def terminale() {
+		render(template: "terminale", model:[mappa: 'master',comandoAvvio:'sleep 3 ; clear'] )
 	}
-	
+
 	def oggetti() {
 		render(template: "oggetti")
 	}
-	
+
 	def oggettiCtrl() {
 		render(template: "oggettiCtrl")
 	}
-	
+
 	def rossonet() {
 		render(template: "rossonet")
 	}
-	
+
 	def rossonetCtrl() {
 		render(template: "rossonetCtrl")
 	}
-	
+
 	def quartz() {
 		render(template: "quartz")
 	}
-	
+
 	def quartzCtrl() {
 		render(template: "quartzCtrl")
 	}
-	
+
+	def utenti() {
+		render(template: "utenti")
+	}
+
+	def utentiCtrl() {
+		render(template: "utentiCtrl")
+	}
 	def processi() {
 		render(template: "processi")
 	}
-	
+
 	def processiCtrl() {
 		render(template: "processiCtrl")
 	}
-	
+
 	def kettle() {
 		render(template: "kettle")
 	}
-	
+
 	def kettleCtrl() {
 		render(template: "kettleCtrl")
 	}
-	
+
+	def reti() {
+		render(template: "reti")
+	}
+
+	def retiCtrl() {
+		render(template: "retiCtrl")
+	}
+
+	def ricettari() {
+		render(template: "ricettari")
+	}
+
+	def ricettariCtrl() {
+		render(template: "ricettariCtrl")
+	}
 	def dashrossonet() {
 		render(template: "dashRossonet")
 	}
-	
+
 	def dashrossonetCtrl() {
 		render(template: "dashRossonetCtrl")
+	}
+
+	def listaVasi() {
+		def risultato = []
+		interfacciaContestoService.contesto.vasi.each{
+			risultato.add([
+				etichetta:it.etichetta,
+				utente:it.utente,
+				uname:it.uname,
+				sudo:it.sudo,
+				stringa:it.toString()])
+		}
+		def incapsulato = [vasi:risultato]
+		render incapsulato as JSON
 	}
 }
 

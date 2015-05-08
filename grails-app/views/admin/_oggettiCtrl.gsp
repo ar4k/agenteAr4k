@@ -7,5 +7,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('OggettiCtrl', function($scope,$position) {
+  .controller('OggettiCtrl', function($scope, $http) {
+    $http.get("${createLink(controller:'admin',action:'listaVasi',absolute:'true')}")
+    .success(function (response) {$scope.vasi = response.vasi;});
   });

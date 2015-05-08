@@ -1,6 +1,6 @@
-<script src="admin/jquery-1.11.2.js"></script>
-<script src="admin/jquery.atmosphere.js"></script>
-<script src="admin/term.js"></script>
+<script src="${resource(dir:'admin',file:'jquery-1.11.2.js')}"></script>
+<script src="${resource(dir:'admin',file:'jquery.atmosphere.js')}"></script>
+<script src="${resource(dir:'admin',file:'term.js')}"></script>
 <script>
 	$(function() {
 		"use strict";
@@ -10,7 +10,7 @@
 		var term = new Terminal();
 		
 		var request = {
-			url : "<g:createLink controller='wsa' action='def' absolute='true'/>/${mappa}",
+			url : "<g:createLink controller='wsa' action='def' absolute='true'/>",
 			contentType : "application/json",
 			trackMessageLength : true,
 			logLevel : 'error',
@@ -23,7 +23,7 @@
 
 		request.onOpen = function(response) {
 			term = new Terminal({
-				cols : 80,
+				cols : 40,
 				rows : 24,
 				useStyle : true,
 				screenKeys : true,
@@ -34,7 +34,6 @@
 
 		socket.onMessage = function(response) {
 			var message = response.responseBody;
-			//console.log(response);
 			term.write(message);
 		};
 
@@ -46,7 +45,7 @@
 			subSocket.push(data);
 		});
 
-		term.open(document.getElementById("terminal-${mappa}"));
+		term.open(document.getElementById("terminal"));
 
 		term.write('\x1b[31msessione in caricamento...\x1b[m\r\n');
 		setTimeout(function() {
@@ -55,5 +54,5 @@
 
 	});
 </script>
-<div id="terminal-${mappa}" class="panel panel-primary"></div>
+<div id="terminal" class="panel panel-primary"></div>
 

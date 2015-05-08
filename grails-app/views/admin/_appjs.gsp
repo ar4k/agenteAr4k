@@ -131,6 +131,25 @@ angular
           }
         }
       })
+      .state('dashboard.utenti',{
+        url:'/utenti',
+        controller: 'UtentiCtrl',
+        templateUrl:'admin/utenti',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/utentiCtrl',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
      .state('dashboard.dashrossonet',{
         url:'/dashrossonet',
         controller: 'DashRossonetCtrl',
@@ -179,6 +198,44 @@ angular
               name:'sbAdminApp',
               files:[
               'admin/quartzCtrl',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.ricettari',{
+        url:'/ricettari',
+        controller: 'RicettariCtrl',
+        templateUrl:'admin/ricettari',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/ricettariCtrl',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.reti',{
+        url:'/reti',
+        controller: 'RetiCtrl',
+        templateUrl:'admin/reti',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/retiCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',

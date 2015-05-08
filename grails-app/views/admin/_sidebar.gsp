@@ -6,19 +6,28 @@
 					class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.oggetti"><i
-					class="fa fa-server fa-fw"></i> Oggetti</a></li>
+					class="fa fa-linux fa-fw"></i> Oggetti</a></li>
+
+			<li ui-sref-active="active"><a ui-sref="dashboard.reti"><i
+					class="fa fa-sitemap fa-fw"></i> Reti</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.kettle"><i
-					class="fa fa-file-code-o fa-fw"></i> Memi</a></li>
+					class="fa fa-flask fa-fw"></i> Memi</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.processi"><i
 					class="fa fa-gears fa-fw"></i> Servizi</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.quartz"><i
-					class="fa fa-clock-o fa-fw"></i> Schedulazione</a></li>
-
+					class="fa fa-clock-o fa-fw"></i> Schedulazioni</a></li>
+					
+			<li ui-sref-active="active"><a ui-sref="dashboard.ricettari"><i
+					class="fa fa-book fa-fw"></i> Ricettari</a></li>
+			
 			<li ui-sref-active="active"><a ui-sref="dashboard.rossonet"><i
-					class="fa fa-cloud fa-fw"></i> AR4K Cloud Service</a></li>
+					class="fa fa-cubes fa-fw"></i> Grails Console</a></li>
+
+			<li ui-sref-active="active"><a ui-sref="dashboard.utenti"><i
+					class="fa fa-users fa-fw"></i> Configura utenti</a></li>
 
 			<li ng-class="{active: collapseVar==1}"><a href=""
 				ng-click="check(1)"><i class="fa fa-graduation-cap fa-fw"></i>

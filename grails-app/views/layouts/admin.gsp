@@ -1,55 +1,88 @@
 <!doctype html>
 <html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <title><g:layoutTitle default="AR4K Augmented Reality For Key" /></title>
-    <base href="${g.createLink(absolute:true,uri:'/')}"/>
-    <meta name="author" content="Rossonet s.c.a r.l (Imola) - Italy">
-    <meta name="description" content="Template applicativo per App in Grails AngularJS Twitter BootStrap con supporto Kettle SSH Spring Auth">
-    <meta name="viewport" content="width=device-width">
+<head>
+<meta charset="utf-8">
+<title><g:layoutTitle default="AR4K Augmented Reality For Key" /></title>
+<base href="${g.createLink(absolute:true,uri:'/')}" />
+<meta name="author" content="Rossonet s.c.a r.l (Imola) - Italy">
+<meta name="description"
+	content="Template applicativo per App in Grails AngularJS Twitter BootStrap con supporto Kettle SSH Spring Auth">
+<meta name="viewport" content="width=device-width">
 
-    <link rel="shortcut icon"
+<link rel="shortcut icon"
 	href="${resource(dir: 'images', file: 'brain.png')}"
 	type="image/x-icon">
-    <link rel="apple-touch-icon"
+<link rel="apple-touch-icon"
 	href="${resource(dir: 'images', file: 'brain.png')}">
-    <link rel="apple-touch-icon" sizes="114x114"
+<link rel="apple-touch-icon" sizes="114x114"
 	href="${resource(dir: 'images', file: 'brain.png')}">
 
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="admin/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="admin/app/styles/main.css">
-    <link rel="stylesheet" href="admin/app/styles/sb-admin-2.css">
-    <link rel="stylesheet" href="admin/app/styles/timeline.css">
-    <link rel="stylesheet" href="admin/bower_components/metisMenu/dist/metisMenu.min.css">
-    <link rel="stylesheet" href="admin/bower_components/angular-loading-bar/build/loading-bar.min.css">
-    <link rel="stylesheet" href="admin/bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
-    <!-- endbuild -->
-    
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="admin/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="admin/bower_components/angular/angular.min.js"></script>
-    <script src="admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="admin/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="admin/bower_components/json3/lib/json3.min.js"></script>
-    <script src="admin/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
-    <script src="admin/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
-    <script src="admin/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="admin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
 
-    <!-- Contenuti pagina header-->
-    <g:layoutHead />
-    <!-- Fine contenuti pagina header-->
+<!-- In sviluppo non usiamo i minificati -->
+<g:if env="development">
+	<link rel="stylesheet"
+		href="admin/bower_components/bootstrap/dist/css/bootstrap.css" />
 
-    <script>
+	<link rel="stylesheet" href="admin/app/styles/main.css">
+	<link rel="stylesheet" href="admin/app/styles/sb-admin-2.css">
+	<link rel="stylesheet" href="admin/app/styles/timeline.css">
+	<link rel="stylesheet"
+		href="admin/bower_components/metisMenu/dist/metisMenu.css">
+	<link rel="stylesheet"
+		href="admin/bower_components/angular-loading-bar/build/loading-bar.css">
+	<link rel="stylesheet"
+		href="admin/bower_components/font-awesome/css/font-awesome.css"
+		type="text/css">
+
+	<script src="admin/bower_components/jquery/dist/jquery.js"></script>
+	<script src="admin/bower_components/angular/angular.js"></script>
+	<script src="admin/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script
+		src="admin/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="admin/bower_components/json3/lib/json3.js"></script>
+	<script src="admin/bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+	<script
+		src="admin/bower_components/angular-loading-bar/build/loading-bar.js"></script>
+	<script
+		src="admin/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="admin/bower_components/metisMenu/dist/metisMenu.js"></script>
+</g:if>
+<g:if env="production">
+	<link rel="stylesheet"
+		href="admin/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" href="admin/app/styles/main.css">
+	<link rel="stylesheet" href="admin/app/styles/sb-admin-2.css">
+	<link rel="stylesheet" href="admin/app/styles/timeline.css">
+	<link rel="stylesheet"
+		href="admin/bower_components/metisMenu/dist/metisMenu.min.css">
+	<link rel="stylesheet"
+		href="admin/bower_components/angular-loading-bar/build/loading-bar.min.css">
+	<link rel="stylesheet"
+		href="admin/bower_components/font-awesome/css/font-awesome.min.css"
+		type="text/css">
+
+	<script src="admin/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="admin/bower_components/angular/angular.min.js"></script>
+	<script src="admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="admin/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="admin/bower_components/json3/lib/json3.min.js"></script>
+	<script src="admin/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+	<script
+		src="admin/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+	<script
+		src="admin/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="admin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+</g:if>
+
+
+
+<!-- Contenuti pagina header-->
+<g:layoutHead />
+<!-- Fine contenuti pagina header-->
+
+<script>
        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -57,21 +90,21 @@
        ga('create', '${grailsApplication.config.google.analytics}');
        ga('send', 'pageview');
     </script>
-    <!-- Custom CSS -->
+<!-- Custom CSS -->
 
-    <!-- Custom Fonts -->
+<!-- Custom Fonts -->
 
-    <!-- Morris Charts CSS -->
-    <!-- <link href="styles/morrisjs/morris.css" rel="stylesheet"> -->
+<!-- Morris Charts CSS -->
+<!-- <link href="styles/morrisjs/morris.css" rel="stylesheet"> -->
 
 
-    </head>
-   
-    <body>
+</head>
 
-    <!-- Contenuti pagina-->
-    <g:layoutBody />
-    <!-- Fine contenuti pagina-->
+<body>
+
+	<!-- Contenuti pagina-->
+	<g:layoutBody />
+	<!-- Fine contenuti pagina-->
 
 	<!-- begin olark code -->
 	<script data-cfasync="false" type='text/javascript'>
@@ -182,13 +215,14 @@
 		</g:if>
 	</script>
 	<noscript>
-		<a href="https://www.olark.com/site/${grailsApplication.config.olark.key}/contact"
+		<a
+			href="https://www.olark.com/site/${grailsApplication.config.olark.key}/contact"
 			title="Contact us" target="_blank">Questions? Feedback?</a> powered
 		by <a href="http://www.olark.com?welcome"
 			title="Olark live chat software">Olark live chat software</a>
 	</noscript>
 	<!-- end olark code -->
 
-    </body>
+</body>
 
 </html>

@@ -195,11 +195,11 @@
             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            <li><g:link controller='user' absolute='true'><i class="fa fa-user fa-fw"></i> Profilo Utenti</g:link>
+            <li><a ui-sref="dashboard.utenti"><i class="fa fa-users fa-fw"></i> Edita profili utenti</a>
             </li>
-            <li><g:link controller='base' absolute='true'><i class="fa fa-gear fa-fw"></i> Pagina base Grails</g:link>
+            <li><a ui-sref="dashboard.rossonet"><i class="fa fa-cubes fa-fw"></i> Console Grails</a>
             </li>
-            <li><g:link controller='console' absolute='true'><i class="fa fa-gear fa-fw"></i> Console Grails</g:link>
+            <li><g:link controller='base' absolute='true' target="_console"><i class="fa fa-trophy fa-fw"></i> Pagina base Grails</g:link>
             </li>
             <li class="divider"></li>
             <li><a href="javascript:document.submitForm.submit()"><i class="fa fa-sign-out fa-fw"></i> Esci</a>

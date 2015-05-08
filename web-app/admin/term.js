@@ -387,7 +387,7 @@ Terminal.defaults = {
   colors: Terminal.colors,
   convertEol: false,
   termName: 'xterm',
-  geometry: [80, 24],
+  geometry: [40, 24],
   cursorBlink: true,
   visualBell: false,
   popOnBell: false,

@@ -40,80 +40,95 @@ import com.jcraft.jsch.*
 class InterfacciaContestoService {
 	/** Contesto applicativo Grails */	
 	GrailsApplication grailsApplication
-	/** servizio bootStrap attivato */
-	BootStrapService bootStrapService
+	/** Contesto in esecuzione */
+	Contesto contesto
+	/** Stato in esecuzione */
+	Stato stato
+	/** Interfaccia corrente */
+	Interfaccia interfaccia
 	/** eventi in controllo */
 	List<Evento> eventi = []
-		
+
+	/** Descrizione a toString() */
+	String toString() {
+		String risultato = "CONTESTO ["+contesto.etichetta+"]\n"
+		risultato += contesto.descrizione+"\n"
+		risultato += contesto.toString()+"\n"
+		risultato += "--------------------------------------\n"
+		risultato += stato.toString()+"\n"
+		risultato += "--------------------------------------\n"
+		return risultato
+	}
+
 	/** Stampa la memoria con Camel */
 	void freeMemory() {
 		sendMessage("seda:input", "Memoria libera: "+Runtime.getRuntime().freeMemory())
 	}
-	
+
 	/** esegue le procedura ogni 5 min. tramite Quartz */
 	void battito() {
-		if(!bootStrapService.contesto?.salva()) log.warn("Errore nel salvataggio del contesto!")
+		log.warn("Errore nel salvataggio del contesto!")
 		freeMemory()
 	}
-	
-/**
- * Eventi Monitorati	
- * 
- * <p style="text-justify">
- * La gestione degli eventi è la base per la propagazione delle informazioni di configurazione (aggiornamento ruoli autenticazioni in particolare), 
- * di monitoraggio e segnalazione e per l'autoscale dei memi</br>
- * </p>
- * 
- * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- *
- */
-class Evento {
-	/** check attivatori */
-	def testTrigger = [] // closure ?
-	/** azione se trigger positivo */
-	def listaAzioni = []
-	/** frequenza controllo */ 
-	String frequenza = '5 minuti'
-	/** controllo eventi attivato ? */
-	Boolean attivato = false
-}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * Eventi Monitorati	
+	 * 
+	 * <p style="text-justify">
+	 * La gestione degli eventi è la base per la propagazione delle informazioni di configurazione (aggiornamento ruoli autenticazioni in particolare), 
+	 * di monitoraggio e segnalazione e per l'autoscale dei memi</br>
+	 * </p>
+	 * 
+	 * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+	 *
+	 */
+	class Evento {
+		/** check attivatori */
+		def testTrigger = [] // closure ?
+		/** azione se trigger positivo */
+		def listaAzioni = []
+		/** frequenza controllo */ 
+		String frequenza = '5 minuti'
+		/** controllo eventi attivato ? */
+		Boolean attivato = false
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// Vecchia implementazione
-	
+
 	/** Host gestiti in memoria */
 	def macchine = []
 	/** Contesti operativi gestiti in memoria */
@@ -124,9 +139,9 @@ class Evento {
 	 * 
 	 * Imposta gli host e i contesti in funzione della configurazione recuperata
 	 * 
- 	 * @author      Andrea Ambrosini -Rossonet-
-  	 * @version     0.1
- 	 * @since       2015-04-01
+	 * @author      Andrea Ambrosini -Rossonet-
+	 * @version     0.1
+	 * @since       2015-04-01
 	 * @see org.ar4k.Configurazione
 	 * @param archivio 	archivio
 	 * @return 		risultato operazione

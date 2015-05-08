@@ -30,10 +30,13 @@ class BootStrap {
 
 	def destroy = {
 	}
-	
+
 	Boolean provaConfigurazioni() {
 		if (grailsApplication.config.master.host) {
 			log.info("Configuro i parametri di configurazione trovati su file")
+			if (grailsApplication.config.utente != '' && grailsApplication.config.password != '') {
+				bootStrapService.aggiungiUtente(grailsApplication.config.utente,grailsApplication.config.password)
+			}
 			bootStrapService.macchinaMaster = grailsApplication.config.master.host?:null
 			bootStrapService.portaMaster = grailsApplication.config.master.port?:null
 			bootStrapService.utenteMaster = grailsApplication.config.master.user?:null

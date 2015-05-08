@@ -28,8 +28,10 @@ class Stato {
 	String etichetta = ''
 	/** descrizione stato */
 	String descrizione ='Stato rete AR4K by Rossonet'
+	/** contesto operativo */
+	Contesto contesto
 
 	String toString() {
-		return etichetta
+		return etichetta+" su "+contesto?.etichetta
 	}
 }

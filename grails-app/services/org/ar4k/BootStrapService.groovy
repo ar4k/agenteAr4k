@@ -29,6 +29,9 @@ import grails.transaction.Transactional
 @Transactional
 class BootStrapService {
 
+	/** iniezione service principale */
+	InterfacciaContestoService interfacciaContestoService
+
 	/** host accesso ssh */
 	String macchinaMaster = null
 	/** porta accesso ssh */
@@ -47,7 +50,6 @@ class BootStrapService {
 
 	/** se vero esclude i controlli di raggiungibilità */
 	Boolean escludiProveConnessione = false
-
 	/** se vero esclude i controlli di raggiungibilità del vaso */
 	Boolean escludiProveConnessioneVaso = false
 
@@ -56,31 +58,23 @@ class BootStrapService {
 
 	/** configurazione proxy tra Grails e il vaso master, se null assente */
 	String proxyVersoMaster = null
-
 	/** configurazione proxy tra il vaso e internet, se null assente */
 	String proxyMasterInternet = null
-
 	/** configurazione proxy tra Grails e il vaso master password*/
 	String passwordProxyVersoMaster = null
-
 	/** configurazione proxy tra il vaso e internet password */
 	String passwordProxyMasterInternet = null
 
 	/** vero se tutti i parametri per accedere sono configurati */
 	Boolean configurato = false
-
 	/** vero se il nodo ssh è raggiungibile dall'applicativo */
 	Boolean raggiungibile = false
-
 	/** vero se il vaso è funzionante*/
 	Boolean vasoConnesso = false
-
 	/** vero se il contesto è scelto */
 	Boolean contestoScelto = false
-
 	/** vero se l'interfaccia è scelta */
 	Boolean interfacciaScelta = false
-
 	/** vero se il nodo master è funzionante completamente  */
 	Boolean inAvvio = true
 
@@ -92,10 +86,8 @@ class BootStrapService {
 
 	/** contesti disponibili */
 	List<Contesto> contestiInMaster = []
-
 	/** interfacce disponibili nel contesto */
 	List<Interfaccia> interfacceInContesto = []
-
 	/** utenti disponibili nel contesto */
 	List<UtenteRuolo> utentiInContesto = []
 
@@ -104,23 +96,25 @@ class BootStrapService {
 		String indirizzoTest='http://hc.rossonet.name'
 		Boolean risultato=false
 		if (escludiProveConnessione==true) {
-			log.info("Test di rete esclusi!")
+			log.info("Test di rete esclusi! (escludiProveConnessione==true)")
 			risultato=true
 		} else {
-			log.info("Prova la connessione a "+indirizzoTest)
+			log.info("verificaConnettivitaInterfaccia() verso "+indirizzoTest)
 			try {
 				URL url = new URL(indirizzoTest)
 				HttpURLConnection con = (HttpURLConnection)url.openConnection()
 				log.debug(con.responseCode)
 				if (con.responseCode==200){
 					risultato = true
-					log.info(indirizzoTest+": Connessione OK")
+					log.info(indirizzoTest+"verificaConnettivitaInterfaccia(): (ok)")
+				} else {
+					log.warn(indirizzoTest+"verificaConnettivitaInterfaccia(): ERRORE")
 				}
 				con.disconnect()
 			} catch (MalformedURLException e) {
-				log.warn(e.printStackTrace())
+				log.warn("verificaConnettivitaInterfaccia(): "+e.printStackTrace())
 			} catch (IOException e) {
-				log.warn(e.printStackTrace())
+				log.warn("verificaConnettivitaInterfaccia(): "+e.printStackTrace())
 			}
 		}
 		return risultato
@@ -136,12 +130,14 @@ class BootStrapService {
 				utente:utenteMaster,
 				key:keyMaster
 				)
-		log.info("Provo la connesione master")
+		log.info("provaConnessioneMaster() verso "+vasoMaster)
 		Boolean risultato = vasoMaster.provaConnessione()
 		if (risultato) {
+			log.info("provaConnessioneMaster() verso "+vasoMaster+" (ok)")
 			configurato = true
 			raggiungibile = true
 		} else {
+			log.warn("provaConnessioneMaster() verso "+vasoMaster+" NON RIUSCITA!")
 			configurato = false
 			raggiungibile = false
 		}
@@ -151,14 +147,17 @@ class BootStrapService {
 	/** avvia o ripristina la connesione ssh al vaso master*/
 	Boolean caricaVasoMaster() {
 		Boolean risultato = false
+		log.info("caricaVasoMaster() su "+vasoMaster)
 		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
 		if (risultato) {
+			log.info("caricaVasoMaster() su "+vasoMaster+" (ok)")
 			vasoConnesso = true
 			contestiInMaster = vasoMaster.listaContesti()
 			Contesto demo = creaContestoAr4kBoot()
 			contestiInMaster.add(demo)
 			log.info("Contesti disponibili dopo la creazione del contesto demo: "+contestiInMaster)
 		} else {
+			log.warn("caricaVasoMaster() su "+vasoMaster+" ERRORE")
 			vasoConnesso = false
 		}
 		return risultato
@@ -166,15 +165,16 @@ class BootStrapService {
 
 	/** cerifica la connettività verso internet del vaso master */
 	Boolean verificaConnettivitaVasoMaster() {
+		log.info("verificaConnettivitaVasoMaster()")
 		Boolean risultato = false
 		if(vasoMaster.verificaConnettivita()) {
 			risultato = true
 			log.info("Il vaso master accede ad Internet")
 		} else {
-			log.info("Il vaso master NON accede ad Internet")
+			log.warn("Il vaso master NON accede ad Internet")
 		}
 		if (escludiProveConnessioneVaso==true) {
-			log.info("Escluso il test di configurazione del vaso")
+			log.info("Escluso il test di raggiungibilità di Internet dal vaso master")
 			risultato = true
 		}
 		return risultato
@@ -182,14 +182,15 @@ class BootStrapService {
 
 	/** carica il contesto per id contesto*/
 	Boolean caricaContesto(String contestoSceltaConf) {
+		log.info("caricaContesto("+contestoSceltaConf+")")
 		Boolean ritorno = false
 		if (caricaVasoMaster()) {
 			String primarioContesto = idContestoScelto
 			if (contestoSceltaConf) primarioContesto = contestoSceltaConf
 			log.info("Provo il caricamento di "+primarioContesto)
-			log.info("Contesti disponibili: "+contestiInMaster)
+			log.debug("Contesti disponibili: "+contestiInMaster)
 			Contesto contestoTarget = contestiInMaster.find{it.idContesto==primarioContesto}
-			log.info("Trovato "+contestoTarget)
+			log.info("Caricato "+contestoTarget)
 			if (contestoTarget) {
 				contesto = contestoTarget
 				if(contesto.avviaContesto()) {
@@ -198,8 +199,9 @@ class BootStrapService {
 					log.info("Attestato sul contesto "+contesto)
 					idContestoScelto = contesto.idContesto
 					interfacceInContesto = contesto.interfacce
+					log.info("Interfacce trovate nel contesto "+interfacceInContesto)
 					contesto.utentiRuoli.each{utentiInContesto.add(it)}
-					utentiInContesto.each{contesto.utentiRuoli.add(it)}
+					log.info("UtentiRuolo trovati nel contesto "+utentiInContesto)
 				}
 			}
 		}
@@ -213,13 +215,15 @@ class BootStrapService {
 	 * @param interfacciaSceltaConf Interfaccia scelta per l'avvio (id)
 	 */
 	Boolean avvia(String contestoSceltaConf,String interfacciaSceltaConf) {
+		log.info("avvia("+contestoSceltaConf+","+interfacciaSceltaConf+")")
 		Boolean ritorno = false
 		if (caricaContesto(contestoSceltaConf)) {
 			String primarioInterfaccia = idInterfacciaScelta
 			if (interfacciaSceltaConf) primarioInterfaccia = interfacciaSceltaConf
 			log.info("Provo il caricamento dell'interfaccia "+primarioInterfaccia)
-			log.info("Interfacce disponibili: "+interfacceInContesto)
+			log.debug("Interfacce disponibili: "+interfacceInContesto)
 			Interfaccia interfacciaTarget = interfacceInContesto.find{it.idInterfaccia==primarioInterfaccia}
+			log.info("Caricata "+interfacciaTarget)
 			if (interfacciaTarget) {
 				interfaccia = interfacciaTarget
 				if(interfaccia.avviaInterfaccia()) {
@@ -228,6 +232,11 @@ class BootStrapService {
 					ritorno = true
 					log.info("Attestato sull'interfaccia "+interfaccia)
 					idInterfacciaScelta = interfaccia.idInterfaccia
+					interfacciaContestoService.contesto=contesto
+					interfacciaContestoService.interfaccia=interfaccia
+					interfacciaContestoService.stato=new Stato(etichetta:'Stato Contesto '+contesto.idContesto,contesto:contesto)
+					log.info("Delegato il controllo a InterfacciaContestoService")
+					log.info(interfacciaContestoService)
 				}
 			}
 		}
@@ -249,6 +258,7 @@ class BootStrapService {
 		risultato +='SISTEMA IN CONFIGURAZIONE: '+inAvvio+"\n"
 		risultato +='Codice commerciale Ar4k: '+codiceAttivazioneAr4k+"\n"
 		risultato +='Escludi prove di raggiungibilità della rete: '+escludiProveConnessione+"\n"
+		risultato +='Escludi prove di raggiungibilità della rete vaso master: '+escludiProveConnessioneVaso+"\n"
 		risultato +='Configurazione proxy Java -> Vaso Master: '+proxyVersoMaster+"\n"
 		risultato +='Configurazione proxy Vaso Master -> Internet: '+proxyMasterInternet+"\n"
 		risultato +='Contesto: '+contesto+"\n"
@@ -267,7 +277,7 @@ class BootStrapService {
 		contestoCreato.configuraMaster(vasoMaster)
 		Interfaccia interfacciaDemo = creaInterfacciaAr4k()
 		contestoCreato.interfacce.add(interfacciaDemo)
-		log.info("Contesto demo creato: "+contestoCreato)
+		log.debug("Contesto demo creato: "+contestoCreato)
 		return contestoCreato
 	}
 
@@ -280,7 +290,7 @@ class BootStrapService {
 
 	/** Aggiunge un utente al contesto */
 	Boolean aggiungiUtente(String nome,String password) {
-		log.info("Creo l'utente "+nome)
+		log.debug("Creo l'utente "+nome)
 		Boolean risultato = false
 		def adminRole = Ruolo.create()
 		adminRole.authority='ROLE_ADMIN'

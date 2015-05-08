@@ -195,6 +195,9 @@ class BootStrapController {
 					bootStrapService.aggiungiUtente(params.utenteDemo,params.passwordDemo1)
 				} else {
 					log.info("Le password NON corrispondo per creare l'utente "+params.utenteDemo)
+					if ( params.utenteDemo) {
+						return configuraAmministratore()
+					}
 				}
 
 				if(bootStrapService.avvia()) {
@@ -204,12 +207,11 @@ class BootStrapController {
 				}
 			}
 			on ("completata").to("completata")
+			on ("configuraAmministratore").to "configuraAmministratore"
 			on ("fallita"){[rapporto:bootStrapService.toString()]}.to("fallita")
 		}
 
-		completata {
-			redirect controller:'login',action:'auth'
-		}
+		completata { redirect controller:'admin' }
 
 		// Implementare pagina aiuto via Olark
 		fallita {
