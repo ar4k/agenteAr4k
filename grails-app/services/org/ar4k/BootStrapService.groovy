@@ -236,6 +236,7 @@ class BootStrapService {
 					interfacciaContestoService.interfaccia=interfaccia
 					interfacciaContestoService.stato=new Stato(etichetta:'Stato Contesto '+contesto.idContesto,contesto:contesto)
 					log.info("Delegato il controllo a InterfacciaContestoService")
+					log.info("Grafica caricata")
 					log.info(interfacciaContestoService)
 				}
 			}
@@ -276,7 +277,9 @@ class BootStrapService {
 				)
 		contestoCreato.configuraMaster(vasoMaster)
 		Interfaccia interfacciaDemo = creaInterfacciaAr4k()
+		Ricettario ricettario = new Ricettario()
 		contestoCreato.interfacce.add(interfacciaDemo)
+		contestoCreato.ricettari.add(ricettario)
 		log.debug("Contesto demo creato: "+contestoCreato)
 		return contestoCreato
 	}

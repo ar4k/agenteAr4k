@@ -27,6 +27,7 @@ class Interfaccia {
 
 	// Oggetti iniettati da Grails - INIZIO -
 	
+	
 	/** service per connessioni SSH utilizzato dall'interfaccia*/
 	SshService sshService
 	/** service Apache Camel utilizzato dall'interfaccia*/
@@ -44,15 +45,14 @@ class Interfaccia {
 
 	// Oggetti iniettati da Grails - FINE -
 	
-	/** oggetto monitoraggio e stato reale*/
-	Stato stato = new Stato()
-	
 	/** id univoco interfaccia */
 	String idInterfaccia = UUID.randomUUID()
 	/** etichetta interfaccia */
 	String etichetta = ''
 	/** descrizione interfaccia */
 	String descrizione ='UI AR4K by Rossonet'
+	/** schema grafico */
+	TemplateInterfaccia grafica = new TemplateInterfaccia()
 	
 	/** esporta la configurazione dell'interfaccia */
 	def esporta() {
@@ -66,11 +66,40 @@ class Interfaccia {
 	
 	/** metodo descrizione */
 	String toString() {
-		return "["+idInterfaccia+"] "+etichetta+" ("+stato+")"
+		return "["+idInterfaccia+"] "+etichetta
 	}
 	
 	/** configura i service in funzione dell'interfaccia */
 	Boolean avviaInterfaccia() {
 		return true
+	}
+}
+
+/** descrive il template grafico dell'interfaccia */
+class TemplateInterfaccia {
+	String etichetta = 'Base Ar4k'
+	String immagineLogo = 'http://www.rossonet.org/wp-content/uploads/2015/01/logoRossonet4.png'
+	Boolean sviluppo = true
+	def colori = [
+		bordo: '#562282',
+		fondoBody: '#AD8ACC',
+		footerColor: '#8459AA',
+		menuAttivo: '#FDC47B',
+		menuFocus: '#FFD9A7',
+		menuColor: '#8D0F2C',
+		menuSfondo: '#8459AA',
+		rigaDispariColor: 'black',
+		rigaDispariSfondo: '#F29EB2',
+		rigaPariColor: 'black',
+		rigaPariSfondo: '#E8718D',
+		primary: 'grey',
+		success: 'green',
+		info: 'white',
+		warning: 'orange',
+		danger: 'red'
+		]
+	
+	String toString() {
+		return etichetta
 	}
 }

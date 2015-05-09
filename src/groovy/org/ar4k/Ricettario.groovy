@@ -21,7 +21,7 @@ class Ricettario {
 	/** id univoco ricettario */
 	String idRicettario = UUID.randomUUID()
 	/** etichetta ricettario */
-	String etichetta = ''
+	String etichetta = 'Ar4k base'
 	/** descrizione ricettario */
 	String descrizione ='Ricettario (git) AR4K by Rossonet'
 	/** repository git */
@@ -57,8 +57,10 @@ class RepositoryGit {
 	String password = null
 	/** URL Repository */
 	String indirizzo = 'https://github.com/rossonet/templateAr4k.git'
+	/** directory ricettario in vaso */
+	String nomeCartella = 'ar4k_open'
 	/** stato */
-	Boolean configurato = false
+	Boolean configurato = true
 	/** codice errore */
 	String codiceErrore = 'Nessun Errore'
 }

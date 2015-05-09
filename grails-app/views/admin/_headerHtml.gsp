@@ -10,14 +10,14 @@
 		</button>
 		<a class="navbar-brand" style="padding: 0px; width: 250px;"
 			href="${createLink(controller:'admin',absolute:'true')}">
-			<div style="text-align: left; padding: 0px; width: 250px;height:50px;">
-				<img src="${logoInterfaccia?:resource(dir:'images',file:'75.png')}"
-					height="40px" style="padding-top:5px;padding-left:20px;"/>
+			<div style="text-align: left; padding: 0px; width: 250px; height: 50px;">
+				<img
+					src="${grafica?.immagineLogo?.toString()?:resource(dir:'images',file:'75.png')}"
+					height="40px" style="padding-top: 5px; padding-left: 20px;" />
 			</div>
 		</a>
 
 	</div>
-	<!-- /.navbar-header -->
 	<header-notification></header-notification>
 
 	<sidebar></sidebar>

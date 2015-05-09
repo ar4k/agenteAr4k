@@ -47,12 +47,31 @@
 
 		term.open(document.getElementById("terminal"));
 
-		term.write('\x1b[31msessione in caricamento...\x1b[m\r\n');
+		term.write('\x1b[31m${testoIntro}\x1b[m\r\n');
 		setTimeout(function() {
 			subSocket.push("${comandoAvvio}\n")
 		}, 2000);
 
 	});
 </script>
-<div id="terminal" class="panel panel-primary"></div>
 
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-3">
+			<div class="panel panel-primary">
+				<div class="text-right panel-heading">
+					vaso ${mappa}
+				</div>
+				<div class="text-right panel-body">
+					<p>
+						${descrizione}
+					</p>
+				</div>
+				<div class="panel-footer"></div>
+			</div>
+		</div>
+		<div class="col-lg-9">
+			<div id="terminal" class="panel panel-primary"></div>
+		</div>
+	</div>
+</div>

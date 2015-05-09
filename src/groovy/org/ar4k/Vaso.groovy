@@ -48,6 +48,8 @@ class Vaso {
 	Boolean tolleranza = false
 	/** indirizzi delle schede */
 	List<PuntoRete> porte = []
+	/** ricettari associazti al vaso */
+	List<Ricettario> ricettari = []
 	/** l'utenza ha l'accesso sudo sulla macchina */
 	Boolean sudo = false
 
@@ -188,9 +190,30 @@ class Vaso {
 		//}
 		return contesti
 	}
-
+	
+	/** lista semi */
+	List<Seme> listaSemi() {
+		
+	}
+	
+	/** stringa predefinita */
 	String toString() {
 		return etichetta+" => "+utente+"@"+macchina+":"+porta
+	}
+	
+	/** scarica un ricettario sul nodo se attivo */
+	Boolean avviaRicettario(Ricettario ricettario) {
+		ricettari.add(ricettario)
+		//ricettari = ricettari.list().unique()
+		if (ricettario.repositoryGit.configurato == true) {
+			String comando = "cd .ar4k/ricettari ; if [ -e "+ricettario.repositoryGit.nomeCartella+" ] ; then cd "+ricettario.repositoryGit.nomeCartella+"; git pull; else  git clone "+ricettario.repositoryGit.indirizzo+" "+ricettario.repositoryGit.nomeCartella+"; fi"
+			esegui(comando)
+		}
+		String comandoCont = "cd .ar4k/ricettari ; if [ -e "+ricettario.repositoryGit.nomeCartella+" ] ; then echo -n 43; fi"
+		String atteso = '43'
+		String risultato = esegui(comandoCont)
+		log.info("risultato "+comandoCont+" = "+risultato+" (atteso: "+atteso+')')
+		return risultato == atteso?true:false
 	}
 
 }

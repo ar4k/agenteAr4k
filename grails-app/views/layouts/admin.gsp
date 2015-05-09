@@ -23,9 +23,9 @@
 	<link rel="stylesheet"
 		href="admin/bower_components/bootstrap/dist/css/bootstrap.css" />
 
-	<link rel="stylesheet" href="admin/app/styles/main.css">
-	<link rel="stylesheet" href="admin/app/styles/sb-admin-2.css">
-	<link rel="stylesheet" href="admin/app/styles/timeline.css">
+	<link rel="stylesheet" href="admin/main">
+	<link rel="stylesheet" href="admin/sbadmin2">
+	<link rel="stylesheet" href="admin/timeline">
 	<link rel="stylesheet"
 		href="admin/bower_components/metisMenu/dist/metisMenu.css">
 	<link rel="stylesheet"

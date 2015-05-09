@@ -282,26 +282,27 @@
 						<section class="feature-text">
 							<h1>AR4K</h1>
 							<h2>Augmented Reality for Key</h2>
-							<p class="text-justify" style="text-align: justify;">La rivoluzione sociale di internet ha
-								profondamente cambiato le abitudini delle persone, i modi di
-								acquisto e i processi aziendali. Di fatto si è creata
-								un'interazione sempre più dinamica e intensa tra il mondo reale
-								e il mondo digitale. Le nostre soluzioni rappresentano per i
-								clienti il grande vantaggio di un rapporto ancora più facile,
-								personalizzato, intuitivo, semplice e immediato con il mondo
-								digitale. Questa nuova forma di interazione geo spaziale, che
-								utilizza tutte le potenzialità espresse e non espresse dei
-								dispositivi mobili, incrementerà la produttività e soddisferà le
-								sempre più esigenti richieste del mercato. Nella nostra visione
-								saranno protagonisti non solo i dispositivi mobili, ma anche
-								tutti i social network permettendo ai clienti di arrivare a più
-								persone in maniera molto più rapida. In questo modo le forme di
-								comunicazione già utlilizzate vengono di fatto riviste e
-								reingegnerizzate per raggiungere più agevolmente e rapidamente
-								fondamentali obiettivi: rendere sempre più dinamico e
-								soddisfacente il rapporto tra l'azienda e i propri clienti,
-								massimizzare le vendite e ottimizzare la produttività dei
-								meccanismi interni.
+							<p class="text-justify" style="text-align: justify;">La
+								rivoluzione sociale di internet ha profondamente cambiato le
+								abitudini delle persone, i modi di acquisto e i processi
+								aziendali. Di fatto si è creata un'interazione sempre più
+								dinamica e intensa tra il mondo reale e il mondo digitale. Le
+								nostre soluzioni rappresentano per i clienti il grande vantaggio
+								di un rapporto ancora più facile, personalizzato, intuitivo,
+								semplice e immediato con il mondo digitale. Questa nuova forma
+								di interazione geo spaziale, che utilizza tutte le potenzialità
+								espresse e non espresse dei dispositivi mobili, incrementerà la
+								produttività e soddisferà le sempre più esigenti richieste del
+								mercato. Nella nostra visione saranno protagonisti non solo i
+								dispositivi mobili, ma anche tutti i social network permettendo
+								ai clienti di arrivare a più persone in maniera molto più
+								rapida. In questo modo le forme di comunicazione già utlilizzate
+								vengono di fatto riviste e reingegnerizzate per raggiungere più
+								agevolmente e rapidamente fondamentali obiettivi: rendere sempre
+								più dinamico e soddisfacente il rapporto tra l'azienda e i
+								propri clienti, massimizzare le vendite e ottimizzare la
+								produttività dei meccanismi interni.
+							
 							<p>
 						</section>
 					</div>
