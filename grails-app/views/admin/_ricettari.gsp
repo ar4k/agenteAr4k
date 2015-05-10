@@ -6,21 +6,12 @@
 			<div class="modal-header">
 				<button aria-hidden="true" data-dismiss="modal"
 					ng-click="pannello=false" class="close" type="button">×</button>
-				<h4 id="RicettarioModalLabel" class="modal-title">Ricettario</h4>
+				<h4 id="RicettarioModalLabel" class="modal-title">Semi in {{titolo}}</h4>
 			</div>
-			<div class="modal-body">Lorem ipsum dolor sit amet, consectetur
-				adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-				dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-				exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-				esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-				cupidatat non proident, sunt in culpa qui officia deserunt mollit
-				anim id est laborum.</div>
+			<div class="modal-body">{{elencosemi}}</div>
 			<div class="modal-footer">
 				<button data-dismiss="modal" ng-click="pannello=false"
 					class="btn btn-default" type="button">Chiudi</button>
-				<button class="btn btn-primary" ng-click="pannello=false"
-					type="button">Ok</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -82,7 +73,7 @@
 									<tr>
 										<th>Etichetta</th>
 										<th>Descrizione</th>
-										<th class="text-right" width="115px">Azioni</th>
+										<th class="text-right">Azioni</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -99,16 +90,17 @@
 										ng-class-odd="'dispari'" ng-class-even="'pari'">
 										<td>{{ricettario.etichetta}}</td>
 										<td>{{ricettario.descrizione}}</td>
-										<td width="115px"
-											style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
-											ng-class="{'success panel': vaso.sudo,'danger panel': !vaso.sudo}">
-											<button class="btn btn-circle btn-xs" type="button" ng-click="$parent.pannello=true">
+										<td class="text-right">
+											<button class="btn btn-circle btn-xs" type="button"
+												ng-click="$parent.nuovo=true">
+												<i class="fa  fa-pencil "></i>
+											</button>
+											<button class="btn btn-circle btn-xs" type="button"
+												ng-click="$parent.semi(ricettario.idRicettario)">
 												<i class="fa fa-eye"></i>
 											</button>
-											<button class="btn btn-circle btn-xs" type="button" ng-click="$parent.pannello=true">
-												<i class="fa fa-linux"></i>
-											</button>
-											<button class="btn btn-circle btn-xs" type="button" ng-click="$parent.pannello=true">
+											<button class="btn btn-circle btn-xs" type="button"
+												ng-click="$parent.aggiorna(ricettario.idRicettario)">
 												<i class="fa fa-refresh"></i>
 											</button>
 										</td>

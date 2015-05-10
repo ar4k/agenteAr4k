@@ -28,6 +28,10 @@ class Connesione {
 	String etichetta = ''
 	/** descrizione connessione */
 	String descrizione ='Connessione AR4K by Rossonet'
+	/** dal punto rete */
+	PuntoRete da
+	/** al punto rete */
+	PuntoRete a
 	
 	/** esporta la connessione*/
 	def esporta() {
@@ -39,24 +43,3 @@ class Connesione {
 	}
 }
 
-/**
- * Porta TCP su un vaso
- *  
- * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- *
- */
-
-class PortaVaso {
-	/** porta tcp */
-	Integer porta = 0
-	String etichetta = ''
-	/** vaso che ospita il servizio o il tunnel ssh verso un altro vaso */
-	Vaso vaso
-	Boolean installata = false
-	Boolean attiva = false
-	Boolean libera = false
-	
-	def esporta() {
-		
-	}
-}

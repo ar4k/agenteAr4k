@@ -55,19 +55,6 @@
 
 package org.ar4k
 
-import static groovyx.gpars.dataflow.Dataflow.task
-
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.codehaus.groovy.grails.commons.GrailsApplication
-import org.atmosphere.cpr.Broadcaster
-import org.atmosphere.cpr.DefaultBroadcaster
-import grails.converters.JSON
-import grails.transaction.Transactional
-import grails.util.Holders
-import java.util.Formatter.DateTime
-import com.jcraft.jsch.*
-
 class Meme {
 	/** id univoco meme */
 	String idMeme = UUID.randomUUID()
@@ -79,21 +66,22 @@ class Meme {
 	String gestore = 'Rossonet s.c.a r.l.'
 	String versione = ''
 	List<String> versioniCompatibili = []
-	String mascheraAvvio = '<p>Maschera non presente</p>'
-	String mascheraBanner = '<p>Maschera non presente</p>'
 	String icona = ''
 	String stato = 'inattivo'
-	List<String> fileGestiti = []
-	List<String> metodiGestiti = []
+	
 	List<String> dipendenze = []
 	List<String> funzionalita = []
 	List<String> variabiliAmbiente = []
-	String verificaMd5Sum = 'xxx'
 	
-	// Come gestire le chiamate del ciclo di vita? Per esempio prima del backup di un MySQL lo script per il dump del db.
-	// Come gestire la registrazione di eventi su altre cartucce durante il ciclo di vita?
-	// Elencare i vari servizi (JCloud,JSoup & Proxy ecc..). Da valutare bene la generazione di controller Angular.
-	 
+	List<RuoloVaso> vasi = []
+	List<PuntoRete> connettori = []
+	/** connessioni tra i vasi disponibili nel contesto*/
+	List<Connesione> connessioni =[]
+	List<Metodo> metodi = []
+	
+	// Da valutare
+	List<String> eventi = []
+
 	/** dump meme */
 	def esporta() {
 		log.info("esporta() il meme: "+idMeme)
@@ -101,9 +89,57 @@ class Meme {
 			idMeme:idMeme,
 			etichetta:etichetta,
 			descrizione:descrizione,
-			mascheraConfigurazione:mascheraConfigurazione,
 			stato:stato
+		]
+	}
+
+	String toString() {
+		return idMeme +' ('+etichetta+') '+descrizione
+	}
+}
+
+/**
+ * PuntoRete rappresenta una porta di rete su un vaso
+ *
+ * @author Andrea Ambrosini (Rossonet s.c.a r.l)
+ *
+ */
+class PuntoRete {
+	String etichetta = 'Connettore'
+	String indirizzoIp = ''
+	String sottoMaschera = ''
+	String mac = ''
+	Integer porta = null
+	Vaso vaso
+	/** protocollo parlato dalla porta */
+	String protocollo = 'Telnet'
+
+	/** Esporta per il salvataggio*/
+	def esporta() {
+		return [
+			indirizzoIp:indirizzoIp,
+			sottoMaschera:sottoMaschera,
+			mac:mac
 		]
 	}
 }
 
+/**
+ * Definisce la funzione dei vasi rispetto al meme
+ * @author Andrea Ambrosini
+ *
+ */
+class RuoloVaso {
+	String ruolo = 'Principale'
+	List<Vaso> vasi = []
+}
+
+/**
+ * Metodo sul meme
+ *
+ * @author Andrea Ambrosini
+ *
+ */
+class Metodo {
+	String etichetta = ''	
+}

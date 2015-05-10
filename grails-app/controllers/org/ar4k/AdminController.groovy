@@ -138,14 +138,42 @@ class AdminController {
 		log.info("Richiesta aggiunta ricettario: "+ricettario)
 		RepositoryGit repositoryGit = new RepositoryGit(indirizzo:ricettario.repo,nomeCartella:ricettario.cartella)
 		if (
-			interfacciaContestoService.contesto.ricettari.add(
-				new Ricettario(etichetta:ricettario.etichetta,descrizione:ricettario.descrizione,repositoryGit:repositoryGit)
-			)
+		interfacciaContestoService.contesto.ricettari.add(
+		new Ricettario(etichetta:ricettario.etichetta,descrizione:ricettario.descrizione,repositoryGit:repositoryGit)
 		)
-		{
+		) {
 			render "ok"
 		} else {
 			render "errore"
+		}
+	}
+
+	def aggiornaRicettario() {
+		String idRicettario = request.JSON.idricettario
+		interfacciaContestoService.contesto.ricettari.each{
+			if (it.idRicettario == idRicettario) {
+				interfacciaContestoService.contesto.vasi*.avviaRicettario(it)
+				interfacciaContestoService.contesto.vasoMaster.caricaSemi(it)
+				it.aggiornato = new Date()
+			}
+		}
+		render "ok"
+	}
+
+	def listaSemi() {
+		String idRicettario = request.JSON.idricettario
+		def incapsulato
+		List<Seme> risultato = []
+		interfacciaContestoService.contesto.ricettari.each{
+			if (it.idRicettario == idRicettario) {
+				it.semi.each{ seme -> risultato.add(seme) }
+				incapsulato = [semi:risultato]
+			}
+		}
+		if ( risultato.size() > 0 ) {
+			render incapsulato as JSON
+		} else {
+			render 'none'
 		}
 	}
 
@@ -153,23 +181,22 @@ class AdminController {
 		def vaso = request.JSON.vaso
 		log.info("Richiesta aggiunta vaso: "+vaso)
 		Vaso vasoAggiunto= new Vaso(
-			etichetta:vaso.etichetta,
-			descrizione:vaso.descrizione,
-			macchina:vaso.hostssh,
-			porta:vaso.porta.toInteger(),
-			utente:vaso.utente,
-			key:vaso.key
-			)
+				etichetta:vaso.etichetta,
+				descrizione:vaso.descrizione,
+				macchina:vaso.hostssh,
+				porta:vaso.porta.toInteger(),
+				utente:vaso.utente,
+				key:vaso.key
+				)
 		if (
-			interfacciaContestoService.contesto.vasi.add(vasoAggiunto)
-		)
-		{
+		interfacciaContestoService.contesto.vasi.add(vasoAggiunto)
+		) {
 			render "ok"
 		} else {
 			render "errore"
 		}
 	}
-	
+
 	def sbadmin2() {
 		render(template: "sbadmin2",contentType:"text/css",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}

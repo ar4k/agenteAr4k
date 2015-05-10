@@ -19,7 +19,7 @@
 package org.ar4k
 
 import com.jcraft.jsch.*
-import grails.converters.XML
+import grails.converters.JSON
 
 class Vaso {
 	/** id univoco vaso */
@@ -46,10 +46,8 @@ class Vaso {
 	String proxy = null
 	/** tollera errori nelle procedure */
 	Boolean tolleranza = false
-	/** indirizzi delle schede */
-	List<PuntoRete> porte = []
-	/** ricettari associazti al vaso */
-	List<Ricettario> ricettari = []
+	/** memi attivati sul vaso */
+	List<Meme> memi = []
 	/** l'utenza ha l'accesso sudo sulla macchina */
 	Boolean sudo = false
 
@@ -66,8 +64,7 @@ class Vaso {
 			path:path,
 			uname:uname,
 			proxy:proxy,
-			tolleranza:tolleranza,
-			porte:porte*.esporta()
+			tolleranza:tolleranza
 		]
 	}
 
@@ -83,7 +80,7 @@ class Vaso {
 
 	/** salva un contesto sul vaso*/
 	Boolean salvaContesto(Contesto contesto) {
-		String file = contesto.esporta() as XML
+		String file = contesto.esporta() as JSON
 		String interruzione = "EOF-"+UUID.randomUUID()+"-AR4K"
 		String comandoEsecuzione="cat > ~/.ar4k/contesti/"+contesto.idContesto+".xml << "+interruzione+"\n"+file+"\n"+interruzione+"\n"
 		String comandoControllo="cat ~/.ar4k/contesti/"+contesto.idContesto+".xml"
@@ -190,56 +187,48 @@ class Vaso {
 		//}
 		return contesti
 	}
-	
+
 	/** lista semi */
 	List<Seme> listaSemi() {
-		
+
 	}
-	
+
 	/** stringa predefinita */
 	String toString() {
 		return etichetta+" => "+utente+"@"+macchina+":"+porta
 	}
-	
+
 	/** scarica un ricettario sul nodo se attivo */
 	Boolean avviaRicettario(Ricettario ricettario) {
-		ricettari.add(ricettario)
-		//ricettari = ricettari.list().unique()
 		if (ricettario.repositoryGit.configurato == true) {
-			String comando = "cd .ar4k/ricettari ; if [ -e "+ricettario.repositoryGit.nomeCartella+" ] ; then cd "+ricettario.repositoryGit.nomeCartella+"; git pull; else  git clone "+ricettario.repositoryGit.indirizzo+" "+ricettario.repositoryGit.nomeCartella+"; fi"
+			String comando = "cd ~/.ar4k/ricettari ; if [ -e "+ricettario.repositoryGit.nomeCartella+" ] ; then cd "+ricettario.repositoryGit.nomeCartella+"; git pull; else  git clone "+ricettario.repositoryGit.indirizzo+" "+ricettario.repositoryGit.nomeCartella+"; fi"
 			esegui(comando)
 		}
-		String comandoCont = "cd .ar4k/ricettari ; if [ -e "+ricettario.repositoryGit.nomeCartella+" ] ; then echo -n 43; fi"
+		String comandoCont = "cd ~/.ar4k/ricettari ; if [ -e "+ricettario.repositoryGit.nomeCartella+"/LICENSE ] ; then echo -n 43; fi"
 		String atteso = '43'
 		String risultato = esegui(comandoCont)
 		log.info("risultato "+comandoCont+" = "+risultato+" (atteso: "+atteso+')')
-		return risultato == atteso?true:false
+		Boolean esito = (risultato == atteso?true:false)
+		if (esito) ricettario.aggiornato = new Date()
+		if (esito) log.info("Esito aggiornamento ricettario "+ricettario+" su "+etichetta+": (ok)")
+		return esito
 	}
 
-}
-
-/**
- * PuntoRete rappresenta una porta di rete su un vaso
- * 
- * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- *
- */
-class PuntoRete {
-	String indirizzoIp = ''
-	String sottoMaschera = ''
-	String mac = ''
-	Integer porta = null
-	/** protocollo parlato dalla porta */
-	String protocollo = 'Telnet'
-	/** eventuale meme assegnatario della porta */
-	Meme memeGestore = null
-
-	/** Esporta per il salvataggio*/
-	def esporta() {
-		return [
-			indirizzoIp:indirizzoIp,
-			sottoMaschera:sottoMaschera,
-			mac:mac
-		]
+	/** legge i semi e popola i dati */
+	Boolean caricaSemi(Ricettario ricettario) {
+		if (ricettario.repositoryGit.configurato == true) {
+			String comandoRicerca = "cd ~/.ar4k/ricettari ;"
+			comandoRicerca += "cd "+ricettario.repositoryGit.nomeCartella+" ;"
+			comandoRicerca += "find . -name '*.ar4k'"
+			def ricerca = esegui(comandoRicerca).tokenize('\n')
+			ricettario.semi = []
+			Meme memeCaricamento = new Meme(etichetta:ricerca)
+			ricerca.each{ricettario.semi.add(percorso:ricerca,meme:memeCaricamento)}
+			log.info("Nel ricettario "+ricettario+" sono presenti "+ricettario.semi.size()+" semi")
+			return true
+		} else {
+			return false
+		}
 	}
+
 }

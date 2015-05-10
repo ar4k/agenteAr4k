@@ -1,21 +1,12 @@
 /**
  * Kettle Service
  *
- * <p>Gestisce le lavorazioni Kettle dei Memi</p>
- *
- * <p style="text-justify">
- * Da valutare l'integrazione con la factory di controller AngularJS</br>
- * </p>
+ * Vecchia implementazione lasciata come esempio.
+ * Da valutare, dopo l'implementazione in ssh delle lavorazione kettle, la manipolazione dei
+ * repository come ricettari
  * 
- * valutare l'inserimento di activity qui.
- * http://alfrescoblog.com/2014/06/07/angular-js-activiti-webapp-part-i/
- * http://alfrescoblog.com/2014/06/17/angular-js-activiti-webapp-part-ii/
- * http://alfrescoblog.com/2014/09/04/angular-js-activiti-webapp-part-iii-final/
- *
- * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- * @version 0.1-alpha
- * @see org.ar4k.Meme
- * @see org.ar4k.Interfaccia
+ * @see org.ar4k.Ricettario
+ * @deprecated
  */
 
 package org.ar4k

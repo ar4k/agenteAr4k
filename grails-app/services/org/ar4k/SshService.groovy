@@ -1,12 +1,14 @@
 /**
  * SSH Service
  *
- * <p>Gestisce il recupero delle pagine generate da AngularJS e le sessioni Stream SSH</p>
+ * <p>Carica e gestisce i metodi ssh per i memi</p>
  *
  * <p style="text-justify">
  * Permette l'esecuzione di comandi (metodi) bash eventualmente integrati da altri framework (Chef/Puppet) sui Vasi. 
- * Gestisce il recupero dell pagine generate da comand line per AngularJS e gestisce gli oggetti con scope session legati 
+ * Gestisce il recupero dell pagine generate dal output stream per AngularJS e gestisce gli oggetti con scope session legati 
  * a gli stream SSH.</br>
+ * Da valutare la gestione di una console unica degli errori per tutto il meme e il meccanismo di inizione delle variabili in bash.
+ * Per il passaggio dai dati in bash pensavo di usare http://stedolan.github.io/jq/ (o simili).
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
@@ -18,14 +20,9 @@
 package org.ar4k
 
 import org.codehaus.groovy.grails.commons.GrailsApplication
-import org.h2.util.New;
-
-import grails.transaction.Transactional
 
 import com.jcraft.jsch.*
 
-
-@Transactional
 class SshService {
 	def GrailsApplication grailsApplication
 	def servletContext

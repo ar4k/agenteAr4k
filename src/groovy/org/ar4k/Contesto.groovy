@@ -25,8 +25,6 @@
 
 package org.ar4k
 
-import grails.converters.XML
-
 class Contesto {
 	/** id univoco contesto */
 	String idContesto = UUID.randomUUID()
@@ -50,8 +48,6 @@ class Contesto {
 	List<Meme> memi = []
 	/** vasi disponibili nel contesto*/
 	List<Vaso> vasi =[]
-	/** connessioni tra i vasi disponibili nel contesto*/
-	List<Connesione> connessioni =[]
 	Vaso vasoMaster
 
 	/** ditruttore di classe (utile per la gestione della pulizia dei vasi)*/
@@ -75,9 +71,6 @@ class Contesto {
 			for (Ricettario ricettario in ricettari) {
 				if (!vaso.avviaRicettario(ricettario)) risultato = false
 			}
-		}
-		for (Connesione connessione in connessioni) {
-			if (!connessione.avvia()) risultato = false
 		}
 		for (Meme meme in memi) {
 			if (!meme.avvia()) risultato = false
@@ -117,7 +110,6 @@ class Contesto {
 			memi:memi*.esporta(),
 			utentiRuoli:utentiRuoli*.esporta(),
 			vasi:vasi*.esporta(),
-			connessioni:connessioni*.esporta(),
 			vasoMaster:vasoMaster.esporta(),
 			ricettari:ricettari*.esporta()
 		]
