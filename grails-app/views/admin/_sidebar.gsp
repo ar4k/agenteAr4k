@@ -11,13 +11,13 @@
 			<li ui-sref-active="active"><a ui-sref="dashboard.reti"><i
 					class="fa fa-sitemap fa-fw"></i> Reti</a></li>
 
-			<li ui-sref-active="active"><a ui-sref="dashboard.kettle"><i
+			<li ui-sref-active="active"><a ui-sref="dashboard.memi"><i
 					class="fa fa-flask fa-fw"></i> Memi</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.processi"><i
 					class="fa fa-gears fa-fw"></i> Servizi</a></li>
 
-			<li ui-sref-active="active"><a ui-sref="dashboard.quartz"><i
+			<li ui-sref-active="active"><a ui-sref="dashboard.schedulatore"><i
 					class="fa fa-clock-o fa-fw"></i> Schedulazioni</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.ricettari"><i

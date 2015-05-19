@@ -169,16 +169,16 @@ angular
           }
         }
       })
-      .state('dashboard.kettle',{
-        url:'/kettle',
-        controller: 'KettleCtrl',
-        templateUrl:'admin/kettle',
+      .state('dashboard.memi',{
+        url:'/memi',
+        controller: 'MemiCtrl',
+        templateUrl:'admin/memi',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/kettleCtrl',
+              'admin/memiCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',
@@ -188,16 +188,16 @@ angular
           }
         }
       })
-      .state('dashboard.quartz',{
-        url:'/quartz',
-        controller: 'QuartzCtrl',
-        templateUrl:'admin/quartz',
+      .state('dashboard.schedulatore',{
+        url:'/schedulatore',
+        controller: 'SchedulatoreCtrl',
+        templateUrl:'admin/schedulatore',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/quartzCtrl',
+              'admin/schedulatoreCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',

@@ -23,7 +23,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 class InterfacciaContestoService {
 	
 	// Tramite Camel garantire l'accesso da vari protocolli
-	static expose = ['jmx']
+	//static expose = ['jmx']
 
 	/** Contesto applicativo Grails */	
 	GrailsApplication grailsApplication

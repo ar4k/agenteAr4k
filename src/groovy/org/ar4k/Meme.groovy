@@ -52,33 +52,36 @@
  * @see org.ar4k.Ricettario
  * @see org.ar4k.Vaso
  */
-
 package org.ar4k
 
+import groovy.transform.AutoClone 
+
+@AutoClone
 class Meme {
 	/** id univoco meme */
 	String idMeme = UUID.randomUUID()
 	/** etichetta meme */
-	String etichetta = ''
+	String etichetta = 'Meme generato atomaticamente'
 	/** descrizione meme */
 	String descrizione ='Meme AR4K by Rossonet'
 	String autore = 'Andrea Ambrosini'
 	String gestore = 'Rossonet s.c.a r.l.'
-	String versione = ''
+	String versione = '0.2'
 	List<String> versioniCompatibili = []
-	String icona = ''
+	String icona = 'fa-thumb-tack'
 	String stato = 'inattivo'
-	
+	Boolean attivo = false
+
 	List<String> dipendenze = []
 	List<String> funzionalita = []
 	List<String> variabiliAmbiente = []
-	
+
 	List<RuoloVaso> vasi = []
 	List<PuntoRete> connettori = []
 	/** connessioni tra i vasi disponibili nel contesto*/
 	List<Connesione> connessioni =[]
 	List<Metodo> metodi = []
-	
+
 	// Da valutare
 	List<String> eventi = []
 
@@ -89,7 +92,15 @@ class Meme {
 			idMeme:idMeme,
 			etichetta:etichetta,
 			descrizione:descrizione,
-			stato:stato
+			stato:stato,
+			attivo:attivo,
+			dipendenze:dipendenze,
+			funzionalita:funzionalita,
+			variabiliAmbiente:variabiliAmbiente,
+			vasi:vasi*.esporta(),
+			connettori:connettori*.esporta(),
+			connessioni:connessioni*.esporta(),
+			metodi:metodi*.esporta()
 		]
 	}
 
@@ -105,41 +116,76 @@ class Meme {
  *
  */
 class PuntoRete {
-	String etichetta = 'Connettore'
-	String indirizzoIp = ''
-	String sottoMaschera = ''
-	String mac = ''
-	Integer porta = null
+	String etichetta = 'Connettore locale'
+	String indirizzoIp = '127.0.0.1'
+	String sottoMaschera = '255.255.255.0'
+	String interfaccia = 'lo'
+	Integer porta
+	String rangePorta = '1024-10000'
 	Vaso vaso
 	/** protocollo parlato dalla porta */
-	String protocollo = 'Telnet'
+	String protocollo
 
 	/** Esporta per il salvataggio*/
 	def esporta() {
 		return [
+			etichetta:etichetta,
 			indirizzoIp:indirizzoIp,
 			sottoMaschera:sottoMaschera,
-			mac:mac
+			porta:porta,
+			vaso:vaso?.etichetta,
+			protocollo:protocollo,
+			interfaccia:interfaccia
 		]
 	}
 }
 
 /**
  * Definisce la funzione dei vasi rispetto al meme
+ * 
  * @author Andrea Ambrosini
  *
  */
 class RuoloVaso {
 	String ruolo = 'Principale'
 	List<Vaso> vasi = []
+	Boolean obbligatorio = true
+
+	def esporta() {
+		return [
+			ruolo:ruolo,
+			obbligatorio:obbligatorio,
+			vasi:vasi*.etichetta
+		]
+	}
 }
 
 /**
- * Metodo sul meme
+ * Metodo sul meme (da sviluppare aggancio verso i vari Service)
  *
  * @author Andrea Ambrosini
  *
  */
 class Metodo {
-	String etichetta = ''	
+	String etichetta = 'test piattaforma Ar4k'
+	String descrizione = 'metodo creato in automatico'
+	String tipoComando = 'bash'
+	String comando = 'ls -l'
+	String icona = 'fa-play-circle-o'
+	Boolean attivo = true
+	Boolean menuVaso = false
+	Boolean menuMeme = false
+	Boolean schedulabile = false
+	Boolean termina = true
+
+	def esporta() {
+		return [
+			etichetta:etichetta,
+			tipoComando:tipoComando,
+			comando:comando,
+			attivo:attivo,
+			menuVaso:menuVaso,
+			menuMeme:menuMeme
+		]
+	}
 }

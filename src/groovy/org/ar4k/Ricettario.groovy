@@ -28,6 +28,8 @@ class Ricettario {
 	RepositoryGit repositoryGit = new RepositoryGit()
 	/** semi disponibili sul ricettario */
 	List<Seme> semi = []
+	/** se il repository va preventivamente caricato su tutti i nodi (vasi) */
+	Boolean onnipresente = true
 	/** ultimo caricamento */
 	Date aggiornato
 	
@@ -41,7 +43,8 @@ class Ricettario {
 			etichetta:etichetta,
 			descrizione:descrizione,
 			repositoryGit:repositoryGit,
-			aggiornato: aggiornato.toString()
+			aggiornato: aggiornato.toString(),
+			semi:semi*.esporta()
 			]
 	}
 
@@ -83,4 +86,13 @@ class Seme {
 	/** dati meme germinante*/
 	Meme meme
 	String percorso
+	
+	/** esporta il seme */
+	def esporta() {
+		log.info("esporta() il seme in : "+percorso)
+		return [
+			meme:meme.esporta(),
+			percorso:percorso
+			]
+	}
 }

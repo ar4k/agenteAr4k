@@ -19,7 +19,9 @@
 package org.ar4k
 
 import com.jcraft.jsch.*
+
 import grails.converters.JSON
+import groovy.json.JsonSlurper
 
 class Vaso {
 	/** id univoco vaso */
@@ -38,7 +40,7 @@ class Vaso {
 	String key = null
 	/** variabile PATH sulla macchina */
 	String path = '/usr/local/bin:/usr/bin:/bin'
-	/** sistema rilavato */
+	/** sistema rilevato */
 	String uname = ''
 	/** da definire: rappresenta le funzionalità del vaso root/user space, memoria,capacità computazionale,spazio store. */
 	List<String> funzionalita = []
@@ -48,7 +50,7 @@ class Vaso {
 	Boolean tolleranza = false
 	/** memi attivati sul vaso */
 	List<Meme> memi = []
-	/** l'utenza ha l'accesso sudo sulla macchina */
+	/** l'utenza ha l'accesso root sulla macchina */
 	Boolean sudo = false
 
 	/** esporta il vaso */
@@ -130,6 +132,7 @@ class Vaso {
 				try{Thread.sleep(500);}catch(Exception ee){}
 			}
 			canale.disconnect()
+			sessione.disconnect()
 		}catch(JSchException e) {
 			log.warn("Errore connesione SSH: "+e.printStackTrace())
 		}
@@ -220,10 +223,40 @@ class Vaso {
 			String comandoRicerca = "cd ~/.ar4k/ricettari ;"
 			comandoRicerca += "cd "+ricettario.repositoryGit.nomeCartella+" ;"
 			comandoRicerca += "find . -name '*.ar4k'"
-			def ricerca = esegui(comandoRicerca).tokenize('\n')
 			ricettario.semi = []
-			Meme memeCaricamento = new Meme(etichetta:ricerca)
-			ricerca.each{ricettario.semi.add(percorso:ricerca,meme:memeCaricamento)}
+			def ricerca = esegui(comandoRicerca).tokenize('\n')
+			ricerca.each{
+				def jsonSlurper = new JsonSlurper()
+				String fileJson = esegui("cd ~/.ar4k/ricettari/"+ricettario.repositoryGit.nomeCartella+" ; cat "+it)
+				log.info("lettura "+it+" \n"+fileJson+"\n")
+				if (!fileJson) fileJson = '{"etichetta":"vuoto","descrizione":"nessun seme configurato in '+it+'"}'
+				try {
+					def semeTarget = jsonSlurper.parseText(fileJson)
+					Seme semeOggetto = new Seme(
+							percorso:it,
+							meme:new Meme(
+							etichetta:semeTarget.etichetta,
+							descrizione:semeTarget.descrizione,
+							autore:semeTarget.autore,
+							gestore:semeTarget.gestore,
+							versione:semeTarget.versione,
+							icona:semeTarget.icona,
+							stato:semeTarget.stato,
+							dipendenze:semeTarget.dipendenze,
+							funzionalita:semeTarget.funzionalita,
+							variabiliAmbiente:semeTarget.variabiliAmbiente,
+							))
+					semeTarget.metodi.each{semeOggetto.meme.metodi.add(new Metodo(it))}
+					semeTarget.connettori.each{semeOggetto.meme.connettori.add(new PuntoRete(it))}
+					semeTarget.vasi.each{semeOggetto.meme.vasi.add(new RuoloVaso(it))}
+					ricettario.semi.add(semeOggetto)
+					log.info("Aggiungo "+semeTarget.etichetta)
+
+				} catch(Exception e) {
+					log.warn(e.printStackTrace())
+				}
+
+			}
 			log.info("Nel ricettario "+ricettario+" sono presenti "+ricettario.semi.size()+" semi")
 			return true
 		} else {

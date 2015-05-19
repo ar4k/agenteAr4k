@@ -7,7 +7,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('RicettariCtrl', function($scope, $http) {
+  .controller('RicettariCtrl', function($scope, $http, $filter) {
     $http.get("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
     .success(function (response) {$scope.ricettari = response.ricettari;});
     
@@ -41,15 +41,27 @@ angular.module('sbAdminApp')
   		});
       };
       
+    $scope.creameme = function(seme) {
+        $http.post("${createLink(controller:'admin',action:'creaMeme',absolute:'true')}", {seme:seme})
+        .success(function(data, status, headers, config) {
+    		// implementare il redirect alla configurazione del meme nel pannello apposito
+  		})
+  		.error(function(data, status, headers, config) {
+    		// called asynchronously if an error occurs
+    		// or server returns response with an error status.
+  		});
+     };
+      
     $scope.semi = function(idricettario) {
-    	$scope.titolo = idricettario;
         $http.post("${createLink(controller:'admin',action:'listaSemi',absolute:'true')}", {idricettario:idricettario})
         .success(function(response) {
         	if (response != 'none') {
 				$scope.elencosemi = response.semi;
+				$scope.titolo = 'Elenco semi in '+$filter('filter')($scope.ricettari, {idRicettario: idricettario}, true)[0].etichetta; 
 				$scope.pannello = true;
 			} else {
-			    $scope.elencosemi = 'Nessun seme presente nel Ricettario...';
+			    $scope.titolo = 'Nessun seme presente nel Ricettario...';
+			    $scope.elencosemi = '';
 				$scope.pannello = true;
 			}
   		})

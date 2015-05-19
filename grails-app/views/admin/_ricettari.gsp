@@ -6,9 +6,37 @@
 			<div class="modal-header">
 				<button aria-hidden="true" data-dismiss="modal"
 					ng-click="pannello=false" class="close" type="button">×</button>
-				<h4 id="RicettarioModalLabel" class="modal-title">Semi in {{titolo}}</h4>
+				<h4 id="RicettarioModalLabel" class="modal-title">{{titolo}}</h4>
 			</div>
-			<div class="modal-body">{{elencosemi}}</div>
+			<div class="modal-body">
+				<div class="dataTable_wrapper">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Etichetta</th>
+									<th>Descrizione</th>
+									<th>Versione</th>
+									<th class="text-right">Azioni</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="seme in elencosemi" ng-class-odd="'dispari'"
+									ng-class-even="'pari'">
+									<td>{{seme.meme.etichetta}}</td>
+									<td>{{seme.meme.descrizione}}</td>
+									<td>{{seme.meme.versione}}</td>
+									<td class="text-right">
+										<button class="btn btn-circle btn-xs" type="button" ng-click="creameme(seme.meme.idMeme)">
+											<i class="fa fa-flask"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 			<div class="modal-footer">
 				<button data-dismiss="modal" ng-click="pannello=false"
 					class="btn btn-default" type="button">Chiudi</button>
@@ -71,17 +99,20 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Etichetta</th>
+										<th>Ricettario</th>
 										<th>Descrizione</th>
 										<th class="text-right">Azioni</th>
 									</tr>
 								</thead>
 								<tbody>
-									<div class="col-lg-3 text-left">
+									<div class="col-lg-5 text-left">
 										<button class="btn btn-outline btn-primary" ng-hide="nuovo"
 											type="button" ng-click="nuovo=true">NUOVO RICETTARIO</button>
+										<button class="btn btn-success btn-primary" ng-hide="nuovo"
+											type="button" ng-click="nuovo=true">AGGIUNGI CODICE
+											AR4K</button>
 									</div>
-									<div class="col-lg-4 text-center"></div>
+									<div class="col-lg-2 text-center"></div>
 									<div class="col-lg-5 text-right">
 										<input placeholder="ricerca in etichetta e descrizione"
 											class="form-control">

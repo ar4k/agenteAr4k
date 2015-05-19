@@ -44,8 +44,8 @@
 								</div>
 								<div class="form-group text-right">
 									<input type="submit" class="btn btn-default"
-										ng-click="nuovovaso(vaso);nuovo=false"
-										value="Salva" /> <input type="button" class="btn btn-default"
+										ng-click="nuovovaso(vaso);nuovo=false" value="Salva" /> <input
+										type="button" class="btn btn-default"
 										ng-click="nuovo=false;reset()" value="Annulla" />
 								</div>
 							</form>
@@ -56,18 +56,21 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Etichetta</th>
+										<th>Oggetto</th>
 										<th>Descrizione</th>
-										<th class="text-right" width="104px">Azioni</th>
+										<th class="text-right">Azioni</th>
 									</tr>
 								</thead>
 								<tbody>
-									<div class="col-lg-3 text-left">
+									<div class="col-lg-5 text-left">
 										<button class="btn btn-outline btn-primary" ng-hide="nuovo"
 											type="button" ng-click="nuovo=true">NUOVO VASO</button>
+										<button class="btn btn-success btn-primary" ng-hide="nuovo"
+											type="button" ng-click="nuovo=true">AGGIUNGI CODICE
+											AR4K</button>
 
 									</div>
-									<div class="col-lg-4 text-center"></div>
+									<div class="col-lg-2 text-center"></div>
 									<div class="col-lg-5 text-right">
 										<input placeholder="ricerca in etichetta e descrizione"
 											class="form-control">
@@ -76,12 +79,19 @@
 										ng-class-even="'pari'">
 										<td>{{vaso.etichetta}}</td>
 										<td>{{vaso.descrizione}}</td>
-										<td width="104px"
-											style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
-											ng-class="{'success panel': vaso.sudo,'danger panel': !vaso.sudo}"><i
-											class="fa fa-desktop"></i> <i class="fa fa-flask"></i> <i
-											class="fa fa-gears"></i> <i class="fa fa-clock-o"></i> <i
-											class="fa fa-bar-chart-o"></i></td>
+										<td class="text-right"
+											ng-class="{'success': vaso.sudo,'danger': !vaso.sudo}">
+
+											<button ng-repeat=""
+												class="btn btn-circle btn-xs" type="button"
+												ng-show="metodo.menuVaso" style="margin: 0.1em;">
+												<i class="fa {{metodo.icona}}"></i>
+											</button>
+											<button style="margin: 0.1em;" class="btn btn-circle btn-xs"
+												type="button" ng-click="$parent.dettagli(vaso.idVaso)">
+												<i class="fa fa-gears"></i>
+											</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>

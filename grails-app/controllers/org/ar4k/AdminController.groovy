@@ -65,12 +65,12 @@ class AdminController {
 		render(template: "rossonetCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
-	def quartz() {
-		render(template: "quartz",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	def schedulatore() {
+		render(template: "schedulatore",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
-	def quartzCtrl() {
-		render(template: "quartzCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	def schedulatoreCtrl() {
+		render(template: "schedulatoreCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
 	def utenti() {
@@ -88,12 +88,12 @@ class AdminController {
 		render(template: "processiCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
-	def kettle() {
-		render(template: "kettle",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	def memi() {
+		render(template: "memi",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
-	def kettleCtrl() {
-		render(template: "kettleCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	def memiCtrl() {
+		render(template: "memiCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
 	def reti() {
@@ -133,6 +133,13 @@ class AdminController {
 		render incapsulato as JSON
 	}
 
+	def listaMemi() {
+		def risultato = []
+		interfacciaContestoService.contesto.memi.each{ risultato.add(it) }
+		def incapsulato = [memi:risultato]
+		render incapsulato as JSON
+	}
+
 	def aggiungiRicettario() {
 		def ricettario = request.JSON.ricettario
 		log.info("Richiesta aggiunta ricettario: "+ricettario)
@@ -155,6 +162,23 @@ class AdminController {
 				interfacciaContestoService.contesto.vasi*.avviaRicettario(it)
 				interfacciaContestoService.contesto.vasoMaster.caricaSemi(it)
 				it.aggiornato = new Date()
+			}
+		}
+		render "ok"
+	}
+
+	def creaMeme() {
+		String idSeme = request.JSON.seme
+		log.info("Richiesta installazione seme "+idSeme)
+		interfacciaContestoService.contesto.ricettari.each{ ricettario ->
+			ricettario.semi.each{
+				if (it.meme.idMeme == idSeme) {
+					log.info("il seme "+it.meme+" corrisponde")
+					Meme nuovoMeme = new Meme()
+					nuovoMeme = it.meme.clone()
+					nuovoMeme.idMeme = UUID.randomUUID()
+					interfacciaContestoService.contesto.memi.add(nuovoMeme)
+				}
 			}
 		}
 		render "ok"
