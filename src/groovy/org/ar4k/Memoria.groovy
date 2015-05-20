@@ -1,50 +1,44 @@
 /**
- * @deprecated vecchia implementazione
+ * Per lo scambio di dati nel contesto tra Memi, Interfacce e Utenti 
+ *
+ *
  */
-
 package org.ar4k
 
-import static groovyx.gpars.dataflow.Dataflow.task
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-
-import org.codehaus.groovy.grails.commons.GrailsApplication
-import org.atmosphere.cpr.Broadcaster
-import org.atmosphere.cpr.DefaultBroadcaster
-
-import grails.converters.JSON
-import grails.transaction.Transactional
-import grails.util.Holders
-
-import java.util.Formatter.DateTime
-
-import com.jcraft.jsch.*
-
-// Classi accessorie
-
-// Ricettario
 class Memoria {
-	String etichetta = UUID.randomUUID()
-	String descrizione ='Ricettario AR4K by Rossonet'
-	String repositoryGit = ''
-	String utente = 'agentear4k'
-	String password = ''
-	String ramo = 'master'
-	String stato = 'repositoryDefault'
-	Boolean archivio = false
-	List<Meme> memi = []
+	String idMemoria = UUID.randomUUID()
+	String etichetta = 'Locazione di Memoria nel Contesto'
+	String descrizione ='Locazione di memoria in un contesto AR4K by Rossonet'
+	String tipo = 'directory' // da verificare le varie opzioni cloud/camel/s3 per database con database ecc con storico
+	List<AccessoMeme> memi = []
+	List<AccessoInterfaccia> interfacce = []
+	List<AccessoRuolo> ruoli = []
+	
+	// Quando non c'è incrocio
+	String accessoPredefinitoMemi = 'ALL'
+	String accessoPredefinitoInterfaccia = 'ALL'
+	String accessoPredefinitoRuolo = 'ALL'
 
-	def salvataggio() {
+	def esporta() {
 		return [
+			idMemoria:idMemoria,
 			etichetta:etichetta,
 			descrizione:descrizione,
-			repositorygit:repositoryGit,
-			utente:utente,
-			password:password,
-			ramo:ramo,
-			stato:stato,
-			archivio:archivio,
-			memi:memi*.salvataggio()
 		]
 	}
+}
+
+class AccessoMeme {
+	Meme meme
+	String accesso = 'ALL'
+}
+
+class AccessoInterfaccia {
+	Interfaccia interfaccia
+	String accesso = 'ALL'
+}
+
+class AccessoRuolo {
+	Ruolo ruolo
+	String accesso = 'ALL'
 }

@@ -7,5 +7,5 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('SchedulatoreCtrl', function($scope,$position) {
+  .controller('MemoriaCtrl', function($scope,$position) {
   });

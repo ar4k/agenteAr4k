@@ -81,9 +81,11 @@ class Meme {
 	/** connessioni tra i vasi disponibili nel contesto*/
 	List<Connesione> connessioni =[]
 	List<Metodo> metodi = []
+	/** stati possibili del meme */
+	List<StatoMeme> stati = []
 
 	// Da valutare
-	List<String> eventi = []
+	List<String> eventi = [] // eventi registrabili su contesto e monitoraggio.
 
 	/** dump meme */
 	def esporta() {
@@ -106,6 +108,13 @@ class Meme {
 
 	String toString() {
 		return idMeme +' ('+etichetta+') '+descrizione
+	}
+	
+	/**
+	 * Chiamato quando si avvia un interfaccia nel constesto
+	 */
+	Boolean verificaAvvia() {
+		return false
 	}
 }
 
@@ -167,25 +176,44 @@ class RuoloVaso {
  *
  */
 class Metodo {
+	/** id univoco metodo */
+	String idMetodo = UUID.randomUUID()
 	String etichetta = 'test piattaforma Ar4k'
 	String descrizione = 'metodo creato in automatico'
-	String tipoComando = 'bash'
-	String comando = 'ls -l'
+	String tipoMetodo = 'bash'
+	String riferimento = 'ls -l'
 	String icona = 'fa-play-circle-o'
-	Boolean attivo = true
 	Boolean menuVaso = false
 	Boolean menuMeme = false
-	Boolean schedulabile = false
-	Boolean termina = true
+	List<Connesione> dipendenzaConnessioni = []
+	List<Metodo> dipendenzaMetodi = []
+	List<RuoloVaso> eseguiSu = []
 
 	def esporta() {
 		return [
+			idMetodo:idMetodo,
 			etichetta:etichetta,
-			tipoComando:tipoComando,
-			comando:comando,
-			attivo:attivo,
+			tipoMetodo:tipoMetodo,
+			riferimento:riferimento,
 			menuVaso:menuVaso,
 			menuMeme:menuMeme
 		]
 	}
+}
+
+/** 
+* Stati del Meme
+*/
+class StatoMeme {
+	String etichetta = 'inattivo'
+	List<Metodo> metodiAttivi = []
+	List<Metodo> metodiDisponibili = []
+	/** maschera nello stato */
+	String AngularMaschera = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String AngularDashboard = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String AngularDiretto = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	// eseguito in automatico al passaggio in questo stato
+	Metodo metodoPredefinito
+	// frequenza
+	String schedulazione = null // Se definito esegue il metodo secondo le logiche di Quartz
 }

@@ -188,16 +188,16 @@ angular
           }
         }
       })
-      .state('dashboard.schedulatore',{
-        url:'/schedulatore',
-        controller: 'SchedulatoreCtrl',
-        templateUrl:'admin/schedulatore',
+      .state('dashboard.memoria',{
+        url:'/memoria',
+        controller: 'MemoriaCtrl',
+        templateUrl:'admin/memoria',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/schedulatoreCtrl',
+              'admin/memoriaCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',

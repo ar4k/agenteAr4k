@@ -42,7 +42,7 @@ class Vaso {
 	String path = '/usr/local/bin:/usr/bin:/bin'
 	/** sistema rilevato */
 	String uname = ''
-	/** da definire: rappresenta le funzionalità del vaso root/user space, memoria,capacità computazionale,spazio store. */
+	/** da definire: rappresenta le funzionalità del vaso root/user space, memoria, capacità computazionale, spazio store. */
 	List<String> funzionalita = []
 	/** Stringa proxy (esportata come http_proxy) */
 	String proxy = null
@@ -91,11 +91,6 @@ class Vaso {
 		return risultato == file+"\n"?true:false
 	}
 
-	/** scrive un file */
-	Boolean scrivi(String file, String path) {
-		return false
-	}
-
 	/** esegui un comando ssh sul vaso */
 	String esegui(String comando) {
 		log.info("connessione al vaso: "+etichetta)
@@ -137,11 +132,6 @@ class Vaso {
 			log.warn("Errore connesione SSH: "+e.printStackTrace())
 		}
 		return risultato
-	}
-
-	/** esegui comando nel contesto specifico*/
-	String esegui(Contesto contesto,String comando) {
-		return null
 	}
 
 	/** prova la connesione ssh al vaso */
@@ -189,11 +179,6 @@ class Vaso {
 		contesti.add(creato)
 		//}
 		return contesti
-	}
-
-	/** lista semi */
-	List<Seme> listaSemi() {
-
 	}
 
 	/** stringa predefinita */

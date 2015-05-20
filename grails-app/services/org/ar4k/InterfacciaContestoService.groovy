@@ -57,6 +57,10 @@ class InterfacciaContestoService {
 		log.warn("Errore nel salvataggio del contesto!")
 		freeMemory()
 	}
+	
+	Processo eseguiMetodo(Metodo metodoTarget) {
+		
+	}
 }
 
 /**
@@ -74,9 +78,7 @@ class Evento {
 	/** check attivatori */
 	def testTrigger = [] // closure ?
 	/** azione se trigger positivo */
-	def listaAzioni = []
-	/** frequenza controllo */ 
-	String frequenza = '5 minuti'
+	List<Metodo> listaMetodi = []
 	/** controllo eventi attivato ? */
 	Boolean attivato = false
 }

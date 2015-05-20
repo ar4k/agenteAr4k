@@ -48,6 +48,9 @@ class Contesto {
 	List<Meme> memi = []
 	/** vasi disponibili nel contesto*/
 	List<Vaso> vasi =[]
+	/** locazioni di memoria disponibili nel contesto */
+	List<Memoria> dati = []
+	
 	Vaso vasoMaster
 
 	/** ditruttore di classe (utile per la gestione della pulizia dei vasi)*/
@@ -73,7 +76,7 @@ class Contesto {
 			}
 		}
 		for (Meme meme in memi) {
-			if (!meme.avvia()) risultato = false
+			if (!meme.verificaAvvia()) risultato = false
 		}
 		log.info("Importa "+utentiRuoli.size()+" utenti/ruoli")
 		for (UtenteRuolo utenteRuolo in utentiRuoli) {
@@ -110,6 +113,7 @@ class Contesto {
 			memi:memi*.esporta(),
 			utentiRuoli:utentiRuoli*.esporta(),
 			vasi:vasi*.esporta(),
+			dati:dati*.esporta(),
 			vasoMaster:vasoMaster.esporta(),
 			ricettari:ricettari*.esporta()
 		]

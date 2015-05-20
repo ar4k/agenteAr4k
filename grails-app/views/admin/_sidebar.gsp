@@ -17,8 +17,8 @@
 			<li ui-sref-active="active"><a ui-sref="dashboard.processi"><i
 					class="fa fa-gears fa-fw"></i> Servizi</a></li>
 
-			<li ui-sref-active="active"><a ui-sref="dashboard.schedulatore"><i
-					class="fa fa-clock-o fa-fw"></i> Schedulazioni</a></li>
+			<li ui-sref-active="active"><a ui-sref="dashboard.memoria"><i
+					class="fa fa-database fa-fw"></i> Dati</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.ricettari"><i
 					class="fa fa-book fa-fw"></i> Ricettari</a></li>

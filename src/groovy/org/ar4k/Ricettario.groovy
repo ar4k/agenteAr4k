@@ -53,7 +53,7 @@ class Ricettario {
 /**
  * RepositoryGit
  *
- * Struttura dati per array repository GIT
+ * Struttura dati per lista repository GIT
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  *
