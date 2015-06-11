@@ -116,6 +116,18 @@ class Meme {
 	Boolean verificaAvvia() {
 		return false
 	}
+	
+	String maschera() {
+		return stati.find{it.etichetta == stato}.angularMaschera
+	}
+	
+	String dashboard() {
+		return stati.find{it.etichetta == stato}.angularDashboard
+	}
+
+	String diretto() {
+		return stati.find{it.etichetta == stato}.angularDiretto
+	}
 }
 
 /**
@@ -209,9 +221,9 @@ class StatoMeme {
 	List<Metodo> metodiAttivi = []
 	List<Metodo> metodiDisponibili = []
 	/** maschera nello stato */
-	String AngularMaschera = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
-	String AngularDashboard = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
-	String AngularDiretto = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String angularMaschera = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String angularDashboard = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String angularDiretto = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
 	// eseguito in automatico al passaggio in questo stato
 	Metodo metodoPredefinito
 	// frequenza

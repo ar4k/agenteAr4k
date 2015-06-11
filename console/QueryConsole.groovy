@@ -35,6 +35,23 @@ mhsIc8K31IrWgutPgXfw84/vYzUgjrpUfqssYKbfN6g4wyumx2rLsaM=
 ctx.getBean('bootStrapService').avvia()
 }
 
+avvia = {
+def bootStrapService = ctx.getBean('bootStrapService')
+if (grailsApplication.config.master.host) {
+ log.info("Configuro i parametri di configurazione trovati su file")
+ bootStrapService.macchinaMaster = grailsApplication.config.master.host?:null
+ bootStrapService.portaMaster = grailsApplication.config.master.port?:null
+ bootStrapService.utenteMaster = grailsApplication.config.master.user?:null
+ bootStrapService.keyMaster = grailsApplication.config.master.key?:null
+ bootStrapService.idContestoScelto = grailsApplication.config.contesto?:null
+ bootStrapService.idInterfacciaScelta = grailsApplication.config.interfaccia?:null
+ bootStrapService.codiceAttivazioneAr4k = grailsApplication.config.codiceAttivazione?:null
+ bootStrapService.proxyVersoMaster = grailsApplication.config.proxyVersoMaster?:null
+ bootStrapService.proxyMasterInternet = grailsApplication.config.proxyMasterInternet?:null
+ bootStrapService.avvia()
+}
+}
+
 // Per verificare i domini
 //grailsApplication.domainClasses.each {
 //    println "Ci sono ${it.clazz.count()} istanze di $it.clazz.simpleName"
@@ -53,6 +70,7 @@ ctx.getBean('bootStrapService').avvia()
 
 // Rigenera l'ambiente.
 //rigenera()
+avvia()
 
 // Attiva/disattiva prove raggiungibilità di rete
 //ctx.getBean('bootStrapService').escludiProveConnessione = false
@@ -64,10 +82,10 @@ ctx.getBean('bootStrapService').avvia()
 //ctx.getBean('interfacciaContestoService').battito()
 
 // Avvia Applicativo con dati di bootstrap
-ctx.getBean('bootStrapService').avvia()
+//ctx.getBean('bootStrapService').avvia()
 
 // Rapporto
-println ctx.getBean('bootStrapService').toString()
+//println ctx.getBean('interfacciaContestoService').contesto.esporta()
 
 // Stampa configurazione contesto
 //println ctx.getBean('bootStrapService').contesto.esporta()

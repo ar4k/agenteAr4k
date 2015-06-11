@@ -17,7 +17,7 @@ class BootStrap {
 				if ( provaConfigurazioni() ) log.info("Sistema configurato e pronto...")
 				break;
 			case Environment.PRODUCTION:
-				if ( provaPresenzaConfigurazioni() ) log.info("Sistema configurato e pronto...")
+				if ( provaConfigurazioni() ) log.info("Sistema configurato e pronto...")
 				break;
 		}
 

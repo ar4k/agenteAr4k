@@ -15,7 +15,7 @@ angular.module('sbAdminApp')
     
     $scope.nuovovaso = function(vaso) {
         $http.post("${createLink(controller:'admin',action:'aggiungiVaso',absolute:'true')}", {vaso:vaso})
-        .success(function(data, status, headers, config) {
+        .success(function(response) {
     		    $http.get("${createLink(controller:'admin',action:'listaVasi',absolute:'true')}")
     			.success(function (response) {$scope.vasi = response.vasi;});
   		})

@@ -8,7 +8,7 @@
  */
 angular.module('sbAdminApp')
   .controller('RicettariCtrl', function($scope, $http, $filter) {
-    $http.get("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
+    $http.post("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
     .success(function (response) {$scope.ricettari = response.ricettari;});
     
     $scope.nuovo=false;
@@ -19,8 +19,8 @@ angular.module('sbAdminApp')
     
     $scope.aggiorna = function(idricettario) {
     	$http.post("${createLink(controller:'admin',action:'aggiornaRicettario',absolute:'true')}", {idricettario:idricettario})
-        .success(function(data, status, headers, config) {
-    		    $http.get("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
+        .success(function(response) {
+    		    $http.post("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
     			.success(function (response) {$scope.ricettari = response.ricettari;});
   		})
   		.error(function(data, status, headers, config) {
@@ -31,7 +31,7 @@ angular.module('sbAdminApp')
     
     $scope.nuovoricettario = function(ricettario) {
         $http.post("${createLink(controller:'admin',action:'aggiungiRicettario',absolute:'true')}", {ricettario:ricettario})
-        .success(function(data, status, headers, config) {
+        .success(function(response) {
     		    $http.get("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
     			.success(function (response) {$scope.ricettari = response.ricettari;});
   		})
@@ -43,7 +43,7 @@ angular.module('sbAdminApp')
       
     $scope.creameme = function(seme) {
         $http.post("${createLink(controller:'admin',action:'creaMeme',absolute:'true')}", {seme:seme})
-        .success(function(data, status, headers, config) {
+        .success(function(response) {
     		// implementare il redirect alla configurazione del meme nel pannello apposito
   		})
   		.error(function(data, status, headers, config) {

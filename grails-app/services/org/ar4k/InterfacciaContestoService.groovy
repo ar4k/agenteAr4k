@@ -35,6 +35,8 @@ class InterfacciaContestoService {
 	Interfaccia interfaccia
 	/** eventi in controllo */
 	List<Evento> eventi = []
+	/** processi in gestione */
+	List<Processo> processi = []
 
 	/** Descrizione a toString() */
 	String toString() {
@@ -58,8 +60,39 @@ class InterfacciaContestoService {
 		freeMemory()
 	}
 	
-	Processo eseguiMetodo(Metodo metodoTarget) {
-		
+	Processo eseguiMetodo(Metodo metodoTarget, String dati) {
+		log.info("Eseguo il metodo "+metodoTarget.etichetta)
+		log.info("Dati "+dati)
+		Meme memeTarget
+		contesto.memi.each{
+			meme -> meme.metodi.each{
+				metodo ->
+				if (metodo.idMetodo == metodoTarget.idMetodo) {
+					memeTarget = meme
+				}
+			}
+		}
+		log.info("Meme "+memeTarget.descrizione)
+		Processo processoTarget = new Processo(metodo:metodoTarget,dati:dati)
+		processoTarget.avvia()
+		processi.add(processoTarget)
+		return processoTarget
+	}
+	
+	Processo statoMetodo(String idProcesso) {
+		return processi.find{it.idProcesso == idProcesso}	
+	}
+	
+	Processo fermaMetodo(String idProcesso) {
+		Processo processoTarget = processi.find{it.idProcesso == idProcesso}
+		processoTarget.ferma()
+		return processoTarget
+	}
+	
+	Processo riavviaMetodo(String idProcesso) {
+		Processo processoTarget = processi.find{it.idProcesso == idProcesso}
+		processoTarget.riavvia()
+		return processoTarget
 	}
 }
 

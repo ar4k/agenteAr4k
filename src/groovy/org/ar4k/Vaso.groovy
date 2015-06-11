@@ -234,6 +234,7 @@ class Vaso {
 					semeTarget.metodi.each{semeOggetto.meme.metodi.add(new Metodo(it))}
 					semeTarget.connettori.each{semeOggetto.meme.connettori.add(new PuntoRete(it))}
 					semeTarget.vasi.each{semeOggetto.meme.vasi.add(new RuoloVaso(it))}
+					semeTarget.stati.each{semeOggetto.meme.stati.add(new StatoMeme(it))}
 					ricettario.semi.add(semeOggetto)
 					log.info("Aggiungo "+semeTarget.etichetta)
 

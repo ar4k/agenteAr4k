@@ -285,6 +285,18 @@ class AdminController {
 		}
 	}
 
+	def maschera(String idMeme) {
+		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.maschera()
+	}
+	
+	def diretto(String idMeme) {
+		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.diretto()
+	}
+	
+	def dashboard(String idMeme) {
+		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.dashboard()
+	}
+	
 	def eseguiMetodo() {
 		def ritorno
 		String idMetodo = request.JSON.idmetodo
@@ -298,7 +310,7 @@ class AdminController {
 			}
 		}
 		if (metodoTarget) {
-			Processo processo = interfacciaContestoService.eseguiMetodo(metodoTarget)
+			Processo processo = interfacciaContestoService.eseguiMetodo(metodoTarget,dati)
 			ritorno = [processo:processo.idProcesso]
 		} else {
 			ritorno = [errore:'nessun metodo trovato']

@@ -6,34 +6,10 @@
 			<div class="modal-header">
 				<button aria-hidden="true" data-dismiss="modal"
 					ng-click="pannello=false" class="close" type="button">×</button>
-				<h4 id="RicettarioModalLabel" class="modal-title">{{titolo}}</h4>
+				<h4 id="memiModalLabel" class="modal-title">{{titolo}}</h4>
 			</div>
 			<div class="modal-body">
-				<div class="dataTable_wrapper">
-					<div class="table-responsive">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Meme</th>
-									<th>Descrizione</th>
-									<th class="text-right">Azioni</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="seme in elencosemi" ng-class-odd="'dispari'"
-									ng-class-even="'pari'">
-									<td>{{seme.meme.etichetta}}</td>
-									<td>{{seme.meme.descrizione}}</td>
-									<td class="text-right">
-										<button class="btn btn-circle btn-xs" type="button">
-											<i class="fa fa-flask"></i>
-										</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
+			<div ng-include="focus"></div>
 			</div>
 			<div class="modal-footer">
 				<button data-dismiss="modal" ng-click="pannello=false"
@@ -125,7 +101,7 @@
 										<td class="text-right"
 											ng-class="{'success': meme.attivo,'danger': !meme.attivo}">
 											<button ng-repeat="metodo in meme.metodi"
-												class="btn btn-circle btn-xs" type="button"
+												class="btn btn-circle btn-xs" type="button" ng-click="$parent.eseguimetodo(metodo.idMetodo)"
 												ng-show="metodo.menuMeme" style="margin:0.1em;">
 												<i class="fa {{metodo.icona}}"></i>
 											</button><button style="margin:0.1em;" class="btn btn-circle btn-xs" type="button"
