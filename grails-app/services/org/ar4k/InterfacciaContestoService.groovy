@@ -18,10 +18,13 @@
 
 package org.ar4k
 
+import org.activiti.engine.ProcessEngine
+import org.activiti.engine.ProcessEngineConfiguration
+import org.activiti.engine.RepositoryService
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class InterfacciaContestoService {
-	
+
 	// Tramite Camel garantire l'accesso da vari protocolli
 	//static expose = ['jmx']
 
@@ -33,10 +36,30 @@ class InterfacciaContestoService {
 	Stato stato
 	/** Interfaccia corrente */
 	Interfaccia interfaccia
-	/** eventi in controllo */
-	List<Evento> eventi = []
-	/** processi in gestione */
-	List<Processo> processi = []
+
+	/** engine Activiti BPM */
+	ProcessEngine processEngine
+
+	/** attiva il processengine Activiti */
+	void attivaActiviti() {
+		//SpringProcessEngineConfiguration
+		processEngine = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
+				.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP)
+				.setJdbcUrl("jdbc:h2:mem:activitiDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE")
+				.setAsyncExecutorEnabled(true)
+				.setAsyncExecutorActivate(true)
+				.buildProcessEngine()
+	}
+
+	String processoTest() {
+		InputStream xmlFile = new FileInputStream(new File(grailsApplication.parentContext.getResource("/activiti/VacationRequest.bpmn20.xml").file.toString()))
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		repositoryService.createDeployment()
+				.addInputStream(grailsApplication.parentContext.getResource("/activiti/VacationRequest.bpmn20.xml").file.toString(),xmlFile)
+				.deploy();
+
+		return repositoryService.createProcessDefinitionQuery().count()
+	}
 
 	/** Descrizione a toString() */
 	String toString() {
@@ -56,63 +79,7 @@ class InterfacciaContestoService {
 
 	/** esegue le procedura ogni 5 min. tramite Quartz */
 	void battito() {
-		log.warn("Errore nel salvataggio del contesto!")
 		freeMemory()
 	}
-	
-	Processo eseguiMetodo(Metodo metodoTarget, String dati) {
-		log.info("Eseguo il metodo "+metodoTarget.etichetta)
-		log.info("Dati "+dati)
-		Meme memeTarget
-		contesto.memi.each{
-			meme -> meme.metodi.each{
-				metodo ->
-				if (metodo.idMetodo == metodoTarget.idMetodo) {
-					memeTarget = meme
-				}
-			}
-		}
-		log.info("Meme "+memeTarget.descrizione)
-		Processo processoTarget = new Processo(metodo:metodoTarget,dati:dati)
-		processoTarget.avvia()
-		processi.add(processoTarget)
-		return processoTarget
-	}
-	
-	Processo statoMetodo(String idProcesso) {
-		return processi.find{it.idProcesso == idProcesso}	
-	}
-	
-	Processo fermaMetodo(String idProcesso) {
-		Processo processoTarget = processi.find{it.idProcesso == idProcesso}
-		processoTarget.ferma()
-		return processoTarget
-	}
-	
-	Processo riavviaMetodo(String idProcesso) {
-		Processo processoTarget = processi.find{it.idProcesso == idProcesso}
-		processoTarget.riavvia()
-		return processoTarget
-	}
-}
-
-/**
- * Eventi Monitorati	
- * 
- * <p style="text-justify">
- * La gestione degli eventi è la base per la propagazione delle informazioni di configurazione (aggiornamento ruoli autenticazioni in particolare), 
- * di monitoraggio e segnalazione e per l'autoscale dei memi</br>
- * </p>
- * 
- * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- *
- */
-class Evento {
-	/** check attivatori */
-	def testTrigger = [] // closure ?
-	/** azione se trigger positivo */
-	List<Metodo> listaMetodi = []
-	/** controllo eventi attivato ? */
-	Boolean attivato = false
 }
 

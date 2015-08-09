@@ -48,8 +48,6 @@ class Contesto {
 	List<Meme> memi = []
 	/** vasi disponibili nel contesto*/
 	List<Vaso> vasi =[]
-	/** locazioni di memoria disponibili nel contesto */
-	List<Memoria> dati = []
 	
 	Vaso vasoMaster
 
@@ -113,7 +111,6 @@ class Contesto {
 			memi:memi*.esporta(),
 			utentiRuoli:utentiRuoli*.esporta(),
 			vasi:vasi*.esporta(),
-			dati:dati*.esporta(),
 			vasoMaster:vasoMaster.esporta(),
 			ricettari:ricettari*.esporta()
 		]

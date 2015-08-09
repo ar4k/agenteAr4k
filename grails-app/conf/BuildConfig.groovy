@@ -96,7 +96,9 @@ grails.project.dependency.resolution = {
 
 		compile "org.atmosphere:atmosphere-runtime:2.2.3", { excludes "slf4j-api" }
 
-		compile 'org.activiti:activiti-engine:5.17.0', { excludes "spring-beans" }
+		compile 'org.activiti:activiti-engine:5.18.0', { excludes "spring-beans" }
+		
+		compile "com.ecwid.consul:consul-api:1.1.4"
 	}
 
 	plugins {
