@@ -25,6 +25,7 @@
 package org.ar4k
 
 import grails.transaction.Transactional
+import com.jcraft.jsch.*
 
 @Transactional
 class BootStrapService {
@@ -149,6 +150,7 @@ class BootStrapService {
 		Boolean risultato = false
 		log.info("caricaVasoMaster() su "+vasoMaster)
 		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
+		if (risultato) risultato = vasoMaster.avviaConsul(interfacciaContestoService.connessione)
 		if (risultato) {
 			log.info("caricaVasoMaster() su "+vasoMaster+" (ok)")
 			vasoConnesso = true
@@ -158,6 +160,7 @@ class BootStrapService {
 			log.info("Contesti disponibili dopo la creazione del contesto demo: "+contestiInMaster)
 		} else {
 			log.warn("caricaVasoMaster() su "+vasoMaster+" ERRORE")
+			risultato = false
 			vasoConnesso = false
 		}
 		return risultato
@@ -217,6 +220,7 @@ class BootStrapService {
 	Boolean avvia(String contestoSceltaConf,String interfacciaSceltaConf) {
 		log.info("avvia("+contestoSceltaConf+","+interfacciaSceltaConf+")")
 		Boolean ritorno = false
+		interfacciaContestoService.connessione = new JSch()
 		if (caricaContesto(contestoSceltaConf)) {
 			String primarioInterfaccia = idInterfacciaScelta
 			if (interfacciaSceltaConf) primarioInterfaccia = interfacciaSceltaConf
@@ -234,7 +238,13 @@ class BootStrapService {
 					idInterfacciaScelta = interfaccia.idInterfaccia
 					interfacciaContestoService.contesto=contesto
 					interfacciaContestoService.interfaccia=interfaccia
-					interfacciaContestoService.stato=new Stato(etichetta:'Stato Contesto '+contesto.idContesto,contesto:contesto)
+					interfacciaContestoService.stato=new Stato(etichetta:'Stato Contesto '+contesto.idContesto)
+					log.info("Attiva il gestore di processo Activiti")
+					interfacciaContestoService.attivaActiviti()
+					log.info("Attiva Consul")
+					interfacciaContestoService.connettiConsul()
+					log.info("Attiva il builder JCloud")
+					interfacciaContestoService.builderJCloud()
 					log.info("Delegato il controllo a InterfacciaContestoService")
 					log.info("Grafica caricata")
 					log.info(interfacciaContestoService)
@@ -270,7 +280,7 @@ class BootStrapService {
 
 	/** Crea il contesto iniziale per il bootstrap AR4K */
 	Contesto creaContestoAr4kBoot() {
-		log.info("Creo il contesto di demo per il boot su "+vasoMaster)
+		log.info("Creo il contesto di base per il boot su "+vasoMaster)
 		Contesto contestoCreato = new Contesto(
 				idContesto:'Bootstrap-Ar4k',
 				etichetta:"Contesto generato per avvio Ar4k"
@@ -280,14 +290,14 @@ class BootStrapService {
 		Ricettario ricettario = new Ricettario()
 		contestoCreato.interfacce.add(interfacciaDemo)
 		contestoCreato.ricettari.add(ricettario)
-		log.debug("Contesto demo creato: "+contestoCreato)
+		log.debug("Contesto base creato: "+contestoCreato)
 		return contestoCreato
 	}
 
 	/** Crea l'interfaccia iniziale per il boot */
 	Interfaccia creaInterfacciaAr4k() {
 		Interfaccia interfacciaCreata = new Interfaccia(idInterfaccia:'Bootstrap-Ar4k')
-		log.info("Ho creato l'interfaccia demo:"+interfacciaCreata)
+		log.info("Ho creato l'interfaccia base:"+interfacciaCreata)
 		return interfacciaCreata
 	}
 

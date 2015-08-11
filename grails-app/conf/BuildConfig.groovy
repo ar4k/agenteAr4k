@@ -97,7 +97,15 @@ grails.project.dependency.resolution = {
 		compile "org.atmosphere:atmosphere-runtime:2.2.3", { excludes "slf4j-api" }
 
 		compile 'org.activiti:activiti-engine:5.18.0', { excludes "spring-beans" }
+		/*
+		runtime ('org.activiti:activiti-spring:5.18.0') {
+			excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
+		}
 		
+		runtime ('org.activiti:activiti-rest:5.18.0') {
+			excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
+		}
+		*/
 		compile "com.ecwid.consul:consul-api:1.1.4"
 	}
 

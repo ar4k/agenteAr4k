@@ -50,7 +50,10 @@ public class Launcher extends AbstractLauncher {
 
 	protected Tomcat tomcat = new Tomcat();
 	protected Context context;
-
+	//protected Context contextExplorer;
+	//protected Context contextRest;
+	//protected File actExplorer;
+	//protected File actRest;
 	/**
 	 * Start the server.
 	 *
@@ -80,7 +83,11 @@ public class Launcher extends AbstractLauncher {
 		try {
 			final Launcher launcher = new Launcher(args);
 			final File exploded = launcher.extractWar();
+			//final File activitiExplorer = launcher.extractWarActivitiExplorer();
+			//final File activitiRest = launcher.extractWarActivitiRest();
 			launcher.deleteExplodedOnShutdown(exploded);
+			//launcher.deleteExplodedOnShutdown(activitiExplorer);
+			//launcher.deleteExplodedOnShutdown(activitiRest);
 			launcher.start(exploded);
 		}
 		catch (Exception e) {
@@ -105,6 +112,34 @@ public class Launcher extends AbstractLauncher {
 		super(args);
 	}
 
+	/*
+	protected File extractWarActivitiExplorer() throws IOException {
+		File dir = new File(getWorkDir(), "activiti-explorer-war");
+		deleteDir(dir);
+		dir.mkdirs();
+		actExplorer = extractWarActivitiExplorer(dir);
+		return actExplorer;
+	}
+
+	protected File extractWarActivitiExplorer(File dir) throws IOException {
+		return extractWar(getClass().getClassLoader().getResourceAsStream("activiti-explorer.war"),
+				File.createTempFile("activiti-explorer", ".war", dir).getAbsoluteFile());
+	}
+	*/
+	/*
+	protected File extractWarActivitiRest() throws IOException {
+		File dir = new File(getWorkDir(), "activiti-rest-war");
+		deleteDir(dir);
+		dir.mkdirs();
+		actRest =  extractWarActivitiRest(dir);
+		return actRest;
+	}
+
+	protected File extractWarActivitiRest(File dir) throws IOException {
+		return extractWar(getClass().getClassLoader().getResourceAsStream("activiti-rest.war"),
+				File.createTempFile("activiti-rest", ".war", dir).getAbsoluteFile());
+	}
+	*/
 	@Override
 	protected void start(File exploded) throws IOException, ServletException {
 
@@ -167,6 +202,8 @@ public class Launcher extends AbstractLauncher {
 
 		tomcat.setBaseDir(tomcatDir.getPath());
 		context = tomcat.addWebapp(contextPath, exploded.getAbsolutePath());
+		//contextExplorer = tomcat.addWebapp("/aexplorer", actExplorer.getAbsolutePath());
+		//contextRest = tomcat.addWebapp("/arest", actRest.getAbsolutePath());
 		tomcat.enableNaming();
 
 		if (useNio) {
@@ -190,6 +227,8 @@ public class Launcher extends AbstractLauncher {
 		connector.setURIEncoding("UTF-8");
 
 		context.setSessionTimeout(sessionTimeout);
+		//contextExplorer.setSessionTimeout(sessionTimeout);
+		//contextRest.setSessionTimeout(sessionTimeout);
 
 		if (httpsPort > 0) {
 			initSsl(keystoreFile, keystorePassword, usingUserKeystore);

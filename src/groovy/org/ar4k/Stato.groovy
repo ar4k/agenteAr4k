@@ -20,6 +20,11 @@
  */
 
 package org.ar4k
+ 
+ 
+import com.ecwid.consul.v1.ConsulClient
+ 
+
 
 class Stato {
 	/** id univoco stato */
@@ -28,10 +33,10 @@ class Stato {
 	String etichetta = ''
 	/** descrizione stato */
 	String descrizione ='Stato rete AR4K by Rossonet'
-	/** contesto operativo */
-	Contesto contesto
-
+	/** Client Consul*/
+	ConsulClient consulBind = null
+	
 	String toString() {
-		return etichetta+" su "+contesto?.etichetta
+		return etichetta
 	}
 }

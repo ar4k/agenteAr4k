@@ -22,6 +22,11 @@ import org.activiti.engine.ProcessEngine
 import org.activiti.engine.ProcessEngineConfiguration
 import org.activiti.engine.RepositoryService
 import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.jclouds.ContextBuilder
+
+import com.ecwid.consul.v1.ConsulClient
+import com.ecwid.consul.ConsulException
+import com.jcraft.jsch.JSch;
 
 class InterfacciaContestoService {
 
@@ -36,9 +41,13 @@ class InterfacciaContestoService {
 	Stato stato
 	/** Interfaccia corrente */
 	Interfaccia interfaccia
+	/** connessione ssh consul */
+	JSch connessione = null
 
 	/** engine Activiti BPM */
 	ProcessEngine processEngine
+	/** builderJCloud */
+	//ContextBuilder contestoJCloud
 
 	/** attiva il processengine Activiti */
 	void attivaActiviti() {
@@ -49,6 +58,20 @@ class InterfacciaContestoService {
 				.setAsyncExecutorEnabled(true)
 				.setAsyncExecutorActivate(true)
 				.buildProcessEngine()
+	}
+
+	void connettiConsul() {
+		try {
+			stato.consulBind = new ConsulClient('http://127.0.0.1')
+			String risposta = stato.consulBind.getCatalogDatacenters()
+			log.info("Datacenter disponibili: "+risposta)
+		} catch (ConsulException ee) {
+			log.warn("Errore avvio Consul: "+ee.printStackTrace())
+		}
+	}
+	
+	void builderJCloud() {
+		//contestoJCloud = new ContextBuilder()
 	}
 
 	String processoTest() {

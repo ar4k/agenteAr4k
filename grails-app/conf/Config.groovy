@@ -299,3 +299,22 @@ grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_REGISTRATO']
 grails.plugin.springsecurity.ui.forgotPassword.emailBody = 'Salve $user,<br>per completare la procedura di cambio della password AR4K selezionare <a href="$url">questo link</a>.<br><br><bold>BOT AR4K</bold><br>(sistema automatico)'
 grails.plugin.springsecurity.ui.forgotPassword.emailSubject = 'Completa il reset della password AR4K'
 
+
+// Activiti
+activiti {
+	processEngineName = "activiti-engine-default"
+	  databaseType = "h2"
+	  deploymentName = appName
+	  deploymentResources = ["file:./grails-app/conf/**/*.bpmn*.xml",
+							 "file:./grails-app/conf/**/*.png",
+							 "file:./src/taskforms/**/*.form"]
+	  jobExecutorActivate = false
+	  mailServerHost = "smtp.yourserver.com"
+	  mailServerPort = "25"
+	  mailServerUsername = ""
+	  mailServerPassword = ""
+	  mailServerDefaultFrom = "username@yourserver.com"
+	  history = "audit" // "none", "activity", "audit" or "full"
+	  sessionUsernameKey = "username"
+	  useFormKey = true
+}

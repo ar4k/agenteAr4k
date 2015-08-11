@@ -296,27 +296,6 @@ class AdminController {
 	def dashboard(String idMeme) {
 		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.dashboard()
 	}
-	
-	def eseguiMetodo() {
-		def ritorno
-		String idMetodo = request.JSON.idmetodo
-		String dati = request.JSON.dati
-		Metodo metodoTarget
-		interfacciaContestoService.contesto.memi.each{ meme ->
-			meme.metodi.each{ metodo ->
-				if (metodo.idMetodo == idMetodo) {
-					metodoTarget = metodo
-				}
-			}
-		}
-		if (metodoTarget) {
-			Processo processo = interfacciaContestoService.eseguiMetodo(metodoTarget,dati)
-			ritorno = [processo:processo.idProcesso]
-		} else {
-			ritorno = [errore:'nessun metodo trovato']
-		}
-		render ritorno as JSON
-	}
 
 	def fermaEsecuzioneMetodo() {
 	}

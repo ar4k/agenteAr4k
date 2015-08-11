@@ -52,6 +52,10 @@ class Vaso {
 	List<Meme> memi = []
 	/** l'utenza ha l'accesso root sulla macchina */
 	Boolean sudo = false
+	/** versione java */
+	String javaVersion = null
+	/** porta tunnel consul */
+	int portaConsul = 8500
 
 	/** esporta il vaso */
 	def esporta() {
@@ -65,8 +69,10 @@ class Vaso {
 			sudo:sudo,
 			path:path,
 			uname:uname,
+			javaVersion:javaVersion,
 			proxy:proxy,
-			tolleranza:tolleranza
+			tolleranza:tolleranza,
+			portaConsul:portaConsul
 		]
 	}
 
@@ -169,6 +175,33 @@ class Vaso {
 		log.info("risultato "+controllo+" = "+risultato+" (atteso: "+atteso+')')
 		return risultato == atteso?true:false
 	}
+
+	Boolean avviaConsul(JSch connessione) {
+		String comando = "nohup ~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server &"
+		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
+		if ( esegui(verifica) != '1\n') {
+			esegui(comando)
+		}
+		addLTunnel(connessione,portaConsul,'127.0.0.1',8500)
+		return esegui(verifica) == '1\n'?true:false
+	}
+
+	void addLTunnel(JSch connessione, int lport, String rhost, int rport) {
+		try {
+			Channel canale
+			// Aggiunge la chiave privata
+			connessione.addIdentity(utente,key.getBytes(),null,null)
+			Session sessione=connessione.getSession(utente, macchina, porta)
+			sessione.setConfig("StrictHostKeyChecking","no")
+			sessione.setConfig("UserKnownHostsFile","/dev/null")
+			sessione.connect()
+			sessione.setPortForwardingL(lport, rhost, lport)
+		}	catch(JSchException e){
+			log.warn("Errore nel tunnel SSH: "+e.printStackTrace())
+		}
+	}
+
+
 
 	/** recupera i contesti salvati nel vaso */
 	List<Contesto> listaContesti() {

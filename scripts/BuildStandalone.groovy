@@ -130,6 +130,12 @@ buildJar = { File workDir, File jar, boolean jetty, File warfile = null ->
 		FileCopyUtils.copy new File(pluginDir, 'grails-app/conf/webdefault.xml'), webDefaults
 	}
 
+	//File activitiRestWar = new File(workDir, 'activiti-rest.war').absoluteFile
+	//File activitiExplorerWar = new File(workDir, 'activiti-explorer.war').absoluteFile
+
+	//FileCopyUtils.copy new File(workDir.parentFile.parentFile, 'esterno/activiti-rest.war'), activitiRestWar
+	//FileCopyUtils.copy new File(workDir.parentFile.parentFile, 'esterno/activiti-explorer.war'), activitiExplorerWar
+
 	jar.canonicalFile.parentFile.mkdirs()
 	ant.jar(destfile: jar) {
 		fileset dir: workDir
