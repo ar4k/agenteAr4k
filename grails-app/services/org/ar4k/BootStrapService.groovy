@@ -150,7 +150,7 @@ class BootStrapService {
 		Boolean risultato = false
 		log.info("caricaVasoMaster() su "+vasoMaster)
 		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
-		if (risultato) risultato = vasoMaster.avviaConsul(interfacciaContestoService.connessione)
+		if (risultato) risultato = vasoMaster.avviaConsul(interfacciaContestoService.connessioneConsul)
 		if (risultato) {
 			log.info("caricaVasoMaster() su "+vasoMaster+" (ok)")
 			vasoConnesso = true
@@ -220,7 +220,7 @@ class BootStrapService {
 	Boolean avvia(String contestoSceltaConf,String interfacciaSceltaConf) {
 		log.info("avvia("+contestoSceltaConf+","+interfacciaSceltaConf+")")
 		Boolean ritorno = false
-		interfacciaContestoService.connessione = new JSch()
+		interfacciaContestoService.connessioneConsul = new JSch()
 		if (caricaContesto(contestoSceltaConf)) {
 			String primarioInterfaccia = idInterfacciaScelta
 			if (interfacciaSceltaConf) primarioInterfaccia = interfacciaSceltaConf
@@ -239,12 +239,10 @@ class BootStrapService {
 					interfacciaContestoService.contesto=contesto
 					interfacciaContestoService.interfaccia=interfaccia
 					interfacciaContestoService.stato=new Stato(etichetta:'Stato Contesto '+contesto.idContesto)
-					log.info("Attiva il gestore di processo Activiti")
-					interfacciaContestoService.attivaActiviti()
+					//log.info("Attiva il gestore di processo Activiti")
+					//interfacciaContestoService.attivaActiviti()
 					log.info("Attiva Consul")
 					interfacciaContestoService.connettiConsul()
-					log.info("Attiva il builder JCloud")
-					interfacciaContestoService.builderJCloud()
 					log.info("Delegato il controllo a InterfacciaContestoService")
 					log.info("Grafica caricata")
 					log.info(interfacciaContestoService)

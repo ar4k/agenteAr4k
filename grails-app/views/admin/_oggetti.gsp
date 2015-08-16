@@ -4,7 +4,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="text-right">
-						<i class="fa fa-linux fa-3" /> OGGETTI (vasi e oggetti collegati)
+						<i class="fa fa-linux fa-3" /> Vasi (connessioni SSH)
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
 						Un <strong>vaso</strong> AR4K corrisponde a un accesso SSH su un
@@ -56,7 +56,7 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Oggetto</th>
+										<th>Vaso</th>
 										<th>Descrizione</th>
 										<th class="text-right">Azioni</th>
 									</tr>

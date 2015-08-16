@@ -83,7 +83,8 @@ grails.project.dependency.resolution = {
 		// Vari ASP
 		//compile('com.dropbox.core:dropbox-core-sdk:1.7.7')
 		//compile('com.evernote:evernote-api:1.25.1')
-		compile('org.jclouds:jclouds-all:1.6.0')
+		compile('org.apache.jclouds:jclouds-all:1.9.1')
+		compile('org.apache.jclouds.labs:docker:1.9.1')
 
 		// Per includere in Crash telnet
 		//runtime 'org.crashub:crash.connectors.telnet:1.3.0-cr7'
@@ -97,11 +98,11 @@ grails.project.dependency.resolution = {
 		compile "org.atmosphere:atmosphere-runtime:2.2.3", { excludes "slf4j-api" }
 
 		compile 'org.activiti:activiti-engine:5.18.0', { excludes "spring-beans" }
-		/*
+	
 		runtime ('org.activiti:activiti-spring:5.18.0') {
 			excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
 		}
-		
+		/*
 		runtime ('org.activiti:activiti-rest:5.18.0') {
 			excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
 		}

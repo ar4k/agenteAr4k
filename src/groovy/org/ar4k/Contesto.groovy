@@ -42,7 +42,7 @@ class Contesto {
 	List<Ricettario> ricettari= []
 	/** interfacce collegate */
 	List<Interfaccia> interfacce= []
-	/** utenti del contesto da importare in configurazione*/
+	/** utenti del contesto da importare in configurazione */
 	List<UtenteRuolo> utentiRuoli = []
 	/** memi attivi nel contesto */
 	List<Meme> memi = []

@@ -162,6 +162,28 @@ class AdminController {
 
 	/**
 	 *
+	 * @return Processi e oggetti collegati in JSON
+	 */
+	def listaProcessi() {
+		def risultato = []
+		risultato = interfacciaContestoService.stato.consulBind.getAgentServices().getValue()
+		def incapsulato = [processi:risultato]
+		render incapsulato as JSON
+	}
+
+	/**
+	 *
+	 * @return Datacenters e oggetti collegati in JSON
+	 */
+	def listaDataCenters() {
+		def risultato = []
+		interfacciaContestoService.stato.consulBind.getCatalogDatacenters().getValue().each{risultato.add(it)}
+		def incapsulato = [datacenters:risultato]
+		render incapsulato as JSON
+	}
+
+	/**
+	 *
 	 * @return Ricettari collegati in JSON
 	 */
 	def listaRicettari() {
@@ -179,6 +201,17 @@ class AdminController {
 		def risultato = []
 		interfacciaContestoService.contesto.memi.each{ risultato.add(it) }
 		def incapsulato = [memi:risultato]
+		render incapsulato as JSON
+	}
+
+	/**
+	 *
+	 * @return Store dati JCloud collegati in JSON
+	 */
+	def listaStore() {
+		def risultato = []
+		interfacciaContestoService.jCloudServer.each{ risultato.add(it) }
+		def incapsulato = [storedati:risultato]
 		render incapsulato as JSON
 	}
 
@@ -257,6 +290,7 @@ class AdminController {
 					// Rigenera tutti gli id casuali per non rischiare riferimenti errati nelle fasi di esecuzione
 					nuovoMeme.idMeme = UUID.randomUUID()
 					nuovoMeme.metodi.each{it.idMetodo=UUID.randomUUID()}
+					nuovoMeme.caricaProcessiActiviti(interfacciaContestoService.contesto.vasoMaster,interfacciaContestoService.processEngine)
 					interfacciaContestoService.contesto.memi.add(nuovoMeme)
 				}
 			}
@@ -288,25 +322,13 @@ class AdminController {
 	def maschera(String idMeme) {
 		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.maschera()
 	}
-	
+
 	def diretto(String idMeme) {
 		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.diretto()
 	}
-	
+
 	def dashboard(String idMeme) {
 		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.dashboard()
-	}
-
-	def fermaEsecuzioneMetodo() {
-	}
-
-	def ripristinaEsecuzioneMetodo() {
-	}
-
-	def statoEsecuzioneMetodo() {
-	}
-
-	def cancellaEsecuzioneMetodo() {
 	}
 
 	/**

@@ -18,10 +18,18 @@
 
 package org.ar4k
 
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.RepositoryService
+import org.jclouds.json.config.GsonModule.ByteArrayAdapter;
+
+import com.google.common.io.ByteStreams.ByteArrayDataInputStream
+import com.google.common.io.ByteStreams.ByteArrayDataOutputStream;
 import com.jcraft.jsch.*
 
 import grails.converters.JSON
 import groovy.json.JsonSlurper
+
+import java.util.zip.ZipInputStream
 
 class Vaso {
 	/** id univoco vaso */
@@ -140,6 +148,42 @@ class Vaso {
 		return risultato
 	}
 
+	/** esegui un comando ssh sul vaso */
+	String leggiBinarioProcesso(String percorso,String target) {
+		String ritorno = '/tmp/'+UUID.randomUUID()+'.bar'
+		FileOutputStream ritornoStream = new FileOutputStream(new File(ritorno))
+		log.info("leggo: "+target+" in "+percorso)
+		try {
+			JSch jsch = new JSch()
+			Channel canale
+			ChannelSftp channelSftp
+			// Aggiunge la chiave privata
+			jsch.addIdentity(utente,key.getBytes(),null,null)
+			Session sessione=jsch.getSession(utente, macchina, porta)
+			sessione.setConfig("StrictHostKeyChecking","no")
+			sessione.setConfig("UserKnownHostsFile","/dev/null")
+			sessione.connect()
+			canale = sessione.openChannel("sftp")
+			canale.connect()
+			channelSftp = (ChannelSftp)canale
+			channelSftp.cd(percorso)
+			log.info("directory sftp: "+channelSftp.pwd())
+			InputStream risultato = channelSftp.get(target)
+			int c
+			byte[] buffer=new byte[1024]
+			while ((c=risultato.read(buffer))!=-1 ) {
+				ritornoStream.write(buffer,0,c)
+			}
+			risultato.close()
+			ritornoStream.close()
+			canale.disconnect()
+			sessione.disconnect()
+		}catch(JSchException e) {
+			log.warn("Errore connesione SSH: "+e.printStackTrace())
+		}
+		return ritorno
+	}
+
 	/** prova la connesione ssh al vaso */
 	Boolean provaConnessione() {
 		log.info("Provo connessione a "+etichetta)
@@ -177,7 +221,7 @@ class Vaso {
 	}
 
 	Boolean avviaConsul(JSch connessione) {
-		String comando = "nohup ~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server &"
+		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate </dev/null &>/dev/null &'
 		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
 		if ( esegui(verifica) != '1\n') {
 			esegui(comando)
@@ -283,4 +327,32 @@ class Vaso {
 		}
 	}
 
+	/** legge i processi e li carica nell engine */
+	Boolean caricaProcesso(ProcessEngine processEngine,String processo,String etichetta,String idMeme) {
+		Boolean ritorno = false
+		try {
+			String comandoRicerca = "cd ~/.ar4k/ricettari ; find . -name '"+processo+"'"
+			File ricerca = new File(esegui(comandoRicerca).tokenize('\n').last())
+			if (ricerca) {
+				String percorso =  ".ar4k/ricettari/"+ricerca.getParent()
+				File definizione = new File(leggiBinarioProcesso(percorso,ricerca.getName()))
+				log.info("carico processo da copia locale: "+definizione)
+				ZipInputStream processoDefinizione = new ZipInputStream(new FileInputStream(definizione))
+				RepositoryService repositoryService = processEngine.getRepositoryService()
+				//def targetEngine = processEngine.getRepositoryService().createDeploymentQuery().deploymentName(idMeme).singleResult() {
+				repositoryService.createDeployment().name(idMeme)
+						.addZipInputStream(processoDefinizione)
+						.deploy()
+				definizione.delete()
+				ritorno = true
+				log.info("caricamento completato: "+percorso+"/"+ricerca.getName())
+			}
+		} catch(Exception e) {
+			log.warn(e.printStackTrace())
+		}
+		return ritorno
+	}
+
 }
+
+

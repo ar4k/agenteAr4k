@@ -40,3 +40,14 @@ interfaccia = 'Bootstrap-Ar4k'
 // Utenza da aggiungere
 //utente='rossonet'
 //password='password'
+
+// configurazioni activiti
+activiti {
+	  jobExecutorActivate = false
+	  mailServerHost = "smtp.yourserver.com"
+	  mailServerPort = "25"
+	  mailServerUsername = ""
+	  mailServerPassword = ""
+	  mailServerDefaultFrom = "username@yourserver.com"
+	  history = "audit" // "none", "activity", "audit" or "full"
+}

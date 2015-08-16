@@ -54,6 +54,8 @@
  */
 package org.ar4k
 
+import org.activiti.engine.ProcessEngine;
+
 import groovy.transform.AutoClone 
 
 @AutoClone
@@ -83,10 +85,18 @@ class Meme {
 	List<Metodo> metodi = []
 	/** stati possibili del meme */
 	List<StatoMeme> stati = []
-
-	// Da valutare
-	List<String> eventi = [] // eventi registrabili su contesto e monitoraggio.
-
+	
+	/** carica i processi disponibili nel motore Activiti */
+	Boolean caricaProcessiActiviti(Vaso vasoMaster,ProcessEngine processEngine) {
+		Boolean ritorno = true
+		metodi.each{ processo ->
+			if ( vasoMaster.caricaProcesso(processEngine,processo.riferimento,processo.etichetta,idMeme) == false ) {
+				ritorno = false
+			}	
+		}
+		return ritorno
+	}
+	
 	/** dump meme */
 	def esporta() {
 		log.info("esporta() il meme: "+idMeme)
@@ -192,20 +202,15 @@ class Metodo {
 	String idMetodo = UUID.randomUUID()
 	String etichetta = 'test piattaforma Ar4k'
 	String descrizione = 'metodo creato in automatico'
-	String tipoMetodo = 'bash'
-	String riferimento = 'ls -l'
 	String icona = 'fa-play-circle-o'
+	String riferimento = ''
 	Boolean menuVaso = false
 	Boolean menuMeme = false
-	List<Connesione> dipendenzaConnessioni = []
-	List<Metodo> dipendenzaMetodi = []
-	List<RuoloVaso> eseguiSu = []
 
 	def esporta() {
 		return [
 			idMetodo:idMetodo,
 			etichetta:etichetta,
-			tipoMetodo:tipoMetodo,
 			riferimento:riferimento,
 			menuVaso:menuVaso,
 			menuMeme:menuMeme

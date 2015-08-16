@@ -6,7 +6,7 @@
 					class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.oggetti"><i
-					class="fa fa-linux fa-fw"></i> Oggetti</a></li>
+					class="fa fa-linux fa-fw"></i> Vasi</a></li>
 
 			<li ui-sref-active="active"><a ui-sref="dashboard.reti"><i
 					class="fa fa-sitemap fa-fw"></i> Reti</a></li>

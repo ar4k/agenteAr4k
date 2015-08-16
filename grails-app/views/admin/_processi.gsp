@@ -1,51 +1,51 @@
-<div>
-	<div class="row">
+<div class="row">
+	<div style="margin-top: 5px;">
 		<div class="col-lg-12">
-			<h1 class="page-header">Dashboard</h1>
-		</div>
-		<!-- /.col-lg-12 -->
-	</div>
-	<!-- /.row -->
-	<div class="row">
-
-		<stats number="6" comments="New comments!" colour="primary"
-			type="comments"></stats>
-		<stats number="12" comments="New tasks!" colour="primary" type="user"></stats>
-		<stats number="18" comments="New orders!" colour="yellow"
-			type="shopping-cart"></stats>
-		<stats number="24" comments="Support tickets!" colour="red"
-			type="support"></stats>
-
-	</div>
-	<!-- /.panel -->
-	<div class="row">
-		<div class="col-lg-8">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+					<h3 class="text-right">
+						<i class="fa fa-gears fa-3" /> Servizi (nodi/servizi Consul)
+					</h3>
+					<p class="text-justify" style="text-align: justify;">
+						Un <strong>servizio</strong> AR4K corrisponde ad un'unità di calcolo/servizio gestita dalla rete Consul.
+					<p>
 				</div>
-				<!-- /.panel-heading -->
-				<timeline></timeline>
-				<!-- /.panel-body -->
-			</div>
-			<!-- /.panel -->
-		</div>
-		<!-- /.col-lg-8 -->
-		<div class="col-lg-4">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<i class="fa fa-bell fa-fw"></i> Notifications Panel
+				<div class="panel-body">
+					<div class="dataTable_wrapper">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Indirizzo</th>
+										<th>Porta</th>
+										<th>Servizio</th>
+										<th>Tags</th>
+										<th class="text-right">Azioni</th>
+									</tr>
+								</thead>
+								<tbody>
+									<div class="col-lg-2 text-center"></div>
+									<div class="col-lg-5 text-right">
+										<input placeholder="ricerca in etichetta e descrizione"
+											class="form-control">
+									</div>
+									<tr ng-repeat="processo in processi" ng-class-odd="'dispari'"
+										ng-class-even="'pari'">
+										<td>{{processo.id}}</td>
+										<td>{{processo.address}}</td>
+										<td>{{processo.port}}</td>
+										<td>{{processo.service}}</td>
+										<td><div ng-repeat="tag in processo.tags">{{tag}}</div></td>
+										<td class="text-right">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
-				<!-- /.panel-heading -->
-				<notifications></notifications>
-				<!-- /.panel-body -->
 			</div>
-			<!-- /.panel -->
-
-			<chat></chat>
-			<!-- /.panel .chat-panel -->
 		</div>
-		<!-- /.col-lg-4 -->
 	</div>
-	<!-- /.row -->
 </div>

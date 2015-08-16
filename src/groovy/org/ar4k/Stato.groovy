@@ -37,6 +37,6 @@ class Stato {
 	ConsulClient consulBind = null
 	
 	String toString() {
-		return etichetta
+		return consulBind.getStatusLeader()
 	}
 }
