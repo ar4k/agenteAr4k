@@ -138,12 +138,13 @@ log4j.main = {
 	environments {
 				development  {
 					info 'grails.app'
-					//debug 'org.grails.plugins.atmosphere_meteor'
 					info 'org.codehaus.groovy.grails.web.servlet'
 					info 'org.codehaus.groovy.grails.web.sitemesh'
 					info 'org.codehaus.groovy.grails.plugins'
 					info 'org.codehaus.groovy.grails.commons'
+					debug 'org.activiti'
 					info 'org.ar4k'
+					//debug 'org.grails.plugins.atmosphere_meteor'
 				}
 	}
 }

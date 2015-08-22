@@ -72,16 +72,9 @@ class Meme {
 	List<String> versioniCompatibili = []
 	String icona = 'fa-thumb-tack'
 	String stato = 'inattivo'
-	Boolean attivo = false
 
 	List<String> dipendenze = []
 	List<String> funzionalita = []
-	List<String> variabiliAmbiente = []
-
-	List<RuoloVaso> vasi = []
-	List<PuntoRete> connettori = []
-	/** connessioni tra i vasi disponibili nel contesto*/
-	List<Connesione> connessioni =[]
 	List<Metodo> metodi = []
 	/** stati possibili del meme */
 	List<StatoMeme> stati = []
@@ -105,13 +98,8 @@ class Meme {
 			etichetta:etichetta,
 			descrizione:descrizione,
 			stato:stato,
-			attivo:attivo,
 			dipendenze:dipendenze,
 			funzionalita:funzionalita,
-			variabiliAmbiente:variabiliAmbiente,
-			vasi:vasi*.esporta(),
-			connettori:connettori*.esporta(),
-			connessioni:connessioni*.esporta(),
 			metodi:metodi*.esporta()
 		]
 	}
@@ -130,66 +118,8 @@ class Meme {
 	String maschera() {
 		return stati.find{it.etichetta == stato}.angularMaschera
 	}
-	
-	String dashboard() {
-		return stati.find{it.etichetta == stato}.angularDashboard
-	}
-
-	String diretto() {
-		return stati.find{it.etichetta == stato}.angularDiretto
-	}
 }
 
-/**
- * PuntoRete rappresenta una porta di rete su un vaso
- *
- * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- *
- */
-class PuntoRete {
-	String etichetta = 'Connettore locale'
-	String indirizzoIp = '127.0.0.1'
-	String sottoMaschera = '255.255.255.0'
-	String interfaccia = 'lo'
-	Integer porta
-	String rangePorta = '1024-10000'
-	Vaso vaso
-	/** protocollo parlato dalla porta */
-	String protocollo
-
-	/** Esporta per il salvataggio*/
-	def esporta() {
-		return [
-			etichetta:etichetta,
-			indirizzoIp:indirizzoIp,
-			sottoMaschera:sottoMaschera,
-			porta:porta,
-			vaso:vaso?.etichetta,
-			protocollo:protocollo,
-			interfaccia:interfaccia
-		]
-	}
-}
-
-/**
- * Definisce la funzione dei vasi rispetto al meme
- * 
- * @author Andrea Ambrosini
- *
- */
-class RuoloVaso {
-	String ruolo = 'Principale'
-	List<Vaso> vasi = []
-	Boolean obbligatorio = true
-
-	def esporta() {
-		return [
-			ruolo:ruolo,
-			obbligatorio:obbligatorio,
-			vasi:vasi*.etichetta
-		]
-	}
-}
 
 /**
  * Metodo sul meme (da sviluppare aggancio verso i vari Service)
@@ -202,18 +132,13 @@ class Metodo {
 	String idMetodo = UUID.randomUUID()
 	String etichetta = 'test piattaforma Ar4k'
 	String descrizione = 'metodo creato in automatico'
-	String icona = 'fa-play-circle-o'
 	String riferimento = ''
-	Boolean menuVaso = false
-	Boolean menuMeme = false
 
 	def esporta() {
 		return [
 			idMetodo:idMetodo,
 			etichetta:etichetta,
-			riferimento:riferimento,
-			menuVaso:menuVaso,
-			menuMeme:menuMeme
+			riferimento:riferimento
 		]
 	}
 }
@@ -223,14 +148,6 @@ class Metodo {
 */
 class StatoMeme {
 	String etichetta = 'inattivo'
-	List<Metodo> metodiAttivi = []
-	List<Metodo> metodiDisponibili = []
 	/** maschera nello stato */
 	String angularMaschera = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
-	String angularDashboard = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
-	String angularDiretto = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
-	// eseguito in automatico al passaggio in questo stato
-	Metodo metodoPredefinito
-	// frequenza
-	String schedulazione = null // Se definito esegue il metodo secondo le logiche di Quartz
 }

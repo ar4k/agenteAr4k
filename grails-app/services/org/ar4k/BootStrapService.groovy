@@ -238,11 +238,13 @@ class BootStrapService {
 					idInterfacciaScelta = interfaccia.idInterfaccia
 					interfacciaContestoService.contesto=contesto
 					interfacciaContestoService.interfaccia=interfaccia
-					interfacciaContestoService.stato=new Stato(etichetta:'Stato Contesto '+contesto.idContesto)
+					interfacciaContestoService.stato=new Stato()
 					//log.info("Attiva il gestore di processo Activiti")
 					//interfacciaContestoService.attivaActiviti()
 					log.info("Attiva Consul")
 					interfacciaContestoService.connettiConsul()
+					log.info("Attiva Kettle")
+					interfacciaContestoService.initKettle()
 					log.info("Delegato il controllo a InterfacciaContestoService")
 					log.info("Grafica caricata")
 					log.info(interfacciaContestoService)

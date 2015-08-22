@@ -1,12 +1,14 @@
+import org.activiti.engine.impl.interceptor.SessionFactory
+
 // Place your Spring DSL code here
 
 beans = {
 	grailsApplication = ref('grailsApplication')
-	
-	//userManagerFactory(org.ar4k.SpringSecurityUserManagerFactory)
-	
-	//groupManagerFactory(org.ar4k.SpringSecurityGroupManagerFactory)
-	
+
+	userEntityManagerFactory(org.ar4k.SpringSecurityUserManagerFactoryActiviti)
+
+	groupEntityManagerFactory(org.ar4k.SpringSecurityGroupManagerFactoryActiviti)
+
 	processEngineConfiguration(org.activiti.spring.SpringProcessEngineConfiguration) {
 		databaseSchemaUpdate = org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP
 		//jdbcUrl = "jdbc:h2:mem:activitiDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
@@ -20,17 +22,16 @@ beans = {
 		mailServerDefaultFrom = grailsApplication.config.activiti.mailServerDefaultFrom
 		history = grailsApplication.config.activiti.history // "none", "activity", "audit" or "full"
 		transactionManager = ref('transactionManager')
-		//customSessionFactories = [ref("userManagerFactory"), ref("groupManagerFactory")]
+		customSessionFactories = [ref('userEntityManagerFactory'),ref('groupEntityManagerFactory')]
 	}
-	
-	processEngine(org.activiti.spring.ProcessEngineFactoryBean) {
-		processEngineConfiguration = ref('processEngineConfiguration')
-	}
-	
-	runtimeService(processEngine: "getRuntimeService")
-	repositoryService(processEngine: "getRepositoryService")
-	taskService(processEngine: "getTaskService")
-	managementService(processEngine: "getManagementService")
-	historyService(processEngine: "getHistoryService")
-	formService(processEngine: "getFormService")
+
+	processEngine(org.activiti.spring.ProcessEngineFactoryBean) { processEngineConfiguration = ref('processEngineConfiguration') }
+
+	runtimeService(processEngine:"getRuntimeService")
+	repositoryService(processEngine:"getRepositoryService")
+	taskService(processEngine:"getTaskService")
+	managementService(processEngine:"getManagementService")
+	identityService(processEngine:"getIdentityService")
+	historyService(processEngine:"getHistoryService")
+	formService(processEngine:"getFormService")
 }

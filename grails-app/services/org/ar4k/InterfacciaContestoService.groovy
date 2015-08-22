@@ -19,6 +19,7 @@
 package org.ar4k
 
 import java.util.zip.ZipInputStream
+
 import org.activiti.engine.ProcessEngine
 import org.activiti.engine.ProcessEngineConfiguration
 import org.activiti.engine.RepositoryService
@@ -29,9 +30,12 @@ import org.jclouds.compute.*
 import org.jclouds.compute.domain.NodeMetadata
 import org.jclouds.compute.domain.Template
 import org.jclouds.rest.config.SetCaller.Module
+import org.pentaho.di.repository.Repository;
+
 import com.ecwid.consul.v1.ConsulClient
 import com.jcraft.jsch.JSch;
 import com.ecwid.consul.v1.agent.model.NewService
+import org.pentaho.di.core.KettleEnvironment
 
 class InterfacciaContestoService {
 
@@ -53,21 +57,23 @@ class InterfacciaContestoService {
 	ProcessEngine processEngine
 	/** builderJCloud */
 	List<Context> jCloudServer = []
-/*
-	
-	void attivaActiviti() {
-		//SpringProcessEngineConfiguration
-		processEngine = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
-				.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP)
-				.setJdbcUrl("jdbc:h2:mem:activitiDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE")
-				.setAsyncExecutorEnabled(true)
-				.setAsyncExecutorActivate(true)
-				.buildProcessEngine()
-	}
-*/
+	List<Repository> kettleRepositories = []
+	/*
+	 void attivaActiviti() {
+	 //SpringProcessEngineConfiguration
+	 processEngine = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
+	 .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP)
+	 .setJdbcUrl("jdbc:h2:mem:activitiDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE")
+	 .setAsyncExecutorEnabled(true)
+	 .setAsyncExecutorActivate(true)
+	 .buildProcessEngine()
+	 }
+	 */
+
+	/** Connette il demone Consul sul nodo ssh master alle API JAVA **/
 	void connettiConsul() {
 		try {
-			stato.consulBind = new ConsulClient('http://127.0.0.1')
+			stato.consulBind = new ConsulClient('http://127.0.0.1',8501)
 			String risposta = stato.consulBind.getCatalogDatacenters()
 			log.info("Datacenter disponibili: "+risposta)
 			NewService nodoMaster = new NewService()
@@ -82,6 +88,12 @@ class InterfacciaContestoService {
 		}
 	}
 
+	/** Attiva il sottositema Kettle **/
+	void initKettle() {
+		KettleEnvironment.init()
+	}
+
+	/** Collega un hypervisor Docker **/
 	void dockerJCloud(String endpoint,String cert,String key) {
 		// per i self-signed
 		// openssl s_client -connect external.com:2376 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > public.crt
@@ -100,6 +112,7 @@ class InterfacciaContestoService {
 		}
 	}
 
+	/** Collega un hypervisor EC2 AWS **/
 	void ec2JCloud(String endpoint,String cert,String key) {
 		try {
 			ComputeServiceContext context = ContextBuilder.newBuilder("aws-ec2")
@@ -114,6 +127,7 @@ class InterfacciaContestoService {
 		}
 	}
 
+	/** Carica un processo in Activiti **/
 	String caricaProcesso(String processo) {
 		InputStream zipFile = new FileInputStream(new File(grailsApplication.parentContext.getResource(processo).file.toString()))
 		ZipInputStream inputStream = new ZipInputStream(zipFile)

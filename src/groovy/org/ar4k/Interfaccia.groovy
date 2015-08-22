@@ -25,21 +25,6 @@ package org.ar4k
 
 class Interfaccia {
 
-	// Oggetti iniettati da Grails - INIZIO -
-	
-	
-	/** service per connessioni SSH utilizzato dall'interfaccia*/
-	SshService sshService
-	/** service Apache Camel utilizzato dall'interfaccia*/
-	CamelService camelService
-	/** service Kettle utilizzato dall'interfaccia*/
-	KettleService kettleService
-	/** service JCloud utilizzato dall'interfaccia*/
-	JCloudService jCloudService
-	/** service JSoup utilizzato dall'interfaccia*/
-	JSoupService jSoupService
-	/** service WebSocket utilizzato dall'interfaccia*/
-	WebSocketService webSocketService
 	/** service per interagire con il contesto */
 	InterfacciaContestoService interfacciaContestoService
 

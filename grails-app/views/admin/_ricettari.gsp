@@ -27,7 +27,8 @@
 									<td>{{seme.meme.descrizione}}</td>
 									<td>{{seme.meme.versione}}</td>
 									<td class="text-right">
-										<button class="btn btn-circle btn-xs" type="button" ng-click="creameme(seme.meme.idMeme)">
+										<button class="btn btn-circle btn-xs" type="button"
+											ng-click="creameme(seme.meme.idMeme)">
 											<i class="fa fa-flask"></i>
 										</button>
 									</td>
@@ -122,15 +123,17 @@
 										<td>{{ricettario.etichetta}}</td>
 										<td>{{ricettario.descrizione}}</td>
 										<td class="text-right">
+											<!--  
 											<button class="btn btn-circle btn-xs" type="button"
 												ng-click="$parent.nuovo=true">
 												<i class="fa  fa-pencil "></i>
 											</button>
-											<button class="btn btn-circle btn-xs" type="button"
+											-->
+											<button class="btn btn-circle btn-success btn-xs" type="button"
 												ng-click="$parent.semi(ricettario.idRicettario)">
 												<i class="fa fa-eye"></i>
 											</button>
-											<button class="btn btn-circle btn-xs" type="button"
+											<button class="btn btn-circle btn-info btn-xs" type="button"
 												ng-click="$parent.aggiorna(ricettario.idRicettario)">
 												<i class="fa fa-refresh"></i>
 											</button>

@@ -50,14 +50,14 @@ class UtenteRuolo implements Serializable {
 		builder.toHashCode()
 	}
 
-	static UtenteRuolo get(long utenteId, long ruoloId) {
+	static UtenteRuolo get(String utenteId, String ruoloId) {
 		UtenteRuolo.where {
 			utente == Utente.load(utenteId) &&
 					ruolo == Ruolo.load(ruoloId)
 		}.get()
 	}
 
-	static boolean exists(long utenteId, long ruoloId) {
+	static boolean exists(String utenteId, String ruoloId) {
 		UtenteRuolo.where {
 			utente == Utente.load(utenteId) &&
 					ruolo == Ruolo.load(ruoloId)

@@ -20,12 +20,17 @@
 
 package org.ar4k
 
-class Utente {
+import org.activiti.engine.identity.User
+
+class Utente implements User{
 
 	transient springSecurityService
 
+	String id
 	String username
 	String password
+	String firstName
+	String lastName
 	String email
 	String sms
 	String jabber
@@ -47,19 +52,27 @@ class Utente {
 	static constraints = {
 		username blank: false, unique: true
 		email email: true,nullable: true
+		firstName nullable:true
+		lastName nullable:true
 		sms nullable: true
 		jabber nullable: true
 		avatar(nullable:true, maxSize:1073741824) // max of 4GB
 		password blank: false
+
 	}
 
-	static mapping = { password column: '`password`' }
+	static mapping = {
+		password column: '`password`'
+		id generator: 'uuid'
+	}
 
 	/** esporta gli utenti nel contesto */
 	def esporta() {
 		return [
 			username:username,
 			password:password,
+			firstName:firstName,
+			lastName:lastName,
 			email:email,
 			sms:sms,
 			jabber:jabber,
@@ -95,5 +108,10 @@ class Utente {
 
 	String toString() {
 		return this.username
+	}
+
+	boolean isPictureSet() {
+		// TODO Auto-generated method stub
+		return false
 	}
 }

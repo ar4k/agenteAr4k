@@ -1,4 +1,7 @@
 /**
+ * DA INTEGRARE IN INTERFACCIA CONTESTO
+ * 
+ * 
  * SSH Service
  *
  * <p>Carica e gestisce i metodi ssh per i memi</p>
@@ -11,6 +14,7 @@
  * Per il passaggio dai dati in bash pensavo di usare http://stedolan.github.io/jq/ (o simili).
  * </p>
  *
+ * @deprecated
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  * @version 0.1-alpha
  * @see org.ar4k.Meme

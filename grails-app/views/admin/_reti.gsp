@@ -4,10 +4,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="text-right">
-						<i class="fa fa-sitemap fa-3" /> Reti gestite (datacenters Consul)
+						<i class="fa fa-sitemap fa-3" /> Reti gestite (datacenters
+						Consul)
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
-						Una <strong>rete</strong> AR4K corrisponde ad un datacenter Consul.
+						Una <strong>rete</strong> AR4K corrisponde ad un datacenter
+						Consul.
 					<p>
 				</div>
 				<div class="panel-body">
@@ -17,15 +19,15 @@
 								<thead>
 									<tr>
 										<th>Datacenter</th>
-										<th class="text-right">Azioni</th>
+										<th class="text-right">Nodi</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="datacenter in datacenters" ng-class-odd="'dispari'"
-										ng-class-even="'pari'">
-										<td>{{datacenter}}</td>
-										<td class="text-right">
-										</td>
+									<tr ng-repeat="datacenter in datacenters"
+										ng-class-odd="'dispari'" ng-class-even="'pari'">
+										<td>{{datacenter.datacenter}}</td>
+										<td class="text-right"><i
+												ng-repeat="nodo in datacenter.nodi">{{nodo.address}} </i></td>
 									</tr>
 								</tbody>
 							</table>

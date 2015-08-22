@@ -19,6 +19,9 @@
 
 package org.ar4k
 import javax.swing.text.html.HTML
+import org.activiti.engine.RepositoryService
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity
+import com.ecwid.consul.v1.QueryParams
 
 import grails.converters.JSON
 import groovy.json.*
@@ -30,6 +33,7 @@ class AdminController {
 	 * Service iniettato da Spring
 	 */
 	InterfacciaContestoService interfacciaContestoService
+	RepositoryService repositoryService
 
 	/**
 	 * 
@@ -155,7 +159,11 @@ class AdminController {
 	 */
 	def listaVasi() {
 		def risultato = []
-		interfacciaContestoService.contesto.vasi.each{ risultato.add(it) }
+		interfacciaContestoService.contesto.vasi.each{ vaso ->
+			String macchina = vaso.macchina
+			String stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(macchina,new QueryParams('ar4kprivate')).getValue().output
+			risultato.add([vaso:vaso,stato:stato])
+		}
 		def incapsulato = [vasi:risultato]
 		render incapsulato as JSON
 	}
@@ -166,7 +174,10 @@ class AdminController {
 	 */
 	def listaProcessi() {
 		def risultato = []
-		risultato = interfacciaContestoService.stato.consulBind.getAgentServices().getValue()
+		interfacciaContestoService.stato.consulBind.getAgentServices().getValue().each{
+			String stato = interfacciaContestoService.stato.consulBind.getHealthChecksForService(it.getValue().service,new QueryParams('ar4kprivate')).getValue()
+			risultato.add(processo:it.getValue(),stato:stato)
+		}
 		def incapsulato = [processi:risultato]
 		render incapsulato as JSON
 	}
@@ -177,7 +188,10 @@ class AdminController {
 	 */
 	def listaDataCenters() {
 		def risultato = []
-		interfacciaContestoService.stato.consulBind.getCatalogDatacenters().getValue().each{risultato.add(it)}
+		interfacciaContestoService.stato.consulBind.getCatalogDatacenters().getValue().each{
+			List<String> nodi = interfacciaContestoService.stato.consulBind.getCatalogNodes(new QueryParams(it)).getValue()
+			risultato.add(datacenter:it,nodi:nodi)
+		}
 		def incapsulato = [datacenters:risultato]
 		render incapsulato as JSON
 	}
@@ -199,7 +213,13 @@ class AdminController {
 	 */
 	def listaMemi() {
 		def risultato = []
-		interfacciaContestoService.contesto.memi.each{ risultato.add(it) }
+		interfacciaContestoService.contesto.memi.each{ meme ->
+			String idMeme = meme.idMeme
+			String idRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).singleResult().getId()
+			//String datiRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).singleResult()
+			List<String> processi = repositoryService.createProcessDefinitionQuery().deploymentId(idRep).list()*.getId()
+			risultato.add([meme:meme,processi:processi])
+		}
 		def incapsulato = [memi:risultato]
 		render incapsulato as JSON
 	}
@@ -210,7 +230,10 @@ class AdminController {
 	 */
 	def listaStore() {
 		def risultato = []
-		interfacciaContestoService.jCloudServer.each{ risultato.add(it) }
+		def risultatoBin = []
+		interfacciaContestoService.stato.consulBind.getKVValues('').getValue().each{
+			risultato.add(it)
+		}
 		def incapsulato = [storedati:risultato]
 		render incapsulato as JSON
 	}

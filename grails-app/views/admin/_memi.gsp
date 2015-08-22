@@ -9,7 +9,7 @@
 				<h4 id="memiModalLabel" class="modal-title">{{titolo}}</h4>
 			</div>
 			<div class="modal-body">
-			<div ng-include="focus"></div>
+				<div ng-include="focus"></div>
 			</div>
 			<div class="modal-footer">
 				<button data-dismiss="modal" ng-click="pannello=false"
@@ -73,17 +73,22 @@
 							<table class="table">
 								<thead>
 									<tr>
+										<th></th>
 										<th>Meme</th>
 										<th>Descrizione</th>
-										<th class="text-right">Azioni</th>
+										<th>Processi</th>
+										<th>Stato</th>
+										<th>Funzionalità</th>
+										<th>Dipendenze</th>
+										<!--  <th class="text-right">Azioni</th> -->
 									</tr>
 								</thead>
 								<tbody>
 									<div class="col-lg-5 text-left">
-
+										<!--
 										<button class="btn btn-outline btn-primary" ng-hide="nuovo"
 											type="button" ng-click="nuovo=true">Mappa Memi</button>
-										<!--
+										
 										<button class="btn btn-success btn-primary" ng-hide="nuovo"
 											type="button" ng-click="nuovo=true">AGGIUNGI CODICE
 											AR4K</button>
@@ -96,19 +101,52 @@
 									</div>
 									<tr ng-repeat="meme in memi" ng-class-odd="'dispari'"
 										ng-class-even="'pari'">
-										<td><i class="fa {{meme.icona}}"></i> {{meme.etichetta}}</td>
-										<td>{{meme.descrizione}}</td>
-										<td class="text-right"
-											ng-class="{'success': meme.attivo,'danger': !meme.attivo}">
-											<button ng-repeat="metodo in meme.metodi"
-												class="btn btn-circle btn-xs" type="button" ng-click="$parent.eseguimetodo(metodo.idMetodo)"
-												ng-show="metodo.menuMeme" style="margin:0.1em;">
-												<i class="fa {{metodo.icona}}"></i>
-											</button><button style="margin:0.1em;" class="btn btn-circle btn-xs" type="button"
-												ng-click="$parent.dettagli(meme.idMeme)">
-												<i class="fa fa-eye"></i>
-											</button>
+										<td>
+											<div>
+												<button style="margin: 0.1em;" class="btn btn-circle btn-xs"
+													type="button" ng-click="$parent.dettagli(meme.idMeme)">
+													<i class="fa {{meme.meme.icona}}"></i>
+												</button>
+											</div>
+											<div>
+												<button style="margin: 0.1em;"
+													class="btn btn-circle btn-info btn-xs" type="button"
+													ng-click="$parent.dettagli(meme.idMeme)">
+													<i class="fa fa-qrcode"></i>
+												</button>
+												<button style="margin: 0.1em;"
+													class="btn btn-circle btn-info btn-xs" type="button"
+													ng-click="$parent.dettagli(meme.idMeme)">
+													<i class="fa fa-send"></i>
+												</button>
+												<button style="margin: 0.1em;"
+													class="btn btn-circle btn-danger btn-xs" type="button"
+													ng-click="$parent.dettagli(meme.idMeme)">
+													<i class="fa fa-trash-o"></i>
+												</button>
+											</div>
 										</td>
+										<td>{{meme.meme.etichetta}}</td>
+										<td>{{meme.meme.descrizione }}</td>
+										<td><div ng-repeat="processo in meme.processi">
+												<div>
+													{{processo}}
+													<button style="margin: 0.1em;"
+														class="btn btn-circle btn-info btn-xs" type="button"
+														ng-click="$parent.dettagli(meme.idMeme)">
+														<i class="fa fa-eye"></i>
+													</button>
+													<button style="margin: 0.1em;"
+														class="btn btn-circle btn-success btn-xs" type="button"
+														ng-click="$parent.dettagli(meme.idMeme)">
+														<i class="fa fa-play"></i>
+													</button>
+												</div>
+											</div></td>
+										<td>{{meme.meme.stato}}</td>
+										<td><div
+												ng-repeat="funzionalitaSingola in meme.meme.funzionalita">{{funzionalitaSingola}}</div></td>
+										<td><div ng-repeat="dipendenza in meme.meme.dipendenze">{{dipendenza}}</div></td>
 									</tr>
 								</tbody>
 							</table>

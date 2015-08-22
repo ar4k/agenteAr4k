@@ -58,7 +58,7 @@
 									<tr>
 										<th>Vaso</th>
 										<th>Descrizione</th>
-										<th class="text-right">Azioni</th>
+										<th class="text-right">Stato</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -77,20 +77,11 @@
 									</div>
 									<tr ng-repeat="vaso in vasi" ng-class-odd="'dispari'"
 										ng-class-even="'pari'">
-										<td>{{vaso.etichetta}}</td>
-										<td>{{vaso.descrizione}}</td>
+										<td>{{vaso.vaso.etichetta}}</td>
+										<td>{{vaso.vaso.descrizione}}</td>
 										<td class="text-right"
-											ng-class="{'success': vaso.sudo,'danger': !vaso.sudo}">
-
-											<button ng-repeat=""
-												class="btn btn-circle btn-xs" type="button"
-												ng-show="metodo.menuVaso" style="margin: 0.1em;">
-												<i class="fa {{metodo.icona}}"></i>
-											</button>
-											<button style="margin: 0.1em;" class="btn btn-circle btn-xs"
-												type="button" ng-click="$parent.dettagli(vaso.idVaso)">
-												<i class="fa fa-gears"></i>
-											</button>
+											ng-class="{'success': vaso.stato,'danger': !vaso.stato}">
+											{{vaso.stato}}
 										</td>
 									</tr>
 								</tbody>

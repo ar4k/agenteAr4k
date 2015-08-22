@@ -54,16 +54,12 @@ class Vaso {
 	List<String> funzionalita = []
 	/** Stringa proxy (esportata come http_proxy) */
 	String proxy = null
-	/** tollera errori nelle procedure */
-	Boolean tolleranza = false
-	/** memi attivati sul vaso */
-	List<Meme> memi = []
 	/** l'utenza ha l'accesso root sulla macchina */
 	Boolean sudo = false
 	/** versione java */
 	String javaVersion = null
 	/** porta tunnel consul */
-	int portaConsul = 8500
+	int portaConsul = 8501
 
 	/** esporta il vaso */
 	def esporta() {
@@ -79,7 +75,6 @@ class Vaso {
 			uname:uname,
 			javaVersion:javaVersion,
 			proxy:proxy,
-			tolleranza:tolleranza,
 			portaConsul:portaConsul
 		]
 	}
@@ -239,7 +234,7 @@ class Vaso {
 			sessione.setConfig("StrictHostKeyChecking","no")
 			sessione.setConfig("UserKnownHostsFile","/dev/null")
 			sessione.connect()
-			sessione.setPortForwardingL(lport, rhost, lport)
+			sessione.setPortForwardingL(lport, rhost, rport)
 		}	catch(JSchException e){
 			log.warn("Errore nel tunnel SSH: "+e.printStackTrace())
 		}
@@ -305,12 +300,9 @@ class Vaso {
 							icona:semeTarget.icona,
 							stato:semeTarget.stato,
 							dipendenze:semeTarget.dipendenze,
-							funzionalita:semeTarget.funzionalita,
-							variabiliAmbiente:semeTarget.variabiliAmbiente,
+							funzionalita:semeTarget.funzionalita
 							))
 					semeTarget.metodi.each{semeOggetto.meme.metodi.add(new Metodo(it))}
-					semeTarget.connettori.each{semeOggetto.meme.connettori.add(new PuntoRete(it))}
-					semeTarget.vasi.each{semeOggetto.meme.vasi.add(new RuoloVaso(it))}
 					semeTarget.stati.each{semeOggetto.meme.stati.add(new StatoMeme(it))}
 					ricettario.semi.add(semeOggetto)
 					log.info("Aggiungo "+semeTarget.etichetta)

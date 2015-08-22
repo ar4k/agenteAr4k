@@ -29,10 +29,6 @@ import com.ecwid.consul.v1.ConsulClient
 class Stato {
 	/** id univoco stato */
 	String idStato = UUID.randomUUID()
-	/** etichetta stato */
-	String etichetta = ''
-	/** descrizione stato */
-	String descrizione ='Stato rete AR4K by Rossonet'
 	/** Client Consul*/
 	ConsulClient consulBind = null
 	

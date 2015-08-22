@@ -1,7 +1,7 @@
 /**
  * WebSocket Service
  *
- * <p>Gestisce le connessioni WebSocket attive coordinandosi con SSHService e JSoupService.</p>
+ * <p>Gestisce le connessioni WebSocket attive.</p>
  *
  * <p style="text-justify">
  * Il service mantiene gli stati relativi ai web socket configurati e la cache degli Stream. 

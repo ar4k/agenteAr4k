@@ -1,4 +1,6 @@
 /**
+ * DA INTEGRARE IN INTERFACCIA CONTESTO
+ * 
  * Kettle Service
  *
  * Vecchia implementazione lasciata come esempio.
