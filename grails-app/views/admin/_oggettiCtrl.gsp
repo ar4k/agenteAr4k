@@ -10,8 +10,13 @@ angular.module('sbAdminApp')
   .controller('OggettiCtrl', function($scope, $http) {
     $http.get("${createLink(controller:'admin',action:'listaVasi',absolute:'true')}")
     .success(function (response) {$scope.vasi = response.vasi;});
+    
+    $http.get("${createLink(controller:'documentazione',action:'vaso.md',absolute:'true')}")
+    .success(function (response) {$scope.vasoHelp = response;});    
   
     $scope.nuovo=false;
+    
+    $scope.focusDocumentazione=false;
     
     $scope.nuovovaso = function(vaso) {
         $http.post("${createLink(controller:'admin',action:'aggiungiVaso',absolute:'true')}", {vaso:vaso})

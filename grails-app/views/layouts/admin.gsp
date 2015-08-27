@@ -46,6 +46,8 @@
 	<script
 		src="admin/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script src="admin/bower_components/metisMenu/dist/metisMenu.js"></script>
+	<script src="admin/bower_components/marked/lib/marked.js"></script>
+	<script src="admin/bower_components/angular-marked/angular-marked.js"></script>
 </g:if>
 <g:if env="production">
 	<link rel="stylesheet"
@@ -74,6 +76,9 @@
 	<script
 		src="admin/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="admin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script src="admin/bower_components/marked/marked.min.js"></script>
+	<script
+		src="admin/bower_components/angular-marked/angular-marked.min.js"></script>
 </g:if>
 
 
@@ -89,14 +94,14 @@
        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
        ga('create', '${grailsApplication.config.google.analytics}');
        ga('send', 'pageview');
-    </script>
+</script>
+
 <!-- Custom CSS -->
 
 <!-- Custom Fonts -->
 
 <!-- Morris Charts CSS -->
 <!-- <link href="styles/morrisjs/morris.css" rel="stylesheet"> -->
-
 
 </head>
 
@@ -105,7 +110,6 @@
 	<!-- Contenuti pagina-->
 	<g:layoutBody />
 	<!-- Fine contenuti pagina-->
-
 	<!-- begin olark code -->
 	<script data-cfasync="false" type='text/javascript'>
 		/*<![CDATA[*/window.olark
@@ -222,7 +226,26 @@
 			title="Olark live chat software">Olark live chat software</a>
 	</noscript>
 	<!-- end olark code -->
-
+	<script>
+	$(document).ready(function(){
+		//Check to see if the window is top if not then display button
+		$(window).scroll(function(){
+				if ($(this).scrollTop() > 150) {
+					$('.scrollToTop').show();
+				} else {
+					$('.scrollToTop').hide();
+				}
+			})
+		});
+	</script>
+	<span id="scrollToTop" class="well well-sm scrollToTop"
+		style="bottom: 2em; left: 1em; position: fixed; display: none; z-index: 999; background-color: rgba(0, 0, 0, 0.0); border: 0; box-shadow: unset;">
+		<a href="#top" class="btn btn-info"
+		onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+			<i class="glyphicon glyphicon-chevron-up"></i> torna in cima
+	</a>
+	</span>
+	<!-- /top-link-block -->
 </body>
 
 </html>

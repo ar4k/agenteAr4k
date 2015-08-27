@@ -23,6 +23,8 @@
 			<li ui-sref-active="active"><a ui-sref="dashboard.ricettari"><i
 					class="fa fa-book fa-fw"></i> Ricettari</a></li>
 			<g:if test="${grafica.sviluppo==true}">
+					<li ui-sref-active="active"><a ui-sref="dashboard.api"><i
+							class="fa fa-file-text-o fa-fw"></i> Documentazione API Ar4k</a></li>
 				<g:if env="development">
 					<li ui-sref-active="active"><a ui-sref="dashboard.rossonet"><i
 							class="fa fa-cubes fa-fw"></i> Grails Console</a></li>

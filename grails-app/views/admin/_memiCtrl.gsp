@@ -8,37 +8,44 @@
  */
 angular.module('sbAdminApp')
   .controller('MemiCtrl', function($scope,$http,$filter) {
-      $http.post("${createLink(controller:'admin',action:'listaMemi',absolute:'true')}")
+    $http.post("${createLink(controller:'admin',action:'listaMemi',absolute:'true')}")
     .success(function (response) {$scope.memi = response.memi;});
     
     $scope.nuovo=false;
     
     $scope.pannello=false;
     
-    $scope.memefocus = '';
+    $scope.pannelloPlay=false;
+    
+    $scope.processfocus = '';
     
     $scope.titolo = 'meme';
     
     $scope.focus = '';
     
-    $scope.eseguimetodo = function(idmetodo) {
-    	$http.post("${createLink(controller:'admin',action:'eseguiMetodo',absolute:'true')}", {idmetodo:idmetodo,dati:''})
-        .success(function(response) {
-    		    $http.get("${createLink(controller:'admin',action:'listaMemi',absolute:'true')}")
-    			.success(function(response) {$scope.memi = response.memi;});
-  		})
-  		.error(function(data, status, headers, config) {
-    		// called asynchronously if an error occurs
-    		// or server returns response with an error status.
-  		});
-      };
+    $scope.focusPlay = '';
     
-  	$scope.dettagli = function(idmeme) {
-    	$scope.memefocus = $filter('filter')($scope.memi, {idMeme: idmeme}, true);
-    	if ($scope.memefocus.length) {
-  			$scope.titolo = $scope.memefocus[0].etichetta;
-        	$scope.focus = "${createLink(controller:'admin',action:'maschera',absolute:'true')}?idMeme="+idmeme;
+  	$scope.dettagli = function(idProcesso) {
+  			$scope.processfocus = $scope.splitta(idProcesso,0);
+  			$scope.titolo = "Diagramma processo "+$scope.processfocus;
+        	$scope.focus = "${createLink(controller:'Ar4kActiviti',action:'diagrammaProcesso',absolute:'true')}?idProcesso="+idProcesso;
         	$scope.pannello = true;
-        	}
   		};
+  		
+  	$scope.mascheraNuovo = function(idProcesso) {
+  			$scope.processfocus = $scope.splitta(idProcesso,0);
+  			$scope.titolo = "Nuova istanza di "+idProcesso;
+        	$scope.focusPlay = "${createLink(controller:'Ar4kActiviti',action:'avvioProcessoForm',absolute:'true')}?idProcesso="+idProcesso;
+        	$scope.pannelloPlay = true;
+  		};
+  		
+  	$scope.splitta = function(string, nb) {
+    		$scope.array = string.split(':');
+    		return $scope.result = $scope.array[nb];
+		};
+		
+	$http.get("${createLink(controller:'documentazione',action:'meme.md',absolute:'true')}")
+    .success(function (response) {$scope.memiHelp = response;});
+    
+    $scope.focusDocumentazione=false;
   });

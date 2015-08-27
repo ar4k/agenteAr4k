@@ -19,8 +19,13 @@
 
 package org.ar4k
 import javax.swing.text.html.HTML
+
+import org.activiti.engine.FormService
 import org.activiti.engine.RepositoryService
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity
+import org.activiti.engine.repository.ProcessDefinition
+
 import com.ecwid.consul.v1.QueryParams
 
 import grails.converters.JSON
@@ -29,11 +34,10 @@ import groovy.json.*
 
 class AdminController {
 
-	/**
-	 * Service iniettato da Spring
-	 */
 	InterfacciaContestoService interfacciaContestoService
 	RepositoryService repositoryService
+	FormService formService
+	RuntimeService runtimeService
 
 	/**
 	 * 
@@ -97,6 +101,14 @@ class AdminController {
 
 	def rossonetCtrl() {
 		render(template: "rossonetCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	}
+	
+	def apiAr4k() {
+		render(template: "apiAr4k",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	}
+
+	def apiAr4kCtrl() {
+		render(template: "apiAr4kCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
 	def memoria() {
@@ -217,8 +229,13 @@ class AdminController {
 			String idMeme = meme.idMeme
 			String idRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).singleResult().getId()
 			//String datiRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).singleResult()
-			List<String> processi = repositoryService.createProcessDefinitionQuery().deploymentId(idRep).list()*.getId()
-			risultato.add([meme:meme,processi:processi])
+			List<String> processiID = repositoryService.createProcessDefinitionQuery().deploymentId(idRep).list()*.getId()
+			def processi = []
+			processiID.each{
+				processi.add([processo:it,istanze:runtimeService.createExecutionQuery().processDefinitionId(it).count()])
+			}
+			def calcolati = [tooltip:meme.tooltip(),maschera:meme.maschera(),dashboard:meme.dashboard(),box:meme.box(),iconaStato:meme.iconaStato()]
+			risultato.add([meme:meme,processi:processi,calcolati:calcolati])
 		}
 		def incapsulato = [memi:risultato]
 		render incapsulato as JSON
@@ -342,18 +359,6 @@ class AdminController {
 		}
 	}
 
-	def maschera(String idMeme) {
-		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.maschera()
-	}
-
-	def diretto(String idMeme) {
-		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.diretto()
-	}
-
-	def dashboard(String idMeme) {
-		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.dashboard()
-	}
-
 	/**
 	 * 
 	 * @return Foglio di stile AngularJS. Tramite la configurazione grafica dell'interfaccia è possibile variare lo stile
@@ -377,5 +382,6 @@ class AdminController {
 	def timeline() {
 		render(template: "timeline",contentType:"text/css",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
+	
 }
 

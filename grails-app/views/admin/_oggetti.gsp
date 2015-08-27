@@ -5,12 +5,20 @@
 				<div class="panel-heading">
 					<h3 class="text-right">
 						<i class="fa fa-linux fa-3" /> Vasi (connessioni SSH)
+						<button style="margin: 0.1em;"
+							class="btn btn-circle btn-default btn-xs" type="button"
+							ng-click="focusDocumentazione=!focusDocumentazione"
+							tooltip-placement="bottom"
+							tooltip="visualizza la documentazione sui vasi.">
+							<i class="fa fa-comment"></i>
+						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
 						Un <strong>vaso</strong> AR4K corrisponde a un accesso SSH su un
 						nodo Unix. Nei vasi è possibile attivare i <strong>semi</strong>
 						configurati nei <strong>ricettari</strong>.
 					<p>
+					<div marked="vasoHelp" ng-show="focusDocumentazione"></div>
 				</div>
 				<div class="panel-body">
 					<div name="nuovo-vaso" ng-show="nuovo" class="panel panel-yellow">
@@ -58,16 +66,23 @@
 									<tr>
 										<th>Vaso</th>
 										<th>Descrizione</th>
+										<th class="text-center">Azioni</th>
 										<th class="text-right">Stato</th>
 									</tr>
 								</thead>
 								<tbody>
 									<div class="col-lg-5 text-left">
-										<button class="btn btn-outline btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true">NUOVO VASO</button>
+										<button alt="Aggiungi un nuovo nodo SSH al contesto"
+											class="btn btn-outline btn-primary" ng-hide="nuovo"
+											type="button" ng-click="nuovo=true"
+											tooltip-placement="bottom"
+											tooltip="aggiunge un nuovo vaso. Richiede la configurazione dell'accesso SSH al nodo.">NUOVO
+											VASO</button>
 										<button class="btn btn-success btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true">AGGIUNGI CODICE
-											AR4K</button>
+											type="button" ng-click="nuovo=true"
+											tooltip-placement="bottom"
+											tooltip="aggiungi una risorsa di calcolo fornita da Rossonet.">AGGIUNGI
+											CODICE AR4K</button>
 
 									</div>
 									<div class="col-lg-2 text-center"></div>
@@ -79,10 +94,38 @@
 										ng-class-even="'pari'">
 										<td>{{vaso.vaso.etichetta}}</td>
 										<td>{{vaso.vaso.descrizione}}</td>
+										<td class="text-center">
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-info btn-xs" type="button"
+												ng-click="$parent.dettagli(meme.idMeme)"
+												tooltip-placement="top"
+												tooltip="salva il contesto attuale sul nodo.">
+												<i class="fa fa-save"></i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-info btn-xs" type="button"
+												ng-click="$parent.dettagli(meme.idMeme)"
+												tooltip-placement="bottom"
+												tooltip="installa e configura un'interfaccia su questo nodo.">
+												<i class="fa fa-desktop "></i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-warning btn-xs" type="button"
+												ng-click="$parent.dettagli(meme.idMeme)"
+												tooltip-placement="bottom"
+												tooltip="resetta l'interfaccia attuale e inizia il bootstrap sul nodo.">
+												<i class="fa fa-trophy"></i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-danger btn-xs" type="button"
+												ng-click="$parent.cancella(dato)" tooltip-placement="top"
+												tooltip="elimina il collegamento con il nodo.">
+												<i class="fa fa-trash-o"></i>
+											</button>
+										</td>
 										<td class="text-right"
 											ng-class="{'success': vaso.stato,'danger': !vaso.stato}">
-											{{vaso.stato}}
-										</td>
+											{{vaso.stato}}</td>
 									</tr>
 								</tbody>
 							</table>

@@ -10,4 +10,11 @@ angular.module('sbAdminApp')
   .controller('MemoriaCtrl', function($scope, $http) {
     $http.get("${createLink(controller:'admin',action:'listaStore',absolute:'true')}")
     .success(function (response) {$scope.storedati = response.storedati});
+    
+    $http.get("${createLink(controller:'documentazione',action:'memoria.md',absolute:'true')}")
+    .success(function (response) {$scope.memoriaHelp = response;});    
+  
+    $scope.nuovo=false;
+    
+    $scope.focusDocumentazione=false;
   });

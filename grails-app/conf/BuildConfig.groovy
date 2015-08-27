@@ -98,6 +98,8 @@ grails.project.dependency.resolution = {
 		compile "org.atmosphere:atmosphere-runtime:2.2.3", { excludes "slf4j-api" }
 
 		compile 'org.activiti:activiti-engine:5.18.0', { excludes "spring-beans" }
+		
+		compile 'org.activiti:activiti-image-generator:5.18.0', { excludes "spring-beans" }
 	
 		runtime ('org.activiti:activiti-spring:5.18.0') {
 			excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
@@ -137,7 +139,7 @@ grails.project.dependency.resolution = {
 		compile ":routing:1.4.0"
 		compile ":mail:1.0.7"
 		// scheduler
-		//compile ":quartz:1.0.2"
+		compile ":quartz:1.0.2"
 
 		// Standalone
 		compile ":standalone:1.3"
@@ -145,6 +147,8 @@ grails.project.dependency.resolution = {
 		//Shell
 		//compile ":crash:1.3.0"
 		compile ":console:1.5.4"
+
+		//compile ":rabbitmq-native:3.1.2"
 
 
 
@@ -175,6 +179,8 @@ grails.project.dependency.resolution = {
 
 		// WebFlow
 		compile ":webflow:2.1.0"
+		
+		runtime ":cors:1.1.8"
 
 	}
 }

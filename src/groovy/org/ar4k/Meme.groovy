@@ -118,6 +118,22 @@ class Meme {
 	String maschera() {
 		return stati.find{it.etichetta == stato}.angularMaschera
 	}
+	
+	String dashboard() {
+		return stati.find{it.etichetta == stato}.angularDashboard
+	}
+	
+	String box() {
+		return stati.find{it.etichetta == stato}.angularBox
+	}
+	
+	String tooltip() {
+		return stati.find{it.etichetta == stato}.tooltip
+	}
+	
+	String iconaStato() {
+		return stati.find{it.etichetta == stato}.icona
+	}
 }
 
 
@@ -150,4 +166,8 @@ class StatoMeme {
 	String etichetta = 'inattivo'
 	/** maschera nello stato */
 	String angularMaschera = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String angularDashboard = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String angularBox = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
+	String icona = 'fa-heart-o'
+	String tooltip = 'interfaccia non implementata'
 }

@@ -13,6 +13,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'hc.marked'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
@@ -84,6 +85,25 @@ angular
               name:'sbAdminApp',
               files:[
               'admin/app/scripts/controllers/main.js',
+              'admin/app/scripts/directives/timeline/timeline.js',
+              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/app/scripts/directives/chat/chat.js',
+              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              ]
+            })
+          }
+        }
+      })
+      .state('dashboard.api',{
+        url:'/apiAr4k',
+        controller: 'ApiAr4kCtrl',
+        templateUrl:'admin/apiAr4k',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'admin/apiAr4kCtrl',
               'admin/app/scripts/directives/timeline/timeline.js',
               'admin/app/scripts/directives/notifications/notifications.js',
               'admin/app/scripts/directives/chat/chat.js',

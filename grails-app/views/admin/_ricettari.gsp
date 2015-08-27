@@ -28,7 +28,9 @@
 									<td>{{seme.meme.versione}}</td>
 									<td class="text-right">
 										<button class="btn btn-circle btn-xs" type="button"
-											ng-click="creameme(seme.meme.idMeme)">
+											ng-click="creameme(seme.meme.idMeme)"
+											tooltip-placement="bottom"
+											tooltip="crea un meme da questo seme.">
 											<i class="fa fa-flask"></i>
 										</button>
 									</td>
@@ -57,6 +59,13 @@
 				<div class="panel-heading">
 					<h3 class="text-right">
 						<i class="fa fa-book fa-3" /> RICETTARI
+						<button style="margin: 0.1em;"
+							class="btn btn-circle btn-default btn-xs" type="button"
+							ng-click="focusDocumentazione=!focusDocumentazione"
+							tooltip-placement="bottom"
+							tooltip="visualizza la documentazione sui ricettari e i repository git.">
+							<i class="fa fa-comment"></i>
+						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
 						Un <strong>ricettario</strong> AR4K corrisponde a un repository
@@ -64,6 +73,7 @@
 						Un seme può essere associato ad un <strong>vaso</strong> per
 						diventare un <strong>meme</strong> attivo.
 					<p>
+					<div marked="ricettariHelp" ng-show="focusDocumentazione"></div>
 				</div>
 				<div class="panel-body">
 					<div name="nuovo-ricettario" ng-show="nuovo"
@@ -108,14 +118,19 @@
 								<tbody>
 									<div class="col-lg-5 text-left">
 										<button class="btn btn-outline btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true">NUOVO RICETTARIO</button>
+											type="button" ng-click="nuovo=true"
+											tooltip-placement="bottom"
+											tooltip="collega un nuovo repository git al sistema.">NUOVO
+											RICETTARIO</button>
 										<button class="btn btn-success btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true">AGGIUNGI CODICE
-											AR4K</button>
+											type="button" ng-click="nuovo=true"
+											tooltip-placement="bottom"
+											tooltip="collega un abbonamento Rossonet Ar4k.">AGGIUNGI
+											CODICE AR4K</button>
 									</div>
 									<div class="col-lg-2 text-center"></div>
 									<div class="col-lg-5 text-right">
-										<input placeholder="ricerca in etichetta e descrizione"
+										<input placeholder="filtra i vasi per parola chiave"
 											class="form-control">
 									</div>
 									<tr ng-repeat="ricettario in ricettari"
@@ -129,13 +144,24 @@
 												<i class="fa  fa-pencil "></i>
 											</button>
 											-->
-											<button class="btn btn-circle btn-success btn-xs" type="button"
-												ng-click="$parent.semi(ricettario.idRicettario)">
+											<button class="btn btn-circle btn-success btn-xs"
+												type="button"
+												ng-click="$parent.semi(ricettario.idRicettario)"
+												tooltip-placement="top"
+												tooltip="visualizza i semi nel ricettario.">
 												<i class="fa fa-eye"></i>
 											</button>
 											<button class="btn btn-circle btn-info btn-xs" type="button"
-												ng-click="$parent.aggiorna(ricettario.idRicettario)">
+												ng-click="$parent.aggiorna(ricettario.idRicettario)"
+												tooltip-placement="top"
+												tooltip="aggiorna il repository git del ricettario e ricarica i semi.">
 												<i class="fa fa-refresh"></i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-danger btn-xs" type="button"
+												ng-click="$parent.cancella(dato)" tooltip-placement="bottom"
+												tooltip="elimina il ricettario. Tutti i memi collegati saranno eliminati!">
+												<i class="fa fa-trash-o"></i>
 											</button>
 										</td>
 									</tr>

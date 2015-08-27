@@ -5,11 +5,19 @@
 				<div class="panel-heading">
 					<h3 class="text-right">
 						<i class="fa fa-gears fa-3" /> Servizi (nodi/servizi Consul)
+						<button style="margin: 0.1em;"
+							class="btn btn-circle btn-default btn-xs" type="button"
+							ng-click="focusDocumentazione=!focusDocumentazione"
+							tooltip-placement="bottom"
+							tooltip="visualizza la documentazione sui servizi.">
+							<i class="fa fa-comment"></i>
+						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
 						Un <strong>servizio</strong> AR4K corrisponde ad un'unità di
 						calcolo/servizio gestita dalla rete Consul.
 					<p>
+					<div marked="serviziHelp" ng-show="focusDocumentazione"></div>
 				</div>
 				<div class="panel-body">
 					<div class="dataTable_wrapper">
@@ -29,7 +37,7 @@
 									<div class="col-lg-5 text-left"></div>
 									<div class="col-lg-2 text-center"></div>
 									<div class="col-lg-5 text-right">
-										<input placeholder="ricerca in etichetta e descrizione"
+										<input placeholder="ricerca per nome servizio o tag"
 											class="form-control">
 									</div>
 									<tr ng-repeat="processo in processi" ng-class-odd="'dispari'"

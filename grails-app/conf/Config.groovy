@@ -142,7 +142,7 @@ log4j.main = {
 					info 'org.codehaus.groovy.grails.web.sitemesh'
 					info 'org.codehaus.groovy.grails.plugins'
 					info 'org.codehaus.groovy.grails.commons'
-					debug 'org.activiti'
+					info 'org.activiti'
 					info 'org.ar4k'
 					//debug 'org.grails.plugins.atmosphere_meteor'
 				}
@@ -281,6 +281,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**':                            ['ROLE_ADMIN'],
 	//'/admin/**':                    ['ROLE_USER'],
 	'/admin/**':                      ['ROLE_ADMIN','ROLE_USER'],
+	'/Ar4kActiviti/**':               ['permitAll'], // Solo per debug!!!
 	// Accesso a tutti autenticati
 	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti
@@ -311,3 +312,5 @@ activiti {
 	  mailServerDefaultFrom = "ar4k@rossonet.com"
 	  history = "audit" // "none", "activity", "audit" or "full"
 }
+
+cors.headers = ['Access-Control-Allow-Origin': '*']

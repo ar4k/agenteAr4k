@@ -11,6 +11,11 @@ angular.module('sbAdminApp')
     $http.post("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
     .success(function (response) {$scope.ricettari = response.ricettari;});
     
+    $http.get("${createLink(controller:'documentazione',action:'ricettario.md',absolute:'true')}")
+    .success(function (response) {$scope.ricettariHelp = response;});    
+    
+    $scope.focusDocumentazione=false;
+    
     $scope.nuovo=false;
     
     $scope.pannello=false;
