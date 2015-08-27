@@ -1,18 +1,5 @@
 /**
  * DA INTEGRARE IN INTERFACCIA CONTESTO
- * 
- * 
- * SSH Service
- *
- * <p>Carica e gestisce i metodi ssh per i memi</p>
- *
- * <p style="text-justify">
- * Permette l'esecuzione di comandi (metodi) bash eventualmente integrati da altri framework (Chef/Puppet) sui Vasi. 
- * Gestisce il recupero dell pagine generate dal output stream per AngularJS e gestisce gli oggetti con scope session legati 
- * a gli stream SSH.</br>
- * Da valutare la gestione di una console unica degli errori per tutto il meme e il meccanismo di inizione delle variabili in bash.
- * Per il passaggio dai dati in bash pensavo di usare http://stedolan.github.io/jq/ (o simili).
- * </p>
  *
  * @deprecated
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)

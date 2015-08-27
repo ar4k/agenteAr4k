@@ -1,17 +1,16 @@
 /**
  * Interfaccia Contesto
  *
- * <p>Gestisce la factory centrale dell'interfaccia per la costruzione dei servizi.</p>
+ * <p>Gestisce la struttura dati del contesto attivo.</p>
  *
  * <p style="text-justify">
- * Tutti gli eventi passano per questo service (una volta completato il bootstrap), in particolare questo service distribuisce gli eventi ai memi e alle code 
- * utente (messaggi, task, eventi)</br>
- * Questa interfaccia permette ai memi la gestione di operazioni complesse quali il load balancer, i dns e i QR</br>
+ * Il servizio viene attivato da BootStrapService.</br>
  * La configurazione di Quartz è in PingJob.
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
- * @version 0.1-alpha
+ * @version 0.2-alpha
+ * @see org.ar4k.BootStrapService
  * @see org.ar4k.Interfaccia
  * @see org.ar4k.Contesto
  */
@@ -46,31 +45,21 @@ class InterfacciaContestoService {
 	GrailsApplication grailsApplication
 	/** Contesto in esecuzione */
 	Contesto contesto
-	/** Stato in esecuzione */
+	/** Stato in esecuzione -Consul- */
 	Stato stato
 	/** Interfaccia corrente */
 	Interfaccia interfaccia
 	/** connessione ssh consul */
 	JSch connessioneConsul = null
 
-	/** engine Activiti BPM -dipendenza iniettata*/
+	/** engine Activiti BPM -dipendenza iniettata */
 	ProcessEngine processEngine
-	/** builderJCloud */
+	/** lista contesti server JCloud operativi */
 	List<Context> jCloudServer = []
+	/** lista repositories Kettle operativi */
 	List<Repository> kettleRepositories = []
-	/*
-	 void attivaActiviti() {
-	 //SpringProcessEngineConfiguration
-	 processEngine = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
-	 .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP)
-	 .setJdbcUrl("jdbc:h2:mem:activitiDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE")
-	 .setAsyncExecutorEnabled(true)
-	 .setAsyncExecutorActivate(true)
-	 .buildProcessEngine()
-	 }
-	 */
 
-	/** Connette il demone Consul sul nodo ssh master alle API JAVA **/
+	/** connette il demone Consul al nodo ssh master alle API JAVA **/
 	void connettiConsul() {
 		try {
 			stato.consulBind = new ConsulClient('http://127.0.0.1',8501)
@@ -88,12 +77,12 @@ class InterfacciaContestoService {
 		}
 	}
 
-	/** Attiva il sottositema Kettle **/
+	/** attiva il sottosistema Kettle **/
 	void initKettle() {
 		KettleEnvironment.init()
 	}
 
-	/** Collega un hypervisor Docker **/
+	/** collega un hypervisor Docker **/
 	void dockerJCloud(String endpoint,String cert,String key) {
 		// per i self-signed
 		// openssl s_client -connect external.com:2376 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > public.crt
@@ -112,7 +101,7 @@ class InterfacciaContestoService {
 		}
 	}
 
-	/** Collega un hypervisor EC2 AWS **/
+	/** collega un hypervisor EC2 AWS **/
 	void ec2JCloud(String endpoint,String cert,String key) {
 		try {
 			ComputeServiceContext context = ContextBuilder.newBuilder("aws-ec2")
@@ -127,7 +116,7 @@ class InterfacciaContestoService {
 		}
 	}
 
-	/** Carica un processo in Activiti **/
+	/** carica un processo in Activiti **/
 	String caricaProcesso(String processo) {
 		InputStream zipFile = new FileInputStream(new File(grailsApplication.parentContext.getResource(processo).file.toString()))
 		ZipInputStream inputStream = new ZipInputStream(zipFile)
@@ -139,7 +128,7 @@ class InterfacciaContestoService {
 		return repositoryService.createProcessDefinitionQuery().count()
 	}
 
-	/** Descrizione a toString() */
+	/** descrizione contesto */
 	String toString() {
 		String risultato = "CONTESTO ["+contesto.etichetta+"]\n"
 		risultato += contesto.descrizione+"\n"
@@ -150,7 +139,7 @@ class InterfacciaContestoService {
 		return risultato
 	}
 
-	/** Stampa la memoria con Camel */
+	/** stampa la memoria con Camel */
 	void freeMemory() {
 		sendMessage("seda:input", "Memoria libera: "+Runtime.getRuntime().freeMemory())
 	}

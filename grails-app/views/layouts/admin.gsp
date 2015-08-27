@@ -240,7 +240,7 @@
 	</script>
 	<span id="scrollToTop" class="well well-sm scrollToTop"
 		style="bottom: 2em; left: 1em; position: fixed; display: none; z-index: 999; background-color: rgba(0, 0, 0, 0.0); border: 0; box-shadow: unset;">
-		<a href="#top" class="btn btn-info"
+		<a href="#top" class="btn btn-default"
 		onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
 			<i class="glyphicon glyphicon-chevron-up"></i> torna in cima
 	</a>

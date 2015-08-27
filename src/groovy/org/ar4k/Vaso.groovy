@@ -4,8 +4,8 @@
  * <p>Un vaso rappresenta un container SSH</p>
  *
  * <p style="text-justify">
- * Il vaso è l'unita base in cui operano i memi, garantisce l'esecuzione degli stessi, ospita il loro file system,
- * coordina i tunnel con autossh, gesisce il proprio cron locale ed espone le API per il ciclo di vita dei propri oggetti</br>
+ * Il vaso è l'unita base in cui operano i memi, garantisce l'esecuzione degli stessi, ospita il loro file system e
+ * ospita il demone Consul</br>
  * </p>
  *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
@@ -65,6 +65,7 @@ class Vaso {
 	def esporta() {
 		return [
 			idVaso:idVaso,
+			etichetta:etichetta,
 			descrizione:descrizione,
 			macchina:macchina,
 			porta:porta,
@@ -73,6 +74,7 @@ class Vaso {
 			sudo:sudo,
 			path:path,
 			uname:uname,
+			funzionalita:funzionalita,
 			javaVersion:javaVersion,
 			proxy:proxy,
 			portaConsul:portaConsul
@@ -143,7 +145,7 @@ class Vaso {
 		return risultato
 	}
 
-	/** esegui un comando ssh sul vaso */
+	/** carica un file .bar dal vaso all'interfaccia */
 	String leggiBinarioProcesso(String percorso,String target) {
 		String ritorno = '/tmp/'+UUID.randomUUID()+'.bar'
 		FileOutputStream ritornoStream = new FileOutputStream(new File(ritorno))
@@ -215,6 +217,7 @@ class Vaso {
 		return risultato == atteso?true:false
 	}
 
+	/** Avvia il demone consul sul vaso e configura una sessione ssh permanente per accedere tramite le API JAVA */
 	Boolean avviaConsul(JSch connessione) {
 		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate </dev/null &>/dev/null &'
 		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
@@ -225,6 +228,7 @@ class Vaso {
 		return esegui(verifica) == '1\n'?true:false
 	}
 
+	/** Aggiunge un tunnel SSH Left*/
 	void addLTunnel(JSch connessione, int lport, String rhost, int rport) {
 		try {
 			Channel canale
@@ -240,9 +244,7 @@ class Vaso {
 		}
 	}
 
-
-
-	/** recupera i contesti salvati nel vaso */
+	/** recupera i contesti salvati sul vaso */
 	List<Contesto> listaContesti() {
 		List<Contesto> contesti = []
 		String lista = esegui("listaContesti")
@@ -274,7 +276,7 @@ class Vaso {
 		return esito
 	}
 
-	/** legge i semi e popola i dati */
+	/** legge i semi e popola i dati dal file JSON */
 	Boolean caricaSemi(Ricettario ricettario) {
 		if (ricettario.repositoryGit.configurato == true) {
 			String comandoRicerca = "cd ~/.ar4k/ricettari ;"

@@ -10,8 +10,6 @@
  * principale (admin) per renderli fruibili all'interfaccia Web Angular (da valutare la generazione automatica del controller AngularJS -Tipo CRUD-)</br>
  * </p>
  *
- * strettamente collegato a MasterCamelRoute
- *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  * @version 0.1-alpha
  * @see org.ar4k.Interfaccia

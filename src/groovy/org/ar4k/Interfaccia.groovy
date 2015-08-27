@@ -27,8 +27,6 @@ class Interfaccia {
 
 	/** service per interagire con il contesto */
 	InterfacciaContestoService interfacciaContestoService
-
-	// Oggetti iniettati da Grails - FINE -
 	
 	/** id univoco interfaccia */
 	String idInterfaccia = UUID.randomUUID()
@@ -45,7 +43,8 @@ class Interfaccia {
 		return [
 			idInterfaccia:idInterfaccia,
 			etichetta:etichetta,
-			descrizione:descrizione
+			descrizione:descrizione,
+			grafica:grafica
 			]
 	}
 	

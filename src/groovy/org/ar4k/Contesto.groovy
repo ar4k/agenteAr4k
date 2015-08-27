@@ -1,13 +1,11 @@
 /**
  * Contesto
  *
- * <p>Un contesto operativo gestisce la correlazione tra vasi, ricettari e utenti</p>
+ * <p>Un contesto operativo gestisce la correlazione tra vasi, ricettari, utenti e memi</p>
  *
  * <p style="text-justify">
  * Il contesto rappresenta un progetto, un insieme di risorse, utenti e codice che interagiscono.</br>
- * E' compito del contesto esporre tutte le funzioni di coordinamento dei vasi per un progetto e la relativa maschera che parte di default in
- * un contesto locale, scaricando solo i ricettari base.</br>
- * il contesto espone la factory dei dns, QR e risorse di calcolo fornite da Provider.</br>
+ * Il contesto espone la factory dei dns, QR e risorse di calcolo fornite da Provider.</br>
  * i memi possono associare degli eventi ai contesti.</br>
  * </br>
  * Un contesto parte sempre con un ricettario base che contiene i meme base per la gestione dei suoi eventi.
@@ -36,19 +34,20 @@ class Contesto {
 	String idProgetto ='00 - LAB Rossonet'
 	/** campo per l'avanzamanto del bootstrap (nascita,vita,virus,morte)*/
 	private String statoBootStrap = 'nascita'
-	/** se salva il contesto su tutti i vasi connessi tranne i disabilitati */
+	/** se vero, salva il contesto su tutti i vasi connessi  */
 	Boolean clonaOvunque = false
-	/** ricettari a disposizione */
+	/** ricettari a disposizione del contesto*/
 	List<Ricettario> ricettari= []
-	/** interfacce collegate */
+	/** interfacce collegate al contesto*/
 	List<Interfaccia> interfacce= []
 	/** utenti del contesto da importare in configurazione */
 	List<UtenteRuolo> utentiRuoli = []
 	/** memi attivi nel contesto */
 	List<Meme> memi = []
-	/** vasi disponibili nel contesto*/
+	/** vasi disponibili nel contesto */
 	List<Vaso> vasi =[]
 	
+	/** vaso principale del contesto con demone Consul */
 	Vaso vasoMaster
 
 	/** ditruttore di classe (utile per la gestione della pulizia dei vasi)*/
@@ -112,7 +111,8 @@ class Contesto {
 			utentiRuoli:utentiRuoli*.esporta(),
 			vasi:vasi*.esporta(),
 			vasoMaster:vasoMaster.esporta(),
-			ricettari:ricettari*.esporta()
+			ricettari:ricettari*.esporta(),
+			clonaOvunque:clonaOvunque
 		]
 	}
 

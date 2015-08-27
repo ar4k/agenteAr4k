@@ -1,7 +1,5 @@
 /**
  * DA INTEGRARE IN INTERFACCIA CONTESTO
- * 
- * Kettle Service
  *
  * Vecchia implementazione lasciata come esempio.
  * Da valutare, dopo l'implementazione in ssh delle lavorazione kettle, la manipolazione dei

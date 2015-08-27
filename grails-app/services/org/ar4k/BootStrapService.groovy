@@ -13,10 +13,6 @@
  * 
  * Questo service è invocato nel bootstrap per avviare l'interfaccia.</b>
  *
- * <strong>TODO:</strong>
- * Immagine macchina base su ks e OVA
- * </p>
- *
  * @author Andrea Ambrosini (Rossonet s.c.a r.l)
  * @version 0.1-alpha
  * @see org.ar4k.Interfaccia
@@ -30,7 +26,7 @@ import com.jcraft.jsch.*
 @Transactional
 class BootStrapService {
 
-	/** iniezione service principale */
+	/** service InterfacciaContestoService da popolare */
 	InterfacciaContestoService interfacciaContestoService
 
 	/** host accesso ssh */
@@ -46,7 +42,7 @@ class BootStrapService {
 	/** interfaccia scelta */
 	String idInterfacciaScelta = null
 
-	/** vasoMaster */
+	/** vasoMaster -connessione ssh principale- */
 	Vaso vasoMaster
 
 	/** se vero esclude i controlli di raggiungibilità */
@@ -121,7 +117,7 @@ class BootStrapService {
 		return risultato
 	}
 
-	/** test parametri correnti e connesione al vaso master*/
+	/** test parametri correnti e connesione al vaso master */
 	Boolean provaConnessioneMaster() {
 		vasoMaster= new Vaso(
 				etichetta:utenteMaster+'@'+macchinaMaster+':'+portaMaster,
@@ -145,7 +141,7 @@ class BootStrapService {
 		return risultato
 	}
 
-	/** avvia o ripristina la connesione ssh al vaso master*/
+	/** avvia o ripristina la connesione ssh al vaso master */
 	Boolean caricaVasoMaster() {
 		Boolean risultato = false
 		log.info("caricaVasoMaster() su "+vasoMaster)
@@ -183,7 +179,7 @@ class BootStrapService {
 		return risultato
 	}
 
-	/** carica il contesto per id contesto*/
+	/** carica il contesto per id contesto */
 	Boolean caricaContesto(String contestoSceltaConf) {
 		log.info("caricaContesto("+contestoSceltaConf+")")
 		Boolean ritorno = false

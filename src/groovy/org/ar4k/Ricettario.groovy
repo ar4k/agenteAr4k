@@ -1,7 +1,7 @@
 /**
  * Ricettario
  *
- * <p>Un ricettario corrisponde ad un archivio git accessibile da un vaso e contiene memi utilizzabili nel vaso</p>
+ * <p>Un ricettario corrisponde ad un archivio git accessibile da un vaso e contiene semi utilizzabili nel vaso per la creazione dei memi.</p>
  *
  * <p style="text-justify">
  * In un vaso sono presenti più ricettari. Un vaso può utilizzare i ricettari compatibili con le funzionalità di cui dispone (base e aggiunte con memi).</br>
@@ -28,8 +28,6 @@ class Ricettario {
 	RepositoryGit repositoryGit = new RepositoryGit()
 	/** semi disponibili sul ricettario */
 	List<Seme> semi = []
-	/** se il repository va preventivamente caricato su tutti i nodi (vasi) */
-	Boolean onnipresente = true
 	/** ultimo caricamento */
 	Date aggiornato
 	
