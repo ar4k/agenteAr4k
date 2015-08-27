@@ -15,4 +15,28 @@ angular.module('sbAdminApp')
     .success(function (response) {$scope.retiHelp = response;});  
     
     $scope.focusDocumentazione=false;
+    
+    $scope.nuovo=false;
+    
+    $scope.pannello=false;
+    
+    $scope.titolo = 'nodo';
+    
+    $scope.focus = '';
+    
+    $scope.statoNodo = 'Problema nella gestione dello stato';
+    
+    $scope.dettagli = function(idNodo,datacenter) {
+  			$scope.titolo = idNodo;
+        	var link = "${createLink(controller:'admin',action:'nodo',absolute:'true')}?identificativo="+idNodo+'&datacenter='+datacenter;
+        	$scope.pannello = true;
+        	$http.get(link)
+        		.success(function(response) {
+					$scope.focus = response;
+  			})
+  				.error(function(data, status, headers, config) {
+    			// called asynchronously if an error occurs
+    			// or server returns response with an error status.
+  			});
+  	};
   });

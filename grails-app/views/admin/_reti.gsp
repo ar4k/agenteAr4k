@@ -1,3 +1,40 @@
+<div aria-hidden="false" aria-labelledby="Meme" role="dialog"
+	tabindex="-1" id="reteModal" class="modal fade in" ng-show="pannello"
+	style="display: block; padding-right: 13px;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-hidden="true" data-dismiss="modal"
+					ng-click="pannello=false" class="close" type="button">×</button>
+				<h4 id="reteModalLabel" class="modal-title">{{titolo}}</h4>
+			</div>
+			<div class="modal-body">
+				<p>Indirizzo IP: {{focus.nodo.value.node.address}}</p>
+				<div ng-repeat="servizio in focus.nodo.value.services"
+					class="well well-sm">
+					<div>
+						<i class="fa fa-gears fa-fw"></i>({{servizio.id}})
+						{{servizio.service}} porta: {{servizio.port}} tags:
+						<p ng-repeat="tag in servizio.tags"">{{tag}}</p>
+					</div>
+				</div>
+				<div class="panel panel-red text-center">
+					<p ng-repeat="stato in focus.stato.value">
+						{{stato.checkId}} - <b>{{stato.name}} => {{stato.status.name}}</b>
+						{{stato.output}}
+					</p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button data-dismiss="modal" ng-click="pannello=false"
+					class="btn btn-default" type="button">Chiudi</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
 <div class="row">
 	<div style="margin-top: 5px;">
 		<div class="col-lg-12">
@@ -21,10 +58,12 @@
 					<div marked="retiHelp" ng-show="focusDocumentazione"></div>
 				</div>
 				<div class="panel-body">
+					<!-- 
 					<button class="btn btn-outline btn-primary" ng-hide="nuovo"
 						type="button" ng-click="" tooltip-placement="bottom"
 						tooltip="visualizza i nodi sulla mappa geografica.">MAPPA
 						GEOGRAFICA NODI</button>
+						 -->
 					<div class="dataTable_wrapper">
 						<div class="table-responsive">
 							<table class="table">
@@ -41,11 +80,13 @@
 										<td class="text-right"><i
 											ng-repeat="nodo in datacenter.nodi">
 												<button style="margin: 0.1em;"
-													class="btn btn-success btn-xs" type="button"
-													ng-click="$parent.dettagli(meme.idMeme)"
+													ng-class="nodo.stato.value[0].status.name == 'PASSING'?'btn btn-success btn-xs':'btn btn-danger btn-xs'"
+													type="button"
+													ng-click="$parent.dettagli(nodo.nodo.node,datacenter.datacenter)"
 													tooltip-placement="top"
 													tooltip="visualizza i dettagli del nodo.">
-													<i class="fa fa-info-circle"></i> {{nodo.address}}
+													<i class="fa fa-info-circle"></i> {{nodo.nodo.node}}
+													({{nodo.nodo.address}})
 												</button>
 										</i></td>
 									</tr>

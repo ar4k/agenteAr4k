@@ -61,37 +61,6 @@
 					<div marked="memiHelp" ng-show="focusDocumentazione"></div>
 				</div>
 				<div class="panel-body">
-					<!--  
-					<div name="nuovo-ricettario" ng-show="nuovo"
-						class="panel panel-yellow">
-						<div class="panel-body">
-							<form class="ng-pristine ng-valid" role="form">
-								<div class="form-group">
-									<input placeholder="Etichetta" ng-model="ricettario.etichetta"
-										class="form-control">
-								</div>
-								<div class="form-group">
-									<input placeholder="Descrizione"
-										ng-model="ricettario.descrizione" class="form-control">
-								</div>
-								<div class="form-group">
-									<input placeholder="URL repository GIT"
-										ng-model="ricettario.repo" class="form-control">
-								</div>
-								<div class="form-group">
-									<input placeholder="Cartella destinazione nel vaso"
-										ng-model="ricettario.cartella" class="form-control">
-								</div>
-								<div class="form-group text-right">
-									<input type="submit" class="btn btn-default"
-										ng-click="nuovoricettario(ricettario);nuovo=false"
-										value="Salva" /> <input type="button" class="btn btn-default"
-										ng-click="nuovo=false;reset()" value="Annulla" />
-								</div>
-							</form>
-						</div>
-					</div>
-					-->
 					<div class="dataTable_wrapper">
 						<div class="table-responsive">
 							<table class="table">

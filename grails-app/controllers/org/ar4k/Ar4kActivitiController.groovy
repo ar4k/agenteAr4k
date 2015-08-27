@@ -77,4 +77,5 @@ class Ar4kActivitiController {
 		InputStream imageStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), diagramResourceName)
 		render file: imageStream, contentType: 'image/png'
 	}
+	
 }

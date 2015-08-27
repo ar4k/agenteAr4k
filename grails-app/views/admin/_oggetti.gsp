@@ -123,9 +123,11 @@
 												<i class="fa fa-trash-o"></i>
 											</button>
 										</td>
-										<td class="text-right"
-											ng-class="{'success': vaso.stato,'danger': !vaso.stato}">
-											{{vaso.stato}}</td>
+										<td>
+											<div
+												ng-class="vaso.stato[0].status.name == 'PASSING'?'panel panel-green text-right':'panel panel-red text-right'" style="margin-bottom:unset;">
+												<div class="panel-heading">{{vaso.stato[0].output}}</div>
+										</td>
 									</tr>
 								</tbody>
 							</table>

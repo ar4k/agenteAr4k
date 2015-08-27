@@ -102,7 +102,7 @@ class AdminController {
 	def rossonetCtrl() {
 		render(template: "rossonetCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
-	
+
 	def apiAr4k() {
 		render(template: "apiAr4k",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
@@ -173,7 +173,7 @@ class AdminController {
 		def risultato = []
 		interfacciaContestoService.contesto.vasi.each{ vaso ->
 			String macchina = vaso.macchina
-			String stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(macchina,new QueryParams('ar4kprivate')).getValue().output
+			def stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(macchina,new QueryParams('ar4kprivate')).getValue()
 			risultato.add([vaso:vaso,stato:stato])
 		}
 		def incapsulato = [vasi:risultato]
@@ -202,9 +202,22 @@ class AdminController {
 		def risultato = []
 		interfacciaContestoService.stato.consulBind.getCatalogDatacenters().getValue().each{
 			List<String> nodi = interfacciaContestoService.stato.consulBind.getCatalogNodes(new QueryParams(it)).getValue()
-			risultato.add(datacenter:it,nodi:nodi)
+			def nodiElaborati = []
+			nodi.each{ nodo ->
+				def stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(nodo.node,new com.ecwid.consul.v1.QueryParams(it))
+				nodiElaborati.add([nodo:nodo,stato:stato])
+			}
+			risultato.add(datacenter:it,nodi:nodiElaborati)
 		}
 		def incapsulato = [datacenters:risultato]
+		render incapsulato as JSON
+	}
+
+	/** @return dettagli per un nodo Consul */
+	def nodo(String identificativo,String datacenter) {
+		def risultato = interfacciaContestoService.stato.consulBind.getCatalogNode(identificativo,new com.ecwid.consul.v1.QueryParams(datacenter))
+		def stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(identificativo,new com.ecwid.consul.v1.QueryParams(datacenter))
+		def incapsulato = [nodo:risultato,stato:stato]
 		render incapsulato as JSON
 	}
 
@@ -248,9 +261,7 @@ class AdminController {
 	def listaStore() {
 		def risultato = []
 		def risultatoBin = []
-		interfacciaContestoService.stato.consulBind.getKVValues('').getValue().each{
-			risultato.add(it)
-		}
+		interfacciaContestoService.stato.consulBind.getKVValues('').getValue().each{ risultato.add(it) }
 		def incapsulato = [storedati:risultato]
 		render incapsulato as JSON
 	}
@@ -382,6 +393,6 @@ class AdminController {
 	def timeline() {
 		render(template: "timeline",contentType:"text/css",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
-	
+
 }
 
