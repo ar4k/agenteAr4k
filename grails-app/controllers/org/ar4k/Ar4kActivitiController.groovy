@@ -8,6 +8,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService
 import org.activiti.engine.repository.ProcessDefinition
 
+/** Controller per le chiamate fatte dalle maschere di Activiti */
 class Ar4kActivitiController {
 
 	InterfacciaContestoService interfacciaContestoService

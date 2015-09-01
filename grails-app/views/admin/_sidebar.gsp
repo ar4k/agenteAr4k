@@ -23,19 +23,22 @@
 			<li ui-sref-active="active"><a ui-sref="dashboard.ricettari"><i
 					class="fa fa-book fa-fw"></i> Ricettari</a></li>
 			<g:if test="${grafica.sviluppo==true}">
-					<li ui-sref-active="active"><a ui-sref="dashboard.api"><i
-							class="fa fa-file-text-o fa-fw"></i> Documentazione API Ar4k</a></li>
+				<li ui-sref-active="active"><a ui-sref="dashboard.api"><i
+						class="fa fa-file-text-o fa-fw"></i> Documentazione API Ar4k</a></li>
 				<g:if env="development">
 					<li ui-sref-active="active"><a ui-sref="dashboard.rossonet"><i
 							class="fa fa-cubes fa-fw"></i> Grails Console</a></li>
 				</g:if>
 
 				<li ui-sref-active="active"><a ui-sref="dashboard.utenti"><i
-						class="fa fa-users fa-fw"></i> Configura utenti</a></li>
+						class="fa fa-users fa-fw"></i> Configura Utenti</a></li>
+
+				<li ui-sref-active="active"><a href="http://www.rossonet.org/archives/650" target="_guida"><i
+						class="fa fa-info fa-fw"></i> Sviluppo Memi</a></li>
 
 				<li ng-class="{active: collapseVar==1}"><a href=""
 					ng-click="check(1)"><i class="fa fa-graduation-cap fa-fw"></i>
-						Vetrina Sviluppo Agile<span class="fa arrow"></span></a>
+						Funzionalità Interfaccia<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level" collapse="collapseVar!=1">
 						<li ui-sref-active="active"><a ui-sref="dashboard.home"><i
 								class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>

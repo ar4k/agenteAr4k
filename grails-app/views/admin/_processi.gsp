@@ -30,7 +30,7 @@
 										<th>Porta</th>
 										<th>Servizio</th>
 										<th>Tags</th>
-										<th class="text-right">Stato</th>
+										<th class="text-right">Gestione</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -47,7 +47,25 @@
 										<td>{{processo.processo.port}}</td>
 										<td>{{processo.processo.service}}</td>
 										<td><div ng-repeat="tag in processo.processo.tags">{{tag}}</div></td>
-										<td class="text-right">{{processo.stato}}</td>
+										<td class="text-right">
+											<p>{{processo.stato}}</p>
+											<p>
+												<button style="margin: 0.1em;"
+													class="btn btn-circle btn-info btn-xs" type="button"
+													ng-click=""
+													tooltip-placement="top"
+													tooltip="gestisci i link e i qr per questo servizio.">
+													<i class="fa fa-qrcode"></i>
+												</button>
+												<button style="margin: 0.1em;"
+													class="btn btn-circle btn-xs" type="button"
+													ng-click=""
+													tooltip-placement="top"
+													tooltip="copia link servizio.">
+													<i class="fa fa-link"></i>
+												</button>
+											</p>
+										</td>
 									</tr>
 								</tbody>
 							</table>

@@ -39,6 +39,8 @@ class Meme {
 	String icona = 'fa-thumb-tack'
 	/** stato del meme */
 	String stato = 'inattivo'
+	/** processo lanciato alla creazione del meme */
+	String autoStart = ''
 	/** lista funzionalità di cui è necessaria la presenza nel contesto per operare */
 	List<String> dipendenze = []
 	/** lista funzionalità rese disponibili al contesto */
@@ -72,6 +74,7 @@ class Meme {
 			versioniCompatibili:versioniCompatibili,
 			icona:icona,
 			stato:stato,
+			autoStart:autoStart,
 			stati:stati*.esporta(),
 			dipendenze:dipendenze,
 			funzionalita:funzionalita,

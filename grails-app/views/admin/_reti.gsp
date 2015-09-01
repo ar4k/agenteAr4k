@@ -58,12 +58,14 @@
 					<div marked="retiHelp" ng-show="focusDocumentazione"></div>
 				</div>
 				<div class="panel-body">
-					<!-- 
-					<button class="btn btn-outline btn-primary" ng-hide="nuovo"
-						type="button" ng-click="" tooltip-placement="bottom"
-						tooltip="visualizza i nodi sulla mappa geografica.">MAPPA
-						GEOGRAFICA NODI</button>
-						 -->
+					<div class="panel panel-green">
+						<div class="panel-heading text-center">HYPERVISOR DISPONIBILI - Servizi Cloud -</div>
+						<div class="panel-body">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare
+								lacus adipiscing, posuere lectus et, fringilla augue.</p>
+						</div>
+					</div>
 					<div class="dataTable_wrapper">
 						<div class="table-responsive">
 							<table class="table">

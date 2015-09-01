@@ -1,4 +1,4 @@
-<div class="row" style="margin-left: .5em; margin-right: .5em;">
+<div class="row" style="margin-left: .2em; margin-right: .2em;">
 	<div class="embed-responsive embed-responsive-16by9"
 		style="margin-top: 5px;">
 		<iframe width="100%" name="docAPI" frameborder="0"

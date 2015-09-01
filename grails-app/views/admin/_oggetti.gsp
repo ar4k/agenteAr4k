@@ -81,8 +81,7 @@
 										<button class="btn btn-success btn-primary" ng-hide="nuovo"
 											type="button" ng-click="nuovo=true"
 											tooltip-placement="bottom"
-											tooltip="aggiungi una risorsa di calcolo fornita da Rossonet.">AGGIUNGI
-											CODICE AR4K</button>
+											tooltip="aggiungi una risorsa di calcolo fornita da Rossonet."><i class="fa fa-shopping-cart"></i> CODICE AR4K</button>
 
 									</div>
 									<div class="col-lg-2 text-center"></div>
@@ -108,6 +107,13 @@
 												tooltip-placement="bottom"
 												tooltip="installa e configura un'interfaccia su questo nodo.">
 												<i class="fa fa-desktop "></i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-xs" type="button"
+												ng-click="$parent.dettagli(meme.idMeme)"
+												tooltip-placement="bottom"
+												tooltip="accesso SSH al vaso.">
+												<i class="fa fa-slack"></i>
 											</button>
 											<button style="margin: 0.1em;"
 												class="btn btn-circle btn-warning btn-xs" type="button"

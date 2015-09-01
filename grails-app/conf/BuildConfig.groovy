@@ -136,7 +136,8 @@ grails.project.dependency.resolution = {
 		//runtime ":aws-sdk:1.9.22"
 
 		// Camel
-		compile ":routing:1.4.0"
+		compile ":routing:1.4.1"
+		compile ":routing-jms:1.2.0"
 		compile ":mail:1.0.7"
 		// scheduler
 		compile ":quartz:1.0.2"

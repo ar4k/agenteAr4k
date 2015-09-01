@@ -94,6 +94,14 @@
 								</tbody>
 							</table>
 						</div>
+						<div class="panel panel-green">
+						<div class="panel-heading text-center">Storage Dati Remoti - Servizi Cloud -</div>
+						<div class="panel-body">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare
+								lacus adipiscing, posuere lectus et, fringilla augue.</p>
+						</div>
+					</div>
 					</div>
 				</div>
 			</div>

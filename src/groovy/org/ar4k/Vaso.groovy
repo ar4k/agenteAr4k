@@ -227,6 +227,17 @@ class Vaso {
 		addLTunnel(connessione,portaConsul,'127.0.0.1',8500)
 		return esegui(verifica) == '1\n'?true:false
 	}
+	
+	/** Avvia broker ActiveMQ sul nodo Master, configura una sessione ssh permanente per connettere l'Apache Camel integrato nell'Interfaccia  */
+	Boolean avviaActiveMQ(JSch connessione) {
+		String comando = '~/.ar4k/ricettari/ar4k_open/'
+		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
+		if ( esegui(verifica) != '1\n') {
+			esegui(comando)
+		}
+		addLTunnel(connessione,portaConsul,'127.0.0.1',8500)
+		return esegui(verifica) == '1\n'?true:false
+	}
 
 	/** Aggiunge un tunnel SSH Left*/
 	void addLTunnel(JSch connessione, int lport, String rhost, int rport) {
