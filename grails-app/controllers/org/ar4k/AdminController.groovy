@@ -369,6 +369,14 @@ class AdminController {
 			render 'none'
 		}
 	}
+	
+	def listaBlobStoreJCloud() {
+		def incapsulato
+		interfacciaContestoService.jCloudServer.each{
+			incapsulato.add(it)
+		}
+		render incapsulato as JSON
+	}
 
 	/**
 	 * 

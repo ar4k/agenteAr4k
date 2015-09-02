@@ -51,10 +51,12 @@ class InterfacciaContestoService {
 	Interfaccia interfaccia
 	/** connessione ssh consul */
 	JSch connessioneConsul = null
+	/** connessione ssh activemq */
+	JSch connessioneActiveMQ = null
 
 	/** engine Activiti BPM -dipendenza iniettata */
 	ProcessEngine processEngine
-	/** lista contesti server JCloud operativi */
+	/** lista contesti JCloud operativi */
 	List<Context> jCloudServer = []
 	/** lista repositories Kettle operativi */
 	List<Repository> kettleRepositories = []
@@ -83,7 +85,7 @@ class InterfacciaContestoService {
 	}
 
 	/** collega un hypervisor Docker **/
-	void dockerJCloud(String endpoint,String cert,String key) {
+	void dockerJCloudCompute(String endpoint,String cert,String key) {
 		// per i self-signed
 		// openssl s_client -connect external.com:2376 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > public.crt
 		// sudo $JAVA_HOME/bin/keytool -import -alias 54.155.20.120 -keystore $JAVA_HOME/jre/lib/security/cacerts -file public.crt
@@ -92,7 +94,7 @@ class InterfacciaContestoService {
 			ComputeServiceContext context = ContextBuilder.newBuilder("docker")
 					.credentials(cert, key)
 					.endpoint(endpoint)
-					.buildView(ComputeServiceContext.class);
+					.buildView(ComputeServiceContext.class)
 			ComputeService client = context.getComputeService()
 			jCloudServer.add(context)
 			log.info("Immagini disponibili su Docker: "+client.listImages())
@@ -102,12 +104,27 @@ class InterfacciaContestoService {
 	}
 
 	/** collega un hypervisor EC2 AWS **/
-	void ec2JCloud(String endpoint,String cert,String key) {
+	void ec2JCloudCompute(String endpoint,String cert,String key) {
 		try {
 			ComputeServiceContext context = ContextBuilder.newBuilder("aws-ec2")
 					.credentials(cert, key)
 					.endpoint(endpoint)
-					.buildView(ComputeServiceContext.class);
+					.buildView(ComputeServiceContext.class)
+			ComputeService client = context.getComputeService()
+			jCloudServer.add(context)
+			log.info("Immagini disponibili su AWS EC2: "+client.listNodes())
+		} catch (Exception e){
+			log.warn("Errore avvio JCloud EC2: "+e.printStackTrace())
+		}
+	}
+	
+	/** collega uno storage S3 AWS **/
+	void s3JCloudStore(String endpoint,String cert,String key) {
+		try {
+			ComputeServiceContext context = ContextBuilder.newBuilder("aws-ec2")
+					.credentials(cert, key)
+					.endpoint(endpoint)
+					.buildView(ComputeServiceContext.class)
 			ComputeService client = context.getComputeService()
 			jCloudServer.add(context)
 			log.info("Immagini disponibili su AWS EC2: "+client.listNodes())

@@ -60,6 +60,8 @@ class Vaso {
 	String javaVersion = null
 	/** porta tunnel consul */
 	int portaConsul = 8501
+	/** porta tunnel ActiveMQ */
+	int portaActiveMQ = 61616
 
 	/** esporta il vaso */
 	def esporta() {
@@ -77,7 +79,8 @@ class Vaso {
 			funzionalita:funzionalita,
 			javaVersion:javaVersion,
 			proxy:proxy,
-			portaConsul:portaConsul
+			portaConsul:portaConsul,
+			portaActiveMQ:portaActiveMQ
 		]
 	}
 
@@ -230,12 +233,12 @@ class Vaso {
 	
 	/** Avvia broker ActiveMQ sul nodo Master, configura una sessione ssh permanente per connettere l'Apache Camel integrato nell'Interfaccia  */
 	Boolean avviaActiveMQ(JSch connessione) {
-		String comando = '~/.ar4k/ricettari/ar4k_open/'
-		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
+		String comando = '~/.ar4k/ricettari/ar4k_open/apache-activemq-5.12.0/bin/activemq start'
+		String verifica = "~/.ar4k/ricettari/ar4k_open/apache-activemq-5.12.0/bin/activemq status | grep 'ActiveMQ is running' | wc -l"
 		if ( esegui(verifica) != '1\n') {
 			esegui(comando)
 		}
-		addLTunnel(connessione,portaConsul,'127.0.0.1',8500)
+		addLTunnel(connessione,portaActiveMQ,'127.0.0.1',61616)
 		return esegui(verifica) == '1\n'?true:false
 	}
 

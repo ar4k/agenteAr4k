@@ -147,6 +147,7 @@ class BootStrapService {
 		log.info("caricaVasoMaster() su "+vasoMaster)
 		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
 		if (risultato) risultato = vasoMaster.avviaConsul(interfacciaContestoService.connessioneConsul)
+		if (risultato) risultato = vasoMaster.avviaActiveMQ(interfacciaContestoService.connessioneActiveMQ)
 		if (risultato) {
 			log.info("caricaVasoMaster() su "+vasoMaster+" (ok)")
 			vasoConnesso = true
@@ -217,6 +218,7 @@ class BootStrapService {
 		log.info("avvia("+contestoSceltaConf+","+interfacciaSceltaConf+")")
 		Boolean ritorno = false
 		interfacciaContestoService.connessioneConsul = new JSch()
+		interfacciaContestoService.connessioneActiveMQ = new JSch()
 		if (caricaContesto(contestoSceltaConf)) {
 			String primarioInterfaccia = idInterfacciaScelta
 			if (interfacciaSceltaConf) primarioInterfaccia = interfacciaSceltaConf
