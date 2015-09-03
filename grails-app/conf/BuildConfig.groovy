@@ -98,18 +98,19 @@ grails.project.dependency.resolution = {
 		compile "org.atmosphere:atmosphere-runtime:2.2.3", { excludes "slf4j-api" }
 
 		compile 'org.activiti:activiti-engine:5.18.0', { excludes "spring-beans" }
-		
+
 		compile 'org.activiti:activiti-image-generator:5.18.0', { excludes "spring-beans" }
-	
+
 		runtime ('org.activiti:activiti-spring:5.18.0') {
 			excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
 		}
 		/*
-		runtime ('org.activiti:activiti-rest:5.18.0') {
-			excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
-		}
-		*/
+		 runtime ('org.activiti:activiti-rest:5.18.0') {
+		 excludes 'spring-context', 'spring-jdbc', 'spring-orm', 'slf4j-log4j12', 'commons-dbcp'
+		 }
+		 */
 		compile "com.ecwid.consul:consul-api:1.1.4"
+
 	}
 
 	plugins {
@@ -136,7 +137,7 @@ grails.project.dependency.resolution = {
 		//runtime ":aws-sdk:1.9.22"
 
 		// Camel
-		compile ":routing:1.4.1"
+		compile ":routing:1.2.3"
 		compile ":routing-jms:1.2.0"
 		compile ":mail:1.0.7"
 		// scheduler
@@ -180,7 +181,7 @@ grails.project.dependency.resolution = {
 
 		// WebFlow
 		compile ":webflow:2.1.0"
-		
+
 		runtime ":cors:1.1.8"
 
 	}

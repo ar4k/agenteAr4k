@@ -30,9 +30,9 @@ class Ricettario {
 	List<Seme> semi = []
 	/** ultimo caricamento */
 	Date aggiornato
-	
-	
-	
+
+
+
 	/** esporta il ricettario */
 	def esporta() {
 		log.info("esporta() il ricettario: "+idRicettario)
@@ -40,12 +40,11 @@ class Ricettario {
 			idRicettario:idRicettario,
 			etichetta:etichetta,
 			descrizione:descrizione,
-			repositoryGit:repositoryGit,
+			repositoryGit:repositoryGit.esporta(),
 			aggiornato: aggiornato.toString(),
 			semi:semi*.esporta()
-			]
+		]
 	}
-
 }
 
 /**
@@ -67,8 +66,17 @@ class RepositoryGit {
 	String nomeCartella = 'ar4k_open'
 	/** stato */
 	Boolean configurato = true
-	/** codice errore */
-	String codiceErrore = 'Nessun Errore'
+
+	def esporta() {
+		log.info("esporta: "+indirizzo )
+		return [
+			utente:utente,
+			password:password,
+			indirizzo:indirizzo,
+			nomeCartella:nomeCartella,
+			configurato:configurato
+		]
+	}
 }
 
 /**
@@ -84,13 +92,13 @@ class Seme {
 	/** dati meme germinante*/
 	Meme meme
 	String percorso
-	
+
 	/** esporta il seme */
 	def esporta() {
 		log.info("esporta() il seme in : "+percorso)
 		return [
 			meme:meme.esporta(),
 			percorso:percorso
-			]
+		]
 	}
 }

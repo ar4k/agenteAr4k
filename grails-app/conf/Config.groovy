@@ -248,6 +248,13 @@ interfaccia = 'Bootstrap-Ar4k'
 // Configurazione proxy tra il vaso master e Internet
 //proxyMasterInternet = ''
 
+// Configurazione ActiveMQ
+grails.plugin.routing.jms.brokerURL = 'tcp://localhost:61616'
+grails.plugin.routing.jms.userName = 'admin'
+grails.plugin.routing.jms.password =  'admin'
+
+grails.routing.camelContextId = 'ar4kInterfaccia'
+
 ///////////////////////////////////////////////////////////////////////////
 ///////////// FINE CONFIGURAZIONI ROSSONET ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////

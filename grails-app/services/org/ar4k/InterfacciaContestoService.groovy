@@ -117,7 +117,7 @@ class InterfacciaContestoService {
 			log.warn("Errore avvio JCloud EC2: "+e.printStackTrace())
 		}
 	}
-	
+
 	/** collega uno storage S3 AWS **/
 	void s3JCloudStore(String endpoint,String cert,String key) {
 		try {
@@ -156,14 +156,35 @@ class InterfacciaContestoService {
 		return risultato
 	}
 
-	/** stampa la memoria con Camel */
-	void freeMemory() {
-		sendMessage("seda:input", "Memoria libera: "+Runtime.getRuntime().freeMemory())
+	/** Stampa il messaggio - utilizzato per il test della connessione con ActiveMQ */
+	void testStampaMemoria(String messaggio) {
+		log.info "Memoria libera: "+messaggio
+	}
+	
+	/** Gestisce gli eventi consul */
+	void eventiConsul(String messaggio) {
+		log.info "Evento Consul: "+messaggio
+	}
+	
+	/** Gestisce la visualizzazione dei messaggi  */
+	void leggiMessaggio(Utente utente,String messaggio) {
+		log.info "Messaggio per l'utente "+utente.username+": "+messaggio
+	}
+	
+	/** Gestisce gli eventi di activiti  */
+	void eventiActiviti(String messaggio) {
+		log.info "Evento Activiti: "+messaggio
+	}
+	
+	/** Gestisce gli eventi di Jcloud  */
+	void eventiJCloud(String messaggio) {
+		log.info "Evento JCloud: "+messaggio
 	}
 
 	/** esegue le procedura ogni 5 min. tramite Quartz */
 	void battito() {
-		freeMemory()
+		sendMessage("activemq:topic:interfaccia.memoria", Runtime.getRuntime().freeMemory())
+		sendMessage("activemq:queue:contesto.salvataggio", contesto.esporta())
 	}
 }
 

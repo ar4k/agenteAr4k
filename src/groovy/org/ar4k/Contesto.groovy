@@ -46,6 +46,8 @@ class Contesto {
 	List<Meme> memi = []
 	/** vasi disponibili nel contesto */
 	List<Vaso> vasi =[]
+	/** lista provider Cloud - da verificare - */
+	List<cloudProvider> cloudProviders= []
 	
 	/** vaso principale del contesto con demone Consul */
 	Vaso vasoMaster
@@ -112,11 +114,36 @@ class Contesto {
 			vasi:vasi*.esporta(),
 			vasoMaster:vasoMaster.esporta(),
 			ricettari:ricettari*.esporta(),
-			clonaOvunque:clonaOvunque
+			clonaOvunque:clonaOvunque,
+			cloudProviders:cloudProviders*.esporta()
 		]
 	}
 
 	String toString() {
 		return etichetta + " su "+vasoMaster+" ("+statoBootStrap+")"
+	}
+}
+
+class cloudProvider {
+	/** id univoco metodo */
+	String idCloudProvider = UUID.randomUUID()
+	String etichetta = 'nessuna etichetta'
+	String descrizione = 'nessuna descrizione'
+	/** percorso file bar (Activiti) nel repository git -Ricettario- */
+	String urlAccesso = ''
+	String tipoCloud = ''
+	String utenza = ''
+	String chiaveAccesso = ''
+
+	def esporta() {
+		return [
+			idMetodo:idMetodo,
+			etichetta:etichetta,
+			descrizione:descrizione,
+			urlAccesso:urlAccesso,
+			tipoCloud:tipoCloud,
+			utenza:utenza,
+			chiaveAccesso:chiaveAccesso
+		]
 	}
 }

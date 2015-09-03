@@ -19,9 +19,13 @@ import org.apache.camel.builder.RouteBuilder
 class MasterCamelRoute extends RouteBuilder {
 	def grailsApplication
 
-	@Override void configure() {
+	@Override 
+	void configure() {
 		def config = grailsApplication?.config
-		// per prova Quartz
-		from('seda:input').to('stream:out')
+		from('activemq:topic:interfaccia.memoria').to('bean:interfacciaContestoService?method=testStampaMemoria')
+		from('activemq:topic:consul.eventi').to('bean:interfacciaContestoService?method=eventiConsul')
+		from('activemq:topic:activiti.eventi').to('bean:interfacciaContestoService?method=eventiActiviti')
+		from('activemq:topic:jcloud.eventi').to('bean:interfacciaContestoService?method=eventiJCloud')
+		//from('seda:memoria').to('bean:interfacciaContestoService?method=testStampaMemoria')
 	}
 }

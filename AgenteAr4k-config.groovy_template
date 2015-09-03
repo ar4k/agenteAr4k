@@ -99,3 +99,8 @@ grails {
         }
 }
 
+// Configurazione ActiveMQ
+
+grails.plugin.routing.jms.brokerURL = 'tcp://localhost:61616' 
+grails.plugin.routing.jms.userName = 'admin'
+grails.plugin.routing.jms.password =  'xxxx'

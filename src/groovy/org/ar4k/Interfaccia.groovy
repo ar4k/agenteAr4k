@@ -23,6 +23,8 @@
 
 package org.ar4k
 
+import grails.converters.JSON
+
 class Interfaccia {
 
 	/** service per interagire con il contesto */
@@ -44,7 +46,7 @@ class Interfaccia {
 			idInterfaccia:idInterfaccia,
 			etichetta:etichetta,
 			descrizione:descrizione,
-			grafica:grafica
+			grafica:grafica.esporta()
 			]
 	}
 	
@@ -82,6 +84,16 @@ class TemplateInterfaccia {
 		warning: 'orange',
 		danger: 'red'
 		]
+	
+	def esporta() {
+		log.info("esporta() il template grafico: "+etichetta)
+		return [
+			etichetta:etichetta,
+			immagineLogo:immagineLogo,
+			sviluppo:sviluppo,
+			colori:new JSON(colori).toString(true)
+			]
+	}
 	
 	String toString() {
 		return etichetta
