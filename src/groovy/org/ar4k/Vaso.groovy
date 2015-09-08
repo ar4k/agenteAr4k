@@ -64,8 +64,6 @@ class Vaso {
 	/** porta tunnel ActiveMQ */
 	int portaActiveMQ = 61616
 
-	InterfacciaContestoService interfacciaContestoService
-
 	/** esporta il vaso */
 	def esporta() {
 		return [
@@ -90,12 +88,10 @@ class Vaso {
 	/** verifica la raggiungibilità di internet dal vaso */
 	Boolean verificaConnettivita() {
 		log.info("Verifico se "+etichetta+" raggiunge l'esterno.")
-		InterfacciaContestoService.codaMessaggi("Verifico se "+etichetta+" raggiunge l'esterno.")
 		String comando = 'wget hc.rossonet.name -O - 2>/dev/null | grep hera | wc -l'
 		String atteso = '1\n'
 		String risultato = esegui(comando)
 		log.info("risultato "+comando+" = "+risultato+" (atteso: "+atteso+')')
-		interfacciaContestoService.codaMessaggi("risultato "+comando+" = "+risultato+" (atteso: "+atteso+')')
 		return risultato == atteso?true:false
 	}
 
@@ -232,7 +228,13 @@ class Vaso {
 
 	/** Avvia il demone consul sul vaso e configura una sessione ssh permanente per accedere tramite le API JAVA */
 	Boolean avviaConsul(JSch connessione) {
-		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate </dev/null &>/dev/null &'
+		String consulKey = Holders.applicationContext.getBean("interfacciaContestoService").contesto.consulKey
+		String dominioConsul = Holders.applicationContext.getBean("interfacciaContestoService").contesto.dominioConsul
+		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate'
+		comando += consulKey?' -encrypt "'+consulKey+'"':''
+		comando += dominioConsul?' -domain '+dominioConsul:''
+		comando += ' </dev/null &>/dev/null &'
+		//String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate </dev/null &>/dev/null &'
 		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
 		String comandoEventiNodi = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 watch -type nodes ~/.ar4k/ricettari/ar4k_open/bin/eventoConsul.sh "nodi aggiornati"</dev/null &>/dev/null &'
 		String comandoEventiService = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 watch -type services ~/.ar4k/ricettari/ar4k_open/bin/eventoConsul.sh "servizi aggiornati"</dev/null &>/dev/null &'

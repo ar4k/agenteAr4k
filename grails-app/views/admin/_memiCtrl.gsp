@@ -16,6 +16,8 @@ angular.module('sbAdminApp')
     
     $scope.pannello=false;
     
+    $scope.pannelloMaschera=false;
+    
     $scope.pannelloPlay=false;
     
     $scope.azioneMemePlay=false;
@@ -23,6 +25,8 @@ angular.module('sbAdminApp')
     $scope.processfocus = '';
     
     $scope.titolo = 'meme';
+    
+    $scope.titoloMaschera = 'istanze';
     
     $scope.focus = '';
     
@@ -36,6 +40,13 @@ angular.module('sbAdminApp')
         	$scope.focus = "${createLink(controller:'Ar4kActiviti',action:'diagrammaProcesso',absolute:'true')}?idProcesso="+idProcesso;
         	$scope.pannello = true;
   		};
+  		
+  	$scope.maschera = function(idProcesso) {
+  			$scope.processfocus = $scope.splitta(idProcesso,0);
+  			$scope.titoloMaschera = "Istanze attive di "+$scope.processfocus;
+        	$http.get("${createLink(controller:'Ar4kActiviti',action:'listaIstanze',absolute:'true')}?idProcesso="+idProcesso).success(function (response) {$scope.focusMaschera = response.istanze;});
+        	$scope.pannelloMaschera = true;
+  	};
   	
     $scope.aggiornaDaMessaggio = function() {
     		$http.post("${createLink(controller:'admin',action:'listaMemi',absolute:'true')}")

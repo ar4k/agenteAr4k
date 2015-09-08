@@ -227,8 +227,6 @@ class BootStrapService {
 			if (interfacciaTarget) {
 				interfaccia = interfacciaTarget
 				if(interfaccia.avviaInterfaccia()) {
-					vasoMaster.avviaConsul(interfacciaContestoService.connessioneConsul)
-					vasoMaster.avviaActiveMQ(interfacciaContestoService.connessioneActiveMQ)
 					interfacciaScelta = true
 					inAvvio = false
 					ritorno = true
@@ -239,6 +237,8 @@ class BootStrapService {
 					interfacciaContestoService.stato=new Stato()
 					//log.info("Attiva il gestore di processo Activiti")
 					//interfacciaContestoService.attivaActiviti()
+					vasoMaster.avviaConsul(interfacciaContestoService.connessioneConsul)
+					vasoMaster.avviaActiveMQ(interfacciaContestoService.connessioneActiveMQ)
 					log.info("Attiva Consul")
 					interfacciaContestoService.connettiConsul()
 					log.info("Attiva Kettle")

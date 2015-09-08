@@ -48,6 +48,8 @@
 	<script src="admin/bower_components/metisMenu/dist/metisMenu.js"></script>
 	<script src="admin/bower_components/marked/lib/marked.js"></script>
 	<script src="admin/bower_components/angular-marked/angular-marked.js"></script>
+	<script src="admin/bower_components/restangular/dist/restangular.js"></script>
+	<script src="admin/bower_components/lodash/dist/lodash.js"></script>
 </g:if>
 <g:if env="production">
 	<link rel="stylesheet"
@@ -79,7 +81,12 @@
 	<script src="admin/bower_components/marked/marked.min.js"></script>
 	<script
 		src="admin/bower_components/angular-marked/angular-marked.min.js"></script>
+	<script
+		src="admin/bower_components/restangular/dist/restangular.min.js"></script>
+	<script src="admin/bower_components/lodash/dist/lodash.min.js"></script>
 </g:if>
+
+<script src="admin/bower_components/angular-lodash/angular-lodash.js"></script>
 
 
 
@@ -238,8 +245,10 @@
 			})
 		});
 	</script>
-	<script type="text/javascript" src="${resource(dir:'admin',file:'jquery.atmosphere.js')}"></script>
-	<script type="text/javascript" src="${resource(dir:'admin',file:'moment.min.js')}"></script>
+	<script type="text/javascript"
+		src="${resource(dir:'admin',file:'jquery.atmosphere.js')}"></script>
+	<script type="text/javascript"
+		src="${resource(dir:'admin',file:'moment.min.js')}"></script>
 	<script>
 	$(function() {
 	"use strict";

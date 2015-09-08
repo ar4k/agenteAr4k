@@ -24,6 +24,25 @@
 						{{stato.output}}
 					</p>
 				</div>
+				<div class="panel text-right">
+					<button class="btn btn-circle btn-success btn-xs" type="button"
+						ng-click="scansiona(focus.nodo.value.node.address)" tooltip-placement="bottom"
+						tooltip="scansiona il nodo per trovare servizi conosciuti">
+						<i class="fa fa-steam"></i>
+					</button>
+					
+					<button class="btn btn-circle btn-warning btn-xs" type="button"
+						ng-click="scansionarete(focus.nodo.value.node.address)" tooltip-placement="bottom"
+						tooltip="scansiona una rete da questo nodo per identificare i servizi">
+						<i class="fa fa-share-alt"></i>
+					</button>
+					
+					<button class="btn btn-circle btn-danger btn-xs" type="button"
+						ng-click="eseguisunodo(focus.nodo.value.node.address)" tooltip-placement="bottom"
+						tooltip="esegui un comando su questo nodo">
+						<i class="fa fa-wrench"></i>
+					</button>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button data-dismiss="modal" ng-click="pannello=false"
@@ -59,7 +78,8 @@
 				</div>
 				<div class="panel-body">
 					<div class="panel panel-green">
-						<div class="panel-heading text-center">HYPERVISOR DISPONIBILI - Servizi Cloud -</div>
+						<div class="panel-heading text-center">HYPERVISOR
+							DISPONIBILI - Servizi Cloud -</div>
 						<div class="panel-body">
 							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 								Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare

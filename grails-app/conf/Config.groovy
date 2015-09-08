@@ -288,7 +288,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**':                            ['ROLE_ADMIN'],
 	//'/admin/**':                    ['ROLE_USER'],
 	'/admin/**':                      ['ROLE_ADMIN','ROLE_USER'],
-	'/Ar4kActiviti/**':               ['permitAll'], // Solo per debug!!!
+	'/Ar4kActiviti/**':               ['ROLE_ADMIN','ROLE_USER'], 
 	// Accesso a tutti autenticati
 	//'/**':                          ['IS_AUTHENTICATED_REMEMBERED'],
 	// Accesso a tutti

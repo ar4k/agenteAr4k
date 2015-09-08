@@ -88,6 +88,8 @@ class LoginController {
 		String view = 'auth'
 
 		String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
+		
+		log.info "PostUrl proposta: "+postUrl
 
 		render view: view, model: [postUrl: postUrl,
 

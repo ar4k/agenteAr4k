@@ -36,6 +36,10 @@ class Contesto {
 	private String statoBootStrap = 'nascita'
 	/** se vero, salva il contesto su tutti i vasi connessi  */
 	Boolean clonaOvunque = false
+	/** chiave criptografia Consul per il protocollo gossip. Si può ottenere con #consul genkey */
+	String consulKey = 'yIetiZno0c7464rOCaIThQ=='
+	/** dominio consul - inserire il punto finale come nella configurazione di Bind -*/
+	String dominioConsul = 'bottegaio.net.'
 	/** ricettari a disposizione del contesto*/
 	List<Ricettario> ricettari= []
 	/** interfacce collegate al contesto*/
@@ -121,7 +125,9 @@ class Contesto {
 			ricettari:ricettari*.esporta(),
 			clonaOvunque:clonaOvunque,
 			cloudProviders:cloudProviders*.esporta(),
-			puntatori:puntatori*.esporta()
+			puntatori:puntatori*.esporta(),
+			consulKey:consulKey,
+			dominioConsul:dominioConsul
 		]
 	}
 

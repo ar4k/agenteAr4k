@@ -70,6 +70,7 @@ class Ar4kActivitiController {
 		render processo?'avviato...':'errore!'
 	}
 
+	
 	def diagrammaStatoProcesso(String idProcesso) {
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
 				.processDefinitionId(idProcesso).singleResult()
@@ -87,6 +88,23 @@ class Ar4kActivitiController {
 		String diagramResourceName = processDefinition.getDiagramResourceName()
 		InputStream imageStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), diagramResourceName)
 		render file: imageStream, contentType: 'image/png'
+	}
+	
+	def listaIstanze(String idProcesso){
+		def variabili = []
+		runtimeService.createProcessInstanceQuery().processDefinitionId(idProcesso).list().each{
+			variabili.add([
+				id:it.getId(),
+				businessKey:it.getBusinessKey(),
+				activityId:it.getActivityId(),
+				deploymentId:it.getDeploymentId(),
+				name:it.getName(),
+				processInstanceId:it.getProcessInstanceId(),
+				sospeso:it.isSuspended()
+				])
+		}
+		def incapsulato = [istanze:variabili]
+		render incapsulato as JSON
 	}
 	
 }

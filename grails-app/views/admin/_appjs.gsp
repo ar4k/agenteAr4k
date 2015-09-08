@@ -13,7 +13,8 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'hc.marked'
+    'hc.marked',
+    'restangular'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
@@ -86,7 +87,6 @@ angular
               files:[
               'admin/app/scripts/controllers/main.js',
               'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/messaggiSistemaCtrl',
               'admin/app/scripts/directives/chat/chat.js',
               'admin/app/scripts/directives/dashboard/stats/stats.js'
               ]
@@ -163,8 +163,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/dashrossonetCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js'
+              'admin/dashrossonetCtrl'
               ]
             })
           }

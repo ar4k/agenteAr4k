@@ -21,6 +21,72 @@
 	<!-- /.modal-dialog -->
 </div>
 
+<div aria-hidden="false" aria-labelledby="Istanze" role="dialog"
+	tabindex="-1" id="istanzeModal" class="modal fade in"
+	ng-show="pannelloMaschera" style="display: block; padding-right: 13px">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-hidden="true" data-dismiss="modal"
+					ng-click="pannelloMaschera=false" class="close" type="button">×</button>
+				<h4 id="memiModalLabel" class="modal-title">{{titoloMaschera}}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="dataTable_wrapper">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Attività</th>
+										<th class="text-right">Azioni</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="istanza in focusMaschera"
+										ng-class-odd="'dispari'" ng-class-even="'pari'">
+										<td>{{istanza.id}}</td>
+										<td>{{istanza.activityId}}</td>
+										<td class="text-right">
+											<button class="btn btn-circle btn-success btn-xs" type="button"
+												ng-click="svolgiistanza(istanza.id)"
+												tooltip-placement="bottom" tooltip="esegui il prossimo compito per questa istanza">
+												<i class="fa fa-play"></i>
+											</button>
+											<button class="btn btn-circle btn-warning btn-xs" type="button"
+												ng-click="sospendiistanza(istanza.id)"
+												tooltip-placement="bottom" tooltip="sospendi questa istanza">
+												<i class="fa fa-pause"></i>
+											</button>
+											<button class="btn btn-circle btn-danger btn-xs" type="button"
+												ng-click="eliminaistanza(istanza.id)"
+												tooltip-placement="bottom" tooltip="cancella questa istanza">
+												<i class="fa fa-stop"></i>
+											</button>
+											<button class="btn btn-circle btn-info btn-xs" type="button"
+												ng-click="assegnaistanza(istanza.id)"
+												tooltip-placement="bottom" tooltip="assegna questa istanza ad un utente">
+												<i class="fa fa-user"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button data-dismiss="modal" ng-click="pannelloMaschera=false"
+					class="btn btn-default" type="button">Chiudi</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
 <div aria-hidden="false" aria-labelledby="Meme" role="dialog"
 	tabindex="-1" id="avvioProcessoModal" class="modal fade in"
 	ng-show="pannelloPlay"
@@ -56,7 +122,7 @@
 </div>
 
 
-<div class="row aggiorna-su-messaggio" >
+<div class="row aggiorna-su-messaggio">
 	<div style="margin-top: 5px;">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
