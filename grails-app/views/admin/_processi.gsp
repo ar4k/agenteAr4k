@@ -10,7 +10,7 @@
 							ng-click="focusDocumentazione=!focusDocumentazione"
 							tooltip-placement="bottom"
 							tooltip="visualizza la documentazione sui servizi.">
-							<i class="fa fa-comment"></i>
+							<i class="fa fa-question"></i>
 						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">

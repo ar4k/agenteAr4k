@@ -69,7 +69,7 @@ defaultInitParams = [
 servlets = [
 	MeteorServletDefault: [
 		className: "org.ar4k.DefaultMeteorServlet",
-		mapping: "/wsa/def/*",
+		mapping: "/wsa/sistema/*",
 		handler: DefaultMeteorHandler,
 		initParams: defaultInitParams
 	]

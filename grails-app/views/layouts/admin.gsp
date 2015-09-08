@@ -102,7 +102,7 @@
 
 <!-- Morris Charts CSS -->
 <!-- <link href="styles/morrisjs/morris.css" rel="stylesheet"> -->
-
+<!--  <script src="${resource(dir:'admin',file:'angular-atmosphere-service.js')}"></script> -->
 </head>
 
 <body>
@@ -237,6 +237,129 @@
 				}
 			})
 		});
+	</script>
+	<script type="text/javascript" src="${resource(dir:'admin',file:'jquery.atmosphere.js')}"></script>
+	<script type="text/javascript" src="${resource(dir:'admin',file:'moment.min.js')}"></script>
+	<script>
+	$(function() {
+	"use strict";
+
+	var socketAct = $.atmosphere;
+	var transportAct = 'websocket';
+
+	var requestAct = {
+		url : "<g:createLink controller='wsa' action='sistema' absolute='true'/>/eventoactiviti",
+		contentType : "application/json",
+		trackMessageLength : true,
+		logLevel : 'error',
+		shared : true,
+		transport : transportAct,
+		fallbackTransport : 'long-polling'
+	};
+
+	var subSocketAct = socketAct.subscribe(requestAct);
+
+	socketAct.onMessage = function(response) {
+		try {
+			var json = jQuery.parseJSON(response.responseBody);
+			var messaggio = json.messaggio;
+			var icona = json.icona;
+			var topo = json.tipo;
+			var li = document.createElement("li");
+			var a = document.createElement("a");
+			var i = document.createElement("i");
+			var div = document.createElement("div");
+			var divisore = document.createElement("li");
+			divisore.setAttribute('class',"divider");
+			i.setAttribute('class',"fa "+icona+" fa-fw");
+			var span = document.createElement("span");
+			span.setAttribute('class',"pull-right text-muted small");
+			var testo = document.createTextNode(" "+messaggio);
+			div.appendChild(i);
+			div.appendChild(testo);
+			div.appendChild(span);
+			a.appendChild(div);
+			li.appendChild(a);
+	
+			var listaMessaggiSistemaAct = document.getElementById("messaggiactiviti");
+			listaMessaggiSistemaAct.appendChild(divisore);
+			listaMessaggiSistemaAct.appendChild(li);
+			
+
+			var contatoreAct = document.getElementById("contatoreactiviti");
+			var attualeAct = contatoreAct.textContent;
+			contatoreAct.textContent = +attualeAct+1;
+		} catch (errore) {
+			console.log("Errore in JSON eventi Activiti: "+errore);
+		}
+	};
+
+	});
+	</script>
+	<script>
+
+	$(function() {
+		"use strict";
+
+		var socketMes = $.atmosphere;
+		var transportMes = 'websocket';
+
+		var requestMes = {
+			url : "<g:createLink controller='wsa' action='sistema' absolute='true'/>/codamessaggi",
+			contentType : "application/json",
+			trackMessageLength : true,
+			logLevel : 'error',
+			shared : true,
+			transport : transportMes,
+			fallbackTransport : 'long-polling'
+		};
+
+		var subSocketMes = socketMes.subscribe(requestMes);
+
+		socketMes.onMessage = function(response) {
+			try {
+				var json = jQuery.parseJSON(response.responseBody);
+				var messaggio = json.messaggio;
+				var icona = json.icona;
+				var tipo = json.tipo;
+				var li = document.createElement("li");
+				var a = document.createElement("a");
+				var i = document.createElement("i");
+				var div = document.createElement("div");
+				var divisore = document.createElement("li");
+				divisore.setAttribute('class',"messaggioElemento divider");
+				i.setAttribute('class',"fa "+icona+" fa-fw");
+				var span = document.createElement("span");
+				span.setAttribute('class',"pull-right text-muted small");
+				span.appendChild(document.createTextNode(moment().calendar()));
+				var testo = document.createTextNode(" "+messaggio);
+				div.appendChild(i);
+				div.appendChild(testo);
+				div.appendChild(span);
+				a.appendChild(div);
+				li.appendChild(a);
+				li.setAttribute('class',"messaggioElemento");
+	
+				var listaMessaggiSistemaMes = document.getElementById("messaggisistema");
+				listaMessaggiSistemaMes.appendChild(divisore);
+				listaMessaggiSistemaMes.appendChild(li);
+	
+				var contatoreMes = document.getElementById("contatoremessaggi");
+				var attualeMes = contatoreMes.textContent;
+				contatoreMes.textContent = +attualeMes+1;
+		} catch (errore) {
+			console.log("Errore in JSON messaggi: "+errore);
+			}
+		try {
+				console.log("Aggiorno per messaggio coda...")
+				$(".aggiorna-su-messaggio").scope().aggiornaDaMessaggio()
+			} catch (problema) {
+				console.log("Errore aggiornamento Controller: "+problema);
+				}
+		};
+
+		});
+
 	</script>
 	<span id="scrollToTop" class="well well-sm scrollToTop"
 		style="bottom: 2em; left: 1em; position: fixed; display: none; z-index: 999; background-color: rgba(0, 0, 0, 0.0); border: 0; box-shadow: unset;">

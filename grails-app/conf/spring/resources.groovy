@@ -8,6 +8,8 @@ beans = {
 	userEntityManagerFactory(org.ar4k.SpringSecurityUserManagerFactoryActiviti)
 
 	groupEntityManagerFactory(org.ar4k.SpringSecurityGroupManagerFactoryActiviti)
+	
+	activitiEventListenerAr4k(org.ar4k.ActivitiEventListenerAr4k)
 
 	processEngineConfiguration(org.activiti.spring.SpringProcessEngineConfiguration) {
 		databaseSchemaUpdate = org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP
@@ -23,6 +25,7 @@ beans = {
 		history = grailsApplication.config.activiti.history // "none", "activity", "audit" or "full"
 		transactionManager = ref('transactionManager')
 		customSessionFactories = [ref('userEntityManagerFactory'),ref('groupEntityManagerFactory')]
+		eventListeners = ref('activitiEventListenerAr4k')
 	}
 
 	processEngine(org.activiti.spring.ProcessEngineFactoryBean) { processEngineConfiguration = ref('processEngineConfiguration') }

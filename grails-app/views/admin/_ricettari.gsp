@@ -1,3 +1,4 @@
+
 <div aria-hidden="false" aria-labelledby="Ricettario" role="dialog"
 	tabindex="-1" id="ricettarioModal" class="modal fade in"
 	ng-show="pannello" style="display: block; padding-right: 13px;">
@@ -52,7 +53,7 @@
 
 
 
-<div class="row">
+<div class="row aggiorna-su-messaggio">
 	<div style="margin-top: 5px;">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -64,7 +65,7 @@
 							ng-click="focusDocumentazione=!focusDocumentazione"
 							tooltip-placement="bottom"
 							tooltip="visualizza la documentazione sui ricettari e i repository git.">
-							<i class="fa fa-comment"></i>
+							<i class="fa fa-question"></i>
 						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
@@ -125,8 +126,9 @@
 										<button class="btn btn-success btn-primary" ng-hide="nuovo"
 											type="button" ng-click="nuovo=true"
 											tooltip-placement="bottom"
-											tooltip="collega un abbonamento Rossonet Ar4k.">AGGIUNGI
-											CODICE AR4K</button>
+											tooltip="collega un abbonamento Rossonet Ar4k.">
+											<i class="fa fa-shopping-cart"></i> CODICE AR4K
+										</button>
 									</div>
 									<div class="col-lg-2 text-center"></div>
 									<div class="col-lg-5 text-right">
@@ -157,10 +159,13 @@
 												tooltip="aggiorna il repository git del ricettario e ricarica i semi.">
 												<i class="fa fa-refresh"></i>
 											</button>
-											<button style="margin: 0.1em;"
+											<button
+												ng-hide="ricettario.repositoryGit.nomeCartella=='ar4k_open'"
+												style="margin: 0.1em;"
 												class="btn btn-circle btn-danger btn-xs" type="button"
-												ng-click="$parent.cancella(dato)" tooltip-placement="bottom"
-												tooltip="elimina il ricettario. Tutti i memi collegati saranno eliminati!">
+												tooltip-placement="bottom"
+												ng-click="$parent.cancella(ricettario.idRicettario)"
+												tooltip="elimina il ricettario. Tutti i semi collegati saranno eliminati! il ricettario non sarà eliminato dai vasi per permettere ai memi il funzionamento.">
 												<i class="fa fa-trash-o"></i>
 											</button>
 										</td>

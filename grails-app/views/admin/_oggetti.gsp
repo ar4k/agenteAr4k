@@ -10,7 +10,7 @@
 							ng-click="focusDocumentazione=!focusDocumentazione"
 							tooltip-placement="bottom"
 							tooltip="visualizza la documentazione sui vasi.">
-							<i class="fa fa-comment"></i>
+							<i class="fa fa-question"></i>
 						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
@@ -113,14 +113,14 @@
 												ng-click="$parent.dettagli(meme.idMeme)"
 												tooltip-placement="bottom"
 												tooltip="accesso SSH al vaso.">
-												<i class="fa fa-slack"></i>
+												<i class="fa fa-terminal"></i>
 											</button>
 											<button style="margin: 0.1em;"
 												class="btn btn-circle btn-warning btn-xs" type="button"
 												ng-click="$parent.dettagli(meme.idMeme)"
 												tooltip-placement="bottom"
 												tooltip="resetta l'interfaccia attuale e inizia il bootstrap sul nodo.">
-												<i class="fa fa-trophy"></i>
+												<i class="fa fa-bolt"></i>
 											</button>
 											<button style="margin: 0.1em;"
 												class="btn btn-circle btn-danger btn-xs" type="button"

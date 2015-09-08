@@ -35,7 +35,7 @@
 	<!-- /.modal-dialog -->
 </div>
 
-<div class="row">
+<div class="row aggiorna-su-messaggio">
 	<div style="margin-top: 5px;">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -48,7 +48,7 @@
 							ng-click="focusDocumentazione=!focusDocumentazione"
 							tooltip-placement="bottom"
 							tooltip="visualizza la documentazione sulle reti.">
-							<i class="fa fa-comment"></i>
+							<i class="fa fa-question"></i>
 						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">

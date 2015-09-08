@@ -13,7 +13,7 @@ angular.module('sbAdminApp')
     
     $http.get("${createLink(controller:'documentazione',action:'rete.md',absolute:'true')}")
     .success(function (response) {$scope.retiHelp = response;});  
-    
+        
     $scope.focusDocumentazione=false;
     
     $scope.nuovo=false;
@@ -38,5 +38,10 @@ angular.module('sbAdminApp')
     			// called asynchronously if an error occurs
     			// or server returns response with an error status.
   			});
+  	};
+  	
+  	$scope.aggiornaDaMessaggio = function() {
+    	    $http.get("${createLink(controller:'admin',action:'listaDataCenters',absolute:'true')}")
+    		.success(function (response) {$scope.datacenters = response.datacenters});
   	};
   });

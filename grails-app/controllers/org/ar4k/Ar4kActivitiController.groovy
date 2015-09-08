@@ -38,6 +38,16 @@ class Ar4kActivitiController {
 		String formStream = formService.getRenderedStartForm(idProcesso)
 		render formStream
 	}
+	
+	/**
+	 * Restituisce la maschera dello stato attuale di un meme
+	 * @return maschera meme
+	 */
+	
+	def mascheraMeme(String idMeme) {
+		log.info "Richiesta maschera per meme "+idMeme
+		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.maschera()
+	}
 
 	/** ritorna l'elenco di parametri necessari nella maschera di avvio */
 	def variabiliAvvioProcesso(String idProcesso) {

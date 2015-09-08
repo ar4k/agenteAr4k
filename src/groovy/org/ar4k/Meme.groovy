@@ -16,6 +16,8 @@
 package org.ar4k
 
 import org.activiti.engine.ProcessEngine;
+import grails.converters.JSON
+import grails.util.Holders
 
 import groovy.transform.AutoClone
 
@@ -57,6 +59,11 @@ class Meme {
 			if ( vasoMaster.caricaProcesso(processEngine,processo.riferimento,processo.etichetta,idMeme) == false ) {
 				ritorno = false
 			}
+		}
+		try {
+			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'CARICORISORSEACTIVITI',messaggio:'Caricati i processi con risultato: '+ritorno.toString()])
+		} catch (Exception ee){
+			log.info "Evento da vaso non comunicato: "+ee.toString()
 		}
 		return ritorno
 	}

@@ -22,8 +22,25 @@ angular.module('sbAdminApp')
     
     $scope.titolo = 'ricettario';
     
+    $scope.aggiornaDaMessaggio = function() {
+    		 $http.post("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
+   			 .success(function (response) {$scope.ricettari = response.ricettari;});
+  	};
+    
     $scope.aggiorna = function(idricettario) {
     	$http.post("${createLink(controller:'admin',action:'aggiornaRicettario',absolute:'true')}", {idricettario:idricettario})
+        .success(function(response) {
+    		    $http.post("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
+    			.success(function (response) {$scope.ricettari = response.ricettari;});
+  		})
+  		.error(function(data, status, headers, config) {
+    		// called asynchronously if an error occurs
+    		// or server returns response with an error status.
+  		});
+      };
+      
+    $scope.cancella = function(idricettario) {
+    	$http.post("${createLink(controller:'admin',action:'eliminaRicettario',absolute:'true')}", {idricettario:idricettario})
         .success(function(response) {
     		    $http.post("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
     			.success(function (response) {$scope.ricettari = response.ricettari;});

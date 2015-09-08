@@ -1576,7 +1576,7 @@
                             var str = message.substring(0, messageStart);
                             var messageLength = parseInt(str, 10);
                             if (isNaN(messageLength))
-                                throw 'message length "' + str + '" is not a number';
+                                console.log('message length "' + str + '" is not a number');
                             messageStart += request.messageDelimiter.length;
                             if (messageStart + messageLength > message.length) {
                                 // message not complete, so there is no trailing messageDelimiter

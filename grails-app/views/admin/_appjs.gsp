@@ -86,7 +86,7 @@ angular
               files:[
               'admin/app/scripts/controllers/main.js',
               'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
+              'admin/messaggiSistemaCtrl',
               'admin/app/scripts/directives/chat/chat.js',
               'admin/app/scripts/directives/dashboard/stats/stats.js'
               ]
@@ -103,11 +103,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/apiAr4kCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/apiAr4kCtrl'
               ]
             })
           }
@@ -122,11 +118,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/rossonetCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/rossonetCtrl'
               ]
             })
           }
@@ -141,11 +133,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/oggettiCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/oggettiCtrl'
               ]
             })
           }
@@ -160,11 +148,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/utentiCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/utentiCtrl'
               ]
             })
           }
@@ -180,10 +164,7 @@ angular
               name:'sbAdminApp',
               files:[
               'admin/dashrossonetCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/app/scripts/directives/timeline/timeline.js'
               ]
             })
           }
@@ -198,11 +179,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/memiCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/memiCtrl'
               ]
             })
           }
@@ -217,11 +194,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/memoriaCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/memoriaCtrl'
               ]
             })
           }
@@ -236,11 +209,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/ricettariCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/ricettariCtrl'
               ]
             })
           }
@@ -255,11 +224,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/retiCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/retiCtrl'
               ]
             })
           }
@@ -274,11 +239,7 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'admin/processiCtrl',
-              'admin/app/scripts/directives/timeline/timeline.js',
-              'admin/app/scripts/directives/notifications/notifications.js',
-              'admin/app/scripts/directives/chat/chat.js',
-              'admin/app/scripts/directives/dashboard/stats/stats.js'
+              'admin/processiCtrl'
               ]
             })
           }

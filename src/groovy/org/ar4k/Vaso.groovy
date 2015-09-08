@@ -30,6 +30,7 @@ import grails.converters.JSON
 import groovy.json.JsonSlurper
 
 import java.util.zip.ZipInputStream
+import grails.util.Holders
 
 class Vaso {
 	/** id univoco vaso */
@@ -63,6 +64,8 @@ class Vaso {
 	/** porta tunnel ActiveMQ */
 	int portaActiveMQ = 61616
 
+	InterfacciaContestoService interfacciaContestoService
+
 	/** esporta il vaso */
 	def esporta() {
 		return [
@@ -87,10 +90,12 @@ class Vaso {
 	/** verifica la raggiungibilità di internet dal vaso */
 	Boolean verificaConnettivita() {
 		log.info("Verifico se "+etichetta+" raggiunge l'esterno.")
+		InterfacciaContestoService.codaMessaggi("Verifico se "+etichetta+" raggiunge l'esterno.")
 		String comando = 'wget hc.rossonet.name -O - 2>/dev/null | grep hera | wc -l'
 		String atteso = '1\n'
 		String risultato = esegui(comando)
 		log.info("risultato "+comando+" = "+risultato+" (atteso: "+atteso+')')
+		interfacciaContestoService.codaMessaggi("risultato "+comando+" = "+risultato+" (atteso: "+atteso+')')
 		return risultato == atteso?true:false
 	}
 
@@ -102,6 +107,11 @@ class Vaso {
 		String comandoControllo="cat ~/.ar4k/contesti/"+contesto.idContesto+".xml"
 		esegui(comandoEsecuzione)
 		String risultato=esegui(comandoControllo)
+		try {
+			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'CONTESTOSALVATO',messaggio:risultato.toString()])
+		} catch (Exception ee){
+			log.info "Evento da vaso non comunicato: "+ee.toString()
+		}
 		return risultato == file+"\n"?true:false
 	}
 
@@ -224,13 +234,21 @@ class Vaso {
 	Boolean avviaConsul(JSch connessione) {
 		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate </dev/null &>/dev/null &'
 		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
+		String comandoEventiNodi = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 watch -type nodes ~/.ar4k/ricettari/ar4k_open/bin/eventoConsul.sh "nodi aggiornati"</dev/null &>/dev/null &'
+		String comandoEventiService = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 watch -type services ~/.ar4k/ricettari/ar4k_open/bin/eventoConsul.sh "servizi aggiornati"</dev/null &>/dev/null &'
+		String comandoEventiChecks = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 watch -type checks ~/.ar4k/ricettari/ar4k_open/bin/eventoConsul.sh "checks aggiornati"</dev/null &>/dev/null &'
 		if ( esegui(verifica) != '1\n') {
+			esegui('killall consul_i386')
 			esegui(comando)
+			esegui('sleep 6')
+			esegui(comandoEventiNodi)
+			esegui(comandoEventiService)
+			esegui(comandoEventiChecks)
 		}
 		addLTunnel(connessione,portaConsul,'127.0.0.1',8500)
 		return esegui(verifica) == '1\n'?true:false
 	}
-	
+
 	/** Avvia broker ActiveMQ sul nodo Master, configura una sessione ssh permanente per connettere l'Apache Camel integrato nell'Interfaccia  */
 	Boolean avviaActiveMQ(JSch connessione) {
 		String comando = '~/.ar4k/ricettari/ar4k_open/apache-activemq-5.12.0/bin/activemq start'
@@ -287,6 +305,11 @@ class Vaso {
 		Boolean esito = (risultato == atteso?true:false)
 		if (esito) ricettario.aggiornato = new Date()
 		if (esito) log.info("Esito aggiornamento ricettario "+ricettario+" su "+etichetta+": (ok)")
+		try {
+			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'SCARICORICETTARIO',messaggio:ricettario.esporta().toString()])
+		} catch (Exception ee){
+			log.info "Evento da vaso non comunicato: "+ee.toString()
+		}
 		return esito
 	}
 
@@ -329,6 +352,11 @@ class Vaso {
 
 			}
 			log.info("Nel ricettario "+ricettario+" sono presenti "+ricettario.semi.size()+" semi")
+			try {
+				Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'CARICASEMI',messaggio:"Numero semi: "+ricettario.semi.size().toString()])
+			} catch (Exception ee){
+				log.info "Evento da vaso non comunicato: "+ee.toString()
+			}
 			return true
 		} else {
 			return false

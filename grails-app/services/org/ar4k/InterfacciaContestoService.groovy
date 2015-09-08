@@ -19,10 +19,13 @@ package org.ar4k
 
 import java.util.zip.ZipInputStream
 
+import grails.converters.JSON
+import grails.util.Holders
 import org.activiti.engine.ProcessEngine
 import org.activiti.engine.ProcessEngineConfiguration
 import org.activiti.engine.RepositoryService
 import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.grails.plugins.atmosphere_meteor.AtmosphereMeteor
 import org.jclouds.Context
 import org.jclouds.ContextBuilder
 import org.jclouds.compute.*
@@ -35,6 +38,8 @@ import com.ecwid.consul.v1.ConsulClient
 import com.jcraft.jsch.JSch;
 import com.ecwid.consul.v1.agent.model.NewService
 import org.pentaho.di.core.KettleEnvironment
+import org.atmosphere.cpr.Broadcaster
+import org.atmosphere.cpr.DefaultBroadcaster
 
 class InterfacciaContestoService {
 
@@ -61,12 +66,16 @@ class InterfacciaContestoService {
 	/** lista repositories Kettle operativi */
 	List<Repository> kettleRepositories = []
 
+	// bean atmosphereMeteor
+	def atmosphereMeteor //= Holders.applicationContext.getBean("atmosphereMeteor")
+
 	/** connette il demone Consul al nodo ssh master alle API JAVA **/
 	void connettiConsul() {
 		try {
 			stato.consulBind = new ConsulClient('http://127.0.0.1',8501)
 			String risposta = stato.consulBind.getCatalogDatacenters()
 			log.info("Datacenter disponibili: "+risposta)
+			codaMessaggiInfo("Datacenter disponibili: "+risposta)
 			NewService nodoMaster = new NewService()
 			nodoMaster.setId("consulAPI")
 			nodoMaster.setName("consulAPI")
@@ -76,6 +85,7 @@ class InterfacciaContestoService {
 			stato.consulBind.agentServiceRegister(nodoMaster)
 		} catch (Exception ee) {
 			log.warn("Errore avvio Consul: "+ee.printStackTrace())
+			codaMessaggiInfo("Errore avvio Consul: "+ee.printStackTrace())
 		}
 	}
 
@@ -160,25 +170,78 @@ class InterfacciaContestoService {
 	void testStampaMemoria(String messaggio) {
 		log.info "Memoria libera: "+messaggio
 	}
+
+	/** Invia a coda messaggi */
+	void codaMessaggi(String messaggio,String icona) {
+		log.info "Messaggio sistema: "+messaggio
+		try {
+			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
+			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
+			broadcaster.broadcast([messaggio:messaggio,icona:icona,tipo:'codaMessaggi'] as JSON)
+		} catch (Exception ee) {
+			log.info "Problemi con websocket: "+ee.toString()
+		}
+	}
 	
+	/** Invia a coda messaggi con icona default */
+	void codaMessaggiInfo(String messaggio) {
+		codaMessaggi(messaggio,'fa-info')
+	}
+
 	/** Gestisce gli eventi consul */
 	void eventiConsul(String messaggio) {
 		log.info "Evento Consul: "+messaggio
+		try {
+			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
+			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
+			broadcaster.broadcast([messaggio:messaggio,icona:'fa-stethoscope',tipo:'codaConsul'] as JSON)
+			//Broadcaster broadcasterConsul = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventoconsul')
+			//broadcasterConsul.broadcast([messaggio:messaggio] as JSON)
+		} catch (Exception ee) {
+			log.info "Problemi con websocket: "+ee.toString()
+		}
 	}
-	
-	/** Gestisce la visualizzazione dei messaggi  */
-	void leggiMessaggio(Utente utente,String messaggio) {
-		log.info "Messaggio per l'utente "+utente.username+": "+messaggio
+
+	/** Gestisce gli eventi interfaccia */
+	void eventiInterfaccia(String messaggio) {
+		log.info "Evento Interfaccia: "+messaggio
+		try {
+			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
+			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
+			broadcaster.broadcast([messaggio:messaggio,icona:'fa-bullseye',tipo:'codaInterfaccia'] as JSON)
+			//Broadcaster broadcasterConsul = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventoconsul')
+			//broadcasterConsul.broadcast([messaggio:messaggio] as JSON)
+		} catch (Exception ee) {
+			log.info "Problemi con websocket: "+ee.toString()
+		}
 	}
 	
 	/** Gestisce gli eventi di activiti  */
 	void eventiActiviti(String messaggio) {
 		log.info "Evento Activiti: "+messaggio
+		try {
+			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
+			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
+			broadcaster.broadcast([messaggio:messaggio,icona:'fa-rocket',tipo:'codaActiviti'] as JSON)
+			//Broadcaster broadcasterActiviti = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventoactiviti')
+			//broadcasterActiviti.broadcast([messaggio:messaggio] as JSON)
+		} catch (Exception ee) {
+			log.info "Problemi con websocket: "+ee.toString()
+		}
 	}
-	
+
 	/** Gestisce gli eventi di Jcloud  */
 	void eventiJCloud(String messaggio) {
 		log.info "Evento JCloud: "+messaggio
+		try {
+			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
+			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
+			broadcaster.broadcast([messaggio:messaggio,icona:'fa-soundcloud',tipo:'codaJCloud'] as JSON)
+			//Broadcaster broadcasterJCloud = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventojcloud')
+			//broadcasterJCloud.broadcast([messaggio:messaggio] as JSON)
+		} catch (Exception ee) {
+			log.info "Problemi con websocket: "+ee.toString()
+		}
 	}
 
 	/** esegue le procedura ogni 5 min. tramite Quartz */

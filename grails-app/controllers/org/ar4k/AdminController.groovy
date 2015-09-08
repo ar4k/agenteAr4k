@@ -165,6 +165,14 @@ class AdminController {
 		render(template: "dashRossonetCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
 	}
 
+	def messaggiSistema() {
+		render(template: "messaggiSistema",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	}
+
+	def messaggiSistemaCtrl() {
+		render(template: "messaggiSistemaCtrl",model:[grafica: interfacciaContestoService.interfaccia.grafica])
+	}
+
 	/**
 	 * 
 	 * @return Vasi e oggetti collegati in JSON
@@ -261,9 +269,42 @@ class AdminController {
 	def listaStore() {
 		def risultato = []
 		def risultatoBin = []
-		interfacciaContestoService.stato.consulBind.getKVValues('').getValue().each{ risultato.add(it) }
+		interfacciaContestoService.stato.consulBind.getKVValues('').getValue().each{ risultato.add([key:it.key,createIndex:it.createIndex,modifyIndex:it.modifyIndex,value:new String(it.value.decodeBase64())]) }
 		def incapsulato = [storedati:risultato]
 		render incapsulato as JSON
+	}
+
+	/**
+	 * 
+	 * Salva un valore in consul
+	 */
+	def salvaValoreKV() {
+		String chiave = request.JSON.chiave
+		String valore = request.JSON.valore
+		interfacciaContestoService.stato.consulBind.setKVValue(chiave, valore)
+		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVAGGIUNTO',chiave:chiave,valore:valore])
+		render "ok"
+	}
+	
+	/**
+	 *
+	 * Salva un valore in consul
+	 */
+	def cancellaValoreKV() {
+		String chiave = request.JSON.chiave
+		interfacciaContestoService.stato.consulBind.deleteKVValue(chiave)
+		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVRIMOSSO',chiave:chiave])
+		render "ok"
+	}
+
+	/**
+	 *
+	 * Salva il contesto in consul KV
+	 */
+	def salvaContestoinKV() {
+		interfacciaContestoService.stato.consulBind.setKVValue("contesto_"+new Date().getTime().toString(), interfacciaContestoService.contesto.esporta().toString())
+		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVSALVATAGGIOCONTESTO',contesto:interfacciaContestoService.contesto.descrizione])
+		render "ok"
 	}
 
 	/**
@@ -273,6 +314,7 @@ class AdminController {
 	def aggiungiVaso() {
 		def vaso = request.JSON.vaso
 		log.info("Richiesta aggiunta vaso: "+vaso)
+		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'VASOAGGIUNTO',messaggio:request.JSON.vaso.toString()])
 		Vaso vasoAggiunto= new Vaso(
 				etichetta:vaso.etichetta,
 				descrizione:vaso.descrizione,
@@ -297,6 +339,7 @@ class AdminController {
 	def aggiungiRicettario() {
 		def ricettario = request.JSON.ricettario
 		log.info("Richiesta aggiunta ricettario: "+ricettario)
+		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'RICETTARIOAGGIUNTO',messaggio:request.JSON.ricettario.toString()])
 		RepositoryGit repositoryGit = new RepositoryGit(indirizzo:ricettario.repo,nomeCartella:ricettario.cartella)
 		if (
 		interfacciaContestoService.contesto.ricettari.add(
@@ -305,6 +348,21 @@ class AdminController {
 		) {
 			render "ok"
 		} else {
+			render "errore"
+		}
+	}
+
+	/**
+	 * Cancella la definizione di un ricettario
+	 */
+	def eliminaRicettario() {
+		String idRicettario = request.JSON.idricettario
+		interfacciaContestoService.contesto.ricettari.removeAll{it.idRicettario == idRicettario}
+		try {
+			sendMessage("activemq:topic:interfaccia.eventi",[tipo:'RICETTARIOELIMINATO',messaggio:idRicettario.toString()])
+			render "ok"
+		} catch (Exception ee){
+			log.info "Evento da AdminController non comunicato: "+ee.toString()
 			render "errore"
 		}
 	}
@@ -369,12 +427,10 @@ class AdminController {
 			render 'none'
 		}
 	}
-	
+
 	def listaBlobStoreJCloud() {
 		def incapsulato
-		interfacciaContestoService.jCloudServer.each{
-			incapsulato.add(it)
-		}
+		interfacciaContestoService.jCloudServer.each{ incapsulato.add(it) }
 		render incapsulato as JSON
 	}
 

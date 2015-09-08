@@ -38,8 +38,25 @@
 	</div>
 </div>
 
+<div aria-hidden="false" aria-labelledby="Meme" role="dialog"
+	tabindex="-1" id="azioneMemeModal" class="modal fade in"
+	ng-show="azioneMemePlay"
+	style="display: block; left: 9em; right: 9em; bottom: 1em; top: 1em; border-radius: 6px; background-color: rgba(255, 255, 255, .9);">
+	<div
+		style="position: absolute; z-index: 1; padding: .4em; padding-right: 2em; top: 0px;"
+		class="col-lg-12 col-md-12 col-sm-12 text-right"
+		ng-show="azioneMemePlay">
+		<button data-dismiss="modal" ng-click="azioneMemePlay=false"
+			class="btn btn-warning btm-sm" type="button">Chiudi</button>
+	</div>
+	<div class="embed-responsive embed-responsive-16by9">
+		<iframe class="embed-responsive-item" ng-src="{{azioneMemeFocus}}"
+			style="bottom: 10px"></iframe>
+	</div>
+</div>
 
-<div class="row">
+
+<div class="row aggiorna-su-messaggio" >
 	<div style="margin-top: 5px;">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -51,7 +68,7 @@
 							ng-click="focusDocumentazione=!focusDocumentazione"
 							tooltip-placement="bottom"
 							tooltip="visualizza la documentazione sui memi.">
-							<i class="fa fa-comment"></i>
+							<i class="fa fa-question"></i>
 						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
@@ -94,7 +111,8 @@
 									</div>
 									<tr ng-repeat="meme in memi" ng-class-odd="'dispari'"
 										ng-class-even="'pari'">
-										<td><i class="fa {{meme.meme.icona}}"></i> {{meme.meme.etichetta}}</td>
+										<td><i class="fa {{meme.meme.icona}}"></i>
+											{{meme.meme.etichetta}}</td>
 										<td>{{meme.meme.descrizione }}</td>
 										<td><div ng-repeat="processo in meme.processi">
 												<div>
@@ -128,20 +146,21 @@
 										<td><div ng-repeat="dipendenza in meme.meme.dipendenze">{{dipendenza}}</div></td>
 										<td class="text-right">
 											<button style="margin: 0.1em;" class="btn btn-circle btn-xs"
-												type="button" ng-click="$parent.dettagli(meme.idMeme)"
+												type="button"
+												ng-click="$parent.azioneMeme(meme.meme.idMeme)"
 												tooltip-placement="top" tooltip="{{meme.calcolati.tooltip}}">
 												<i class="fa {{meme.calcolati.iconaStato}}"></i>
 											</button>
 											<button style="margin: 0.1em;"
 												class="btn btn-circle btn-info btn-xs" type="button"
-												ng-click="$parent.dettagli(meme.idMeme)"
+												ng-click="$parent.azioneMeme(meme.meme.idMeme)"
 												tooltip-placement="top"
 												tooltip="gestisci i link e i qr per questo meme.">
 												<i class="fa fa-qrcode"></i>
 											</button>
 											<button style="margin: 0.1em;"
 												class="btn btn-circle btn-danger btn-xs" type="button"
-												ng-click="$parent.dettagli(meme.idMeme)"
+												ng-click="$parent.azioneMeme(meme.idMeme)"
 												tooltip-placement="bottom"
 												tooltip="elimina questo meme, i processi e le istanze collegate ad esso.">
 												<i class="fa fa-trash-o"></i>
@@ -157,3 +176,4 @@
 		</div>
 	</div>
 </div>
+

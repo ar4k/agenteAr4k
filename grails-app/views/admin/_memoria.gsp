@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row aggiorna-su-messaggio">
 	<div style="margin-top: 5px;">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -10,7 +10,7 @@
 							ng-click="focusDocumentazione=!focusDocumentazione"
 							tooltip-placement="bottom"
 							tooltip="visualizza la documentazione sui dati memorizzati in Consul.">
-							<i class="fa fa-comment"></i>
+							<i class="fa fa-question"></i>
 						</button>
 					</h3>
 					<p class="text-justify" style="text-align: justify;">
@@ -24,16 +24,19 @@
 						<div class="panel-body">
 							<form class="ng-pristine ng-valid" role="form">
 								<div class="form-group">
-									<input placeholder="Etichetta" ng-model="ricettario.etichetta"
-										class="form-control">
+									<input placeholder="Etichetta" ng-model="chiave"
+										class="form-control" value"{{chiave}}">
 								</div>
 								<div class="form-group">
-									<input placeholder="Valore" ng-model="ricettario.descrizione"
-										class="form-control">
+									<textarea
+										class="form-control ng-pristine ng-untouched ng-valid"
+										ng-model="valore"
+										placeholder="Valore per la chiave"
+										style="width: 985px; height: 151px;">{{valore}}</textarea>
 								</div>
 								<div class="form-group text-right">
 									<input type="submit" class="btn btn-default"
-										ng-click="nuovorivalore(ricettario);nuovo=false" value="Salva" />
+										ng-click="salva(chiave,valore);nuovo=false" value="Salva" />
 									<input type="button" class="btn btn-default"
 										ng-click="nuovo=false;reset()" value="Annulla" />
 								</div>
@@ -46,10 +49,10 @@
 								<thead>
 									<tr>
 										<th>Chiave</th>
-										<th>Valore</th>
 										<th>Creato idx</th>
 										<th>Modifica idx</th>
 										<th class="text-right">Azioni</th>
+										<th>Valore</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -61,7 +64,7 @@
 											VALORE</button>
 										<button style="margin: 0.1em;"
 											class="btn btn-circle btn-success btn-xs" type="button"
-											ng-click="" tooltip-placement="bottom"
+											ng-click="salvaContestoinKV()" tooltip-placement="bottom"
 											tooltip="salva contesto come KV Consul.">
 											<i class="fa fa-save"></i>
 										</button>
@@ -73,35 +76,45 @@
 									<tr ng-repeat="dato in storedati" ng-class-odd="'dispari'"
 										ng-class-even="'pari'">
 										<td>{{dato.key}}</td>
-										<td>{{dato.value}}</td>
 										<td>{{dato.createIndex}}</td>
 										<td>{{dato.modifyIndex}}</td>
 										<td class="text-right">
 											<button style="margin: 0.1em;"
 												class="btn btn-circle btn-warning btn-xs" type="button"
-												ng-click="$parent.cancella(dato)" tooltip-placement="top"
+												ng-show="dato.key.substr(0,9) == 'contesto_'"
+												ng-click="$parent.bootstrap(dato.key)"
+												tooltip-placement="top"
+												tooltip="resetta l'interfaccia ed esegui il bootstrap di questo contesto.">
+												<i class="fa fa-bolt"></i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-info btn-xs" type="button"
+												ng-click="$parent.modifica(dato.key,dato.value)"
+												tooltip-placement="top"
 												tooltip="modifica il valore per questa chiave.">
 												<i class="fa fa-edit"></i>
 											</button>
 											<button style="margin: 0.1em;"
 												class="btn btn-circle btn-danger btn-xs" type="button"
-												ng-click="$parent.cancella(dato)" tooltip-placement="top"
-												tooltip="elimina questa chiave.">
+												ng-click="$parent.cancella(dato.key)"
+												tooltip-placement="top" tooltip="elimina questa chiave.">
 												<i class="fa fa-trash-o"></i>
 											</button>
 										</td>
+										<td>{{dato.value}}</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<div class="panel panel-green">
-						<div class="panel-heading text-center">Storage Dati Remoti - Servizi Cloud -</div>
-						<div class="panel-body">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare
-								lacus adipiscing, posuere lectus et, fringilla augue.</p>
+							<div class="panel-heading text-center">Storage Dati Remoti
+								- Servizi Cloud -</div>
+							<div class="panel-body">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									Vestibulum tincidunt est vitae ultrices accumsan. Aliquam
+									ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>

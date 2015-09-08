@@ -38,13 +38,13 @@ class SpringSecurityOAuthController {
 		// Validate the 'provider' URL. Any errors here are either misconfiguration
 		// or web crawlers (or malicious users).
 		if (!params.provider) {
-			renderError 400, "The Spring Security OAuth callback URL must include the 'provider' URL parameter."
+			renderError 400, "The Spring Security OAuth callback URL deve essere inclusa nella configurazione 'provider'"
 			return
 		}
 
 		def sessionKey = oauthService.findSessionKeyForAccessToken(params.provider)
 		if (!session[sessionKey]) {
-			renderError 500, "No OAuth token in the session for provider '${params.provider}'!"
+			renderError 500, "Nessun OAuth token nella sessione del provider '${params.provider}'!"
 			return
 		}
 
@@ -61,8 +61,8 @@ class SpringSecurityOAuthController {
 
 			def redirectUrl = SpringSecurityUtils.securityConfig.oauth.registration.askToLinkOrCreateAccountUri
 			assert redirectUrl, "grails.plugin.springsecurity.oauth.registration.askToLinkOrCreateAccountUri" +
-			" configuration option must be set!"
-			log.debug "Redirecting to askToLinkOrCreateAccountUri: ${redirectUrl}"
+			" la configurazione deve essere impostata!"
+			log.debug "Redirecting a askToLinkOrCreateAccountUri: ${redirectUrl}"
 			redirect(redirectUrl instanceof Map ? redirectUrl : [uri: redirectUrl])
 		}
 	}
@@ -73,7 +73,7 @@ class SpringSecurityOAuthController {
 		if (springSecurityService.loggedIn) {
 			def currentUser = springSecurityService.currentUser
 			OAuthToken oAuthToken = session[SPRING_SECURITY_OAUTH_TOKEN]
-			assert oAuthToken, "There is no auth token in the session!"
+			assert oAuthToken, "Non c'è un auth token nella sessione!"
 			currentUser.addToOAuthIDs(provider: oAuthToken.providerName, accessToken: oAuthToken.socialId, user: currentUser)
 			if (currentUser.validate() && currentUser.save()) {
 				oAuthToken = updateOAuthToken(oAuthToken, currentUser)
@@ -89,7 +89,7 @@ class SpringSecurityOAuthController {
 	 */
 	def linkAccount = { OAuthLinkAccountCommand command ->
 		OAuthToken oAuthToken = session[SPRING_SECURITY_OAUTH_TOKEN]
-		assert oAuthToken, "There is no auth token in the session!"
+		assert oAuthToken, "Non c'è un auth token nella sessione!"
 		log.error "ATTENZIONE: manca il controllo delle password in org.rossonet.secure.SpringSecurityOAuthController"
 		if (request.post) {
 			boolean linked = command.validate() && Utente.withTransaction { status ->
@@ -124,7 +124,7 @@ class SpringSecurityOAuthController {
 
 	def createAccount = { OAuthCreateAccountCommand command ->
 		OAuthToken oAuthToken = session[SPRING_SECURITY_OAUTH_TOKEN]
-		assert oAuthToken, "There is no auth token in the session!"
+		assert oAuthToken, "Non c'è un auth token nella sessione!"
 
 		if (request.post) {
 			if (!springSecurityService.loggedIn) {

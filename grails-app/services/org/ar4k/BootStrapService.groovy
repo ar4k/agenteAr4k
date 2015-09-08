@@ -146,8 +146,6 @@ class BootStrapService {
 		Boolean risultato = false
 		log.info("caricaVasoMaster() su "+vasoMaster)
 		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
-		if (risultato) risultato = vasoMaster.avviaConsul(interfacciaContestoService.connessioneConsul)
-		if (risultato) risultato = vasoMaster.avviaActiveMQ(interfacciaContestoService.connessioneActiveMQ)
 		if (risultato) {
 			log.info("caricaVasoMaster() su "+vasoMaster+" (ok)")
 			vasoConnesso = true
@@ -229,6 +227,8 @@ class BootStrapService {
 			if (interfacciaTarget) {
 				interfaccia = interfacciaTarget
 				if(interfaccia.avviaInterfaccia()) {
+					vasoMaster.avviaConsul(interfacciaContestoService.connessioneConsul)
+					vasoMaster.avviaActiveMQ(interfacciaContestoService.connessioneActiveMQ)
 					interfacciaScelta = true
 					inAvvio = false
 					ritorno = true

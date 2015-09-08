@@ -47,10 +47,13 @@ class Contesto {
 	/** vasi disponibili nel contesto */
 	List<Vaso> vasi =[]
 	/** lista provider Cloud - da verificare - */
-	List<cloudProvider> cloudProviders= []
+	List<CloudProvider> cloudProviders= []
+	/** short link e qr */
+	List<Puntatore> puntatori = []
 	
 	/** vaso principale del contesto con demone Consul */
 	Vaso vasoMaster
+	
 
 	/** ditruttore di classe (utile per la gestione della pulizia dei vasi)*/
 	def destroy() {
@@ -78,6 +81,8 @@ class Contesto {
 			if (!meme.verificaAvvia()) risultato = false
 		}
 		log.info("Importa "+utentiRuoli.size()+" utenti/ruoli")
+		
+		
 		for (UtenteRuolo utenteRuolo in utentiRuoli) {
 			utenteRuolo.utente.save(flush:true)
 			utenteRuolo.ruolo.save(flush:true)
@@ -115,7 +120,8 @@ class Contesto {
 			vasoMaster:vasoMaster.esporta(),
 			ricettari:ricettari*.esporta(),
 			clonaOvunque:clonaOvunque,
-			cloudProviders:cloudProviders*.esporta()
+			cloudProviders:cloudProviders*.esporta(),
+			puntatori:puntatori*.esporta()
 		]
 	}
 
@@ -124,7 +130,7 @@ class Contesto {
 	}
 }
 
-class cloudProvider {
+class CloudProvider {
 	/** id univoco metodo */
 	String idCloudProvider = UUID.randomUUID()
 	String etichetta = 'nessuna etichetta'
@@ -144,6 +150,35 @@ class cloudProvider {
 			tipoCloud:tipoCloud,
 			utenza:utenza,
 			chiaveAccesso:chiaveAccesso
+		]
+	}
+}
+
+class Puntatore {
+	/** id univoco */
+	String idPuntatore = UUID.randomUUID()
+	/** qr */
+	String qr = UUID.randomUUID()
+	String etichetta = 'nessuna etichetta'
+	String descrizione = 'nessuna descrizione'
+	/** percorso principale */
+	String urlAccesso = ''
+	/** tipo filtro: JSoup,Camel,Redirect,Risorsa su deploy Activiti,Risorsa Consul (da cat su nodo tramite consul) */
+	String tipoFiltro = ''
+	/** dati configurazione (dipende da tipo) */
+	String datiJson = ''
+	/** lista chiavi accesso alla risorsa -per sicurezza- */
+	List<String> chiaviAccesso = []
+
+	def esporta() {
+		return [
+			idPuntatore:idPuntatore,
+			etichetta:etichetta,
+			descrizione:descrizione,
+			urlAccesso:urlAccesso,
+			tipoFiltro:tipoFiltro,
+			datiJson:datiJson,
+			chiaveAccesso:chiaviAccesso
 		]
 	}
 }

@@ -34,7 +34,7 @@
 						class="fa fa-users fa-fw"></i> Configura Utenti</a></li>
 
 				<li ui-sref-active="active"><a href="http://www.rossonet.org/archives/650" target="_guida"><i
-						class="fa fa-info fa-fw"></i> Sviluppo Memi</a></li>
+						class="fa fa-university fa-fw"></i> Sviluppo Memi</a></li>
 
 				<li ng-class="{active: collapseVar==1}"><a href=""
 					ng-click="check(1)"><i class="fa fa-graduation-cap fa-fw"></i>
