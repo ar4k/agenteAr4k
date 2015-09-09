@@ -1,8 +1,9 @@
 package org.ar4k
 
+import com.ecwid.consul.v1.QueryParams
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityService
-
+import grails.util.Holders
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService
@@ -38,12 +39,12 @@ class Ar4kActivitiController {
 		String formStream = formService.getRenderedStartForm(idProcesso)
 		render formStream
 	}
-	
+
 	/**
 	 * Restituisce la maschera dello stato attuale di un meme
 	 * @return maschera meme
 	 */
-	
+
 	def mascheraMeme(String idMeme) {
 		log.info "Richiesta maschera per meme "+idMeme
 		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.maschera()
@@ -70,7 +71,7 @@ class Ar4kActivitiController {
 		render processo?'avviato...':'errore!'
 	}
 
-	
+
 	def diagrammaStatoProcesso(String idProcesso) {
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
 				.processDefinitionId(idProcesso).singleResult()
@@ -89,7 +90,25 @@ class Ar4kActivitiController {
 		InputStream imageStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), diagramResourceName)
 		render file: imageStream, contentType: 'image/png'
 	}
-	
+
+	def apiAr4k() {
+		def daCaricare  = [
+			'admin/bower_components/jquery/dist/jquery.js',
+			'admin/bower_components/angular/angular.js',
+			'admin/bower_components/bootstrap/dist/js/bootstrap.js',
+			'admin/bower_components/oclazyload/dist/ocLazyLoad.js',
+			'admin/bower_components/restangular/dist/restangular.js',
+			'admin/bower_components/lodash/dist/lodash.js'
+		]
+		String dipendenze = ''
+		daCaricare.each{
+			dipendenze+= Holders.getServletContext().getResource(it).getContent().text
+		}
+
+		render(template: "apiAr4k",contentType: "application/javascript", encoding: "UTF-8",model:[dipendenze:dipendenze])
+	}
+
+
 	def listaIstanze(String idProcesso){
 		def variabili = []
 		runtimeService.createProcessInstanceQuery().processDefinitionId(idProcesso).list().each{
@@ -101,10 +120,67 @@ class Ar4kActivitiController {
 				name:it.getName(),
 				processInstanceId:it.getProcessInstanceId(),
 				sospeso:it.isSuspended()
-				])
+			])
 		}
 		def incapsulato = [istanze:variabili]
 		render incapsulato as JSON
 	}
+
+	/**
+	 *
+	 * @return Processi e oggetti collegati in JSON
+	 */
+	def listaProcessi() {
+		def risultato = []
+		interfacciaContestoService.stato.consulBind.getAgentServices().getValue().each{
+			String stato = interfacciaContestoService.stato.consulBind.getHealthChecksForService(it.getValue().service,new QueryParams('ar4kprivate')).getValue()
+			risultato.add(processo:it.getValue(),stato:stato)
+		}
+		def incapsulato = [processi:risultato]
+		render incapsulato as JSON
+	}
+
+	/**
+	 *
+	 * @return Datacenters e oggetti collegati in JSON
+	 */
+	def listaDataCenters() {
+		def risultato = []
+		interfacciaContestoService.stato.consulBind.getCatalogDatacenters().getValue().each{
+			List<String> nodi = interfacciaContestoService.stato.consulBind.getCatalogNodes(new QueryParams(it)).getValue()
+			def nodiElaborati = []
+			nodi.each{ nodo ->
+				def stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(nodo.node,new com.ecwid.consul.v1.QueryParams(it))
+				nodiElaborati.add([nodo:nodo,stato:stato])
+			}
+			risultato.add(datacenter:it,nodi:nodiElaborati)
+		}
+		def incapsulato = [datacenters:risultato]
+		render incapsulato as JSON
+	}
+
+
+	/**
+	 *
+	 * @return Store dati JCloud collegati in JSON
+	 */
+	def listaStore() {
+		def risultato = []
+		def risultatoBin = []
+		interfacciaContestoService.stato.consulBind.getKVValues('').getValue().each{ risultato.add([key:it.key,createIndex:it.createIndex,modifyIndex:it.modifyIndex,value:new String(it.value.decodeBase64())]) }
+		def incapsulato = [storedati:risultato]
+		render incapsulato as JSON
+	}
 	
+	/**
+	 *
+	 * Salva un valore in consul
+	 */
+	def salvaValoreKV() {
+		String chiave = request.JSON.chiave
+		String valore = request.JSON.valore
+		interfacciaContestoService.stato.consulBind.setKVValue(chiave, valore)
+		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVAGGIUNTO',chiave:chiave,valore:valore])
+		render "ok"
+	}
 }
