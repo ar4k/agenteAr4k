@@ -110,6 +110,13 @@
 <!-- Morris Charts CSS -->
 <!-- <link href="styles/morrisjs/morris.css" rel="stylesheet"> -->
 <!--  <script src="${resource(dir:'admin',file:'angular-atmosphere-service.js')}"></script> -->
+
+<style>
+.div4-padding {
+padding: 4px; 
+}
+</style>
+
 </head>
 
 <body>

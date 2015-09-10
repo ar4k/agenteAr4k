@@ -26,19 +26,22 @@
 				</div>
 				<div class="panel text-right">
 					<button class="btn btn-circle btn-success btn-xs" type="button"
-						ng-click="scansiona(focus.nodo.value.node.address)" tooltip-placement="bottom"
+						ng-click="scansiona(focus.nodo.value.node.address)"
+						tooltip-placement="bottom"
 						tooltip="scansiona il nodo per trovare servizi conosciuti">
 						<i class="fa fa-steam"></i>
 					</button>
-					
+
 					<button class="btn btn-circle btn-warning btn-xs" type="button"
-						ng-click="scansionarete(focus.nodo.value.node.address)" tooltip-placement="bottom"
+						ng-click="scansionarete(focus.nodo.value.node.address)"
+						tooltip-placement="bottom"
 						tooltip="scansiona una rete da questo nodo per identificare i servizi">
 						<i class="fa fa-share-alt"></i>
 					</button>
-					
+
 					<button class="btn btn-circle btn-danger btn-xs" type="button"
-						ng-click="eseguisunodo(focus.nodo.value.node.address)" tooltip-placement="bottom"
+						ng-click="eseguisunodo(focus.nodo.value.node.address)"
+						tooltip-placement="bottom"
 						tooltip="esegui un comando su questo nodo">
 						<i class="fa fa-wrench"></i>
 					</button>
@@ -56,7 +59,7 @@
 
 <div class="row aggiorna-su-messaggio">
 	<div style="margin-top: 5px;">
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="text-right">
@@ -86,35 +89,31 @@
 								lacus adipiscing, posuere lectus et, fringilla augue.</p>
 						</div>
 					</div>
-					<div class="dataTable_wrapper">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Datacenter</th>
-										<th class="text-right">Nodi</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="datacenter in datacenters"
-										ng-class-odd="'dispari'" ng-class-even="'pari'">
-										<td>{{datacenter.datacenter}}</td>
-										<td class="text-right"><i
-											ng-repeat="nodo in datacenter.nodi">
-												<button style="margin: 0.1em;"
-													ng-class="nodo.stato.value[0].status.name == 'PASSING'?'btn btn-success btn-xs':'btn btn-danger btn-xs'"
-													type="button"
-													ng-click="$parent.dettagli(nodo.nodo.node,datacenter.datacenter)"
-													tooltip-placement="top"
-													tooltip="visualizza i dettagli del nodo.">
-													<i class="fa fa-info-circle"></i> {{nodo.nodo.node}}
-													({{nodo.nodo.address}})
-												</button>
-										</i></td>
-									</tr>
-								</tbody>
-							</table>
+					<div class="container-fluid">
+
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 div4-padding"><h4>Datacenter</h4></div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right div4-padding"><h4>Nodi</h4></div>
 						</div>
+
+						<div ng-repeat="datacenter in datacenters"
+							ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'" ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 div4-padding">{{datacenter.datacenter}}</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right div4-padding">
+								<i ng-repeat="nodo in datacenter.nodi">
+									<button style="margin: 0.1em;"
+										ng-class="nodo.stato.value[0].status.name == 'PASSING'?'btn btn-success btn-xs':'btn btn-danger btn-xs'"
+										type="button"
+										ng-click="$parent.dettagli(nodo.nodo.node,datacenter.datacenter)"
+										tooltip-placement="top"
+										tooltip="visualizza i dettagli del nodo.">
+										<i class="fa fa-info-circle"></i> {{nodo.nodo.node}}
+										({{nodo.nodo.address}})
+									</button>
+								</i>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>

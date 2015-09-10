@@ -9,35 +9,27 @@
 					ng-click="pannello=false" class="close" type="button">×</button>
 				<h4 id="RicettarioModalLabel" class="modal-title">{{titolo}}</h4>
 			</div>
-			<div class="modal-body">
-				<div class="dataTable_wrapper">
-					<div class="table-responsive">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Etichetta</th>
-									<th>Descrizione</th>
-									<th>Versione</th>
-									<th class="text-right">Azioni</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="seme in elencosemi" ng-class-odd="'dispari'"
-									ng-class-even="'pari'">
-									<td>{{seme.meme.etichetta}}</td>
-									<td>{{seme.meme.descrizione}}</td>
-									<td>{{seme.meme.versione}}</td>
-									<td class="text-right">
-										<button class="btn btn-circle btn-xs" type="button"
-											ng-click="creameme(seme.meme.idMeme)"
-											tooltip-placement="bottom"
-											tooltip="crea un meme da questo seme.">
-											<i class="fa fa-flask"></i>
-										</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+			<div class="modal-body container-fluid">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 div4-padding">Etichetta</div>
+					<div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 div4-padding">Descrizione</div>
+					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 div4-padding">Versione</div>
+					<div
+						class="col-xs-6 col-sm-6 col-md-2 col-lg-2 div4-padding text-right">Azioni</div>
+				</div>
+				<div ng-repeat="seme in elencosemi"
+					ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'"
+					ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">
+					<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 div4-padding">{{seme.meme.etichetta}}</div>
+					<div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 div4-padding">{{seme.meme.descrizione}}</div>
+					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 div4-padding">{{seme.meme.versione}}</div>
+					<div
+						class="col-xs-6 col-sm-6 col-md-2 col-lg-2 text-right div4-padding">
+						<button class="btn btn-circle btn-xs" type="button"
+							ng-click="creameme(seme.meme.idMeme)" tooltip-placement="bottom"
+							tooltip="crea un meme da questo seme.">
+							<i class="fa fa-flask"></i>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -55,11 +47,11 @@
 
 <div class="row aggiorna-su-messaggio">
 	<div style="margin-top: 5px;">
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="text-right">
-						<i class="fa fa-book fa-3" /> RICETTARI
+						<i class="fa fa-book fa-3"></i> RICETTARI
 						<button style="margin: 0.1em;"
 							class="btn btn-circle btn-default btn-xs" type="button"
 							ng-click="focusDocumentazione=!focusDocumentazione"
@@ -106,72 +98,80 @@
 							</form>
 						</div>
 					</div>
-					<div class="dataTable_wrapper">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Ricettario</th>
-										<th>Descrizione</th>
-										<th class="text-right">Azioni</th>
-									</tr>
-								</thead>
-								<tbody>
-									<div class="col-lg-5 text-left">
-										<button class="btn btn-outline btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true"
-											tooltip-placement="bottom"
-											tooltip="collega un nuovo repository git al sistema.">NUOVO
-											RICETTARIO</button>
-										<button class="btn btn-success btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true"
-											tooltip-placement="bottom"
-											tooltip="collega un abbonamento Rossonet Ar4k.">
-											<i class="fa fa-shopping-cart"></i> CODICE AR4K
-										</button>
-									</div>
-									<div class="col-lg-2 text-center"></div>
-									<div class="col-lg-5 text-right">
-										<input placeholder="filtra i vasi per parola chiave"
-											class="form-control">
-									</div>
-									<tr ng-repeat="ricettario in ricettari"
-										ng-class-odd="'dispari'" ng-class-even="'pari'">
-										<td>{{ricettario.etichetta}}</td>
-										<td>{{ricettario.descrizione}}</td>
-										<td class="text-right">
-											<!--  
+
+					<div class="container-fluid">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-left">
+							<div
+								class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right div4-padding">
+								<button class="btn btn-outline btn-primary" ng-hide="nuovo"
+									type="button" ng-click="nuovo=true" tooltip-placement="bottom"
+									tooltip="collega un nuovo repository git al sistema.">NUOVO
+									RICETTARIO</button>
+							</div>
+							<div
+								class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left div4-padding">
+								<button class="btn btn-success btn-primary" ng-hide="nuovo"
+									type="button" ng-click="nuovo=true" tooltip-placement="bottom"
+									tooltip="collega un abbonamento Rossonet Ar4k.">
+									<i class="fa fa-shopping-cart"></i> CODICE AR4K
+								</button>
+							</div>
+						</div>
+						<div
+							class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right form-group input-group div4-padding">
+							<input placeholder="ricerca testuale" class="form-control"
+								ng-model="queryRicerca"/><span class="input-group-btn">
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-times"></i>
+								</button>
+							</span>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 div4-padding"><h4>Ricettario</h4></div>
+							<div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 div4-padding"><h4>Descrizione</h4></div>
+							<div
+								class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-right div4-padding"><h4>Azioni</h4></div>
+							<div>
+								<div ng-repeat="ricettario in ricettari | filter:queryRicerca"
+									ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'"
+									ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 div4-padding">{{ricettario.etichetta}}</div>
+									<div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 div4-padding">{{ricettario.descrizione}}</div>
+									<div
+										class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-right div4-padding">
+										<!--  
 											<button class="btn btn-circle btn-xs" type="button"
 												ng-click="$parent.nuovo=true">
 												<i class="fa  fa-pencil "></i>
 											</button>
 											-->
-											<button class="btn btn-circle btn-success btn-xs"
-												type="button"
-												ng-click="$parent.semi(ricettario.idRicettario)"
-												tooltip-placement="top"
-												tooltip="visualizza i semi nel ricettario.">
-												<i class="fa fa-eye"></i>
-											</button>
-											<button class="btn btn-circle btn-info btn-xs" type="button"
-												ng-click="$parent.aggiorna(ricettario.idRicettario)"
-												tooltip-placement="top"
-												tooltip="aggiorna il repository git del ricettario e ricarica i semi.">
-												<i class="fa fa-refresh"></i>
-											</button>
-											<button
-												ng-hide="ricettario.repositoryGit.nomeCartella=='ar4k_open'"
-												style="margin: 0.1em;"
-												class="btn btn-circle btn-danger btn-xs" type="button"
-												tooltip-placement="bottom"
-												ng-click="$parent.cancella(ricettario.idRicettario)"
-												tooltip="elimina il ricettario. Tutti i semi collegati saranno eliminati! il ricettario non sarà eliminato dai vasi per permettere ai memi il funzionamento.">
-												<i class="fa fa-trash-o"></i>
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+										<button class="btn btn-circle btn-success btn-xs"
+											type="button"
+											ng-click="$parent.semi(ricettario.idRicettario)"
+											tooltip-placement="top"
+											tooltip="visualizza i semi nel ricettario.">
+											<i class="fa fa-eye"></i>
+										</button>
+										<button class="btn btn-circle btn-info btn-xs" type="button"
+											ng-click="$parent.aggiorna(ricettario.idRicettario)"
+											tooltip-placement="top"
+											tooltip="aggiorna il repository git del ricettario e ricarica i semi.">
+											<i class="fa fa-refresh"></i>
+										</button>
+										<button
+											ng-hide="ricettario.repositoryGit.nomeCartella=='ar4k_open'"
+											style="margin: 0.1em;"
+											class="btn btn-circle btn-danger btn-xs" type="button"
+											tooltip-placement="bottom"
+											ng-click="$parent.cancella(ricettario.idRicettario)"
+											tooltip="elimina il ricettario. Tutti i semi collegati saranno eliminati! il ricettario non sarà eliminato dai vasi per permettere ai memi il funzionamento.">
+											<i class="fa fa-trash-o"></i>
+										</button>
+									</div>
+								</div>
+
+							</div>
+
 						</div>
 					</div>
 				</div>

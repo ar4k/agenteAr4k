@@ -1,6 +1,6 @@
 <div class="row">
 	<div style="margin-top: 5px;">
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="text-right">
@@ -59,85 +59,98 @@
 							</form>
 						</div>
 					</div>
-					<div class="dataTable_wrapper">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Vaso</th>
-										<th>Descrizione</th>
-										<th class="text-center">Azioni</th>
-										<th class="text-right">Stato</th>
-									</tr>
-								</thead>
-								<tbody>
-									<div class="col-lg-5 text-left">
-										<button alt="Aggiungi un nuovo nodo SSH al contesto"
-											class="btn btn-outline btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true"
-											tooltip-placement="bottom"
-											tooltip="aggiunge un nuovo vaso. Richiede la configurazione dell'accesso SSH al nodo.">NUOVO
-											VASO</button>
-										<button class="btn btn-success btn-primary" ng-hide="nuovo"
-											type="button" ng-click="nuovo=true"
-											tooltip-placement="bottom"
-											tooltip="aggiungi una risorsa di calcolo fornita da Rossonet."><i class="fa fa-shopping-cart"></i> CODICE AR4K</button>
+					<div class="container-fluid">
 
-									</div>
-									<div class="col-lg-2 text-center"></div>
-									<div class="col-lg-5 text-right">
-										<input placeholder="ricerca in etichetta e descrizione"
-											class="form-control">
-									</div>
-									<tr ng-repeat="vaso in vasi" ng-class-odd="'dispari'"
-										ng-class-even="'pari'">
-										<td>{{vaso.vaso.etichetta}}</td>
-										<td>{{vaso.vaso.descrizione}}</td>
-										<td class="text-center">
-											<button style="margin: 0.1em;"
-												class="btn btn-circle btn-info btn-xs" type="button"
-												ng-click="$parent.dettagli(meme.idMeme)"
-												tooltip-placement="top"
-												tooltip="salva il contesto attuale sul nodo.">
-												<i class="fa fa-save"></i>
-											</button>
-											<button style="margin: 0.1em;"
-												class="btn btn-circle btn-info btn-xs" type="button"
-												ng-click="$parent.dettagli(meme.idMeme)"
-												tooltip-placement="bottom"
-												tooltip="installa e configura un'interfaccia su questo nodo.">
-												<i class="fa fa-desktop "></i>
-											</button>
-											<button style="margin: 0.1em;"
-												class="btn btn-circle btn-xs" type="button"
-												ng-click="$parent.dettagli(meme.idMeme)"
-												tooltip-placement="bottom"
-												tooltip="accesso SSH al vaso.">
-												<i class="fa fa-terminal"></i>
-											</button>
-											<button style="margin: 0.1em;"
-												class="btn btn-circle btn-warning btn-xs" type="button"
-												ng-click="$parent.dettagli(meme.idMeme)"
-												tooltip-placement="bottom"
-												tooltip="resetta l'interfaccia attuale e inizia il bootstrap sul nodo.">
-												<i class="fa fa-bolt"></i>
-											</button>
-											<button style="margin: 0.1em;"
-												class="btn btn-circle btn-danger btn-xs" type="button"
-												ng-click="$parent.cancella(dato)" tooltip-placement="top"
-												tooltip="elimina il collegamento con il nodo.">
-												<i class="fa fa-trash-o"></i>
-											</button>
-										</td>
-										<td>
-											<div
-												ng-class="vaso.stato[0].status.name == 'PASSING'?'panel panel-green text-right':'panel panel-red text-right'" style="margin-bottom:unset;">
-												<div class="panel-heading">{{vaso.stato[0].output}}</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+
+
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-left">
+							<div
+								class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right div4-padding">
+								<button alt="Aggiungi un nuovo nodo SSH al contesto"
+									class="btn btn-outline btn-primary" ng-hide="nuovo"
+									type="button" ng-click="nuovo=true" tooltip-placement="bottom"
+									tooltip="aggiunge un nuovo vaso. Richiede la configurazione dell'accesso SSH al nodo.">NUOVO
+									VASO</button>
+							</div>
+							<div
+								class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left div4-padding">
+								<button class="btn btn-success btn-primary" ng-hide="nuovo"
+									type="button" ng-click="nuovo=true" tooltip-placement="bottom"
+									tooltip="aggiungi una risorsa di calcolo fornita da Rossonet.">
+									<i class="fa fa-shopping-cart"></i> CODICE AR4K
+								</button>
+							</div>
 						</div>
+
+						<div
+							class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right form-group input-group div4-padding">
+							<input placeholder="ricerca testuale" ng-model="queryRicerca"
+								class="form-control" /><span class="input-group-btn">
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-times"></i>
+								</button>
+							</span>
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 div4-padding"><h4>Vaso</h4></div>
+							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 div4-padding"><h4>Descrizione</h4></div>
+							<div
+								class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center div4-padding"><h4>Azioni</h4></div>
+							<div
+								class="col-xs-6 col-sm-6 col-md-2 col-lg-2 text-right div4-padding"><h4>Stato</h4></div>
+						</div>
+
+						<div ng-repeat="vaso in vasi | filter:queryRicerca"
+							ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'"
+							ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">
+							<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 div4-padding">{{vaso.vaso.etichetta}}</div>
+							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 div4-padding">{{vaso.vaso.descrizione}}</div>
+							<div
+								class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center div4-padding">
+								<button style="margin: 0.1em;"
+									class="btn btn-circle btn-info btn-xs" type="button"
+									ng-click="$parent.dettagli(meme.idMeme)"
+									tooltip-placement="top"
+									tooltip="salva il contesto attuale sul nodo.">
+									<i class="fa fa-save"></i>
+								</button>
+								<button style="margin: 0.1em;"
+									class="btn btn-circle btn-info btn-xs" type="button"
+									ng-click="$parent.dettagli(meme.idMeme)"
+									tooltip-placement="bottom"
+									tooltip="installa e configura un'interfaccia su questo nodo.">
+									<i class="fa fa-desktop "></i>
+								</button>
+								<button style="margin: 0.1em;" class="btn btn-circle btn-xs"
+									type="button" ng-click="$parent.dettagli(meme.idMeme)"
+									tooltip-placement="bottom" tooltip="accesso SSH al vaso.">
+									<i class="fa fa-terminal"></i>
+								</button>
+								<button style="margin: 0.1em;"
+									class="btn btn-circle btn-warning btn-xs" type="button"
+									ng-click="$parent.dettagli(meme.idMeme)"
+									tooltip-placement="bottom"
+									tooltip="resetta l'interfaccia attuale e inizia il bootstrap sul nodo.">
+									<i class="fa fa-bolt"></i>
+								</button>
+								<button style="margin: 0.1em;"
+									class="btn btn-circle btn-danger btn-xs" type="button"
+									ng-click="$parent.cancella(dato)" tooltip-placement="top"
+									tooltip="elimina il collegamento con il nodo.">
+									<i class="fa fa-trash-o"></i>
+								</button>
+							</div>
+							<div
+								class="col-xs-6 col-sm-6 col-md-2 col-lg-2 text-right div4-padding">
+								<div
+									ng-class="vaso.stato[0].status.name == 'PASSING'?'panel panel-green text-right':'panel panel-red text-right'"
+									style="margin-bottom: unset;">
+									<div class="panel-heading">{{vaso.stato[0].output}}</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>

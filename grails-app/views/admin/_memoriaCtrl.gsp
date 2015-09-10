@@ -70,4 +70,10 @@ angular.module('sbAdminApp')
     	    $http.get("${createLink(controller:'admin',action:'listaStore',absolute:'true')}")
     		.success(function (response) {$scope.storedati = response.storedati});
   	};
-  });
+  })
+  .filter('prettyJSON', function () {
+    function syntaxHighlight(json) {
+      return JSON ? JSON.stringify(json, null, 5) : 'your browser doesnt support JSON so cant pretty print';
+    }
+    return syntaxHighlight;
+});
