@@ -113,7 +113,21 @@
 
 <style>
 .div4-padding {
-padding: 4px; 
+	padding: 4px;
+}
+
+.embed-iframe-full {
+	border: 0 none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+.embed-container-full {
+	padding: .5em;
+	padding: .5em;
+	height: 100%;
+	width: 100%;
 }
 </style>
 

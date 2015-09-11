@@ -84,27 +84,26 @@
 	<!-- /.modal-dialog -->
 </div>
 
-<div aria-hidden="false" aria-labelledby="Meme" role="dialog"
+<div aria-hidden="false" aria-labelledby="AvviaMeme" role="dialog"
 	tabindex="-1" id="avvioProcessoModal" class="modal fade in"
 	ng-show="pannelloPlay"
-	style="display: block; left: 9em; right: 9em; bottom: 1em; top: 1em; border-radius: 6px; background-color: rgba(255, 255, 255, .9);">
+	style="display: block; left: 1em; right: 1em; bottom: 1em; top: 1em; border-radius: 6px; background-color: rgba(255, 255, 255, .9);">
 	<div
 		style="position: absolute; z-index: 1; padding: .4em; padding-right: 2em; top: 0px;"
-		class="col-lg-12 col-md-12 col-sm-12 text-right"
+		class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right"
 		ng-show="pannelloPlay">
 		<button data-dismiss="modal" ng-click="pannelloPlay=false"
 			class="btn btn-warning btm-sm" type="button">Chiudi</button>
 	</div>
-	<div class="embed-responsive embed-responsive-16by9">
-		<iframe class="embed-responsive-item" ng-src="{{focusPlay}}"
-			style="bottom: 10px"></iframe>
+	<div class="embed-container-full">
+		<iframe class="embed-iframe-full" ng-src="{{focusPlay}}"></iframe>
 	</div>
 </div>
 
-<div aria-hidden="false" aria-labelledby="Meme" role="dialog"
+<div aria-hidden="false" aria-labelledby="AzioneMeme" role="dialog"
 	tabindex="-1" id="azioneMemeModal" class="modal fade in"
 	ng-show="azioneMemePlay"
-	style="display: block; left: 9em; right: 9em; bottom: 1em; top: 1em; border-radius: 6px; background-color: rgba(255, 255, 255, .9);">
+	style="display: block; left: 1em; right: 1em; bottom: 1em; top: 1em; border-radius: 6px; background-color: rgba(255, 255, 255, .9);">
 	<div
 		style="position: absolute; z-index: 1; padding: .4em; padding-right: 2em; top: 0px;"
 		class="col-lg-12 col-md-12 col-sm-12 text-right"
@@ -112,9 +111,8 @@
 		<button data-dismiss="modal" ng-click="azioneMemePlay=false"
 			class="btn btn-warning btm-sm" type="button">Chiudi</button>
 	</div>
-	<div class="embed-responsive embed-responsive-16by9">
-		<iframe class="embed-responsive-item" ng-src="{{azioneMemeFocus}}"
-			style="bottom: 10px"></iframe>
+	<div class="embed-container-full">
+		<iframe class="embed-iframe-full" ng-src="{{azioneMemeFocus}}" ></iframe>
 	</div>
 </div>
 
