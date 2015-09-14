@@ -50,6 +50,9 @@ angular.module('sbAdminApp')
   	$scope.modifica = function(chiave,valore) {
   			$scope.chiave = chiave;
   			$scope.valore = valore;
+  			var container = document.getElementById("jsoneditor");
+        	var editor = new JSONEditor(container);
+        	editor.set(valore);
   			$scope.nuovo=true;
   	};
   	

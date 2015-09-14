@@ -200,7 +200,7 @@ class AdminController {
 	def listaProcessi() {
 		def risultato = []
 		interfacciaContestoService.stato.consulBind.getAgentServices().getValue().each{
-			String stato = interfacciaContestoService.stato.consulBind.getHealthChecksForService(it.getValue().service,new QueryParams('ar4kprivate')).getValue()
+			String stato = interfacciaContestoService.stato.consulBind.getHealthChecksForService(it.getValue().service,new QueryParams(interfacciaContestoService.contesto.datacenterConsul)).getValue()
 			risultato.add(processo:it.getValue(),stato:stato)
 		}
 		def incapsulato = [processi:risultato]

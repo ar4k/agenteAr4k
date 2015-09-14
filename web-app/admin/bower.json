@@ -22,7 +22,8 @@
     "restangular": "1.5.1",
     "angular-lodash": "0.1.2",
     "angular-marked": "0.0.18",
-    "marked": "0.3.5"
+    "marked": "0.3.5",
+    "jsoneditor": "4.2.1"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

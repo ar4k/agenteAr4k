@@ -32,6 +32,7 @@
 										class="form-control ng-pristine ng-untouched ng-valid"
 										ng-model="valore" placeholder="Valore per la chiave"
 										style="width: 100%; height: 151px;">{{valore}}</textarea>
+										<div id="jsoneditor" style="width: 400px; height: 400px;"></div>
 								</div>
 								<div class="form-group text-right">
 									<input type="submit" class="btn btn-default"

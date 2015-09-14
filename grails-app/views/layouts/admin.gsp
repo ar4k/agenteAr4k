@@ -51,6 +51,7 @@
 	<script src="admin/bower_components/restangular/dist/restangular.js"></script>
 	<script src="admin/bower_components/lodash/dist/lodash.js"></script>
 	<script src="admin/bower_components/angular-animate/angular-animate.js"></script>
+	<script src="admin/bower_components/jsoneditor/dist/jsoneditor.js"></script>
 </g:if>
 <g:if env="production">
 	<link rel="stylesheet"
@@ -86,6 +87,7 @@
 		src="admin/bower_components/restangular/dist/restangular.min.js"></script>
 	<script src="admin/bower_components/lodash/dist/lodash.min.js"></script>
 	<script src="admin/bower_components/angular-animate/angular-animate.min.js"></script>
+	<script src="admin/bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
 </g:if>
 
 <script src="admin/bower_components/angular-lodash/angular-lodash.js"></script>
