@@ -85,8 +85,8 @@
 						<div
 							class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right form-group input-group div4-padding">
 							<input placeholder="ricerca testuale" ng-model="queryRicerca"
-								class="form-control" /><span class="input-group-btn">
-								<button class="btn btn-default" type="button">
+								class="form-control"/><span class="input-group-btn">
+								<button class="btn btn-default" type="button" ng-click="queryRicerca=''">
 									<i class="fa fa-times"></i>
 								</button>
 							</span>
@@ -110,7 +110,7 @@
 								class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center div4-padding">
 								<button style="margin: 0.1em;"
 									class="btn btn-circle btn-info btn-xs" type="button"
-									ng-click="$parent.dettagli(meme.idMeme)"
+									ng-click="$parent.salvacontestosuvaso(vaso.vaso.idVaso)"
 									tooltip-placement="top"
 									tooltip="salva il contesto attuale sul nodo.">
 									<i class="fa fa-save"></i>
@@ -136,8 +136,8 @@
 								</button>
 								<button style="margin: 0.1em;"
 									class="btn btn-circle btn-danger btn-xs" type="button"
-									ng-click="$parent.cancella(dato)" tooltip-placement="top"
-									tooltip="elimina il collegamento con il nodo.">
+									ng-click="$parent.eliminavaso(vaso.vaso.idVaso)" tooltip-placement="top"
+									tooltip="elimina il collegamento con il nodo." ng-hide="vaso.master">
 									<i class="fa fa-trash-o"></i>
 								</button>
 							</div>

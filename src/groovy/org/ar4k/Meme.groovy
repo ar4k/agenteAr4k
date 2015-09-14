@@ -25,6 +25,8 @@ import groovy.transform.AutoClone
 class Meme {
 	/** id univoco meme */
 	String idMeme = UUID.randomUUID()
+	/** Riferimento sul filesytem per il ricettario */
+	String pathVaso = ''
 	/** etichetta meme */
 	String etichetta = 'Meme generato atomaticamente'
 	/** descrizione meme */
@@ -61,7 +63,7 @@ class Meme {
 			}
 		}
 		try {
-			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'CARICORISORSEACTIVITI',messaggio:'Caricati i processi con risultato: '+ritorno.toString()])
+			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",([tipo:'CARICORISORSEACTIVITI',messaggio:'Caricamento processo '+processo.etichetta+' da meme '+etichetta+' in vaso '+vasoMaster.etichetta+' : '+ritorno.toString()] as JSON).toString())
 		} catch (Exception ee){
 			log.info "Evento da vaso non comunicato: "+ee.toString()
 		}
@@ -156,11 +158,11 @@ class Metodo {
  */
 class StatoMeme {
 	String etichetta = 'non implementato'
-	/** maschera del meme nello stato */
+	/** maschera del meme nello stato (verrà interpretata da grails) */
 	String angularMaschera = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
-	/** html per dashboard del meme nello stato */
+	/** html per dashboard del meme nello stato (verrà interpretata da grails) */
 	String angularDashboard = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
-	/** maschera piccola meme nello stato */
+	/** maschera piccola meme nello stato (verrà interpretata da grails) */
 	String angularBox = '<div>INTERFACCIA NON IMPLEMENTATA</div>'
 	/** icona pulsante nello stato -Maschera Memi- */
 	String icona = 'fa-thumb-tack'

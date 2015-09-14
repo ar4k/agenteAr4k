@@ -29,7 +29,7 @@ class Interfaccia {
 
 	/** service per interagire con il contesto */
 	InterfacciaContestoService interfacciaContestoService
-	
+
 	/** id univoco interfaccia */
 	String idInterfaccia = UUID.randomUUID()
 	/** etichetta interfaccia */
@@ -38,7 +38,11 @@ class Interfaccia {
 	String descrizione ='UI AR4K by Rossonet'
 	/** schema grafico */
 	TemplateInterfaccia grafica = new TemplateInterfaccia()
-	
+	/** porta bind tunnel ssh per Consul */
+	int portaConsul = 8501
+	/** porta bind tunnel ssh per ActiveMQ */
+	int portaActiveMQ = 61616
+
 	/** esporta la configurazione dell'interfaccia */
 	def esporta() {
 		log.info("esporta() l'interfaccia: "+idInterfaccia)
@@ -46,15 +50,17 @@ class Interfaccia {
 			idInterfaccia:idInterfaccia,
 			etichetta:etichetta,
 			descrizione:descrizione,
-			grafica:grafica.esporta()
-			]
+			grafica:grafica.esporta(),
+			portaConsul:portaConsul,
+			portaActiveMQ:portaActiveMQ
+		]
 	}
-	
+
 	/** metodo descrizione */
 	String toString() {
 		return "["+idInterfaccia+"] "+etichetta
 	}
-	
+
 	/** configura i service in funzione dell'interfaccia */
 	Boolean avviaInterfaccia() {
 		return true
@@ -83,18 +89,35 @@ class TemplateInterfaccia {
 		info: 'white',
 		warning: 'orange',
 		danger: 'red'
-		]
-	
+	]
+
 	def esporta() {
 		log.info("esporta() il template grafico: "+etichetta)
 		return [
 			etichetta:etichetta,
 			immagineLogo:immagineLogo,
 			sviluppo:sviluppo,
-			colori:new JSON(colori).toString(true)
-			]
+			colori:[
+				bordo: colori.bordo,
+				fondoBody: colori.fondoBody,
+				footerColor: colori.footerColor,
+				menuAttivo: colori.menuAttivo,
+				menuFocus: colori.menuFocus,
+				menuColor: colori.menuColor,
+				menuSfondo: colori.menuSfondo,
+				rigaDispariColor: colori.rigaDispariColor,
+				rigaDispariSfondo: colori.rigaDispariSfondo,
+				rigaPariColor: colori.rigaPariColor,
+				rigaPariSfondo: colori.rigaPariSfondo,
+				primary: colori.primary,
+				success: colori.success,
+				info: colori.info,
+				warning: colori.warning,
+				danger: colori.danger
+			] 
+		]
 	}
-	
+
 	String toString() {
 		return etichetta
 	}

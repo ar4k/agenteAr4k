@@ -43,10 +43,9 @@
 </script>
 <div class="row">
 	<div class="embed-container-full">
-		<iframe width="100%" name="docAPI" class="embed-iframe-full"
-			style="align-content: stretch;"
+		<iframe width="100%" name="docAPI"
 			ng-src="<g:createLink controller='docs' action='gapi'
 			absolute='true'/>" id="embed-iframe-full-id"
-			class="panel panel-default"></iframe>
+			class="panel panel-default embed-iframe-full"></iframe>
 	</div>
 </div>

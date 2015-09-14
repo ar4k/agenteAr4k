@@ -121,7 +121,7 @@
 							class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right form-group input-group div4-padding">
 							<input placeholder="ricerca testuale" class="form-control"
 								ng-model="queryRicerca"/><span class="input-group-btn">
-								<button class="btn btn-default" type="button">
+								<button class="btn btn-default" type="button" ng-click="queryRicerca=''">
 									<i class="fa fa-times"></i>
 								</button>
 							</span>

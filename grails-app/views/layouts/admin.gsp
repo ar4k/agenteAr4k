@@ -50,6 +50,7 @@
 	<script src="admin/bower_components/angular-marked/angular-marked.js"></script>
 	<script src="admin/bower_components/restangular/dist/restangular.js"></script>
 	<script src="admin/bower_components/lodash/dist/lodash.js"></script>
+	<script src="admin/bower_components/angular-animate/angular-animate.js"></script>
 </g:if>
 <g:if env="production">
 	<link rel="stylesheet"
@@ -84,6 +85,7 @@
 	<script
 		src="admin/bower_components/restangular/dist/restangular.min.js"></script>
 	<script src="admin/bower_components/lodash/dist/lodash.min.js"></script>
+	<script src="admin/bower_components/angular-animate/angular-animate.min.js"></script>
 </g:if>
 
 <script src="admin/bower_components/angular-lodash/angular-lodash.js"></script>
@@ -129,6 +131,7 @@
 	height: 100%;
 	width: 100%;
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 </style>
 
 </head>
@@ -350,6 +353,12 @@
 			try {
 				var json = jQuery.parseJSON(response.responseBody);
 				var messaggio = json.messaggio;
+				var jsonMessaggio = {};
+				try{
+					jsonMessaggio = jQuery.parseJSON(messaggio);
+				} catch (problema) {
+					console.log("Messaggio non json. codice errore: "+problema);
+				}
 				var icona = json.icona;
 				var tipo = json.tipo;
 				var li = document.createElement("li");
@@ -362,6 +371,36 @@
 				var span = document.createElement("span");
 				span.setAttribute('class',"pull-right text-muted small");
 				span.appendChild(document.createTextNode(moment().calendar()));
+				switch (jsonMessaggio.tipo) {
+					case 'ENTITY_CREATED': if (jsonMessaggio.processo != null) {
+						messaggio = "Creata istanza per processo "+jsonMessaggio.processo;
+					} else {
+						messaggio = "Creata istanza per processo vuoto";
+						};
+					 break;
+					case 'SCARICORICETTARIO': messaggio = "Caricato il ricettario "+jsonMessaggio.messaggio; break;
+					case 'CARICASEMI': messaggio = "Caricati "+jsonMessaggio.messaggio+" seme/i"; break;
+					case 'ENTITY_INITIALIZED': if (jsonMessaggio.processo != null) {
+							messaggio = "Inizializzata entità "+jsonMessaggio.processo;
+						} else {
+							messaggio = "Inizializzato processo vuoto";
+							};
+						 break;
+					case 'CARICORISORSEACTIVITI': messaggio = jsonMessaggio.messaggio; break;
+					case 'KVSALVATAGGIOCONTESTO': messaggio = 'Salvato il contesto '+jsonMessaggio.contesto+' nello store KV di Consul'; break;
+					case 'KVAGGIUNTO': messaggio = 'Salvata la chiave '+jsonMessaggio.chiave+' nello store KV'; break;
+					case 'KVRIMOSSO': messaggio = 'Rimossa chiave '+jsonMessaggio.chiave+' dallo store KV'; break;
+					case 'VASOAGGIUNTO': messaggio = 'Vaso '+jsonMessaggio.messaggio.etichetta+' aggiunto al sistema'; break;
+					case 'VASOELIMINATO': messaggio = 'Eliminato il vaso '+jsonMessaggio.vaso; break;
+					case 'PROCESS_STARTED': messaggio = 'Istanza '+jsonMessaggio.istanza+' avviata da processo'+jsonMessaggio.processo; break;
+					case 'ACTIVITY_STARTED': messaggio = 'Attività su istanza '+jsonMessaggio.istanza+' iniziata'; break;
+					case 'ACTIVITY_COMPLETED': messaggio = 'Attività su istanza '+jsonMessaggio.istanza+' completata'; break;
+					case 'SEQUENCEFLOW_TAKEN': messaggio = 'Flusso su istanza '+jsonMessaggio.istanza+' seguito'; break;
+					case 'TASK_CREATED': messaggio = 'Task di processo '+jsonMessaggio.processo+' creato per istanza '+jsonMessaggio.istanza; break;
+					case 'CONTESTOSALVATO': messaggio = jsonMessaggio.messaggio; break;
+					case 'VASOSALVATAGGIOCONTESTO': messaggio = 'Salvato il contesto '+jsonMessaggio.contesto+' nel vaso '+jsonMessaggio.vaso; break;
+					default: messaggio = messaggio; break;
+				}
 				var testo = document.createTextNode(" "+messaggio);
 				div.appendChild(i);
 				div.appendChild(testo);
@@ -382,7 +421,9 @@
 			}
 		try {
 				console.log("Aggiorno per messaggio coda...")
-				$(".aggiorna-su-messaggio").scope().aggiornaDaMessaggio()
+				$(".aggiorna-su-messaggio").each(function() {
+					  $( this ).scope().aggiornaDaMessaggio()
+				});
 			} catch (problema) {
 				console.log("Errore aggiornamento Controller: "+problema);
 				}

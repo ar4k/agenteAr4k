@@ -27,6 +27,7 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity
 import org.activiti.engine.repository.ProcessDefinition
 
 import com.ecwid.consul.v1.QueryParams
+import com.jcraft.jsch.JSch
 
 import grails.converters.JSON
 import groovy.json.*
@@ -181,8 +182,12 @@ class AdminController {
 		def risultato = []
 		interfacciaContestoService.contesto.vasi.each{ vaso ->
 			String macchina = vaso.macchina
-			def stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(macchina,new QueryParams('ar4kprivate')).getValue()
-			risultato.add([vaso:vaso,stato:stato])
+			Boolean eMaster = false;
+			def stato = interfacciaContestoService.stato.consulBind.getHealthChecksForNode(macchina,new QueryParams(interfacciaContestoService.contesto.datacenterConsul)).getValue()
+			if (interfacciaContestoService.contesto.vasoMaster.idVaso == vaso.idVaso ) {
+				eMaster = true;
+			}
+			risultato.add([vaso:vaso,stato:stato,master:eMaster])
 		}
 		def incapsulato = [vasi:risultato]
 		render incapsulato as JSON
@@ -282,10 +287,10 @@ class AdminController {
 		String chiave = request.JSON.chiave
 		String valore = request.JSON.valore
 		interfacciaContestoService.stato.consulBind.setKVValue(chiave, valore)
-		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVAGGIUNTO',chiave:chiave,valore:valore])
+		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'KVAGGIUNTO',chiave:chiave,valore:valore] as JSON).toString())
 		render "ok"
 	}
-	
+
 	/**
 	 *
 	 * Salva un valore in consul
@@ -293,7 +298,7 @@ class AdminController {
 	def cancellaValoreKV() {
 		String chiave = request.JSON.chiave
 		interfacciaContestoService.stato.consulBind.deleteKVValue(chiave)
-		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVRIMOSSO',chiave:chiave])
+		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'KVRIMOSSO',chiave:chiave] as JSON).toString())
 		render "ok"
 	}
 
@@ -302,8 +307,19 @@ class AdminController {
 	 * Salva il contesto in consul KV
 	 */
 	def salvaContestoinKV() {
-		interfacciaContestoService.stato.consulBind.setKVValue("contesto_"+new Date().getTime().toString(), interfacciaContestoService.contesto.esporta().toString())
-		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVSALVATAGGIOCONTESTO',contesto:interfacciaContestoService.contesto.descrizione])
+		interfacciaContestoService.stato.consulBind.setKVValue("contesto_"+new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")), interfacciaContestoService.contesto.esporta().toString())
+		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'KVSALVATAGGIOCONTESTO',contesto:interfacciaContestoService.contesto.descrizione] as JSON).toString())
+		render "ok"
+	}
+
+	def salvaContestoSuVaso() {
+		String vasoRicerca = request.JSON.vaso
+		Vaso vasoTarget = interfacciaContestoService.contesto.vasi.find{ vaso -> vaso.idVaso == vasoRicerca}
+		String vasoEtichetta = vasoTarget.etichetta
+		Contesto contestoDaSalvare = new Contesto()
+		contestoDaSalvare = interfacciaContestoService.contesto
+		vasoTarget.salvaContesto(contestoDaSalvare)
+		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'VASOSALVATAGGIOCONTESTO',contesto:interfacciaContestoService.contesto.descrizione,vaso:vasoEtichetta] as JSON).toString())
 		render "ok"
 	}
 
@@ -314,7 +330,6 @@ class AdminController {
 	def aggiungiVaso() {
 		def vaso = request.JSON.vaso
 		log.info("Richiesta aggiunta vaso: "+vaso)
-		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'VASOAGGIUNTO',messaggio:request.JSON.vaso.toString()])
 		Vaso vasoAggiunto= new Vaso(
 				etichetta:vaso.etichetta,
 				descrizione:vaso.descrizione,
@@ -326,10 +341,35 @@ class AdminController {
 		if (
 		interfacciaContestoService.contesto.vasi.add(vasoAggiunto)
 		) {
+			Vaso vasoTrovato = interfacciaContestoService.contesto.vasi.find{it.macchina == vasoAggiunto.macchina && it.porta == vasoAggiunto.porta && it.utente == vasoAggiunto.utente && it.key == vasoAggiunto.key }
+			vasoTrovato.provaConnessione()
+			vasoTrovato.provaVaso()
+			interfacciaContestoService.contesto.ricettari.each{
+				if (it.clonaOvunque == true ) {
+					vasoTrovato.avviaRicettario(it)
+				}
+			}
+			vasoTrovato.avviaConsulClient(interfacciaContestoService.contesto.vasoMaster.macchina)
+			sendMessage("activemq:topic:interfaccia.eventi",([tipo:'VASOAGGIUNTO',messaggio:vaso] as JSON).toString())
 			render "ok"
 		} else {
 			render "errore"
 		}
+	}
+
+	def eliminaVaso() {
+		String idVaso = request.JSON.vaso
+		String risultato = 'Vaso non eliminato'
+		if (interfacciaContestoService.contesto.vasoMaster.idVaso != idVaso ) {
+			int conto = interfacciaContestoService.contesto.vasi.size()
+			interfacciaContestoService.contesto.vasi.removeAll{ it.idVaso == idVaso }
+			if (conto!=interfacciaContestoService.contesto.vasi.size()){
+				int differenza = conto-interfacciaContestoService.contesto.vasi.size()
+				risultato = "Eliminato "+differenza.toString()+" vaso"
+				sendMessage("activemq:topic:interfaccia.eventi",([tipo:'VASOELIMINATO',vaso:idVaso] as JSON).toString())
+			}
+		}
+		render risultato
 	}
 
 	/**
@@ -339,7 +379,7 @@ class AdminController {
 	def aggiungiRicettario() {
 		def ricettario = request.JSON.ricettario
 		log.info("Richiesta aggiunta ricettario: "+ricettario)
-		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'RICETTARIOAGGIUNTO',messaggio:request.JSON.ricettario.toString()])
+		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'RICETTARIOAGGIUNTO',messaggio:request.JSON.ricettario.toString()] as JSON).toString())
 		RepositoryGit repositoryGit = new RepositoryGit(indirizzo:ricettario.repo,nomeCartella:ricettario.cartella)
 		if (
 		interfacciaContestoService.contesto.ricettari.add(
@@ -359,7 +399,7 @@ class AdminController {
 		String idRicettario = request.JSON.idricettario
 		interfacciaContestoService.contesto.ricettari.removeAll{it.idRicettario == idRicettario}
 		try {
-			sendMessage("activemq:topic:interfaccia.eventi",[tipo:'RICETTARIOELIMINATO',messaggio:idRicettario.toString()])
+			sendMessage("activemq:topic:interfaccia.eventi",([tipo:'RICETTARIOELIMINATO',messaggio:idRicettario.toString()]  as JSON).toString())
 			render "ok"
 		} catch (Exception ee){
 			log.info "Evento da AdminController non comunicato: "+ee.toString()
@@ -375,9 +415,11 @@ class AdminController {
 		String idRicettario = request.JSON.idricettario
 		interfacciaContestoService.contesto.ricettari.each{
 			if (it.idRicettario == idRicettario) {
-				interfacciaContestoService.contesto.vasi*.avviaRicettario(it)
+				if (it.clonaOvunque) {
+					interfacciaContestoService.contesto.vasi*.avviaRicettario(it)
+				}
 				interfacciaContestoService.contesto.vasoMaster.caricaSemi(it)
-				it.aggiornato = new Date()
+				it.aggiornato = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")).toString()
 			}
 		}
 		render "ok"
@@ -398,6 +440,7 @@ class AdminController {
 					nuovoMeme = it.meme.clone()
 					// Rigenera tutti gli id casuali per non rischiare riferimenti errati nelle fasi di esecuzione
 					nuovoMeme.idMeme = UUID.randomUUID()
+					nuovoMeme.pathVaso = '~/.ar4k/ricettari/'+ ricettario.repositoryGit.nomeCartella
 					nuovoMeme.metodi.each{it.idMetodo=UUID.randomUUID()}
 					nuovoMeme.caricaProcessiActiviti(interfacciaContestoService.contesto.vasoMaster,interfacciaContestoService.processEngine)
 					interfacciaContestoService.contesto.memi.add(nuovoMeme)

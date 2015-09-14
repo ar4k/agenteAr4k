@@ -29,7 +29,9 @@ class Ricettario {
 	/** semi disponibili sul ricettario */
 	List<Seme> semi = []
 	/** ultimo caricamento */
-	Date aggiornato
+	String aggiornato
+	/** se vero, carica il repository su tutti i vasi  */
+	Boolean clonaOvunque = true
 
 
 
@@ -42,6 +44,7 @@ class Ricettario {
 			descrizione:descrizione,
 			repositoryGit:repositoryGit.esporta(),
 			aggiornato: aggiornato.toString(),
+			clonaOvunque:clonaOvunque,
 			semi:semi*.esporta()
 		]
 	}

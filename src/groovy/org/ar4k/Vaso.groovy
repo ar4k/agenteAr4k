@@ -59,10 +59,6 @@ class Vaso {
 	Boolean sudo = false
 	/** versione java */
 	String javaVersion = null
-	/** porta tunnel consul */
-	int portaConsul = 8501
-	/** porta tunnel ActiveMQ */
-	int portaActiveMQ = 61616
 
 	/** esporta il vaso */
 	def esporta() {
@@ -79,9 +75,7 @@ class Vaso {
 			uname:uname,
 			funzionalita:funzionalita,
 			javaVersion:javaVersion,
-			proxy:proxy,
-			portaConsul:portaConsul,
-			portaActiveMQ:portaActiveMQ
+			proxy:proxy
 		]
 	}
 
@@ -97,18 +91,18 @@ class Vaso {
 
 	/** salva un contesto sul vaso*/
 	Boolean salvaContesto(Contesto contesto) {
-		String file = contesto.esporta() as JSON
+		JSON file = contesto.esporta() as JSON
 		String interruzione = "EOF-"+UUID.randomUUID()+"-AR4K"
-		String comandoEsecuzione="cat > ~/.ar4k/contesti/"+contesto.idContesto+".xml << "+interruzione+"\n"+file+"\n"+interruzione+"\n"
-		String comandoControllo="cat ~/.ar4k/contesti/"+contesto.idContesto+".xml"
+		String comandoEsecuzione="cat > ~/.ar4k/contesti/"+contesto.idContesto+".json << "+interruzione+"\n"+file.toString(true)+"\n"+interruzione+"\n"
+		String comandoControllo="cat ~/.ar4k/contesti/"+contesto.idContesto+".json"
 		esegui(comandoEsecuzione)
 		String risultato=esegui(comandoControllo)
 		try {
-			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'CONTESTOSALVATO',messaggio:risultato.toString()])
+			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",([tipo:'CONTESTOSALVATO',messaggio:"Contesto salvato su "+etichetta+" con il nome "+contesto.idContesto+".json"] as JSON).toString())
 		} catch (Exception ee){
 			log.info "Evento da vaso non comunicato: "+ee.toString()
 		}
-		return risultato == file+"\n"?true:false
+		return risultato == file.toString(true)+"\n"?true:false
 	}
 
 	/** esegui un comando ssh sul vaso */
@@ -152,6 +146,10 @@ class Vaso {
 			log.warn("Errore connesione SSH: "+e.printStackTrace())
 		}
 		return risultato
+	}
+
+	String leggiConCat(String target){
+		return esegui('cat '+target)
 	}
 
 	/** carica un file .bar dal vaso all'interfaccia */
@@ -208,6 +206,9 @@ class Vaso {
 		mkdir -p .ar4k/contesti
 		mkdir -p .ar4k/ricettari
 		mkdir -p .ar4k/dati
+		mkdir -p .ar4k/dati/consul
+		mkdir -p .ar4k/dati/activemq/data
+		mkdir -p .ar4k/dati/activemq/tmp
 		"""
 		String battezza = "echo '"+idVaso+"'>>~/.ar4k/dati/prove.log"
 		String controllo = """
@@ -230,7 +231,8 @@ class Vaso {
 	Boolean avviaConsul(JSch connessione) {
 		String consulKey = Holders.applicationContext.getBean("interfacciaContestoService").contesto.consulKey
 		String dominioConsul = Holders.applicationContext.getBean("interfacciaContestoService").contesto.dominioConsul
-		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate'
+		String datacenterConsul = Holders.applicationContext.getBean("interfacciaContestoService").contesto.datacenterConsul
+		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati/consul -bootstrap -server -dc '+datacenterConsul
 		comando += consulKey?' -encrypt "'+consulKey+'"':''
 		comando += dominioConsul?' -domain '+dominioConsul:''
 		comando += ' </dev/null &>/dev/null &'
@@ -247,18 +249,36 @@ class Vaso {
 			esegui(comandoEventiService)
 			esegui(comandoEventiChecks)
 		}
-		addLTunnel(connessione,portaConsul,'127.0.0.1',8500)
+		addLTunnel(connessione,Holders.applicationContext.getBean("interfacciaContestoService").interfaccia.portaConsul,'127.0.0.1',8500)
+		return esegui(verifica) == '1\n'?true:false
+	}
+
+	Boolean avviaConsulClient(String serverJoin) {
+		String consulKey = Holders.applicationContext.getBean("interfacciaContestoService").contesto.consulKey
+		String dominioConsul = Holders.applicationContext.getBean("interfacciaContestoService").contesto.dominioConsul
+		String datacenterConsul = Holders.applicationContext.getBean("interfacciaContestoService").contesto.datacenterConsul
+		String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati/consul -dc '+datacenterConsul+' -join '+serverJoin
+		comando += consulKey?' -encrypt "'+consulKey+'"':''
+		comando += dominioConsul?' -domain '+dominioConsul:''
+		comando += ' </dev/null &>/dev/null &'
+		//String comando = '~/.ar4k/ricettari/ar4k_open/i386/consul_i386 agent -data-dir ~/.ar4k/dati -bootstrap -server -dc ar4kPrivate </dev/null &>/dev/null &'
+		String verifica = "~/.ar4k/ricettari/ar4k_open/i386/consul_i386 info | grep 'revision = 9a9cc934' | wc -l"
+		if ( esegui(verifica) != '1\n') {
+			esegui('killall consul_i386')
+			esegui(comando)
+		}
+		//addLTunnel(connessione,porta,'127.0.0.1',8500)
 		return esegui(verifica) == '1\n'?true:false
 	}
 
 	/** Avvia broker ActiveMQ sul nodo Master, configura una sessione ssh permanente per connettere l'Apache Camel integrato nell'Interfaccia  */
 	Boolean avviaActiveMQ(JSch connessione) {
-		String comando = '~/.ar4k/ricettari/ar4k_open/apache-activemq-5.12.0/bin/activemq start'
+		String comando = 'export ACTIVEMQ_DATA=".ar4k/dati/activemq/data"; export ACTIVEMQ_TMP=".ar4k/dati/activemq/tmp" ; ~/.ar4k/ricettari/ar4k_open/apache-activemq-5.12.0/bin/activemq start'
 		String verifica = "~/.ar4k/ricettari/ar4k_open/apache-activemq-5.12.0/bin/activemq status | grep 'ActiveMQ is running' | wc -l"
 		if ( esegui(verifica) != '1\n') {
 			esegui(comando)
 		}
-		addLTunnel(connessione,portaActiveMQ,'127.0.0.1',61616)
+		addLTunnel(connessione,Holders.applicationContext.getBean("interfacciaContestoService").interfaccia.portaActiveMQ,'127.0.0.1',61616)
 		return esegui(verifica) == '1\n'?true:false
 	}
 
@@ -281,11 +301,24 @@ class Vaso {
 	/** recupera i contesti salvati sul vaso */
 	List<Contesto> listaContesti() {
 		List<Contesto> contesti = []
-		String lista = esegui("listaContesti")
-		//for (String item in lista) {
-		Contesto creato = new Contesto()
-		contesti.add(creato)
-		//}
+		String comandoRicerca = "cd ~/.ar4k/contesti ;"
+		comandoRicerca += "find . -name '*.json'"
+		def ricerca = esegui(comandoRicerca).tokenize('\n')
+		ricerca.each{
+			def jsonSlurper = new JsonSlurper()
+			String fileJson = esegui("cd ~/.ar4k/contesti/; cat "+it)
+			log.info("lettura "+it+" \n"+fileJson+"\n")
+			if (!fileJson) fileJson = '{"etichetta":"vuoto","descrizione":"nessun contesto in '+it+'"}'
+			try {
+				def contestoTarget = jsonSlurper.parseText(fileJson)
+				Contesto contestoOggetto = new Contesto(contestoTarget)
+				contesti.add(contestoOggetto)
+			} catch(Exception e) {
+				log.warn(e.printStackTrace())
+			}
+
+		}
+		log.info("Ho trovato "+contesti.size()+" contesti")
 		return contesti
 	}
 
@@ -305,10 +338,10 @@ class Vaso {
 		String risultato = esegui(comandoCont)
 		log.info("risultato "+comandoCont+" = "+risultato+" (atteso: "+atteso+')')
 		Boolean esito = (risultato == atteso?true:false)
-		if (esito) ricettario.aggiornato = new Date()
+		if (esito) ricettario.aggiornato = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")).toString()
 		if (esito) log.info("Esito aggiornamento ricettario "+ricettario+" su "+etichetta+": (ok)")
 		try {
-			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'SCARICORICETTARIO',messaggio:ricettario.esporta().toString()])
+			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",([tipo:'SCARICORICETTARIO',messaggio:ricettario.etichetta+" ("+descrizione+")"] as JSON).toString())
 		} catch (Exception ee){
 			log.info "Evento da vaso non comunicato: "+ee.toString()
 		}
@@ -355,7 +388,7 @@ class Vaso {
 			}
 			log.info("Nel ricettario "+ricettario+" sono presenti "+ricettario.semi.size()+" semi")
 			try {
-				Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",[tipo:'CARICASEMI',messaggio:"Numero semi: "+ricettario.semi.size().toString()])
+				Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:interfaccia.eventi",([tipo:'CARICASEMI',messaggio:ricettario.semi.size().toString()] as JSON).toString())
 			} catch (Exception ee){
 				log.info "Evento da vaso non comunicato: "+ee.toString()
 			}

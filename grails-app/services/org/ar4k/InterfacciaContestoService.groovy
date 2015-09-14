@@ -59,6 +59,8 @@ class InterfacciaContestoService {
 	/** connessione ssh activemq */
 	JSch connessioneActiveMQ = null
 
+	List<JSch> connnessioniSSH = []
+
 	/** engine Activiti BPM -dipendenza iniettata */
 	ProcessEngine processEngine
 	/** lista contesti JCloud operativi */

@@ -25,7 +25,7 @@
 							class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-lg-offset-3 col-md-offset-2 col-sm-offset-1 form-group input-group div4-padding">
 							<input placeholder="ricerca testuale" ng-model="queryRicerca"
 								class="form-control" /><span class="input-group-btn">
-								<button class="btn btn-default" type="button">
+								<button class="btn btn-default" type="button" ng-click="queryRicerca=''">
 									<i class="fa fa-times"></i>
 								</button>
 							</span>

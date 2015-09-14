@@ -7,6 +7,7 @@ import grails.util.Holders
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService
+import org.activiti.engine.TaskService
 import org.activiti.engine.repository.ProcessDefinition
 
 /** Controller per le chiamate fatte dalle maschere di Activiti */
@@ -15,6 +16,7 @@ class Ar4kActivitiController {
 	InterfacciaContestoService interfacciaContestoService
 	RepositoryService repositoryService
 	FormService formService
+	TaskService taskService
 	RuntimeService runtimeService
 	SpringSecurityService springSecurityService
 
@@ -32,12 +34,21 @@ class Ar4kActivitiController {
 	 * @return form inizio processo
 	 */
 	def avvioProcessoForm(String idProcesso) {
-		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(idProcesso).singleResult()
-		String deploymentId = processDefinition.getDeploymentId()
-		//String templateForm = formService.getStartFormData(idProcesso).getFormKey()
-		//InputStream formStream = repositoryService.getResourceAsStream(deploymentId,templateForm)
 		String formStream = formService.getRenderedStartForm(idProcesso)
 		render formStream
+	}
+	
+	def taskProcessoForm(String idTask) {
+		String formStream = formService.getRenderedTaskForm(idTask)
+		render formStream
+	}
+
+	/**
+	 * Restituisce un percorso relativo al repository di un Meme
+	 */
+	def ritornaFile(String idMeme,String target) {
+		String fileTarget = interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.pathVaso + target
+		render interfacciaContestoService.contesto.vasoMaster.leggiConCat(fileTarget)
 	}
 
 	/**
@@ -112,6 +123,7 @@ class Ar4kActivitiController {
 	def listaIstanze(String idProcesso){
 		def variabili = []
 		runtimeService.createProcessInstanceQuery().processDefinitionId(idProcesso).list().each{
+			String taskid = taskService.createTaskQuery().processInstanceId(it.getId()).list().last().id
 			variabili.add([
 				id:it.getId(),
 				businessKey:it.getBusinessKey(),
@@ -119,13 +131,50 @@ class Ar4kActivitiController {
 				deploymentId:it.getDeploymentId(),
 				name:it.getName(),
 				processInstanceId:it.getProcessInstanceId(),
-				sospeso:it.isSuspended()
+				sospeso:it.isSuspended(),
+				taskid:taskid
 			])
 		}
 		def incapsulato = [istanze:variabili]
 		render incapsulato as JSON
 	}
 
+	def listaTask(){
+		def risultato = []
+		taskService.createTaskQuery().list().each{
+			String icona = interfacciaContestoService.contesto.memi.find{ meme->
+				ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionId(it.getProcessDefinitionId()).singleResult()
+				String depId = processDefinition.getDeploymentId()
+				meme.idMeme == repositoryService.createDeploymentQuery().deploymentId(depId).singleResult().getName()
+			}.icona
+			
+			
+			it.getProcessDefinitionId()
+			risultato.add([id:it.id,
+				icona:icona,
+				assignee:it.getAssignee(),
+				category:it.getCategory(),
+				createTime:it.getCreateTime(),
+				delegationState:it.getDelegationState(),
+				description:it.getDescription(),
+				dueDate:it.getDueDate(),
+				executionId:it.getExecutionId(),
+				formKey:it.getFormKey(),
+				name:it.getName(),
+				owner:it.getOwner(),
+				parentTaskId:it.getParentTaskId(),
+				priority:it.getPriority(),
+				processDefinitionId:it.getProcessDefinitionId(),
+				processInstanceId:it.getProcessInstanceId(),
+				processVariables:it.getProcessVariables(),
+				taskDefinitionKey:it.getTaskDefinitionKey(),
+				tenantId:it.getTenantId()
+			])
+		}
+		def incapsulato = [tasks:risultato,conto:risultato.size()]
+		render incapsulato as JSON
+	}
 	/**
 	 *
 	 * @return Processi e oggetti collegati in JSON
@@ -171,7 +220,7 @@ class Ar4kActivitiController {
 		def incapsulato = [storedati:risultato]
 		render incapsulato as JSON
 	}
-	
+
 	/**
 	 *
 	 * Salva un valore in consul
@@ -180,7 +229,7 @@ class Ar4kActivitiController {
 		String chiave = request.JSON.chiave
 		String valore = request.JSON.valore
 		interfacciaContestoService.stato.consulBind.setKVValue(chiave, valore)
-		sendMessage("activemq:topic:interfaccia.eventi",[tipo:'KVAGGIUNTO',chiave:chiave,valore:valore])
+		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'KVAGGIUNTO',chiave:chiave,valore:valore] as JSON).toString())
 		render "ok"
 	}
 }

@@ -29,4 +29,21 @@ angular.module('sbAdminApp')
     		// or server returns response with an error status.
   		});
       };
+      
+    $scope.eliminavaso = function(vaso) {
+    	$http.post("${createLink(controller:'admin',action:'eliminaVaso',absolute:'true')}", {vaso:vaso})
+        .success(function(response) {
+    		    $http.get("${createLink(controller:'admin',action:'listaVasi',absolute:'true')}")
+    			.success(function (response) {$scope.vasi = response.vasi;});
+  		})
+  	  };
+  		
+  	$scope.salvacontestosuvaso = function(vaso) {
+    	$http.post("${createLink(controller:'admin',action:'salvaContestoSuVaso',absolute:'true')}", {vaso:vaso})
+        .success(function(response) {
+    		    $http.get("${createLink(controller:'admin',action:'listaVasi',absolute:'true')}")
+    			.success(function (response) {$scope.vasi = response.vasi;});
+  		})
+  	  };
+  		
   });

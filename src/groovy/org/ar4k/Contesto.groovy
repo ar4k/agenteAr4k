@@ -23,6 +23,8 @@
 
 package org.ar4k
 
+import groovy.transform.AutoClone;
+
 class Contesto {
 	/** id univoco contesto */
 	String idContesto = UUID.randomUUID()
@@ -40,6 +42,8 @@ class Contesto {
 	String consulKey = 'yIetiZno0c7464rOCaIThQ=='
 	/** dominio consul - inserire il punto finale come nella configurazione di Bind -*/
 	String dominioConsul = 'bottegaio.net.'
+	/** Datacenter vasi contesto - condivisibile tra più contesti - */
+	String datacenterConsul = 'caverna'
 	/** ricettari a disposizione del contesto*/
 	List<Ricettario> ricettari= []
 	/** interfacce collegate al contesto*/

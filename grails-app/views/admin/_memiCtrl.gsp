@@ -34,6 +34,10 @@ angular.module('sbAdminApp')
     
     $scope.azioneMemeFocus = '';
     
+    $scope.currentPage = 1;
+    $scope.entryLimit = 5; // items per page
+    $scope.totalItems = 0;
+        
   	$scope.dettagli = function(idProcesso) {
   			$scope.processfocus = $scope.splitta(idProcesso,0);
   			$scope.titolo = "Diagramma processo "+$scope.processfocus;
@@ -44,7 +48,12 @@ angular.module('sbAdminApp')
   	$scope.maschera = function(idProcesso) {
   			$scope.processfocus = $scope.splitta(idProcesso,0);
   			$scope.titoloMaschera = "Istanze attive di "+$scope.processfocus;
-        	$http.get("${createLink(controller:'Ar4kActiviti',action:'listaIstanze',absolute:'true')}?idProcesso="+idProcesso).success(function (response) {$scope.focusMaschera = response.istanze;});
+        	$http.get("${createLink(controller:'Ar4kActiviti',action:'listaIstanze',absolute:'true')}?idProcesso="+idProcesso).success(function (response) {
+        		$scope.focusMaschera = response.istanze;
+			    // Per task list
+				$scope.totalItems = $scope.focusMaschera.length;
+				//$scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+        	});
         	$scope.pannelloMaschera = true;
   	};
   	
@@ -71,7 +80,26 @@ angular.module('sbAdminApp')
 		};
 		
 	$http.get("${createLink(controller:'documentazione',action:'meme.md',absolute:'true')}")
-    .success(function (response) {$scope.memiHelp = response;});
+    	.success(function (response) {$scope.memiHelp = response;});
     
     $scope.focusDocumentazione=false;
+    
+    $scope.svolgiistanza = function(idIstanza) {
+    	  	$scope.titolo = "Esegui il compito "+idIstanza;
+        	$scope.focusPlay = "${createLink(controller:'Ar4kActiviti',action:'taskProcessoForm',absolute:'true')}?idTask="+idIstanza;
+        	$scope.pannelloPlay = true;
+    }
+    
+    $scope.setPage = function (pageNo) {
+    	$scope.currentPage = pageNo;
+  	};
+  })
+  .filter('startFrom', function () {
+	return function (input, start) {
+		if (input) {
+			start = +start;
+			return input.slice(start);
+		}
+		return [];
+	};
   });

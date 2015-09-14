@@ -10,7 +10,7 @@ class ActivitiEventListenerAr4k implements ActivitiEventListener {
 	@Override
 	public void onEvent(ActivitiEvent event) {
 		try {
-			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:activiti.eventi",[tipo:event.getType().toString(),processo:event.getProcessDefinitionId(),istanza:event.getProcessInstanceId(),esecuzione:event.getExecutionId()])
+			Holders.applicationContext.getBean("interfacciaContestoService").sendMessage("activemq:topic:activiti.eventi",([tipo:event.getType().toString(),processo:event.getProcessDefinitionId(),istanza:event.getProcessInstanceId(),esecuzione:event.getExecutionId()] as JSON).toString())
 		} catch (Exception ee){
 			log.info "Evento di Activiti non comunicato: "+ee.toString()
 		}

@@ -43,7 +43,7 @@
 </script>
 <div class="row">
 	<div class="embed-container-full">
-		<iframe name="consoleGrails" id="embed-iframe-full-id"
+		<iframe name="consoleGrails" width="100%" id="embed-iframe-full-id"
 			ng-src="<g:createLink controller='user' 
 			absolute='true'/>" class="panel panel-default embed-iframe-full"></iframe>
 	</div>

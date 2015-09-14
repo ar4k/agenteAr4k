@@ -34,45 +34,54 @@
 			<div class="modal-body">
 				<div class="modal-body">
 					<div class="container-fluid">
-
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 div4-padding"><h4>Id</h4></div>
-							<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 div4-padding"><h4>Attività</h4></div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right div4-padding"><h4>Azioni</h4></div>
-						</div>
-
-						<div ng-repeat="istanza in focusMaschera" ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'"
-							ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">
-							<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 div4-padding">{{istanza.id}}</div>
-							<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 div4-padding">{{istanza.activityId}}</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right div4-padding">
-								<button class="btn btn-circle btn-success btn-xs" type="button"
-									ng-click="svolgiistanza(istanza.id)" tooltip-placement="bottom"
-									tooltip="esegui il prossimo compito per questa istanza">
-									<i class="fa fa-play"></i>
-								</button>
-								<button class="btn btn-circle btn-warning btn-xs" type="button"
-									ng-click="sospendiistanza(istanza.id)"
-									tooltip-placement="bottom" tooltip="sospendi questa istanza">
-									<i class="fa fa-pause"></i>
-								</button>
-								<button class="btn btn-circle btn-danger btn-xs" type="button"
-									ng-click="eliminaistanza(istanza.id)"
-									tooltip-placement="bottom" tooltip="cancella questa istanza">
-									<i class="fa fa-stop"></i>
-								</button>
-								<button class="btn btn-circle btn-info btn-xs" type="button"
-									ng-click="assegnaistanza(istanza.id)"
-									tooltip-placement="bottom"
-									tooltip="assegna questa istanza ad un utente">
-									<i class="fa fa-user"></i>
-								</button>
+						<div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 div4-padding">
+									<h4>Id</h4>
+								</div>
+								<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 div4-padding">
+									<h4>Attività</h4>
+								</div>
+								<div
+									class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right div4-padding">
+									<h4>Azioni</h4>
+								</div>
+							</div>
+							<pagination total-items="totalItems" ng-model="currentPage" next-text="->" previous-text="<-"></pagination>
+							<div ng-repeat="istanza in focusMaschera | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
+								ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'"
+								ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">
+								<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 div4-padding">{{istanza.id}}</div>
+								<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 div4-padding">{{istanza.activityId}}</div>
+								<div
+									class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right div4-padding">
+									<button class="btn btn-circle btn-success btn-xs" type="button"
+										ng-click="svolgiistanza(istanza.taskid)"
+										tooltip-placement="bottom"
+										tooltip="esegui il prossimo compito per questa istanza">
+										<i class="fa fa-play"></i>
+									</button>
+									<button class="btn btn-circle btn-warning btn-xs" type="button"
+										ng-click="sospendiistanza(istanza.id)"
+										tooltip-placement="bottom" tooltip="sospendi questa istanza">
+										<i class="fa fa-pause"></i>
+									</button>
+									<button class="btn btn-circle btn-danger btn-xs" type="button"
+										ng-click="eliminaistanza(istanza.id)"
+										tooltip-placement="bottom" tooltip="cancella questa istanza">
+										<i class="fa fa-stop"></i>
+									</button>
+									<button class="btn btn-circle btn-info btn-xs" type="button"
+										ng-click="assegnaistanza(istanza.id)"
+										tooltip-placement="bottom"
+										tooltip="assegna questa istanza ad un utente">
+										<i class="fa fa-user"></i>
+									</button>
+								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
-
 			</div>
 			<div class="modal-footer">
 				<button data-dismiss="modal" ng-click="pannelloMaschera=false"
@@ -112,7 +121,7 @@
 			class="btn btn-warning btm-sm" type="button">Chiudi</button>
 	</div>
 	<div class="embed-container-full">
-		<iframe class="embed-iframe-full" ng-src="{{azioneMemeFocus}}" ></iframe>
+		<iframe class="embed-iframe-full" ng-src="{{azioneMemeFocus}}"></iframe>
 	</div>
 </div>
 
@@ -144,7 +153,8 @@
 							class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-lg-offset-3 col-md-offset-2 col-sm-offset-1 form-group input-group div4-padding">
 							<input placeholder="ricerca testuale" ng-model="queryRicerca"
 								class="form-control" /><span class="input-group-btn">
-								<button class="btn btn-default" type="button">
+								<button class="btn btn-default" type="button"
+									ng-click="queryRicerca=''">
 									<i class="fa fa-times"></i>
 								</button>
 							</span>
@@ -193,7 +203,8 @@
 								<!--  -->
 								&nbsp;
 								<p ng-repeat="funzionalitaSingola in meme.meme.funzionalita">
-									<strong>{{funzionalitaSingola}}</strong></p>
+									<strong>{{funzionalitaSingola}}</strong>
+								</p>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 div4-padding">
 								<!--  -->
@@ -203,29 +214,31 @@
 							<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10 div4-padding">
 								<div ng-repeat="processo in meme.processi">
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 well">
-										<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7"><i>{{processo.processo}}</i></div>
+										<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+											<i>{{processo.processo}}</i>
+										</div>
 										<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 text-right">
-										<button style="margin: 0.1em;"
-											class="btn btn-circle btn-warning btn-xs" type="button"
-											ng-click="$parent.maschera(processo.processo)"
-											tooltip-placement="bottom"
-											tooltip="visualizza le istanze attive per questo processo.">
-											<i>{{processo.istanze}}</i>
-										</button>
-										<button style="margin: 0.1em;"
-											class="btn btn-circle btn-info btn-xs" type="button"
-											ng-click="$parent.dettagli(processo.processo)"
-											tooltip-placement="top"
-											tooltip="visualizza la definizione del processo.">
-											<i class="fa fa-eye"></i>
-										</button>
-										<button style="margin: 0.1em;"
-											class="btn btn-circle btn-success btn-xs" type="button"
-											ng-click="$parent.mascheraNuovo(processo.processo)"
-											tooltip-placement="bottom"
-											tooltip="crea una nuova istanza per questo processo.">
-											<i class="fa fa-play"></i>
-										</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-warning btn-xs" type="button"
+												ng-click="$parent.maschera(processo.processo)"
+												tooltip-placement="bottom"
+												tooltip="visualizza le istanze attive per questo processo.">
+												<i>{{processo.istanze}}</i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-info btn-xs" type="button"
+												ng-click="$parent.dettagli(processo.processo)"
+												tooltip-placement="top"
+												tooltip="visualizza la definizione del processo.">
+												<i class="fa fa-eye"></i>
+											</button>
+											<button style="margin: 0.1em;"
+												class="btn btn-circle btn-success btn-xs" type="button"
+												ng-click="$parent.mascheraNuovo(processo.processo)"
+												tooltip-placement="bottom"
+												tooltip="crea una nuova istanza per questo processo.">
+												<i class="fa fa-play"></i>
+											</button>
 										</div>
 									</div>
 								</div>

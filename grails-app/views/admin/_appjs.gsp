@@ -12,6 +12,7 @@ angular
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
+    //'ngAnimate',
     'angular-loading-bar',
     'hc.marked',
     'restangular'
@@ -307,6 +308,27 @@ angular
        templateUrl:'admin/app/views/ui-elements/grid.html',
        url:'/grid'
    })
-  }]);
+  }])
+.controller('taskCtrl', function($scope,$http,$filter) {
+	$scope.pannelloMain=false;
+	$scope.focusMain='';
+	
+    $scope.svolgiistanza = function(idTask) {
+       	$scope.focusMain = "${createLink(controller:'Ar4kActiviti',action:'taskProcessoForm',absolute:'true')}?idTask="+idTask;
+       	$scope.pannelloMain = true;
+       	};
 
+    $http.get("${createLink(controller:'ar4kActiviti',action:'listaTask',absolute:'true')}")
+    	.success(function (response) {
+    		$scope.tasks = response.tasks;
+    		$scope.numeroTasks = response.conto;
+    		}); 
+    $scope.aggiornaDaMessaggio = function() {
+    	$http.get("${createLink(controller:'ar4kActiviti',action:'listaTask',absolute:'true')}")
+    		.success(function (response) {
+    			$scope.tasks = response.tasks;
+    			$scope.numeroTasks = response.conto;
+    			}); 
+  		};
+});
     
