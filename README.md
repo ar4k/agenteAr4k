@@ -21,7 +21,7 @@ alt="Rossonet" width="640" height="360" border="10" /></a>
 La [spin Rossonet](http://www.rossonet.org/archives/94) di [Fedora 21](http://it.wikipedia.org/wiki/Fedora_%28informatica%29) è predisposta per contenere tutti gli strumenti utili per lo sviluppo sulla piattaforma Ar4k.
 
 
-Un'installazione Ar4k funzionante è composta da due elementi: un ambiente JVM in cui eseguire agenteAr4k e un account ssh su una macchina Linux che ospita il broker di rete [ActiveMQ](http://activemq.apache.org/) e i servizi per la gestione dell'infrastruttura cloud gestiti con [Consul](https://www.consul.io/).
+Un'installazione Ar4k funzionante è composta da due elementi: un ambiente JVM in cui eseguire agenteAr4k e un account ssh su una macchina Linux che ospita il broker [ActiveMQ](http://activemq.apache.org/) e i servizi per la gestione dell'infrastruttura cloud gestiti con [Consul](https://www.consul.io/).
 
 ####Procedure ambiente di sviluppo agenteAr4k
 
@@ -84,7 +84,7 @@ Un sistema Ar4k operativo è composto da vari servizi e componenti logici. L'int
 " target="_blank"><img src="http://img.youtube.com/vi/HQIvqNOF4l4/0.jpg" 
 alt="Rossonet" width="640" height="360" border="10" /></a>
 
-Dopo la compilazione e l'avvio dell'applicazione Java, sarà possibile collegarsi alla maschera principale su http://<indirizzo server>:6630/AgenteAr4k. Se l'ambiente viene lanciato come singolo pacchetto jar, l'interfaccia sarà raggiungibile su http://<indirizzo server>:6630/ -senza AgenteAr4k-.
+Dopo la compilazione e l'avvio dell'applicazione Java, sarà possibile collegarsi alla maschera principale su http://indirizzo server:6630/AgenteAr4k. Se l'ambiente viene lanciato come singolo pacchetto jar, l'interfaccia sarà raggiungibile su http://indirizzo server:6630/ -senza AgenteAr4k finale-.
 
 ![alt text](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/prima-configurazione-benvenuto.png "Maschera di benvenuto BootStrap").
 
