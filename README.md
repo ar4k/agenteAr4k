@@ -1,5 +1,5 @@
 #agenteAr4k
-Template applicazione AR4K
+Interfaccia Java sistema AR4K
 
 ![alt text](http://www.rossonet.org/wp-content/uploads/2015/01/logoRossonet4.png "Rossonet")
 
@@ -10,11 +10,22 @@ Per maggiori dettagli sulla licenza rimando a [questa voce](http://it.wikipedia.
 
 ![alt text](https://www.gnu.org/graphics/gplv3-88x31.png "LGPL Logo")
 
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=_eW1PRixyA0
+" target="_blank"><img src="http://img.youtube.com/vi/_eW1PRixyA0/0.jpg" 
+alt="Rossonet" width="640" height="360" border="10" /></a>
+
+
 ###Guida rapida per il deploy
 
 La [spin Rossonet](http://www.rossonet.org/archives/94) di [Fedora 21](http://it.wikipedia.org/wiki/Fedora_%28informatica%29) è predisposta per contenere tutti gli strumenti utili per lo sviluppo sulla piattaforma Ar4k.
 
+
+Un'installazione Ar4k funzionante è composta da due elementi: un ambiente JVM in cui eseguire agenteAr4k e un account ssh su una macchina Linux che ospita il broker di rete [ActiveMQ](http://activemq.apache.org/) e i servizi per la gestione dell'infrastruttura cloud gestiti con [Consul](https://www.consul.io/).
+
 ####Procedure ambiente di sviluppo agenteAr4k
+
+La procedura illustrata vale per macchine Unix/Linux (il codice è per una sessione di [Bash](https://it.wikipedia.org/wiki/Bash)) 
 
 Per scaricare l'intero sistema:
 ```bash
@@ -63,65 +74,55 @@ Per creare un war installabile su Tomcat >= 7
 
 ##Autenticazione demo: admin/rossonet2012
 
-###Perchè questo progetto?
+###Descrizione ambiente
 
->
-> Da fare:
-> - scelte progettuali e sponsorship.
-> - modello di business cooperativa produzione lavoro e comunità.
-> - localizzazione territoriale ed eventuale partnership con associazioni.
-> - valorizzazione del modello open source nel contesto locale (con particolare attenzione ai vantaggi della scelta open nelle imprese)
-> - compatibilità RedHat
-> - integrazione Acantho
-> - integrazione CloudPlugs
-> - il mondo 3D
->
+Un sistema Ar4k operativo è composto da vari servizi e componenti logici. L'interfaccia è responsabile per la gestione dei processi [Activiti](http://activiti.org/) e l'erogazione dei servizi web. L'interfaccia può lavorare in due modalità: bootstrap del sistema o interfaccia amministrativa.
 
-####Storia del progetto
+####BootStrap sistema Ar4k da interfaccia
 
->
-> Da fare: verificare chi vuole essere citato.
->
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=HQIvqNOF4l4
+" target="_blank"><img src="http://img.youtube.com/vi/HQIvqNOF4l4/0.jpg" 
+alt="Rossonet" width="640" height="360" border="10" /></a>
 
-####L'architettura software (la nostra proposta)
+Dopo la compilazione e l'avvio dell'applicazione Java, sarà possibile collegarsi alla maschera principale su http://<indirizzo server>:6630/AgenteAr4k. Se l'ambiente viene lanciato come singolo pacchetto jar, l'interfaccia sarà raggiungibile su http://<indirizzo server>:6630/ -senza AgenteAr4k-.
 
-La classe principale su cui operare è [AccoppiatoreService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/AccoppiatoreService.groovy). Il file è ampiamente commentato.
+![alt text](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/prima-configurazione-benvenuto.png "Maschera di benvenuto BootStrap").
 
-[**Documentazione completa delle classi e metodi**](http://rossonet.github.io/agenteAr4k/web-app/docs/gapi/index.html)
+L'interfaccia è ampiamente documentata. I passi principali per avviare il sistema sono:
+1. configurare il nodo ssh -chiamato [vaso](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/vaso.md)- nel sistema;
+2. selezionare il contesto tra quelli disponibili sul vaso;
+3. selezionare l'interfaccia tra quelle disponibili nel contesto;
+4. configurare l'utenza amministrativa base.
 
-> 
-> - Target del progetto
-> - Infrastuttura per lo sviluppo in cloud
-> - Curva di apprendimento
-> - Ambiente di sviluppo AngularJS
-> - Ambiente user space Linux
-> - Servizi SSH
->
+![alt text](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/prima-configurazione-ssh.png "Configurazione SSH accesso al vaso master").
 
->
-> Da fare: 
-> - schema architettura da foto lavagna
-> - descrizione parte Angular
-> - descrizione parte Service Java
-> - descrizione parte SSH e tunnel autossh
-> - integrazione noVNC e Term.js
-> - descrizione modello dati e sua gestione tramite ssh
-> - rimando a repository ssh
->
+![alt text](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/bootstrap-scelta-interfaccia.png "Bootstrap interfaccia").
 
-###Note sull'adozione di git come repository
+![alt text](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/bootstrap-prima-utenza.png "Configurazione utenza amministrativa").
 
->
-> Da fare:
-> - separazione dell'infrastruttura e del codice progetto in due repository distinti
-> - agenteAr4k open source
-> - repository master ssh privato
-> - creazione repository base ssh su GitHub
-> - rendicontazione delle ore/lavoro con riferimento a git
-> - guida operativa script in bin per la gestione di git
->
+#### Ambiente Operativo Ar4k
 
-###Descrizione ambiente di sviluppo
+![alt text](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/IMG_20150908_231216.jpg "Schema generale API AngularJS").
+
+Dopo il bootstrap -o tramite un file di configurazione predisposto da [questo template]([AgenteAr4k-config.groovy_template](https://github.com/rossonet/agenteAr4k/blob/master/AgenteAr4k-config.groovy_template))- il sistema offrirà i seguenti servizi:
+
+...da completare... 
+
+#### Sviluppare memi per Ar4k
+
+##### Documentazione Ar4k
+
+1. [Memoria](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/memoria.md)
+2. [Meme](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/meme.md)
+3. [Rete](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/rete.md)
+4. [Ricettario](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/ricettario.md)
+5. [Servizio](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/servizio.md)
+6. [Vaso](https://github.com/rossonet/agenteAr4k/blob/master/web-app/documentazione/vaso.md)
+
+7. [Groovy API Ar4k](http://rossonet.github.io/agenteAr4k/web-app/docs/gapi/index.html)
+8. [JavaDoc API Ar4k](http://rossonet.github.io/agenteAr4k/web-app/docs/api/index.html)
+
+###Componenti Software
 
 ####Grails
 
@@ -131,7 +132,7 @@ Versione Grails 2.4.4
 
 [IDE](http://spring.io/tools/ggts)
 
-Con ./compila.sh si ottiene un jar eseguibile con java -jar (nome file).jar
+Con ./compila.sh si ottiene un jar eseguibile con "java -jar (nome file).jar"
 Per configurare il tomcat 7.0.55 integrato editare [Launcher.java](https://github.com/rossonet/agenteAr4k/blob/master/src/java/grails/plugin/standalone/Launcher.java)
 
 Per configurare il prodotto, salvare nella directory home dell'utente che esegue Java il file di configurazione ottenuto compilando il template [AgenteAr4k-config.groovy_template](https://github.com/rossonet/agenteAr4k/blob/master/AgenteAr4k-config.groovy_template) e posizionandolo in .rossonet/(nome app)-config.groovy
@@ -139,13 +140,17 @@ Per configurare il prodotto, salvare nella directory home dell'utente che esegue
 ####Spring Security
 
 I domini Grails Utente, Ruolo, UtenteRuolo e OAuthID contengono i dati relativi all'autenticazione;
-all'avvio l'applicativo configura i ruoli ROLE_ADMIN, ROLE_USER, ROLE_MASTER e ROLE_REGISTRATO e l'utente admin con password rossonet2012 (Per configurare un utente differente configurare il file .rossonet/(nome app)-config.groovy con i relativi parametri.)
+all'avvio l'applicativo configura i ruoli ROLE_ADMIN, ROLE_USER, ROLE_MASTER, ROLE_SISTEMISTA e ROLE_REGISTRATO e l'utente admin con password rossonet2012 (Per configurare un utente differente configurare il file .rossonet/(nome app)-config.groovy con i relativi parametri.)
 
 I permessi sono configurabili in [Config.grovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/conf/Config.groovy). Sempre in Config.groovy sono editabili i testi delle mail per la registrazione e il recupero della password.
 
-Gli utenti registrati sono configurati nel ruolo ROLE_REGISTRATO, quelli riconosciuti tramite social auth nel ruolo ROLE_USER.
+Gli utenti appena registrati -anche tramite social auth- sono configurati nel ruolo ROLE_REGISTRATO, per renderli operativi sul sistema devono acquisire il ruolo ROLE_USER.
 
-Il servizio di utilità per l'autenticazione è [ProcedureService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/ProcedureService.groovy).
+####Activiti
+
+Activiti è BPMS open source disponibile in Java per l'integrazione in altri applicativi. La documentazione specifica della versione adottata da Ar4k è disponibile qui: [documentazione Activiti](http://www.activiti.org/userguide/)
+
+Le classi Java sono ispezionabili su [JavaDoc Activiti API](http://activiti.org/javadocs/)
 
 ####Mail Server
 
@@ -176,8 +181,6 @@ Installato [il plugin Jasper](https://grails.org/plugin/jasper) in Grails.
 
 Il sistema agisce sui nodi attraverso il protocollo [SSH](http://it.wikipedia.org/wiki/Secure_shell), più nello specifico utilizzando la libreria Java [Jsch](http://www.jcraft.com/jsch/).
 
-Nel file [SshService.groovy](https://github.com/rossonet/agenteAr4k/blob/master/grails-app/services/org/ar4k/SshService.groovy) sono implementati i servizi base di connessione SSH utilizzati dagli oggetti della piattaforma.
-
 ####WebSocket
 
 Integrato in Grails [atmosphere-meteor plugin](https://grails.org/plugin/atmosphere-meteor).
@@ -202,18 +205,11 @@ Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [Pi
 > Da completare
 >
 
-####Configurazione Oggetti e relazione con repository di progetto
-
->
-> da fare. Javadoc?
->
-
-####Gestione DNS
+####Consul
 
 >
 > completamente da implementare...
-> - integrazione OpenShift
-> - integrazione provider esterni?
+> - integrazione dns
 >
 
 ####FrontEnd Web in Angular.js
@@ -231,117 +227,23 @@ Una schedulazione che stampa la memoria libera ogni 10 min è configurata in [Pi
 ###Casi d'uso
 
 >
-> Da discutere in Rossonet e con clienti
+> Da dimplementare
 >
 
 
 ## TODO
 
-###A FINE MAGGIO 2015
+###A FINE OTTOBRE 2015
 
 1. Completare integrazione Kettle
 2. Porting ambienti produzione Rossonet
 3. Integrazione con [RCloud](https://github.com/rossonet/Strumenti-RCloud);
 4. Import repository remoti automaticamente da web in funzione dell'identificativo;
-5. Integrare [noVNC](https://github.com/kanaka/noVNC);
-6. Integrare [tty.js](https://github.com/chjj/tty.js);
 
 ###SENZA SCADENZA
 
 1. File kickstart per installazione su CentOS 6.x CentOS 7.x Fedora 21 RHEL7;
-2. Validare il repository su OpenShift Origin e RH OpenShift Online;
-3. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org);
-4. Integrarare Activiti in AccoppiatoreService;
-5. Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
-6. Semplificazione inizio progetto con agenteAr4k (wizard bootstrap agenteAr4k);
-
-## Prodotti open source integrati/integrabili nel sistema
-
-###Linux
-
-> Articoli Torvalds
-
-###Networking
-
-
-###Integrazione Microsof™
-
-> da definire con un amico inglese
-
-###Git
-
-
-###Java
-
-
-###Groovy
-
-
-###CentOS
-
-
-###RedHat EL
-
-
-###OpenShift Origin
-
-
-###Openshift
-
-
-###Spring
-
-
-###Grails
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=XrDXqoomws4
-" target="_blank"><img src="http://img.youtube.com/vi/XrDXqoomws4/0.jpg" 
-alt="Rossonet" width="640" height="360" border="10" /></a>
-
-
-###SSH
-
-
-###Pentaho Data Integration (aka Kettle)
-
-
-###AngularJS
-
-
-###Twitter BootStrap
-
-
-###OpenLayers
-
-
-###D3.js
-
-
-###JasperReport
-
-
-###Bash e Chef
-
-
-###JSoup
-
-
-###JCloud
-
-
-###Integrazione VOIP
-
-> da definire
-
-###ImageMagic
-
-> da definire
-
-###Gestione QR
-
-> da definire
-
-###Proxy Apache
-
-> da definire
-
+2. Integrare [OpenJSCAD](https://github.com/Spiritdude/OpenJSCAD.org);
+3. Procedura di connessione remota in modalità automatica (con sniffer o meno), manuale, da Olark;
+4. Integrare D3.js, OpenLayer;
+5. Valutare Hawtio;
