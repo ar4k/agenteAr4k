@@ -45,5 +45,16 @@ angular.module('sbAdminApp')
     			.success(function (response) {$scope.vasi = response.vasi;});
   		})
   	  };
-  		
+  	  
+  	$scope.resettasuvaso = function(vaso) {
+    	$http.post("${createLink(controller:'admin',action:'resettaInterfacciaSuVaso',absolute:'true')}", {vaso:vaso})
+        .success(function(response) {
+        		setTimeout(
+  				function() 
+  				{
+    				window.location.href="${createLink(controller:'bootStrap',action:'boot',absolute:'true')}";
+ 				}, 2000);
+  		})
+  	  };	
+  	  
   });

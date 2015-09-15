@@ -74,6 +74,11 @@ angular.module('sbAdminApp')
         	$scope.azioneMemePlay = true;
   		};
   		
+  	$scope.cancellaMeme = function(idMeme) {
+        	$scope.azioneMemeFocus = "${createLink(controller:'Ar4kActiviti',action:'cancellaMeme',absolute:'true')}?idMeme="+idMeme;
+        	$scope.azioneMemePlay = true;
+  		};
+  		
   	$scope.splitta = function(string, nb) {
     		$scope.array = string.split(':');
     		return $scope.result = $scope.array[nb];

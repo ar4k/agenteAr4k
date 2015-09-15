@@ -55,6 +55,19 @@ class Interfaccia {
 			portaActiveMQ:portaActiveMQ
 		]
 	}
+	
+	Interfaccia importa(Map json){
+		log.info("importa() l'interfaccia: "+json.idInterfaccia)
+		Interfaccia interfacciaCreata = new Interfaccia(
+			idInterfaccia:json.idInterfaccia,
+			etichetta:json.etichetta,
+			descrizione:json.descrizione,
+			grafica:new TemplateInterfaccia(json.grafica),
+			portaConsul:json.portaConsul,
+			portaActiveMQ:json.portaActiveMQ
+			)	
+		return interfacciaCreata
+	}
 
 	/** metodo descrizione */
 	String toString() {

@@ -129,7 +129,7 @@
 								</button>
 								<button style="margin: 0.1em;"
 									class="btn btn-circle btn-warning btn-xs" type="button"
-									ng-click="$parent.dettagli(meme.idMeme)"
+									ng-click="$parent.resettasuvaso(vaso.vaso.idVaso)"
 									tooltip-placement="bottom"
 									tooltip="resetta l'interfaccia attuale e inizia il bootstrap sul nodo.">
 									<i class="fa fa-bolt"></i>

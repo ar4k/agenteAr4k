@@ -20,6 +20,8 @@
 
 package org.ar4k
 
+import grails.converters.JSON;
+
 import org.activiti.engine.identity.User
 
 class Utente implements User{
@@ -86,6 +88,29 @@ class Utente implements User{
 			passwordExpired:passwordExpired,
 			oAuthIDs:oAuthIDs*.esporta()
 		]
+	}
+	
+	Utente importa(Map json){
+		log.info("importa() l'utente: "+json.username)
+		Utente utenteCreato = new Utente(
+			username:json.username,
+			password:json.password,
+			firstName:json.firstName,
+			lastName:json.lastName,
+			email:json.email,
+			sms:json.sms,
+			jabber:json.jabber,
+			workingTime:json.workingTime,
+			dateCreated:json.dateCreated,
+			lastUpdated:json.lastUpdated,
+			avatar:json.avatar,
+			enabled:json.enabled,
+			accountExpired:json.accountExpired,
+			accountLocked:json.accountLocked,
+			passwordExpired:json.passwordExpired
+			)
+		json.oAuthIDs.each{utenteCreato.oAuthIDs.add(new OAuthID(it))}
+		return utenteCreato
 	}
 
 	Set<Ruolo> getAuthorities() {

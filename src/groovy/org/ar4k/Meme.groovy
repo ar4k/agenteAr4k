@@ -16,9 +16,9 @@
 package org.ar4k
 
 import org.activiti.engine.ProcessEngine;
+
 import grails.converters.JSON
 import grails.util.Holders
-
 import groovy.transform.AutoClone
 
 @AutoClone
@@ -53,6 +53,8 @@ class Meme {
 	List<Metodo> metodi = []
 	/** stati possibili del meme */
 	List<StatoMeme> stati = []
+	/** maschera disinstallazione (verrà interpretata da grails) */
+	String disinstallazione = '<div>INTERFACCIA DISINSTALLAZIONE</div>'
 
 	/** carica i processi disponibili nel motore Activiti */
 	Boolean caricaProcessiActiviti(Vaso vasoMaster,ProcessEngine processEngine) {
@@ -84,11 +86,35 @@ class Meme {
 			icona:icona,
 			stato:stato,
 			autoStart:autoStart,
+			disinstallazione:disinstallazione,
 			stati:stati*.esporta(),
 			dipendenze:dipendenze,
 			funzionalita:funzionalita,
 			metodi:metodi*.esporta()
 		]
+	}
+	
+	Meme importa(Map json){
+		log.info("importa() il meme: "+json.idMeme)
+		Meme memeCreato = new Meme(
+			idMeme:json.idMeme,
+			etichetta:json.etichetta,
+			descrizione:json.descrizione,
+			autore:json.autore,
+			gestore:json.gestore,
+			versione:json.versione,
+			versioniCompatibili:json.versioniCompatibili,
+			icona:json.icona,
+			stato:json.stato,
+			autoStart:json.autoStart,
+			disinstallazione:json.disinstallazione,
+			dipendenze:json.dipendenze,
+			funzionalita:json.funzionalita
+			)
+		json.metodi.each{memeCreato.metodi.add(new Metodo(it))}
+		json.stati.each{memeCreato.stati.add(new StatoMeme(it))}
+
+		return memeCreato
 	}
 
 	String toString() {

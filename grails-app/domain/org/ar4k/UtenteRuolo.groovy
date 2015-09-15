@@ -16,6 +16,8 @@
 
 package org.ar4k
 
+import grails.converters.JSON;
+
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 class UtenteRuolo implements Serializable {
@@ -32,6 +34,15 @@ class UtenteRuolo implements Serializable {
 			utente:utente.esporta(),
 			ruolo:ruolo.esporta()
 		]
+	}
+	
+	UtenteRuolo importa(Map json){
+		log.info("importa() l'utente-ruolo: "+json.utente.username+"-"+json.ruolo.authority)
+		UtenteRuolo utenteRuoloCreato = new UtenteRuolo(
+			utente:new Utente().importa(json.utente),
+			ruolo:new Ruolo().importa(json.ruolo),
+			)
+		return utenteRuoloCreato
 	}
 
 	boolean equals(other) {

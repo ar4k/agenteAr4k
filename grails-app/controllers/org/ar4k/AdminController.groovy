@@ -18,6 +18,8 @@
  */
 
 package org.ar4k
+import java.util.List;
+
 import javax.swing.text.html.HTML
 
 import org.activiti.engine.FormService
@@ -36,6 +38,7 @@ import groovy.json.*
 class AdminController {
 
 	InterfacciaContestoService interfacciaContestoService
+	BootStrapService bootStrapService
 	RepositoryService repositoryService
 	FormService formService
 	RuntimeService runtimeService
@@ -307,7 +310,8 @@ class AdminController {
 	 * Salva il contesto in consul KV
 	 */
 	def salvaContestoinKV() {
-		interfacciaContestoService.stato.consulBind.setKVValue("contesto_"+new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")), interfacciaContestoService.contesto.esporta().toString())
+		JSON contestoJson = interfacciaContestoService.contesto.esporta() as JSON
+		interfacciaContestoService.stato.consulBind.setKVValue("contesto_"+new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")), contestoJson.toString())
 		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'KVSALVATAGGIOCONTESTO',contesto:interfacciaContestoService.contesto.descrizione] as JSON).toString())
 		render "ok"
 	}
@@ -316,12 +320,46 @@ class AdminController {
 		String vasoRicerca = request.JSON.vaso
 		Vaso vasoTarget = interfacciaContestoService.contesto.vasi.find{ vaso -> vaso.idVaso == vasoRicerca}
 		String vasoEtichetta = vasoTarget.etichetta
-		Contesto contestoDaSalvare = new Contesto()
-		contestoDaSalvare = interfacciaContestoService.contesto
+		Contesto contestoDaSalvare = interfacciaContestoService.contesto
 		vasoTarget.salvaContesto(contestoDaSalvare)
 		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'VASOSALVATAGGIOCONTESTO',contesto:interfacciaContestoService.contesto.descrizione,vaso:vasoEtichetta] as JSON).toString())
 		render "ok"
 	}
+
+	def salvaContestoDaKVsuMaster() {
+		JsonSlurper jsonSlurper = new JsonSlurper()
+		Map dato = jsonSlurper.parseText(request.JSON.dato)
+		Contesto contestoCaricato = new Contesto().importa(dato)
+		contestoCaricato.salva()
+		render 'ok'
+	}
+	
+	def resettaInterfacciaSuVaso() {
+		String idVasoTarget = request.JSON.vaso
+		Vaso vasoTarget = interfacciaContestoService.contesto.vasi.find{it.idVaso == idVasoTarget}
+		bootStrapService.macchinaMaster = vasoTarget.macchina
+		bootStrapService.portaMaster = vasoTarget.porta
+		bootStrapService.utenteMaster = vasoTarget.utente
+		bootStrapService.keyMaster = vasoTarget.key
+		bootStrapService.idContestoScelto = null
+		bootStrapService.idInterfacciaScelta = null
+		bootStrapService.inAvvio = true
+		bootStrapService.inReset = true
+		bootStrapService.contestoScelto = false
+		bootStrapService.interfacciaScelta = false
+		bootStrapService.configurato = true
+		bootStrapService.raggiungibile = true
+		bootStrapService.contesto = null
+		bootStrapService.interfaccia = null
+		bootStrapService.contestiInMaster = []
+		bootStrapService.interfacceInContesto = []
+		bootStrapService.utentiInContesto = []
+		interfacciaContestoService.connessioneConsul.finalize() 
+		interfacciaContestoService.connessioneActiveMQ.finalize() 
+		interfacciaContestoService.connnessioniSSH.each{it.finalize()}
+		render 'ok'
+	}
+
 
 	/**
 	 *
@@ -379,7 +417,7 @@ class AdminController {
 	def aggiungiRicettario() {
 		def ricettario = request.JSON.ricettario
 		log.info("Richiesta aggiunta ricettario: "+ricettario)
-		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'RICETTARIOAGGIUNTO',messaggio:request.JSON.ricettario.toString()] as JSON).toString())
+		sendMessage("activemq:topic:interfaccia.eventi",([tipo:'RICETTARIOAGGIUNTO',messaggio:request.JSON.ricettario] as JSON).toString())
 		RepositoryGit repositoryGit = new RepositoryGit(indirizzo:ricettario.repo,nomeCartella:ricettario.cartella)
 		if (
 		interfacciaContestoService.contesto.ricettari.add(

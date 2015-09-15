@@ -74,6 +74,8 @@ class BootStrapService {
 	Boolean interfacciaScelta = false
 	/** vero se il nodo master è funzionante completamente  */
 	Boolean inAvvio = true
+	
+	Boolean inReset = false
 
 	/** contesto interfaccia */
 	Contesto contesto
@@ -196,8 +198,10 @@ class BootStrapService {
 					ritorno = true
 					log.info("Attestato sul contesto "+contesto)
 					idContestoScelto = contesto.idContesto
-					interfacceInContesto = contesto.interfacce
+					interfacceInContesto = []
+					contesto.interfacce.each{interfacceInContesto.add(it)}
 					log.info("Interfacce trovate nel contesto "+interfacceInContesto)
+					utentiInContesto = []
 					contesto.utentiRuoli.each{utentiInContesto.add(it)}
 					log.info("UtentiRuolo trovati nel contesto "+utentiInContesto)
 				}

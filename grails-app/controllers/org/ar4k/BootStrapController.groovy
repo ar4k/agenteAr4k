@@ -33,12 +33,17 @@ class BootStrapController {
 				if (bootStrapService.inAvvio == false) {
 					return completata()
 				} else {
+				if (bootStrapService.inReset == true) {
+					return reset()
+				} else {
 					return success()
+				}
 				}
 			}
 			on ("success"){[verifica:bootStrapService.verificaConnettivitaInterfaccia()]}.to "showBenvenuto"
 			on (Exception).to "showBenvenuto"
 			on ("completata").to("completata")
+			on ("reset").to("verificaMaster")
 		}
 
 		showBenvenuto {
@@ -94,10 +99,10 @@ class BootStrapController {
 
 		verificaMaster {
 			action {
-				bootStrapService.macchinaMaster = params.indirizzoMaster?:''
-				bootStrapService.portaMaster = params.portaMaster?.toInteger()?:0 // Per evitare problemi in caso di Integer null
-				bootStrapService.utenteMaster = params.utenteMaster?:''
-				bootStrapService.keyMaster = params.chiaveMaster?:''
+				bootStrapService.macchinaMaster = params.indirizzoMaster?:bootStrapService.macchinaMaster
+				bootStrapService.portaMaster = params.portaMaster?.toInteger()?:bootStrapService.portaMaster // Per evitare problemi in caso di Integer null
+				bootStrapService.utenteMaster = params.utenteMaster?:bootStrapService.utenteMaster
+				bootStrapService.keyMaster = params.chiaveMaster?:bootStrapService.keyMaster
 				log.info("Verifica l'accesso a "+bootStrapService.utenteMaster+"@"+bootStrapService.macchinaMaster+":"+bootStrapService.keyMaster)
 				if (bootStrapService.caricaVasoMaster()) {
 					log.info("Verifica connessione master completata...")
@@ -126,8 +131,8 @@ class BootStrapController {
 
 		testProxyMaster {
 			action {
-				bootStrapService.proxyMasterInternet=params.proxyMaster?:''
-				bootStrapService.passwordProxyMasterInternet=params.passwordProxyMaster?:''
+				bootStrapService.proxyMasterInternet=params.proxyMaster?:bootStrapService.proxyMasterInternet
+				bootStrapService.passwordProxyMasterInternet=params.passwordProxyMaster?:bootStrapService.passwordProxyMasterInternet
 				Boolean risultato = false
 				if (bootStrapService.proxyMasterInternet=='NO NETWORK TEST') {
 					bootStrapService.escludiProveConnessioneVaso = true // per disabilitare test di rete

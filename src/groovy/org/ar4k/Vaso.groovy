@@ -30,6 +30,7 @@ import grails.converters.JSON
 import groovy.json.JsonSlurper
 
 import java.util.zip.ZipInputStream
+
 import grails.util.Holders
 
 class Vaso {
@@ -77,6 +78,26 @@ class Vaso {
 			javaVersion:javaVersion,
 			proxy:proxy
 		]
+	}
+	
+	Vaso importa(Map json){
+		log.info("importa() il vaso: "+json.idVaso)
+		Vaso vasoCreato = new Vaso(
+			idVaso:json.idVaso,
+			etichetta:json.etichetta,
+			descrizione:json.descrizione,
+			macchina:json.macchina,
+			porta:json.porta,
+			utente:json.utente,
+			key:json.key,
+			sudo:json.sudo,
+			path:json.path,
+			uname:json.uname,
+			funzionalita:json.funzionalita,
+			javaVersion:json.javaVersion,
+			proxy:json.proxy
+			)
+		return vasoCreato
 	}
 
 	/** verifica la raggiungibilità di internet dal vaso */
@@ -305,13 +326,13 @@ class Vaso {
 		comandoRicerca += "find . -name '*.json'"
 		def ricerca = esegui(comandoRicerca).tokenize('\n')
 		ricerca.each{
-			def jsonSlurper = new JsonSlurper()
+			JsonSlurper jsonSlurper = new JsonSlurper()
 			String fileJson = esegui("cd ~/.ar4k/contesti/; cat "+it)
 			log.info("lettura "+it+" \n"+fileJson+"\n")
 			if (!fileJson) fileJson = '{"etichetta":"vuoto","descrizione":"nessun contesto in '+it+'"}'
 			try {
-				def contestoTarget = jsonSlurper.parseText(fileJson)
-				Contesto contestoOggetto = new Contesto(contestoTarget)
+				Contesto contestoOggetto = new Contesto().importa(jsonSlurper.parseText(fileJson) as Map)
+				log.info("Trovato contesto: "+contestoOggetto.esporta())
 				contesti.add(contestoOggetto)
 			} catch(Exception e) {
 				log.warn(e.printStackTrace())

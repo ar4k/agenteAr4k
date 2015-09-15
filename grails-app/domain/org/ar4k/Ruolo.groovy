@@ -16,6 +16,8 @@
 
 package org.ar4k
 
+import grails.converters.JSON;
+
 import org.activiti.engine.identity.Group
 
 class Ruolo implements Group {
@@ -30,6 +32,14 @@ class Ruolo implements Group {
 		return [
 			authority:authority
 		]
+	}
+	
+	Ruolo importa(Map json){
+		log.info("importa() il ruolo: "+json.authority)
+		Ruolo ruoloCreato = new Ruolo(
+			authority:json.authority
+			)
+		return ruoloCreato
 	}
 
 	static mapping = {

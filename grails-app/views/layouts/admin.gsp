@@ -86,11 +86,13 @@
 	<script
 		src="admin/bower_components/restangular/dist/restangular.min.js"></script>
 	<script src="admin/bower_components/lodash/dist/lodash.min.js"></script>
-	<script src="admin/bower_components/angular-animate/angular-animate.min.js"></script>
+	<script
+		src="admin/bower_components/angular-animate/angular-animate.min.js"></script>
 	<script src="admin/bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
 </g:if>
 
 <script src="admin/bower_components/angular-lodash/angular-lodash.js"></script>
+<link rel="stylesheet" href="admin/jsoneditor.css" type="text/css">
 
 
 
@@ -133,7 +135,10 @@
 	height: 100%;
 	width: 100%;
 }
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.nav, .pagination, .carousel, .panel-title a {
+	cursor: pointer;
+}
 </style>
 
 </head>
@@ -401,6 +406,8 @@
 					case 'TASK_CREATED': messaggio = 'Task di processo '+jsonMessaggio.processo+' creato per istanza '+jsonMessaggio.istanza; break;
 					case 'CONTESTOSALVATO': messaggio = jsonMessaggio.messaggio; break;
 					case 'VASOSALVATAGGIOCONTESTO': messaggio = 'Salvato il contesto '+jsonMessaggio.contesto+' nel vaso '+jsonMessaggio.vaso; break;
+					case 'RICETTARIOAGGIUNTO': messaggio = 'Aggiunto il ricettario '+jsonMessaggio.messaggio.etichetta; break;
+					case 'RICETTARIOELIMINATO': messaggio = 'Eliminato il ricettario '+jsonMessaggio.messaggio; break;
 					default: messaggio = messaggio; break;
 				}
 				var testo = document.createTextNode(" "+messaggio);

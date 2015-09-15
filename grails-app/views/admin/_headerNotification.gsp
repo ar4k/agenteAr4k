@@ -1,6 +1,6 @@
 <div ng-controller="taskCtrl">
-	<div aria-hidden="false" aria-labelledby="FullScreenModal" role="dialog"
-		tabindex="-1" id="fullScreenModal" class="modal fade in"
+	<div aria-hidden="false" aria-labelledby="FullScreenModal"
+		role="dialog" tabindex="-1" id="fullScreenModal" class="modal fade in"
 		ng-show="pannelloMain"
 		style="display: block; left: 1em; right: 1em; bottom: 1em; top: 1em; border-radius: 6px; background-color: rgba(255, 255, 255, .9);">
 		<div
@@ -22,13 +22,10 @@
 		</a>
 			<ul class="dropdown-menu dropdown-messages">
 				<li ng-repeat="task in tasks"><a href=""
-					ng-click="svolgiistanza(task.id)">
-					
-						<i class="fa {{task.icona}} fa-fw"></i> <strong>{{task.name}}</strong> <span
-								class="pull-right text-muted"> <em>{{task.description}}</em>
-							</span>
-				
-						<span class="pull-right text-muted small">{{task.createTime}}</span>
+					ng-click="svolgiistanza(task.id)"> <i
+						class="fa {{task.icona}} fa-fw"></i> <strong>{{task.name}}</strong>
+						<span class="pull-right text-muted"> <em>{{task.description}}</em>
+					</span> <span class="pull-right text-muted small">{{task.createTime}}</span>
 				</a></li>
 			</ul> <!-- /.dropdown-messages --></li>
 		<!-- /.dropdown -->
@@ -61,14 +58,15 @@
 			<ul class="dropdown-menu dropdown-user">
 				<li><a ui-sref="dashboard.utenti"><i
 						class="fa fa-users fa-fw"></i> Edita profili utenti</a></li>
-				<li><a ui-sref="dashboard.utenti"><i
-						class="fa fa-unlink fa-fw"></i> Riavvia l'interfaccia Java</a></li>
 				<g:if env="development">
 					<li><a ui-sref="dashboard.rossonet"><i
 							class="fa fa-cubes fa-fw"></i> Console Grails</a></li>
-					<li><g:link controller='base' absolute='true'
-							target="_console">
-							<i class="fa fa-trophy fa-fw"></i> Pagina base Grails</g:link></li>
+
+					<g:if test="${grafica.sviluppo==true}">
+						<li><g:link controller='base' absolute='true'
+								target="_console">
+								<i class="fa fa-trophy fa-fw"></i> Pagina base Grails</g:link></li>
+					</g:if>
 				</g:if>
 				<li class="divider"></li>
 				<form name="submitForm" method="POST"

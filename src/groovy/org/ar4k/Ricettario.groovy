@@ -17,6 +17,8 @@
 
 package org.ar4k
 
+import grails.converters.JSON;
+
 class Ricettario {
 	/** id univoco ricettario */
 	String idRicettario = UUID.randomUUID()
@@ -47,6 +49,21 @@ class Ricettario {
 			clonaOvunque:clonaOvunque,
 			semi:semi*.esporta()
 		]
+	}
+
+	Ricettario importa(Map json){
+		log.info("importa() ricettario: "+json.idRicettario)
+		Ricettario ricettarioCreato = new Ricettario(
+				idRicettario:json.idRicettario,
+				etichetta:json.etichetta,
+				descrizione:json.descrizione,
+				repositoryGit:new RepositoryGit(json.repositoryGit),
+				aggiornato: json.aggiornato,
+				clonaOvunque:json.clonaOvunque,
+				semi:semi*.esporta()
+				)
+		json.semi.each{ricettarioCreato.semi.add(new Seme().importa(it))}
+		return ricettarioCreato
 	}
 }
 
@@ -103,5 +120,14 @@ class Seme {
 			meme:meme.esporta(),
 			percorso:percorso
 		]
+	}
+
+	Seme importa(Map json){
+		log.info("importa() il seme: "+json.meme.idMeme)
+		Seme semeCreato = new Seme(
+				percorso:json.percorso,
+				meme:new Meme().importa(json.meme)
+				)
+		return semeCreato
 	}
 }

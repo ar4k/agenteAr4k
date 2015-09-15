@@ -28,15 +28,15 @@
 										class="form-control"value"{{chiave}}">
 								</div>
 								<div class="form-group">
-									<textarea
+									<!-- <textarea
 										class="form-control ng-pristine ng-untouched ng-valid"
 										ng-model="valore" placeholder="Valore per la chiave"
-										style="width: 100%; height: 151px;">{{valore}}</textarea>
-										<div id="jsoneditor" style="width: 400px; height: 400px;"></div>
+										style="width: 100%; height: 151px;">{{valore}}</textarea> -->
+										<div id="jsoneditor" style="width: 100%; height: 250px;"></div>
 								</div>
 								<div class="form-group text-right">
 									<input type="submit" class="btn btn-default"
-										ng-click="salva(chiave,valore);nuovo=false" value="Salva" />
+										ng-click="salva(chiave);nuovo=false" value="Salva" />
 									<input type="button" class="btn btn-default"
 										ng-click="nuovo=false;reset()" value="Annulla" />
 								</div>
@@ -50,7 +50,7 @@
 
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-left">
 							<button class="btn btn-outline btn-primary" ng-hide="nuovo"
-								type="button" ng-click="nuovo=true" tooltip-placement="bottom"
+								type="button" ng-click="editor.setText(false);chiave='';nuovo=true" tooltip-placement="bottom"
 								tooltip="aggiungi nuovo key value nel sistema Consul distribuito tra i nodi gestiti.">NUOVO
 								VALORE</button>
 							<button style="margin: 0.1em;"
@@ -94,9 +94,9 @@
 								<button style="margin: 0.1em;"
 									class="btn btn-circle btn-warning btn-xs" type="button"
 									ng-show="dato.key.substr(0,9) == 'contesto_'"
-									ng-click="$parent.bootstrap(dato.key)" tooltip-placement="top"
-									tooltip="resetta l'interfaccia ed esegui il bootstrap di questo contesto.">
-									<i class="fa fa-bolt"></i>
+									ng-click="$parent.salvasumaster(dato.value)" tooltip-placement="top"
+									tooltip="salva il contesto sul vaso master.">
+									<i class="fa fa-save"></i>
 								</button>
 								<button style="margin: 0.1em;"
 									class="btn btn-circle btn-info btn-xs" type="button"

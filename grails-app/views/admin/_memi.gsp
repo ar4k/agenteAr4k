@@ -252,16 +252,16 @@
 								</button>
 								<button style="margin: 0.1em;"
 									class="btn btn-circle btn-info btn-xs" type="button"
-									ng-click="$parent.azioneMeme(meme.meme.idMeme)"
+									ng-click="1+1"
 									tooltip-placement="top"
 									tooltip="gestisci i link e i qr per questo meme.">
 									<i class="fa fa-qrcode"></i>
 								</button>
 								<button style="margin: 0.1em;"
 									class="btn btn-circle btn-danger btn-xs" type="button"
-									ng-click="$parent.azioneMeme(meme.idMeme)"
+									ng-click="$parent.cancellaMeme(meme.meme.idMeme)"
 									tooltip-placement="bottom"
-									tooltip="elimina questo meme, i processi e le istanze collegate ad esso.">
+									tooltip="Apre l'interfaccia per eliminare questo meme, i processi e le istanze collegate ad esso.">
 									<i class="fa fa-trash-o"></i>
 								</button>
 							</div>

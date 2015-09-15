@@ -42,7 +42,7 @@
 						<div class="form-group">
 							<label for="utenteDemo">Nome utente desiderato</label> <input
 								type="text" name="utenteDemo"
-								class="text-field form-control validate-field required"
+								class="text-field form-control validate-field"
 								data-validation-type="string" id="utenteDemo"
 								placeholder="ess. rossonet">
 						</div>

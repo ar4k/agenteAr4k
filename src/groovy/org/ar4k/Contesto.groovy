@@ -23,6 +23,7 @@
 
 package org.ar4k
 
+import grails.converters.JSON
 import groovy.transform.AutoClone;
 
 class Contesto {
@@ -134,11 +135,37 @@ class Contesto {
 			dominioConsul:dominioConsul
 		]
 	}
-
+	
+	Contesto importa(Map json){
+		log.info("importa() il contesto: "+json.idContesto)
+		Contesto contestoCreato = new Contesto(
+			idContesto:json.idContesto,
+			etichetta:json.etichetta,
+			descrizione:json.descrizione,
+			idProgetto:json.idProgetto,
+			consulKey:json.consulKey,
+			dominioConsul:json.dominioConsul,
+			clonaOvunque:json.clonaOvunque,
+			vasoMaster:new Vaso().importa(json.vasoMaster)
+			)
+		json.interfacce.each{contestoCreato.interfacce.add(new Interfaccia().importa(it))}
+		json.memi.each{contestoCreato.memi.add(new Meme().importa(it))}
+		json.utentiRuoli.each{contestoCreato.utentiRuoli.add(new UtenteRuolo().importa(it))}
+		json.vasi.each{contestoCreato.vasi.add(new Vaso().importa(it))}
+		json.interfacce.each{contestoCreato.interfacce.add(new Interfaccia().importa(it))}
+		json.ricettari.each{contestoCreato.ricettari.add(new Ricettario().importa(it))}
+		json.cloudProviders.each{contestoCreato.cloudProviders.add(new CloudProvider(it))}
+		json.puntatori.each{contestoCreato.puntatori.add(new Puntatore(it))}
+		
+		return contestoCreato
+	}
+	
 	String toString() {
 		return etichetta + " su "+vasoMaster+" ("+statoBootStrap+")"
 	}
 }
+
+
 
 class CloudProvider {
 	/** id univoco metodo */

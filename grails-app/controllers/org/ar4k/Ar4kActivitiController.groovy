@@ -60,6 +60,11 @@ class Ar4kActivitiController {
 		log.info "Richiesta maschera per meme "+idMeme
 		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.maschera()
 	}
+	
+	def cancellaMeme(String idMeme) {
+		log.info "Richiesta disinstallazione per meme "+idMeme
+		render interfacciaContestoService.contesto.memi.find{it.idMeme == idMeme}.disinstallazione
+	}
 
 	/** ritorna l'elenco di parametri necessari nella maschera di avvio */
 	def variabiliAvvioProcesso(String idProcesso) {
