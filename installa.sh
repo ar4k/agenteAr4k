@@ -64,7 +64,7 @@ then
 		echo "Sarà richiesta la password di root"
 		su -c "yum localinstall -y --nogpg jdk-7u79-linux-*"
 	fi
-	rm -rf ~/.java_tmp
+	rm -rf .java_tmp
 	cd $dir_locale
 fi
 
