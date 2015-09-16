@@ -71,6 +71,9 @@ fi
 # Configura la variabile d'ambiente JAVA_HOME se non configurata
 if [ " $(echo $JAVA_HOME)" = " " ]
 then
+	echo "JAVA_HOME trovata"
+	echo $JAVA_HOME
+else
 	echo "Configuro JAVA_HOME a /usr/java/latest"
 	export JAVA_HOME=/usr/java/latest
 	echo "export JAVA_HOME=/usr/java/latest" >> ~/.bash_profile
