@@ -81,9 +81,9 @@ git clone https://github.com/rossonet/agentear4k.git
 
 # lancia la compilazione
 cd agentear4k
-#./compila.sh
+./compila.sh
 # lancia l'applicativo - se possibile, verrà lanciato il default browser alla fine dell'operazione -
-#./ar4k.sh
-./grailsw run-app
+./ar4k.sh
+#./grailsw run-app
 
 exit 0

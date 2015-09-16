@@ -17,13 +17,12 @@
 <link rel="apple-touch-icon" sizes="114x114"
 	href="${resource(dir: 'images', file: 'brain.png')}">
 
-<link rel="stylesheet" href="admin/main">
-<link rel="stylesheet" href="admin/sbadmin2">
-<link rel="stylesheet" href="admin/timeline">
 
+<!-- In sviluppo non usiamo i minificati -->
 <g:if env="development">
 	<link rel="stylesheet"
 		href="admin/bower_components/bootstrap/dist/css/bootstrap.css" />
+
 
 	<link rel="stylesheet"
 		href="admin/bower_components/metisMenu/dist/metisMenu.css">
@@ -89,7 +88,9 @@
 
 <script src="admin/bower_components/angular-lodash/angular-lodash.js"></script>
 <link rel="stylesheet" href="admin/jsoneditor.css" type="text/css">
-
+<link rel="stylesheet" href="admin/main">
+<link rel="stylesheet" href="admin/sbadmin2">
+<link rel="stylesheet" href="admin/timeline">
 
 
 <!-- Contenuti pagina header-->
