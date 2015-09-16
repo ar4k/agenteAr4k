@@ -19,7 +19,7 @@ then
 		yum install -y git
 	else	
 		echo "Sarà richiesta la password di root"
-		su - -c "yum install -y git"
+		su -c "yum install -y git"
 	fi
 fi
 
@@ -41,7 +41,7 @@ then
 			yum install -y wget
 		else	
 			echo "Sarà richiesta la password di root"
-			sudo yum install -y wget
+			su -c "yum install -y wget"
 		fi
 	fi
 
@@ -62,7 +62,7 @@ then
 		yum localinstall -y --nogpg jdk-7u79-linux-*
 	else	
 		echo "Sarà richiesta la password di root"
-		sudo yum localinstall -y --nogpg jdk-7u79-linux-*
+		su -c "yum localinstall -y --nogpg jdk-7u79-linux-*"
 	fi
 	rm -rf ~/.java_tmp
 	cd $dir_locale
