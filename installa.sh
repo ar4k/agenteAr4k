@@ -10,7 +10,7 @@ piattaforma=$(uname -i)
 dir_locale=$(pwd)
 
 # Installa le dipendenze con sudo
-verifica_git=$(git --version | grep -i git | wc -l)
+verifica_git=$(git --version 2> /dev/null | grep -i git | wc -l)
 if [ $verifica_git -ne 1 ]
 then 
 	echo "git non rilevato, installo..."
@@ -19,7 +19,7 @@ then
 		yum install -y git
 	else	
 		echo "Sarà richiesta la password di root"
-		sudo yum install -y git
+		su - -c "yum install -y git"
 	fi
 fi
 
@@ -32,7 +32,7 @@ then
 	echo "Java non presente, installo..."
 	mkdir .java_tmp
 
-	verifica_wget=$(wget --version)
+	verifica_wget=$(wget --version 2> /dev/null | wc -l)
 	if [ $verifica_wget -lt 1 ]
 	then 
 		echo "wget non rilevato, è necessario per installare Java, procedo..."
@@ -59,10 +59,10 @@ then
 
 	if [ "$(whoami)" = "root" ]
 	then
-		yum localinstall -y -nogpg jdk-7u79-linux-*
+		yum localinstall -y --nogpg jdk-7u79-linux-*
 	else	
 		echo "Sarà richiesta la password di root"
-		sudo yum localinstall -y -nogpg jdk-7u79-linux-*
+		sudo yum localinstall -y --nogpg jdk-7u79-linux-*
 	fi
 	rm -rf ~/.java_tmp
 	cd $dir_locale
@@ -81,8 +81,9 @@ git clone https://github.com/rossonet/agentear4k.git
 
 # lancia la compilazione
 cd agentear4k
-./compila.sh
+#./compila.sh
 # lancia l'applicativo - se possibile, verrà lanciato il default browser alla fine dell'operazione -
-./ar4k.sh
+#./ar4k.sh
+./grailsw run-app
 
 exit 0

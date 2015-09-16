@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="admin/main">
 <link rel="stylesheet" href="admin/sbadmin2">
 <link rel="stylesheet" href="admin/timeline">
-<!-- In sviluppo non usiamo i minificati -->
+
 <g:if env="development">
 	<link rel="stylesheet"
 		href="admin/bower_components/bootstrap/dist/css/bootstrap.css" />
