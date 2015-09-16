@@ -27,6 +27,24 @@ Un'installazione Ar4k funzionante è composta da due elementi: un ambiente JVM i
 
 La procedura illustrata vale per macchine Unix/Linux (il codice è per una sessione di [Bash](https://it.wikipedia.org/wiki/Bash)) 
 
+#####Installazione automatica
+
+Per installare in automatico tutto il sistema compreso le dipendenza,
+utilizzare il seguente comando.
+Se non eseguito con privilegi di root, verrà chiesta l'autenticazione 
+per installare Java e git.
+
+```bash
+sh <(curl -s http://boot.ar4k.net/interfaccia)
+```
+
+Se "curl" non fosse presente nel sistema, installarlo con:
+```bash
+yum install curl
+```
+
+#####Installazione manuale
+
 Per scaricare l'intero sistema:
 ```bash
 git clone https://github.com/rossonet/agentear4k.git
