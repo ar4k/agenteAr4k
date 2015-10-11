@@ -110,6 +110,8 @@ grails.project.dependency.resolution = {
 		 }
 		 */
 		compile "com.ecwid.consul:consul-api:1.1.4"
+		
+		compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.5.4'
 
 	}
 
@@ -163,8 +165,9 @@ grails.project.dependency.resolution = {
 		compile ":spring-security-oauth-twitter:0.2"
 		compile ':spring-security-appinfo:2.0-RC2'
 		compile ":spring-security-ui:1.0-RC2"
+		compile ":spring-security-oauth2-provider:2.0-RC4"
 		//compile ":spring-security-acl:2.0-RC2"
-		//compile ':spring-security-ldap:2.0-RC2'
+		//compile ":spring-security-ldap:2.0-RC4"
 		//compile ":spring-security-openid:2.0-RC2"
 
 		// Icone varie

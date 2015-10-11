@@ -25,7 +25,7 @@ Un'installazione Ar4k funzionante è composta da due elementi: un ambiente JVM i
 
 ####Procedure ambiente di sviluppo agenteAr4k
 
-La procedura illustrata vale per macchine Unix/Linux (il codice è per una sessione di [Bash](https://it.wikipedia.org/wiki/Bash)) 
+La procedura illustrata vale per macchine CentOS/RedHat/Fedora (il codice è per una sessione di [Bash](https://it.wikipedia.org/wiki/Bash)) 
 
 #####Installazione automatica
 

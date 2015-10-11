@@ -135,6 +135,7 @@ log4j.main = {
 			'org.hibernate',
 			'net.sf.ehcache.hibernate'
 	fatal	'org.hibernate.tool.hbm2ddl.SchemaExport' // bug grails 11198 work around by Ambrosini
+	fatal   'org.apache.camel.component.jms.DefaultJmsMessageListenerContainer'
 	environments {
 				development  {
 					info 'grails.app'
@@ -227,9 +228,31 @@ master.user = 'ar4k'
 // Iniziare la stringa chiave con """ e concludere con uguale combinazione
 master.key = """
 -----BEGIN RSA PRIVATE KEY-----
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+MIIEoAIBAAKCAQEAnMVL/qgLI9p7kAPC/JDH9Z8tv1dRpLWCyBxMr8Z2p94K+/NE
+avP10wflj8Mxk89v9Z4JOPsP5vSVsFdNJJD5oD++5cD5XGlBSjtKfxZPVz+VKgBo
+Aouke+mrnQ27BUYH6g7Aas/LUXhDkqBCckKE1f8ukwEAWkTvKcTJ0t8Ir6WqONiu
+8ITxxRa7LNxFYIzt+1N3ScMVLEfszQe4xsG02WwPS2JgBT2mVjg3J3cWy78RDJjm
+oO6UpT7QpxykV/pVBkRTBwzN+gqKfXxc2xvULbHgfpakGs/GijTKNiqOonsB3eyV
+D9MacP/kWMUkh2REjzE7jw5UKfwKM/8o5NMcPwIBIwKCAQAj1VMy5JTU/r0oO1/E
+s2Dnr1rp6BKpTg9DrrJxUe88UAKCu0LWnimPUkMZi7OPf98TkdY46O2xIfZUMTY0
+PmTxbaf6ADj/LgBLe0Q6Tj4FUFyb4tXx9AhW1lMclWyTfbiqhwdo3wnmvGc3dRaA
+hDueoLowOr5AhMjzmrHJzJRFZ1ZKpZt/2mAXRYde0Hn4ujdyddGgw0LAFkchUCHN
+/Ymsi7Nl75o5idE/CxF+2HtknolldcnPBP7H7WtFQYOFBH6e2MVuR/BMhuVQMfO9
+RDktF3uyv7aFn/LfGGfnoZ86mt3tF441OU4Crhyz03yvHDwk3M1wtxeoiYYQzZrd
+0TkLAoGBAMrRI743ALpUvunf5sxlBAI1p1I54YC722IsAiQT6qe9ckVHm+dnIviX
+EAXYx200D2QVh6xrxKuPGRmsviSqNf2fI/orGaHbZXf1dScHX0zcTQykSf2teB0d
+CCxwm+EHhpbOV/f/2O1nSoG6+/mCLGU++t4JF7zkilwM8MUeI7pZAoGBAMXhIGhq
+KNMKh6EOJWNbWjkw6K/wi1BoCxNvRwDNodLJFpklzjXiX7pLV8TDvI2/ehPbLedL
+dA5rdwGrX+BH0K1wK/kZeHDP1udJLKt3sg0sHhasRefku+LdIdcwK5T6juAiTY7n
+H3e9+6ULC+mHHFgu8Fq41Y/EGAOdit48PAhXAoGAaE5M5XtfdcUu++9+ArebqV1r
+/mbpAGCctiVC7fudQFLNDa/MhaLBhykeLuSD0cMAmd8v1QQ5QkmX4VGGW//D/sbf
+TXVAYd6L9IzdKgPKnI6OBoBgkRdiWB2PLMwy6MIKs/UXTFexZCZ+FtUxITuhzatc
+cjCP3XzZcSs5/vmOt5sCgYBra5U//x154SUOSYICvJAQawH5HC5e2WUZLcd1dvFy
+bSmGVln//ou85xJjgDMoYKFbPHgBN5bF/9Ljpiy7lLMcUtYK4fDsyJk7ugJOdC10
+3W9rZNV94pHhjfxtgIyv9btGeQWIFxEVHf2ivNqUtw9jEiq05/7npPcX588K7X+s
+wQKBgHwRHbOAi1L5SrZgPpdMa/Y3hxd9HXz/E8k0S5PuXgIR/uIwM31j6AvQTh0b
+By5hGzU8Jimq23HxpiO8w3zpFN7pLVQWb+WVFBUsz8rH2OfI5x/SF2Od2MQr/g+G
+XY4EKah0OgIHWHJ1FkWvyVUYDn+BTSGj6roqszef3NNOsutc
 -----END RSA PRIVATE KEY-----
 """
 
@@ -281,6 +304,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/login/**':    				  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
+	'/oauth/authorize.dispatch':      ["isFullyAuthenticated() and (request.getMethod().equals('GET') or request.getMethod().equals('POST'))"],
+	'/oauth/token.dispatch':          ["isFullyAuthenticated() and request.getMethod().equals('POST')"],
 	'/atterraggio/**':                ['permitAll'],
 	'/springSecurityOAuth/**':	      ['permitAll'],
 	'/codeqr':			        	  ['permitAll'],
@@ -300,6 +325,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 // Added by the Spring Security OAuth plugin:
 grails.plugin.springsecurity.oauth.domainClass = 'org.ar4k.OAuthID'
+
+grails.exceptionresolver.params.exclude = ['password', 'client_secret']
 
 // Testo per registrazione
 grails.plugin.springsecurity.ui.register.emailBody = 'Benvenuto $user,<br>per completare la procedura di registrazione in AR4K selezionare <a href="$url">questo link</a>.<br><br><bold>BOT AR4K</bold><br>(sistema automatico)'
@@ -322,3 +349,11 @@ activiti {
 }
 
 cors.headers = ['Access-Control-Allow-Origin': '*']
+
+
+// Added by the Spring Security OAuth2 Provider plugin:
+grails.plugin.springsecurity.oauthProvider.clientLookup.className = 'org.ar4k.Client'
+grails.plugin.springsecurity.oauthProvider.authorizationCodeLookup.className = 'org.ar4k.AuthorizationCode'
+grails.plugin.springsecurity.oauthProvider.accessTokenLookup.className = 'org.ar4k.AccessToken'
+grails.plugin.springsecurity.oauthProvider.refreshTokenLookup.className = 'org.ar4k.RefreshToken'
+

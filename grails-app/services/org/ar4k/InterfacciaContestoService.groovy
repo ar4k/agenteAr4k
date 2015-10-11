@@ -184,7 +184,7 @@ class InterfacciaContestoService {
 			log.info "Problemi con websocket: "+ee.toString()
 		}
 	}
-	
+
 	/** Invia a coda messaggi con icona default */
 	void codaMessaggiInfo(String messaggio) {
 		codaMessaggi(messaggio,'fa-info')
@@ -217,7 +217,7 @@ class InterfacciaContestoService {
 			log.info "Problemi con websocket: "+ee.toString()
 		}
 	}
-	
+
 	/** Gestisce gli eventi di activiti  */
 	void eventiActiviti(String messaggio) {
 		log.info "Evento Activiti: "+messaggio
@@ -248,8 +248,12 @@ class InterfacciaContestoService {
 
 	/** esegue le procedura ogni 5 min. tramite Quartz */
 	void battito() {
-		sendMessage("activemq:topic:interfaccia.memoria", Runtime.getRuntime().freeMemory())
-		sendMessage("activemq:queue:contesto.salvataggio", contesto.esporta())
+		try {
+			sendMessage("activemq:topic:interfaccia.memoria", Runtime.getRuntime().freeMemory())
+			sendMessage("activemq:queue:contesto.salvataggio", contesto.esporta())
+		} catch (Exception ee) {
+			log.info "ActiveMQ non collegato: "+ee.toString()
+		}
 	}
 }
 
