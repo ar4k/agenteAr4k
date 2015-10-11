@@ -11,8 +11,8 @@ Per maggiori dettagli sulla licenza rimando a [questa voce](http://it.wikipedia.
 ![alt text](https://www.gnu.org/graphics/gplv3-88x31.png "LGPL Logo")
 
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=_eW1PRixyA0
-" target="_blank"><img src="http://img.youtube.com/vi/_eW1PRixyA0/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=9uQAiXJah4U
+" target="_blank"><img src="http://img.youtube.com/vi/9uQAiXJah4U/0.jpg" 
 alt="Rossonet" width="640" height="360" border="10" /></a>
 
 
