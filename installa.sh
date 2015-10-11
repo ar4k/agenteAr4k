@@ -47,7 +47,7 @@ then
 
 	# Scarico la JVM per l'architettura specifica
 	cd .java_tmp
-	verifica_architettura_x64=$(echo $piattaforma | grep -i 'x64' | wc -l)
+	verifica_architettura_x64=$(echo $piattaforma | grep -i 'x86_64' | wc -l)
 
 	if [ $verifica_architettura_x64 -eq 1 ]	
 	then
