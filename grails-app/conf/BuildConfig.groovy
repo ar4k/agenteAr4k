@@ -165,7 +165,7 @@ grails.project.dependency.resolution = {
 		compile ":spring-security-oauth-twitter:0.2"
 		compile ':spring-security-appinfo:2.0-RC2'
 		compile ":spring-security-ui:1.0-RC2"
-		compile ":spring-security-oauth2-provider:2.0-RC4"
+		//compile ":spring-security-oauth2-provider:2.0-RC4"
 		//compile ":spring-security-acl:2.0-RC2"
 		//compile ":spring-security-ldap:2.0-RC4"
 		//compile ":spring-security-openid:2.0-RC2"
