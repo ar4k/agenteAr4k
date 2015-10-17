@@ -316,6 +316,10 @@ class AdminController {
 		render "ok"
 	}
 
+	/**
+	 *
+	 * Salva il contesto su un vaso
+	 */
 	def salvaContestoSuVaso() {
 		String vasoRicerca = request.JSON.vaso
 		Vaso vasoTarget = interfacciaContestoService.contesto.vasi.find{ vaso -> vaso.idVaso == vasoRicerca}
@@ -326,6 +330,7 @@ class AdminController {
 		render "ok"
 	}
 
+	/** copia il contesto da KV Consul ad un vaso */
 	def salvaContestoDaKVsuMaster() {
 		JsonSlurper jsonSlurper = new JsonSlurper()
 		Map dato = jsonSlurper.parseText(request.JSON.dato)
@@ -357,6 +362,11 @@ class AdminController {
 		interfacciaContestoService.connessioneConsul.finalize() 
 		interfacciaContestoService.connessioneActiveMQ.finalize() 
 		interfacciaContestoService.connnessioniSSH.each{it.finalize()}
+		bootStrapService.valoreCasuale=org.apache.commons.lang.RandomStringUtils.random(5, true, true).toString()
+		render 'ok'
+	}
+	
+	def salvaConfigurazioneInterfaccia() {
 		render 'ok'
 	}
 

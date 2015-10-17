@@ -330,5 +330,11 @@ angular
     			$scope.numeroTasks = response.conto;
     			}); 
   		};
+  	$scope.salvaConfigurazioneInterfaccia = function() {
+    	$http.get("${createLink(controller:'admin',action:'salvaConfigurazioneInterfaccia',absolute:'true')}")
+    		.success(function (response) {
+    			alert("Configurazione salvata con risultato: "+response);
+    			}); 
+  		};
 });
     

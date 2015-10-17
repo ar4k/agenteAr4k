@@ -115,13 +115,13 @@
 									tooltip="salva il contesto attuale sul nodo.">
 									<i class="fa fa-save"></i>
 								</button>
-								<button style="margin: 0.1em;"
+								<!--  button style="margin: 0.1em;"
 									class="btn btn-circle btn-info btn-xs" type="button"
 									ng-click="$parent.dettagli(meme.idMeme)"
 									tooltip-placement="bottom"
 									tooltip="installa e configura un'interfaccia su questo nodo.">
 									<i class="fa fa-desktop "></i>
-								</button>
+								</button-->
 								<button style="margin: 0.1em;" class="btn btn-circle btn-xs"
 									type="button" ng-click="$parent.dettagli(meme.idMeme)"
 									tooltip-placement="bottom" tooltip="accesso SSH al vaso.">

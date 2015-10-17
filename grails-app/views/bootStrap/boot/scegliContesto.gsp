@@ -27,7 +27,7 @@
 	<article id="bootstrap" class="section-wrapper clearfix"
 		data-custom-background-img="${resource(dir: 'atterraggio', file: 'images/other_images/bg3.jpg')}">
 		<div class="content-wrapper clearfix">
-			<div class="col-sm-10 col-md-9 pull-right">
+			<div class="col-sm-12 col-md-10 pull-right">
 
 				<section class="feature-text">
 					<h2>Scegli il contesto applicativo</h2>
@@ -44,7 +44,7 @@
 						<g:if test="${it}">
 							<p>
 								<a href="${createLink(event: 'scegliInterfaccia')}&contesto=${it.id}"
-									class="link-scroll btn btn-outline-inverse btn-lg">Scegli
+									class="link-scroll btn btn-danger btn-outline-inverse btn-lg">Scegli
 									il contesto "${it.descrizione?:it.id}"
 								</a>
 							</p>

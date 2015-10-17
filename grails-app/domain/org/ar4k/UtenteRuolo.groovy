@@ -37,7 +37,7 @@ class UtenteRuolo implements Serializable {
 	}
 	
 	UtenteRuolo importa(Map json){
-		log.info("importa() l'utente-ruolo: "+json.utente.username+"-"+json.ruolo.authority)
+		log.info("importa() l'utente-ruolo: "+json.utente.username+" - "+json.ruolo.authority)
 		UtenteRuolo utenteRuoloCreato = new UtenteRuolo(
 			utente:new Utente().importa(json.utente),
 			ruolo:new Ruolo().importa(json.ruolo),

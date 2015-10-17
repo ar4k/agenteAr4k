@@ -33,11 +33,11 @@ class BootStrapController {
 				if (bootStrapService.inAvvio == false) {
 					return completata()
 				} else {
-				if (bootStrapService.inReset == true) {
-					return reset()
-				} else {
-					return success()
-				}
+					if (bootStrapService.inReset == true) {
+						return reset()
+					} else {
+						return success()
+					}
 				}
 			}
 			on ("success"){[verifica:bootStrapService.verificaConnettivitaInterfaccia()]}.to "showBenvenuto"
@@ -70,7 +70,7 @@ class BootStrapController {
 				bootStrapService.passwordProxyVersoMaster=params.passwordJvm?:''
 				if (bootStrapService.proxyVersoMaster=='NO NETWORK TEST') bootStrapService.escludiProveConnessione = true // per disabilitare test di rete
 			}
-			on ("success").to "entrata"
+			on ("success").to "inizio"
 			on (Exception).to "showBenvenuto"
 		}
 
@@ -92,7 +92,7 @@ class BootStrapController {
 
 		configuraMaster {
 			on ("indietro").to "showBenvenuto"
-			on ("configuraProxyJvm").to "configuraProxyJvm"
+			on ("configuraProxyJvm").to "configuraProxyMaster"
 			on ("configuraCodCommerciale").to "configuraCodCommerciale"
 			on ("verificaMaster").to "verificaMaster"
 		}
@@ -100,7 +100,11 @@ class BootStrapController {
 		verificaMaster {
 			action {
 				bootStrapService.macchinaMaster = params.indirizzoMaster?:bootStrapService.macchinaMaster
-				bootStrapService.portaMaster = params.portaMaster?.toInteger()?:bootStrapService.portaMaster // Per evitare problemi in caso di Integer null
+				if (params.portaMaster == "") {
+					bootStrapService.portaMaster = 0
+				}	else {
+					bootStrapService.portaMaster = params.portaMaster?.toInteger()?:bootStrapService.portaMaster // Per evitare problemi in caso di Integer null
+				}
 				bootStrapService.utenteMaster = params.utenteMaster?:bootStrapService.utenteMaster
 				bootStrapService.keyMaster = params.chiaveMaster?:bootStrapService.keyMaster
 				log.info("Verifica l'accesso a "+bootStrapService.utenteMaster+"@"+bootStrapService.macchinaMaster+":"+bootStrapService.keyMaster)
@@ -114,7 +118,6 @@ class BootStrapController {
 				} else {
 					return configuraMaster()
 				}
-
 			}
 			on ("scegliContesto"){
 				def lista = []
@@ -141,12 +144,13 @@ class BootStrapController {
 					risultato = bootStrapService.verificaConnettivitaVasoMaster()
 				}
 				if (risultato == true ) {
-					return success() }
+					return success()
+				}
 				else {
 					return sconnesso()
 				}
 			}
-			on ("success").to "scegliContesto"
+			on ("success").to "inizio"
 			on ("sconnesso").to "configuraProxyMaster"
 		}
 

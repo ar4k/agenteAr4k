@@ -59,10 +59,10 @@ class Contesto {
 	List<CloudProvider> cloudProviders= []
 	/** short link e qr */
 	List<Puntatore> puntatori = []
-	
+
 	/** vaso principale del contesto con demone Consul */
 	Vaso vasoMaster
-	
+
 
 	/** ditruttore di classe (utile per la gestione della pulizia dei vasi)*/
 	def destroy() {
@@ -89,16 +89,27 @@ class Contesto {
 		for (Meme meme in memi) {
 			if (!meme.verificaAvvia()) risultato = false
 		}
-		log.info("Importa "+utentiRuoli.size()+" utenti/ruoli")
-		
-		
+		log.debug("Importa "+utentiRuoli.size()+" utenti/ruoli")
+
+
 		for (UtenteRuolo utenteRuolo in utentiRuoli) {
-			utenteRuolo.utente.save(flush:true)
-			utenteRuolo.ruolo.save(flush:true)
-			utenteRuolo.save(flush:true)
+			log.info(utenteRuolo.utente)
+			Utente u = Utente.create()
+			Ruolo r = Ruolo.create()
+			r.importa(utenteRuolo.ruolo.esporta())
+			r.save(flush:true)
+			u.importa(utenteRuolo.utente.esporta())
+			u.save(flush:true)
+			UtenteRuolo ur = UtenteRuolo.create()
+			ur.utente=u
+			ur.ruolo=r
+			ur.save(flush:true)
 		}
-		log.info("Importati utenti e ruoli")
-		if (risultato) statoBootStrap = 'avviato'
+		log.debug("Importati utenti e ruoli")
+		if (risultato) {
+			log.info("Contesto "+etichetta+" avviato.")
+			statoBootStrap = 'avviato'
+		}
 		return risultato
 	}
 
@@ -124,7 +135,7 @@ class Contesto {
 			idProgetto:idProgetto,
 			interfacce:interfacce*.esporta(),
 			memi:memi*.esporta(),
-			utentiRuoli:utentiRuoli*.esporta(),
+			utentiRuoli:UtenteRuolo.findAll()*.esporta(),
 			vasi:vasi*.esporta(),
 			vasoMaster:vasoMaster.esporta(),
 			ricettari:ricettari*.esporta(),
@@ -135,31 +146,33 @@ class Contesto {
 			dominioConsul:dominioConsul
 		]
 	}
-	
+
 	Contesto importa(Map json){
 		log.info("importa() il contesto: "+json.idContesto)
 		Contesto contestoCreato = new Contesto(
-			idContesto:json.idContesto,
-			etichetta:json.etichetta,
-			descrizione:json.descrizione,
-			idProgetto:json.idProgetto,
-			consulKey:json.consulKey,
-			dominioConsul:json.dominioConsul,
-			clonaOvunque:json.clonaOvunque,
-			vasoMaster:new Vaso().importa(json.vasoMaster)
-			)
+				idContesto:json.idContesto,
+				etichetta:json.etichetta,
+				descrizione:json.descrizione,
+				idProgetto:json.idProgetto,
+				consulKey:json.consulKey,
+				dominioConsul:json.dominioConsul,
+				clonaOvunque:json.clonaOvunque,
+				vasoMaster:new Vaso().importa(json.vasoMaster)
+				)
 		json.interfacce.each{contestoCreato.interfacce.add(new Interfaccia().importa(it))}
 		json.memi.each{contestoCreato.memi.add(new Meme().importa(it))}
-		json.utentiRuoli.each{contestoCreato.utentiRuoli.add(new UtenteRuolo().importa(it))}
+		json.utentiRuoli.each{
+			UtenteRuolo ur = new UtenteRuolo().importa(it)
+			contestoCreato.utentiRuoli.add(ur)
+		}
 		json.vasi.each{contestoCreato.vasi.add(new Vaso().importa(it))}
-		json.interfacce.each{contestoCreato.interfacce.add(new Interfaccia().importa(it))}
 		json.ricettari.each{contestoCreato.ricettari.add(new Ricettario().importa(it))}
 		json.cloudProviders.each{contestoCreato.cloudProviders.add(new CloudProvider(it))}
 		json.puntatori.each{contestoCreato.puntatori.add(new Puntatore(it))}
-		
+
 		return contestoCreato
 	}
-	
+
 	String toString() {
 		return etichetta + " su "+vasoMaster+" ("+statoBootStrap+")"
 	}

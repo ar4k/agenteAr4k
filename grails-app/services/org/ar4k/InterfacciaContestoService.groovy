@@ -76,7 +76,7 @@ class InterfacciaContestoService {
 		try {
 			stato.consulBind = new ConsulClient('http://127.0.0.1',8501)
 			String risposta = stato.consulBind.getCatalogDatacenters()
-			log.info("Datacenter disponibili: "+risposta)
+			log.debug("Datacenter disponibili: "+risposta)
 			codaMessaggiInfo("Datacenter disponibili: "+risposta)
 			NewService nodoMaster = new NewService()
 			nodoMaster.setId("consulAPI")
@@ -109,7 +109,7 @@ class InterfacciaContestoService {
 					.buildView(ComputeServiceContext.class)
 			ComputeService client = context.getComputeService()
 			jCloudServer.add(context)
-			log.info("Immagini disponibili su Docker: "+client.listImages())
+			log.debug("Immagini disponibili su Docker: "+client.listImages())
 		} catch (Exception e){
 			log.warn("Errore avvio JCloud Docker: "+e.printStackTrace())
 		}
@@ -124,7 +124,7 @@ class InterfacciaContestoService {
 					.buildView(ComputeServiceContext.class)
 			ComputeService client = context.getComputeService()
 			jCloudServer.add(context)
-			log.info("Immagini disponibili su AWS EC2: "+client.listNodes())
+			log.debug("Immagini disponibili su AWS EC2: "+client.listNodes())
 		} catch (Exception e){
 			log.warn("Errore avvio JCloud EC2: "+e.printStackTrace())
 		}
@@ -139,7 +139,7 @@ class InterfacciaContestoService {
 					.buildView(ComputeServiceContext.class)
 			ComputeService client = context.getComputeService()
 			jCloudServer.add(context)
-			log.info("Immagini disponibili su AWS EC2: "+client.listNodes())
+			log.debug("Immagini disponibili su AWS EC2: "+client.listNodes())
 		} catch (Exception e){
 			log.warn("Errore avvio JCloud EC2: "+e.printStackTrace())
 		}
@@ -175,13 +175,13 @@ class InterfacciaContestoService {
 
 	/** Invia a coda messaggi */
 	void codaMessaggi(String messaggio,String icona) {
-		log.info "Messaggio sistema: "+messaggio
+		log.debug "Messaggio sistema: "+messaggio
 		try {
 			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
 			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
 			broadcaster.broadcast([messaggio:messaggio,icona:icona,tipo:'codaMessaggi'] as JSON)
 		} catch (Exception ee) {
-			log.info "Problemi con websocket: "+ee.toString()
+			log.warn "Problemi con websocket: "+ee.toString()
 		}
 	}
 
@@ -192,7 +192,7 @@ class InterfacciaContestoService {
 
 	/** Gestisce gli eventi consul */
 	void eventiConsul(String messaggio) {
-		log.info "Evento Consul: "+messaggio
+		log.debug "Evento Consul: "+messaggio
 		try {
 			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
 			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
@@ -200,13 +200,13 @@ class InterfacciaContestoService {
 			//Broadcaster broadcasterConsul = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventoconsul')
 			//broadcasterConsul.broadcast([messaggio:messaggio] as JSON)
 		} catch (Exception ee) {
-			log.info "Problemi con websocket: "+ee.toString()
+			log.warn "Problemi con websocket: "+ee.toString()
 		}
 	}
 
 	/** Gestisce gli eventi interfaccia */
 	void eventiInterfaccia(String messaggio) {
-		log.info "Evento Interfaccia: "+messaggio
+		log.debug "Evento Interfaccia: "+messaggio
 		try {
 			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
 			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
@@ -214,13 +214,13 @@ class InterfacciaContestoService {
 			//Broadcaster broadcasterConsul = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventoconsul')
 			//broadcasterConsul.broadcast([messaggio:messaggio] as JSON)
 		} catch (Exception ee) {
-			log.info "Problemi con websocket: "+ee.toString()
+			log.warn "Problemi con websocket: "+ee.toString()
 		}
 	}
 
 	/** Gestisce gli eventi di activiti  */
 	void eventiActiviti(String messaggio) {
-		log.info "Evento Activiti: "+messaggio
+		log.debug "Evento Activiti: "+messaggio
 		try {
 			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
 			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
@@ -228,13 +228,13 @@ class InterfacciaContestoService {
 			//Broadcaster broadcasterActiviti = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventoactiviti')
 			//broadcasterActiviti.broadcast([messaggio:messaggio] as JSON)
 		} catch (Exception ee) {
-			log.info "Problemi con websocket: "+ee.toString()
+			log.warn "Problemi con websocket: "+ee.toString()
 		}
 	}
 
 	/** Gestisce gli eventi di Jcloud  */
 	void eventiJCloud(String messaggio) {
-		log.info "Evento JCloud: "+messaggio
+		log.debug "Evento JCloud: "+messaggio
 		try {
 			atmosphereMeteor = Holders.applicationContext.getBean("atmosphereMeteor")
 			Broadcaster broadcaster = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/codamessaggi')
@@ -242,7 +242,7 @@ class InterfacciaContestoService {
 			//Broadcaster broadcasterJCloud = atmosphereMeteor.broadcasterFactory.lookup(DefaultBroadcaster.class, '/wsa/sistema/eventojcloud')
 			//broadcasterJCloud.broadcast([messaggio:messaggio] as JSON)
 		} catch (Exception ee) {
-			log.info "Problemi con websocket: "+ee.toString()
+			log.warn "Problemi con websocket: "+ee.toString()
 		}
 	}
 
@@ -252,7 +252,7 @@ class InterfacciaContestoService {
 			sendMessage("activemq:topic:interfaccia.memoria", Runtime.getRuntime().freeMemory())
 			sendMessage("activemq:queue:contesto.salvataggio", contesto.esporta())
 		} catch (Exception ee) {
-			log.info "ActiveMQ non collegato: "+ee.toString()
+			log.warn "ActiveMQ non collegato: "+ee.toString()+" (Questo è normale in fase di bootstrap)"
 		}
 	}
 }

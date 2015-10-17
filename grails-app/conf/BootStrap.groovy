@@ -13,7 +13,7 @@ class BootStrap {
 	def init = { servletContext ->
 		switch (Environment.current) {
 			case Environment.DEVELOPMENT:
-				log.info("Sistema in Sviluppo... ")
+				log.info("Sistema in configurazione di sviluppo... ")
 				if ( provaConfigurazioni() ) log.info("Sistema configurato e pronto...")
 				break;
 			case Environment.PRODUCTION:
@@ -21,11 +21,11 @@ class BootStrap {
 				break;
 		}
 
-		log.info("\nIn BootStrap.groovy:\n***  ")
+		log.debug("\nIn BootStrap.groovy:\n***  ")
 		for (String property: System.getProperty("java.class.path").split(";")) {
-			log.info(property + "\n")
+			log.debug(property + "\n")
 		}
-		log.info("***\n")
+		log.debug("***\n")
 	}
 
 	def destroy = {
@@ -33,7 +33,7 @@ class BootStrap {
 	
 	Boolean provaConfigurazioni() {
 		if (grailsApplication.config.master.host) {
-			log.info("Configuro i parametri di configurazione trovati su file")
+			log.debug("Configuro i parametri di configurazione trovati su file")
 			if (grailsApplication.config.utente && grailsApplication.config.password) {
 				bootStrapService.aggiungiUtente(grailsApplication.config.utente?:'',grailsApplication.config.password?:'')
 			}

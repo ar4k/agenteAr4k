@@ -1,12 +1,11 @@
 /**
  * Bootstrap
  *
- * <p>Service per la gestione del boot dell'interfaccia</p>
+ * <p>Service per la gestione del boot dell'interfaccia agenteAr4k</p>
  *
  * <p style="text-justify">
  * Questo service istanzia il primo vaso a cui si collega l'interfaccia via SSH.
- * Questo vaso, per l'interfaccia è considerato master, il bootstrap permette la creazione di
- * un vaso su OpenShift,Factory Rossonet,AWS (tramite immagine) per poi utilizzarlo.</br>
+ * Questo vaso, per l'interfaccia è considerato master</br>
  * 
  * Il service, per tutto il ciclo di vita dell'interfaccia grafica, conserva lo stato e rende disponibili 
  * i metodi per cambiare il vaso master e/o il contesto chiudendo correttamente il precedente.</b>
@@ -21,6 +20,7 @@
 package org.ar4k
 
 import grails.transaction.Transactional
+
 import com.jcraft.jsch.*
 
 @Transactional
@@ -29,7 +29,7 @@ class BootStrapService {
 	/** service InterfacciaContestoService da popolare */
 	InterfacciaContestoService interfacciaContestoService
 
-	/** host accesso ssh */
+	/** indirizzo host vaso master accesso ssh */
 	String macchinaMaster = null
 	/** porta accesso ssh */
 	Integer portaMaster = null
@@ -74,13 +74,14 @@ class BootStrapService {
 	Boolean interfacciaScelta = false
 	/** vero se il nodo master è funzionante completamente  */
 	Boolean inAvvio = true
-	
+
+	/** vero se l'interfaccia resetta il contesto */
 	Boolean inReset = false
 
 	/** contesto interfaccia */
 	Contesto contesto
 
-	/** Interfaccia apllicativa del contesto */
+	/** Interfaccia applicativa del contesto */
 	Interfaccia interfaccia
 
 	/** contesti disponibili */
@@ -90,24 +91,29 @@ class BootStrapService {
 	/** utenti disponibili nel contesto */
 	List<UtenteRuolo> utentiInContesto = []
 
+	/** host pubblico per test di raggiungibilità */
+	String indirizzoTest='http://hc.rossonet.name'
+
+	/** identificativo di boot */
+	String valoreCasuale=org.apache.commons.lang.RandomStringUtils.random(5, true, true).toString()
+
 	/** verifica se l'interfaccia raggiunge il gw ar4k */
 	Boolean verificaConnettivitaInterfaccia() {
-		String indirizzoTest='http://hc.rossonet.name'
 		Boolean risultato=false
 		if (escludiProveConnessione==true) {
 			log.info("Test di rete esclusi! (escludiProveConnessione==true)")
 			risultato=true
 		} else {
-			log.info("verificaConnettivitaInterfaccia() verso "+indirizzoTest)
+			log.debug("verificaConnettivitaInterfaccia() verso "+indirizzoTest)
 			try {
 				URL url = new URL(indirizzoTest)
 				HttpURLConnection con = (HttpURLConnection)url.openConnection()
 				log.debug(con.responseCode)
 				if (con.responseCode==200){
 					risultato = true
-					log.info(indirizzoTest+"verificaConnettivitaInterfaccia(): (ok)")
+					log.info(indirizzoTest+" verificaConnettivitaInterfaccia(): (ok)")
 				} else {
-					log.warn(indirizzoTest+"verificaConnettivitaInterfaccia(): ERRORE")
+					log.warn(indirizzoTest+" verificaConnettivitaInterfaccia(): ERRORE")
 				}
 				con.disconnect()
 			} catch (MalformedURLException e) {
@@ -121,6 +127,7 @@ class BootStrapService {
 
 	/** test parametri correnti e connesione al vaso master */
 	Boolean provaConnessioneMaster() {
+		Boolean risultato=false
 		vasoMaster= new Vaso(
 				etichetta:utenteMaster+'@'+macchinaMaster+':'+portaMaster,
 				descrizione:'Nodo Master Ar4k',
@@ -129,8 +136,8 @@ class BootStrapService {
 				utente:utenteMaster,
 				key:keyMaster
 				)
-		log.info("provaConnessioneMaster() verso "+vasoMaster)
-		Boolean risultato = vasoMaster.provaConnessione()
+		log.debug("provaConnessioneMaster() verso "+vasoMaster)
+		risultato = vasoMaster.provaConnessione()
 		if (risultato) {
 			log.info("provaConnessioneMaster() verso "+vasoMaster+" (ok)")
 			configurato = true
@@ -146,12 +153,13 @@ class BootStrapService {
 	/** avvia o ripristina la connesione ssh al vaso master */
 	Boolean caricaVasoMaster() {
 		Boolean risultato = false
-		log.info("caricaVasoMaster() su "+vasoMaster)
+		log.debug("caricaVasoMaster() su "+vasoMaster)
 		if (provaConnessioneMaster()) risultato = vasoMaster.provaVaso()
 		if (risultato) {
 			log.info("caricaVasoMaster() su "+vasoMaster+" (ok)")
 			vasoConnesso = true
 			contestiInMaster = vasoMaster.listaContesti()
+			// Aggiunge il contesto demo
 			Contesto demo = creaContestoAr4kBoot()
 			contestiInMaster.add(demo)
 			log.info("Contesti disponibili dopo la creazione del contesto demo: "+contestiInMaster)
@@ -165,7 +173,7 @@ class BootStrapService {
 
 	/** cerifica la connettività verso internet del vaso master */
 	Boolean verificaConnettivitaVasoMaster() {
-		log.info("verificaConnettivitaVasoMaster()")
+		log.debug("verificaConnettivitaVasoMaster()")
 		Boolean risultato = false
 		if(vasoMaster.verificaConnettivita()) {
 			risultato = true
@@ -182,21 +190,21 @@ class BootStrapService {
 
 	/** carica il contesto per id contesto */
 	Boolean caricaContesto(String contestoSceltaConf) {
-		log.info("caricaContesto("+contestoSceltaConf+")")
+		log.debug("caricaContesto("+contestoSceltaConf+")")
 		Boolean ritorno = false
 		if (caricaVasoMaster()) {
 			String primarioContesto = idContestoScelto
 			if (contestoSceltaConf) primarioContesto = contestoSceltaConf
-			log.info("Provo il caricamento di "+primarioContesto)
+			log.debug("Provo il caricamento di "+primarioContesto)
 			log.debug("Contesti disponibili: "+contestiInMaster)
 			Contesto contestoTarget = contestiInMaster.find{it.idContesto==primarioContesto}
-			log.info("Caricato "+contestoTarget)
+			log.info(contestoTarget?"Caricato contesto "+contestoTarget:"Nessun contesto caricato...")
 			if (contestoTarget) {
 				contesto = contestoTarget
 				if(contesto.avviaContesto()) {
 					contestoScelto = true
 					ritorno = true
-					log.info("Attestato sul contesto "+contesto)
+					log.debug("Attestato sul contesto "+contesto)
 					idContestoScelto = contesto.idContesto
 					interfacceInContesto = []
 					contesto.interfacce.each{interfacceInContesto.add(it)}
@@ -204,6 +212,8 @@ class BootStrapService {
 					utentiInContesto = []
 					contesto.utentiRuoli.each{utentiInContesto.add(it)}
 					log.info("UtentiRuolo trovati nel contesto "+utentiInContesto)
+				}else {
+					log.warn("Impossibile avviare il contesto "+contesto)
 				}
 			}
 		}
@@ -217,24 +227,24 @@ class BootStrapService {
 	 * @param interfacciaSceltaConf Interfaccia scelta per l'avvio (id)
 	 */
 	Boolean avvia(String contestoSceltaConf,String interfacciaSceltaConf) {
-		log.info("avvia("+contestoSceltaConf+","+interfacciaSceltaConf+")")
+		log.debug("avvia("+contestoSceltaConf+","+interfacciaSceltaConf+")")
 		Boolean ritorno = false
 		interfacciaContestoService.connessioneConsul = new JSch()
 		interfacciaContestoService.connessioneActiveMQ = new JSch()
 		if (caricaContesto(contestoSceltaConf)) {
 			String primarioInterfaccia = idInterfacciaScelta
 			if (interfacciaSceltaConf) primarioInterfaccia = interfacciaSceltaConf
-			log.info("Provo il caricamento dell'interfaccia "+primarioInterfaccia)
+			log.debug("Provo il caricamento dell'interfaccia "+primarioInterfaccia)
 			log.debug("Interfacce disponibili: "+interfacceInContesto)
 			Interfaccia interfacciaTarget = interfacceInContesto.find{it.idInterfaccia==primarioInterfaccia}
-			log.info("Caricata "+interfacciaTarget)
+			log.info(interfacciaTarget?"Caricata interfaccia "+interfacciaTarget:"Nessuna interfaccia caricata...")
 			if (interfacciaTarget) {
 				interfaccia = interfacciaTarget
 				if(interfaccia.avviaInterfaccia()) {
 					interfacciaScelta = true
 					inAvvio = false
 					ritorno = true
-					log.info("Attestato sull'interfaccia "+interfaccia)
+					log.debug("Attestato sull'interfaccia "+interfaccia)
 					idInterfacciaScelta = interfaccia.idInterfaccia
 					interfacciaContestoService.contesto=contesto
 					interfacciaContestoService.interfaccia=interfaccia
@@ -248,8 +258,8 @@ class BootStrapService {
 					log.info("Attiva Kettle")
 					interfacciaContestoService.initKettle()
 					log.info("Delegato il controllo a InterfacciaContestoService")
-					log.info("Grafica caricata")
-					log.info(interfacciaContestoService)
+					log.debug("Grafica caricata")
+					log.debug(interfacciaContestoService)
 				}
 			}
 		}
@@ -282,10 +292,10 @@ class BootStrapService {
 
 	/** Crea il contesto iniziale per il bootstrap AR4K */
 	Contesto creaContestoAr4kBoot() {
-		log.info("Creo il contesto di base per il boot su "+vasoMaster)
+		log.debug("Creo il contesto di base per il boot su "+vasoMaster)
 		Contesto contestoCreato = new Contesto(
-				idContesto:'Bootstrap-Ar4k',
-				etichetta:"Contesto generato per avvio Ar4k"
+				idContesto:'ContestoBootstrapAr4k'+"-"+valoreCasuale,
+				etichetta:"Generato automaticamente in data "+new Date().format( 'dd-MM-yyyy' ).toString()+" -"+valoreCasuale+"-"
 				)
 		contestoCreato.configuraMaster(vasoMaster)
 		Interfaccia interfacciaDemo = creaInterfacciaAr4k()
@@ -298,8 +308,8 @@ class BootStrapService {
 
 	/** Crea l'interfaccia iniziale per il boot */
 	Interfaccia creaInterfacciaAr4k() {
-		Interfaccia interfacciaCreata = new Interfaccia(idInterfaccia:'Bootstrap-Ar4k')
-		log.info("Ho creato l'interfaccia base:"+interfacciaCreata)
+		Interfaccia interfacciaCreata = new Interfaccia(idInterfaccia:'InterfacciaBootstrapAr4k')
+		log.debug("Ho creato l'interfaccia base:"+interfacciaCreata)
 		return interfacciaCreata
 	}
 
@@ -315,9 +325,13 @@ class BootStrapService {
 		UtenteRuolo utenteRuolo = UtenteRuolo.create()
 		utenteRuolo.utente=testUser
 		utenteRuolo.ruolo=adminRole
-		testUser.save(flush:true)
-		adminRole.save(flush:true)
-		utenteRuolo.save(flush:true)
+		try {
+			testUser.save(flush:true)
+			adminRole.save(flush:true)
+			utenteRuolo.save(flush:true)
+		} catch (Exception e){
+			log.warn("Impossibile salvare l'utente. Errore: "+e.toString())
+		}
 		utentiInContesto.add(utenteRuolo)
 		if (utentiInContesto.size() > 0) {
 			log.info("Creato l'utente "+nome)

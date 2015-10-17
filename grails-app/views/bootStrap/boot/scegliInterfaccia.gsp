@@ -39,7 +39,7 @@
 							<p>
 								<a
 									href="${createLink(event: 'provaUtente')}&interfaccia=${it.id}"
-									class="link-scroll btn btn-outline-inverse btn-lg">Scegli
+									class="link-scroll btn btn-danger btn-outline-inverse btn-lg">Scegli
 									l'interfaccia "${it.descrizione?:it.id}"
 								</a>
 							</p>

@@ -58,6 +58,9 @@
 			<ul class="dropdown-menu dropdown-user">
 				<li><a ui-sref="dashboard.utenti"><i
 						class="fa fa-users fa-fw"></i> Edita profili utenti</a></li>
+				<li><a href="" ng-click="salvaConfigurazioneInterfaccia()"><i
+						class="fa fa-save fa-fw"></i> Salva la configurazione
+						dell'interfaccia in locale</a></li>
 				<g:if env="development">
 					<li><a ui-sref="dashboard.rossonet"><i
 							class="fa fa-cubes fa-fw"></i> Console Grails</a></li>

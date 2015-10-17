@@ -29,10 +29,11 @@
 			<div class="col-md-10 col-xs-12 col-sm-12 pull-right">
 				<h2>Configurazione iniziale AR4K</h2>
 				<p class="text-justify" style="text-align: justify;">
-					La piattaforma non è configurata. Il sistema Ar4k è composto dalla
-					console (<strong>interfaccia</strong>) che genera le pagine web che
-					state leggendo in questo momento e da uno o più macchine a cui la
-					console accede via ssh con autenticazione tramite chiave privata.
+					La piattaforma non è ancora configurata. Il sistema Ar4k è composto
+					dalla console (<strong>interfaccia</strong>) che genera le pagine
+					web che state leggendo in questo momento e da uno o più macchine a
+					cui la console accede via ssh con autenticazione tramite chiave
+					privata (<strong>vasi</strong>).
 				</p>
 
 			</div>
@@ -41,29 +42,36 @@
 				<div class="col-md-10 col-xs-12 col-sm-12 pull-right">
 					<p class="text-justify" style="text-align: justify;">
 						E' possibile inserire un codice di configurazione automatica
-						reperibile presso il <a href="http://www.rossonet.org/negozio"
-							target="_new">punto vendita online Rossonet.</a>
+						reperibile dopo la registrazione gratuita su <a
+							href="https://registrazione.ar4k.eu" target="_new">https://registrazione.ar4k.eu</a>.
 					</p>
 					<p>
 						<a href="${createLink(event: 'configuraCodCommerciale')}"
 							class="link-scroll btn-success btn btn-outline-inverse btn-lg">Inserisci
-							codice AR4K Rossonet</a>
+							codice AR4K</a>
 					</p>
 					<p class="text-justify" style="text-align: justify;">
 						oppure si può procedere alla configurazione inserendo manualmente
 						i parametri.<br />Per iniziare bisogna configurare l'accesso SSH
-						ad un utente, non necessariamente "root", di una macchina
-						Unix/Linux. Un accesso SSH ad un account utente su una macchina,
-						nella terminologia di Ar4k è denominato <strong>vaso</strong>. Il
-						vaso primario a cui sono connesse le <strong>interfacce</strong>
-						di un <strong>contesto</strong> è denominato <strong>vaso
-							master</strong>. Maggiore documentazione è disponibile nella <a
+						con un utente, non necessariamente "root", su una macchina
+						Unix/Linux. Un account su una macchina linux, nella terminologia
+						di Ar4k è denominato <strong>vaso</strong>. Il vaso primario a cui
+						sono connesse le <strong>interfacce</strong> di un <strong>contesto</strong>
+						è denominato <strong>vaso master</strong>. Maggiore documentazione
+						è disponibile nella <a
 							href="https://github.com/rossonet/agenteAr4k" target="_new">pagina
-							del progetto su GitHub</a>.
+							del progetto su GitHub</a>.<strong> Nel video seguente viene
+							illustrata la procedura per creare un utenza per l'accesso e la
+							relativa chiave ssh. Per inserire i parametri di connessione, la
+							chiave e procedere con la configurazione dell'interfaccia, usare
+							il pulsante rosso sotto il video.</strong>
 					</p>
+					<iframe width="560" height="315"
+						src="https://www.youtube.com/embed/FohP0BmYhB8" frameborder="0"
+						allowfullscreen></iframe>
 					<p>
-						<a href="${createLink(event: 'configuraMaster')}"
-							class="link-scroll btn btn-outline-inverse btn-lg">Configura
+						<br /> <a href="${createLink(event: 'configuraMaster')}"
+							class="link-scroll btn btn-danger btn-outline-inverse btn-lg">Configura
 							l'accesso SSH al vaso master</a>
 					</p>
 					<!-- .col-sm-10 -->

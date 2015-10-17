@@ -150,7 +150,7 @@ grails.project.dependency.resolution = {
 
 		//Shell
 		//compile ":crash:1.3.0"
-		compile ":console:1.5.4"
+		compile ":console:1.5.6"
 
 		//compile ":rabbitmq-native:3.1.2"
 

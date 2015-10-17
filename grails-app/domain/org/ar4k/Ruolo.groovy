@@ -33,12 +33,15 @@ class Ruolo implements Group {
 			authority:authority
 		]
 	}
-	
+
 	Ruolo importa(Map json){
 		log.info("importa() il ruolo: "+json.authority)
-		Ruolo ruoloCreato = new Ruolo(
-			authority:json.authority
-			)
+		Ruolo ruoloCreato = Ruolo.findAllByAuthority(json.authority)
+		if (!ruoloCreato) {
+			ruoloCreato = new Ruolo(
+					authority:json.authority
+					)
+		}
 		return ruoloCreato
 	}
 

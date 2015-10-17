@@ -62,7 +62,7 @@
 						</div>
 						<div class="form-group">
 							<button name="_eventId"
-								class="btn btn-success btn-sm btn-outline-inverse"
+								class="btn btn-danger btn-sm btn-outline-inverse"
 								value="completata"
 								onClick="document.forms['configuraUtenteDemo'].submit();">Avvia
 								interfaccia Ar4k con i parametri scelti</button>
