@@ -339,6 +339,32 @@ class BootStrapService {
 		}
 		return risultato
 	}
+
+	Boolean aggiungiUtenteRuolo(UtenteRuolo iti) {
+		try {
+			Utente u = Utente.findAllByUsername(iti.utente.username)[0]
+			if (!(u && u.username == iti.utente.username)){
+				u = Utente.importa(iti.utente.esporta())
+			}
+			u.save(flush:true)
+
+			Ruolo r = Ruolo.findAllByAuthority(iti.ruolo.authority)[0]
+			if (!(r && r.authority == iti.ruolo.authority)){
+				r = Ruolo.importa(iti.ruolo.esporta())
+			}
+			r.save(flush:true)
+
+			UtenteRuolo ur
+				ur = UtenteRuolo.findAllByUtenteAndRuolo(u,r)[0]
+			if (!ur){
+				ur = UtenteRuolo.importa(u,r)
+			}
+			ur.save(flush:true)
+		} catch (Exception e) {
+			log.warn("Errore nel caricamento UtenteRuolo "+iti)
+		}
+		return true
+	}
 }
 
 

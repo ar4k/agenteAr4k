@@ -34,15 +34,12 @@ class Ruolo implements Group {
 		]
 	}
 
-	Ruolo importa(Map json){
-		log.info("importa() il ruolo: "+json.authority)
-		Ruolo ruoloCreato = Ruolo.findAllByAuthority(json.authority)
-		if (!ruoloCreato) {
-			ruoloCreato = new Ruolo(
-					authority:json.authority
-					)
-		}
-		return ruoloCreato
+	static Ruolo importa(Map json){
+		Ruolo ruolo = new Ruolo(
+				authority:json.authority
+				)
+		//ruoloCreato.save(flush:true)
+		return ruolo
 	}
 
 	static mapping = {
@@ -61,5 +58,9 @@ class Ruolo implements Group {
 
 	void setName(String arg0) {
 		// TODO Auto-generated method stub
+	}
+
+	String toString() {
+		return this.authority
 	}
 }

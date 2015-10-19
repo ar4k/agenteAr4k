@@ -72,7 +72,7 @@ class Utente implements User{
 	def esporta() {
 		return [
 			username:username,
-			password:password,
+			password:'-crypto-pwd-exported-AR4K-'+password,
 			firstName:firstName,
 			lastName:lastName,
 			email:email,
@@ -90,30 +90,28 @@ class Utente implements User{
 		]
 	}
 
-	Utente importa(Map json){
-		log.info("importa() l'utente: "+json.username)
-		Utente utenteCreato = Utente.findAllByUsername(json.username)
-		if (!utenteCreato) {
-			utenteCreato = new Utente(
-					username:json.username,
-					password:json.password,
-					firstName:json.firstName,
-					lastName:json.lastName,
-					email:json.email,
-					sms:json.sms,
-					jabber:json.jabber,
-					workingTime:json.workingTime,
-					dateCreated:json.dateCreated,
-					lastUpdated:json.lastUpdated,
-					avatar:json.avatar,
-					enabled:json.enabled,
-					accountExpired:json.accountExpired,
-					accountLocked:json.accountLocked,
-					passwordExpired:json.passwordExpired
-					)
-			json.oAuthIDs.each{utenteCreato.oAuthIDs.add(new OAuthID(it))}
-		}
-		return utenteCreato
+	static Utente importa(Map json){
+		Utente utente = new Utente(
+				username:json.username,
+				firstName:json.firstName,
+				lastName:json.lastName,
+				email:json.email,
+				sms:json.sms,
+				jabber:json.jabber,
+				workingTime:json.workingTime,
+				//dateCreated:json.dateCreated,
+				//lastUpdated:json.lastUpdated,
+				avatar:json.avatar,
+				enabled:json.enabled,
+				accountExpired:json.accountExpired,
+				accountLocked:json.accountLocked,
+				passwordExpired:json.passwordExpired,
+				password:json.password
+				)
+
+		json.oAuthIDs.each{utenteCreato.oAuthIDs.add(new OAuthID(it))}
+		//utenteCreato.save(flush:true)
+		return utente
 	}
 
 	Set<Ruolo> getAuthorities() {
@@ -125,8 +123,13 @@ class Utente implements User{
 	}
 
 	def beforeUpdate() {
-		if (isDirty('password')) {
-			encodePassword()
+		if (isDirty('password') ) {
+			if (password.find(/^-crypto-pwd-exported-AR4K-.*$/)) {
+				log.info('Password utente passata al sistema pre criptata...')
+				password = password.replace('-crypto-pwd-exported-AR4K-', '')
+			} else {
+				encodePassword()
+			}
 		}
 	}
 

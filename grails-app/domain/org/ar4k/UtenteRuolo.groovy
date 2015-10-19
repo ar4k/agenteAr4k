@@ -35,14 +35,14 @@ class UtenteRuolo implements Serializable {
 			ruolo:ruolo.esporta()
 		]
 	}
-	
-	UtenteRuolo importa(Map json){
-		log.info("importa() l'utente-ruolo: "+json.utente.username+" - "+json.ruolo.authority)
-		UtenteRuolo utenteRuoloCreato = new UtenteRuolo(
-			utente:new Utente().importa(json.utente),
-			ruolo:new Ruolo().importa(json.ruolo),
-			)
-		return utenteRuoloCreato
+
+	static UtenteRuolo importa(Utente utente,Ruolo ruolo){
+		UtenteRuolo utenteRuolo = new UtenteRuolo(
+				utente:utente,
+				ruolo:ruolo
+				)
+		//utenteRuoloCreato.save(flush:true)
+		return utenteRuolo
 	}
 
 	boolean equals(other) {
@@ -90,8 +90,7 @@ class UtenteRuolo implements Serializable {
 		}.deleteAll()
 
 		if (flush) {
-			UtenteRuolo.withSession { it.flush()
-			} }
+			UtenteRuolo.withSession { it.flush() } }
 
 		rowCount > 0
 	}
@@ -104,8 +103,7 @@ class UtenteRuolo implements Serializable {
 			}.deleteAll()
 
 		if (flush) {
-			UtenteRuolo.withSession { it.flush()
-			} }
+			UtenteRuolo.withSession { it.flush() } }
 	}
 
 	static void removeAll(Ruolo r, boolean flush = false) {
@@ -116,8 +114,7 @@ class UtenteRuolo implements Serializable {
 			}.deleteAll()
 
 		if (flush) {
-			UtenteRuolo.withSession { it.flush()
-			} }
+			UtenteRuolo.withSession { it.flush() } }
 	}
 
 	static constraints = {
@@ -136,5 +133,9 @@ class UtenteRuolo implements Serializable {
 	static mapping = {
 		id composite: ['ruolo', 'utente']
 		version false
+	}
+
+	String toString() {
+		return this.ruolo.toString()+" - "+this.utente.toString()
 	}
 }

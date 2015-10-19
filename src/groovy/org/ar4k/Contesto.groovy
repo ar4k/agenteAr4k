@@ -24,7 +24,8 @@
 package org.ar4k
 
 import grails.converters.JSON
-import groovy.transform.AutoClone;
+import groovy.transform.AutoClone
+import grails.util.Holders
 
 class Contesto {
 	/** id univoco contesto */
@@ -59,7 +60,7 @@ class Contesto {
 	List<CloudProvider> cloudProviders= []
 	/** short link e qr */
 	List<Puntatore> puntatori = []
-
+	
 	/** vaso principale del contesto con demone Consul */
 	Vaso vasoMaster
 
@@ -90,22 +91,12 @@ class Contesto {
 			if (!meme.verificaAvvia()) risultato = false
 		}
 		log.debug("Importa "+utentiRuoli.size()+" utenti/ruoli")
-
-
-		for (UtenteRuolo utenteRuolo in utentiRuoli) {
-			log.info(utenteRuolo.utente)
-			Utente u = Utente.create()
-			Ruolo r = Ruolo.create()
-			r.importa(utenteRuolo.ruolo.esporta())
-			r.save(flush:true)
-			u.importa(utenteRuolo.utente.esporta())
-			u.save(flush:true)
-			UtenteRuolo ur = UtenteRuolo.create()
-			ur.utente=u
-			ur.ruolo=r
-			ur.save(flush:true)
+		
+		utentiRuoli.each{
+			Holders.applicationContext.getBean("bootStrapService").aggiungiUtenteRuolo(it)
 		}
 		log.debug("Importati utenti e ruoli")
+
 		if (risultato) {
 			log.info("Contesto "+etichetta+" avviato.")
 			statoBootStrap = 'avviato'
@@ -162,8 +153,11 @@ class Contesto {
 		json.interfacce.each{contestoCreato.interfacce.add(new Interfaccia().importa(it))}
 		json.memi.each{contestoCreato.memi.add(new Meme().importa(it))}
 		json.utentiRuoli.each{
-			UtenteRuolo ur = new UtenteRuolo().importa(it)
+			Utente u = Utente.importa(it.utente)
+			Ruolo r = Ruolo.importa(it.ruolo)
+			UtenteRuolo ur = UtenteRuolo.importa(u,r)
 			contestoCreato.utentiRuoli.add(ur)
+			log.info("importato UtenteRuolo, utente "+ur.utente+" ruolo "+ur.ruolo)
 		}
 		json.vasi.each{contestoCreato.vasi.add(new Vaso().importa(it))}
 		json.ricettari.each{contestoCreato.ricettari.add(new Ricettario().importa(it))}
