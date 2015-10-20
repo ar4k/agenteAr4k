@@ -338,7 +338,7 @@ class AdminController {
 		contestoCaricato.salva()
 		render 'ok'
 	}
-	
+
 	def resettaInterfacciaSuVaso() {
 		String idVasoTarget = request.JSON.vaso
 		Vaso vasoTarget = interfacciaContestoService.contesto.vasi.find{it.idVaso == idVasoTarget}
@@ -359,8 +359,8 @@ class AdminController {
 		bootStrapService.contestiInMaster = []
 		bootStrapService.interfacceInContesto = []
 		bootStrapService.utentiInContesto = []
-		interfacciaContestoService.connessioneConsul.finalize() 
-		interfacciaContestoService.connessioneActiveMQ.finalize() 
+		interfacciaContestoService.connessioneConsul.finalize()
+		interfacciaContestoService.connessioneActiveMQ.finalize()
 		interfacciaContestoService.connnessioniSSH.each{it.finalize()}
 		UtenteRuolo.findAll().each{it.delete(flush: true)}
 		Utente.findAll().each{it.delete(flush: true)}
@@ -368,9 +368,26 @@ class AdminController {
 		bootStrapService.valoreCasuale=org.apache.commons.lang.RandomStringUtils.random(5, true, true).toString()
 		render 'ok'
 	}
-	
+
 	def salvaConfigurazioneInterfaccia() {
-		render 'ok'
+		String risposta = "Errore nel salvataggio della configurazione..."
+		try{
+			new File("${System.properties.'user.home'}/.ar4k").mkdirs()
+			File file = new File("${System.properties.'user.home'}/.ar4k/AgenteAr4k-config.groovy")
+			file.write "//File di configurazione Agente Ar4k by Rossonet -generato automaticamente\n"
+			file << "//by Ambrosini -Rossonet s.c.a r.l.-\n\n"
+			file << "master.host = '"+interfacciaContestoService.contesto.vasoMaster.macchina+"'\n"
+			file << "master.port = "+interfacciaContestoService.contesto.vasoMaster.porta+"\n"
+			file << "master.user = '"+interfacciaContestoService.contesto.vasoMaster.utente+"'\n"
+			file << 'master.key = """'+"\n"
+			file << interfacciaContestoService.contesto.vasoMaster.key+"\n"
+			file << '"""'+"\n"
+			file << "contesto = '"+interfacciaContestoService.contesto.idContesto+"'\n"
+			file << "interfaccia = '"+interfacciaContestoService.interfaccia.idInterfaccia+"'\n"
+			
+			risposta = "salvataggio effettuato"
+		} catch(Exception ee){log.warn("Errore nel salvataggio della configurazione interfaccia in locale: "+ee.toString())}
+		render risposta
 	}
 
 

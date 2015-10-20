@@ -53,6 +53,8 @@ class Meme {
 	List<Metodo> metodi = []
 	/** stati possibili del meme */
 	List<StatoMeme> stati = []
+	/** nodi coinvolti dal meme */
+	List<String> indirizziNodiCoinvolti = []
 	/** maschera disinstallazione (verrà interpretata da grails) */
 	String disinstallazione = '<div>INTERFACCIA DISINSTALLAZIONE</div>'
 
@@ -90,7 +92,8 @@ class Meme {
 			stati:stati*.esporta(),
 			dipendenze:dipendenze,
 			funzionalita:funzionalita,
-			metodi:metodi*.esporta()
+			metodi:metodi*.esporta(),
+			indirizziNodiCoinvolti:indirizziNodiCoinvolti
 		]
 	}
 	
@@ -194,6 +197,8 @@ class StatoMeme {
 	String icona = 'fa-thumb-tack'
 	/** tooltip pulsante nello stato -Maschera Memi- */
 	String tooltip = 'interfaccia non implementata'
+	/** visualizzato su tutti i nodi? */
+	Boolean suTuttiNodi = false
 
 	String toString() {
 		return etichetta
