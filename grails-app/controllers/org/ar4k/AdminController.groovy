@@ -362,6 +362,9 @@ class AdminController {
 		interfacciaContestoService.connessioneConsul.finalize() 
 		interfacciaContestoService.connessioneActiveMQ.finalize() 
 		interfacciaContestoService.connnessioniSSH.each{it.finalize()}
+		UtenteRuolo.findAll().each{it.delete(flush: true)}
+		Utente.findAll().each{it.delete(flush: true)}
+		Ruolo.findAll().each{it.delete(flush: true)}
 		bootStrapService.valoreCasuale=org.apache.commons.lang.RandomStringUtils.random(5, true, true).toString()
 		render 'ok'
 	}

@@ -117,8 +117,10 @@ class Vaso {
 	Boolean salvaContesto(Contesto contesto) {
 		JSON file = contesto.esporta() as JSON
 		String interruzione = "EOF-"+UUID.randomUUID()+"-AR4K"
-		String comandoEsecuzione="cat > ~/.ar4k/contesti/"+contesto.idContesto+".json << "+interruzione+"\n"+file.toString(true)+"\n"+interruzione+"\n"
+		String fileElaborato = java.util.regex.Matcher.quoteReplacement(file.toString(true))
+		String comandoEsecuzione="cat > ~/.ar4k/contesti/"+contesto.idContesto+".json << "+interruzione+"\n"+fileElaborato+"\n"+interruzione+"\n"
 		String comandoControllo="cat ~/.ar4k/contesti/"+contesto.idContesto+".json"
+		log.debug("salva contesto su vaso con comando: "+comandoEsecuzione)
 		esegui(comandoEsecuzione)
 		String risultato=esegui(comandoControllo)
 		try {

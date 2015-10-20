@@ -199,13 +199,15 @@ class BootStrapController {
 
 		testFinale {
 			action {
-				if ( params.passwordDemo1 == params.passwordDemo2 && params.passwordDemo1 != '') {
-					log.info("Creo l'utente "+params.utenteDemo)
-					bootStrapService.aggiungiUtente(params.utenteDemo,params.passwordDemo1)
-				} else {
-					log.info("Le password NON corrispondo per creare l'utente "+params.utenteDemo)
-					if ( params.utenteDemo) {
-						return configuraAmministratore()
+				if(params.utenteDemo ) {
+					if ( params.passwordDemo1 == params.passwordDemo2 && params.passwordDemo1 != '') {
+						log.info("Creo l'utente "+params.utenteDemo)
+						bootStrapService.aggiungiUtente(params.utenteDemo,params.passwordDemo1)
+					} else {
+						log.info("Le password NON corrispondo per creare l'utente "+params.utenteDemo)
+						if ( params.utenteDemo) {
+							return configuraAmministratore()
+						}
 					}
 				}
 

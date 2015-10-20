@@ -37,10 +37,13 @@ class UtenteRuolo implements Serializable {
 	}
 
 	static UtenteRuolo importa(Utente utente,Ruolo ruolo){
-		UtenteRuolo utenteRuolo = new UtenteRuolo(
+		//UtenteRuolo utenteRuolo = UtenteRuolo.findAllByUtenteAndRuolo(utente,ruolo)[0]
+		//if (!utenteRuolo){
+		UtenteRuolo	utenteRuolo = new UtenteRuolo(
 				utente:utente,
 				ruolo:ruolo
 				)
+		//}
 		//utenteRuoloCreato.save(flush:true)
 		return utenteRuolo
 	}

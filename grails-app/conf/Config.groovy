@@ -145,7 +145,7 @@ log4j.main = {
 					info 'org.codehaus.groovy.grails.commons'
 					info 'org.activiti'
 					info 'org.ar4k'
-					//debug 'org.grails.plugins.atmosphere_meteor'
+					//debug 'org.hibernate'
 				}
 	}
 }

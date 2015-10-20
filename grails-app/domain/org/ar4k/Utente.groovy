@@ -47,7 +47,10 @@ class Utente implements User{
 	boolean accountLocked
 	boolean passwordExpired
 
+	boolean esportatoConPasswordInChiaro = true
+
 	static transients = ['springSecurityService']
+
 
 	static hasMany = [oAuthIDs: OAuthID]
 
@@ -72,7 +75,7 @@ class Utente implements User{
 	def esporta() {
 		return [
 			username:username,
-			password:'-crypto-pwd-exported-AR4K-'+password,
+			password:password,
 			firstName:firstName,
 			lastName:lastName,
 			email:email,
@@ -86,12 +89,15 @@ class Utente implements User{
 			accountExpired:accountExpired,
 			accountLocked:accountLocked,
 			passwordExpired:passwordExpired,
+			esportatoConPasswordInChiaro:esportatoConPasswordInChiaro,
 			oAuthIDs:oAuthIDs*.esporta()
 		]
 	}
 
 	static Utente importa(Map json){
-		Utente utente = new Utente(
+		Utente utente =Utente.findAllByUsername(json.username)[0]
+		if(!utente){
+		utente = new Utente(
 				username:json.username,
 				firstName:json.firstName,
 				lastName:json.lastName,
@@ -106,10 +112,11 @@ class Utente implements User{
 				accountExpired:json.accountExpired,
 				accountLocked:json.accountLocked,
 				passwordExpired:json.passwordExpired,
-				password:json.password
+				password:json.password,
+				esportatoConPasswordInChiaro:json.esportatoConPasswordInChiaro
 				)
-
 		json.oAuthIDs.each{utenteCreato.oAuthIDs.add(new OAuthID(it))}
+		}
 		//utenteCreato.save(flush:true)
 		return utente
 	}
@@ -119,22 +126,30 @@ class Utente implements User{
 	}
 
 	def beforeInsert() {
-		encodePassword()
+		if (esportatoConPasswordInChiaro) {
+			encodePassword()
+			esportatoConPasswordInChiaro = false
+			log.info("Cripto la password per l'utente (INSERT) "+username)
+		} else {
+			esportatoConPasswordInChiaro = false
+			log.info("Importo l'utente "+username+" con password criptate")
+		}
 	}
 
 	def beforeUpdate() {
-		if (isDirty('password') ) {
-			if (password.find(/^-crypto-pwd-exported-AR4K-.*$/)) {
-				log.info('Password utente passata al sistema pre criptata...')
-				password = password.replace('-crypto-pwd-exported-AR4K-', '')
-			} else {
-				encodePassword()
-			}
+		if (isDirty('password')) {
+			encodePassword()
+			esportatoConPasswordInChiaro = false
+			log.info("Cripto la password per l'utente (UPDATE) "+username)
 		}
 	}
 
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+	}
+
+	static String ritrovaPassword(String testo) {
+		return testo.replace('-crypto-pwd-exported-AR4K-', '')
 	}
 
 	String toString() {

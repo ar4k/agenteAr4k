@@ -210,7 +210,8 @@ class BootStrapService {
 					contesto.interfacce.each{interfacceInContesto.add(it)}
 					log.info("Interfacce trovate nel contesto "+interfacceInContesto)
 					utentiInContesto = []
-					contesto.utentiRuoli.each{utentiInContesto.add(it)}
+					//contesto.utentiRuoli.each{utentiInContesto.add(it)}
+					UtenteRuolo.findAll().each{utentiInContesto.add(it)}
 					log.info("UtentiRuolo trovati nel contesto "+utentiInContesto)
 				}else {
 					log.warn("Impossibile avviare il contesto "+contesto)
@@ -260,6 +261,11 @@ class BootStrapService {
 					log.info("Delegato il controllo a InterfacciaContestoService")
 					log.debug("Grafica caricata")
 					log.debug(interfacciaContestoService)
+					log.info("Aggiorno la situazione utenti")
+					try{
+					interfacciaContestoService.contesto.utentiRuoli = []
+					utentiInContesto.each{interfacciaContestoService.contesto.utentiRuoli.add(it)}
+					} catch(Exception ee) {log.warn(ee.toString())}
 				}
 			}
 		}
@@ -347,12 +353,14 @@ class BootStrapService {
 				u = Utente.importa(iti.utente.esporta())
 			}
 			u.save(flush:true)
+			u = Utente.findAllByUsername(iti.utente.username)[0]
 
 			Ruolo r = Ruolo.findAllByAuthority(iti.ruolo.authority)[0]
 			if (!(r && r.authority == iti.ruolo.authority)){
 				r = Ruolo.importa(iti.ruolo.esporta())
 			}
 			r.save(flush:true)
+			r = Ruolo.findAllByAuthority(iti.ruolo.authority)[0]
 
 			UtenteRuolo ur
 				ur = UtenteRuolo.findAllByUtenteAndRuolo(u,r)[0]
