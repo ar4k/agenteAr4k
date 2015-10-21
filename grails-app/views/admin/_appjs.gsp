@@ -309,7 +309,7 @@ angular
        url:'/grid'
    })
   }])
-.controller('taskCtrl', function($scope,$http,$filter) {
+.controller('taskCtrl', function($scope,$http,$filter,$window) {
 	$scope.pannelloMain=false;
 	$scope.focusMain='';
 	
@@ -335,6 +335,10 @@ angular
     		.success(function (response) {
     			alert("Configurazione salvata con risultato: "+response);
     			}); 
+  		};
+  	$scope.scaricaConfigurazioneInterfaccia = function() {
+    	$http.get("${createLink(controller:'admin',action:'scaricaConfigurazioneInterfaccia',absolute:'true')}")
+    		.success(function (response) {$window.open("${createLink(controller:'admin',action:'scaricaConfigurazioneInterfaccia',absolute:'true')}");}); 
   		};
 });
     

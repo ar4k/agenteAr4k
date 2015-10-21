@@ -32,6 +32,10 @@ class BootStrap {
 	}
 	
 	Boolean provaConfigurazioni() {
+		if (System.getProperty("rossonet.codattivazione")) {
+			log.info("Trovato codice bootstrap in linea di comando...")
+			bootStrapService.impostaCodiceCommerciale(System.getProperty("rossonet.codattivazione"))
+		}
 		if (grailsApplication.config.master.host) {
 			log.debug("Configuro i parametri di configurazione trovati su file")
 			if (grailsApplication.config.utente && grailsApplication.config.password) {

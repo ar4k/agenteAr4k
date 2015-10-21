@@ -87,6 +87,6 @@ cd agentear4k
 #./compila.sh
 # lancia l'applicativo - se possibile, verrà lanciato il default browser alla fine dell'operazione -
 #./ar4k.sh
-./grailsw run-app
+./grailsw run-app -Drossonet.codattivazione=$1
 
 exit 0

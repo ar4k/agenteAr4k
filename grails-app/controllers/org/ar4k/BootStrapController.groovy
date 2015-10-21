@@ -83,7 +83,7 @@ class BootStrapController {
 		provaCodiceCommerciale {
 			action {
 				bootStrapService.codiceAttivazioneAr4k=params.codCommerciale?:''
-				// da implementare il test e l'azione
+				bootStrapService.impostaCodiceCommerciale(bootStrapService.codiceAttivazioneAr4k)
 				return completata()
 			}
 			on ("completata").to("completata")

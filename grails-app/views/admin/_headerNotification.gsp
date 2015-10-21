@@ -62,6 +62,8 @@
 						class="fa fa-save fa-fw"></i> Salva la configurazione
 						dell'interfaccia in locale</a></li>
 				<g:if env="development">
+					<li><a href="" ng-click="scaricaConfigurazioneInterfaccia()"><i
+							class="fa fa-download fa-fw"></i> Esporta la configurazione dell'interfaccia</a></li>
 					<li><a ui-sref="dashboard.rossonet"><i
 							class="fa fa-cubes fa-fw"></i> Console Grails</a></li>
 

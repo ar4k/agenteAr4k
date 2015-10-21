@@ -390,6 +390,18 @@ class AdminController {
 		render risposta
 	}
 
+	def scaricaConfigurazioneInterfaccia() {
+		def configurazione = [
+			host:interfacciaContestoService.contesto.vasoMaster.macchina,
+			port:interfacciaContestoService.contesto.vasoMaster.porta,
+			user:interfacciaContestoService.contesto.vasoMaster.utente,
+			key:interfacciaContestoService.contesto.vasoMaster.key,
+			contesto:interfacciaContestoService.contesto.idContesto,
+			interfaccia:interfacciaContestoService.interfaccia.idInterfaccia
+		]
+		//response.setHeader('Content-disposition', +"attachment; filename="+interfacciaContestoService.contesto.idContesto+".json")
+		render text:configurazione as JSON,contentType:"text/json",encoding: "UTF-8"
+	}
 
 	/**
 	 *

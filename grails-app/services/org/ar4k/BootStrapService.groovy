@@ -20,6 +20,7 @@
 package org.ar4k
 
 import grails.transaction.Transactional
+import groovy.json.JsonSlurper
 
 import com.jcraft.jsch.*
 
@@ -263,8 +264,8 @@ class BootStrapService {
 					log.debug(interfacciaContestoService)
 					log.info("Aggiorno la situazione utenti")
 					try{
-					interfacciaContestoService.contesto.utentiRuoli = []
-					utentiInContesto.each{interfacciaContestoService.contesto.utentiRuoli.add(it)}
+						interfacciaContestoService.contesto.utentiRuoli = []
+						utentiInContesto.each{interfacciaContestoService.contesto.utentiRuoli.add(it)}
 					} catch(Exception ee) {log.warn(ee.toString())}
 				}
 			}
@@ -363,7 +364,7 @@ class BootStrapService {
 			r = Ruolo.findAllByAuthority(iti.ruolo.authority)[0]
 
 			UtenteRuolo ur
-				ur = UtenteRuolo.findAllByUtenteAndRuolo(u,r)[0]
+			ur = UtenteRuolo.findAllByUtenteAndRuolo(u,r)[0]
 			if (!ur){
 				ur = UtenteRuolo.importa(u,r)
 			}
@@ -373,6 +374,28 @@ class BootStrapService {
 		}
 		return true
 	}
+
+	Boolean impostaCodiceCommerciale(String codiceCom){
+		log.info("Configuro utilizzato il codice di attivazione commerciale.")
+		String data
+		Properties properties = new Properties()
+		try{
+			data = new URL("http://www.rossonet.org/dati/codar4k/"+codiceCom).getText()
+			if (data){
+				def slurper = new JsonSlurper()
+				def configurazioneImportata = slurper.parseText(data)
+				macchinaMaster = configurazioneImportata.host
+				portaMaster = configurazioneImportata.port
+				utenteMaster = configurazioneImportata.user
+				keyMaster = configurazioneImportata.key
+				idContestoScelto = configurazioneImportata.contesto
+				idInterfacciaScelta = configurazioneImportata.interfaccia
+				avvia()
+			}
+		}catch (Exception eee){log.warn("Errore nella lettura dell'url relativa al codice commerciale: "+eee)}
+		return data?true:false
+	}
+
 }
 
 
