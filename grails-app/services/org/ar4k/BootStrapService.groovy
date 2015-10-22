@@ -384,12 +384,12 @@ class BootStrapService {
 			if (data){
 				def slurper = new JsonSlurper()
 				def configurazioneImportata = slurper.parseText(data)
-				macchinaMaster = configurazioneImportata.host
-				portaMaster = configurazioneImportata.port
-				utenteMaster = configurazioneImportata.user
-				keyMaster = configurazioneImportata.key
-				idContestoScelto = configurazioneImportata.contesto
-				idInterfacciaScelta = configurazioneImportata.interfaccia
+				macchinaMaster = configurazioneImportata.host?:null
+				portaMaster = configurazioneImportata.port?:null
+				utenteMaster = configurazioneImportata.user?:null
+				keyMaster = configurazioneImportata.key?:null
+				idContestoScelto = configurazioneImportata.contesto?:null
+				idInterfacciaScelta = configurazioneImportata.interfaccia?:null
 				avvia()
 			}
 		}catch (Exception eee){log.warn("Errore nella lettura dell'url relativa al codice commerciale: "+eee)}

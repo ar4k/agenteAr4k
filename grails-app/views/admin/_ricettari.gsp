@@ -17,7 +17,8 @@
 					<div
 						class="col-xs-6 col-sm-6 col-md-2 col-lg-2 div4-padding text-right">Azioni</div>
 				</div>
-				<div ng-repeat="seme in elencosemi"
+				<pagination total-items="totalItems" items-per-page="entryLimit" ng-model="currentPage" next-text="->" previous-text="<-"></pagination>
+				<div ng-repeat="seme in elencosemi | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
 					ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'"
 					ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">
 					<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 div4-padding">{{seme.meme.etichetta}}</div>

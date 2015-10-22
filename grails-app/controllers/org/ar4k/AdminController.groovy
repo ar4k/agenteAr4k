@@ -255,16 +255,21 @@ class AdminController {
 	def listaMemi() {
 		def risultato = []
 		interfacciaContestoService.contesto.memi.each{ meme ->
-			String idMeme = meme.idMeme
-			String idRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).singleResult().getId()
-			//String datiRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).singleResult()
-			List<String> processiID = repositoryService.createProcessDefinitionQuery().deploymentId(idRep).list()*.getId()
-			def processi = []
-			processiID.each{
-				processi.add([processo:it,istanze:runtimeService.createExecutionQuery().processDefinitionId(it).count()])
-			}
-			def calcolati = [tooltip:meme.tooltip(),maschera:meme.maschera(),dashboard:meme.dashboard(),box:meme.box(),iconaStato:meme.iconaStato()]
-			risultato.add([meme:meme,processi:processi,calcolati:calcolati])
+			try{
+				String idMeme = meme.idMeme
+				List<String> listRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).list()*.getId()
+				//String datiRep = repositoryService.createDeploymentQuery().deploymentName(idMeme).singleResult()
+				def processi = []
+				listRep.each{ rep->
+					String idRep = rep
+					List<String> processiID = repositoryService.createProcessDefinitionQuery().deploymentId(idRep).list()*.getId()
+					processiID.each{
+						processi.add([processo:it,istanze:runtimeService.createExecutionQuery().processDefinitionId(it).count()])
+					}
+				}
+				def calcolati = [tooltip:meme.tooltip(),maschera:meme.maschera(),dashboard:meme.dashboard(),box:meme.box(),iconaStato:meme.iconaStato()]
+				risultato.add([meme:meme,processi:processi,calcolati:calcolati])
+			} catch (Exception ee){log.warn("Errore nella lettura del meme: "+ee)}
 		}
 		def incapsulato = [memi:risultato]
 		render incapsulato as JSON
@@ -384,7 +389,7 @@ class AdminController {
 			file << '"""'+"\n"
 			file << "contesto = '"+interfacciaContestoService.contesto.idContesto+"'\n"
 			file << "interfaccia = '"+interfacciaContestoService.interfaccia.idInterfaccia+"'\n"
-			
+
 			risposta = "salvataggio effettuato"
 		} catch(Exception ee){log.warn("Errore nel salvataggio della configurazione interfaccia in locale: "+ee.toString())}
 		render risposta

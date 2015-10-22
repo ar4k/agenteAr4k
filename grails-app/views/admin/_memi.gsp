@@ -47,7 +47,7 @@
 									<h4>Azioni</h4>
 								</div>
 							</div>
-							<pagination total-items="totalItems" ng-model="currentPage" next-text="->" previous-text="<-"></pagination>
+							<pagination total-items="totalItems" ng-model="currentPage" items-per-page="entryLimit" next-text="->" previous-text="<-"></pagination>
 							<div ng-repeat="istanza in focusMaschera | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
 								ng-class-odd="'col-xs-12 col-sm-12 col-md-12 col-lg-12 dispari'"
 								ng-class-even="'col-xs-12 col-sm-12 col-md-12 col-lg-12 pari'">

@@ -22,6 +22,10 @@ angular.module('sbAdminApp')
     
     $scope.titolo = 'ricettario';
     
+    $scope.currentPage = 1;
+    $scope.entryLimit = 6; // items per page
+    $scope.totalItems = 0;
+    
     $scope.aggiornaDaMessaggio = function() {
     		 $http.post("${createLink(controller:'admin',action:'listaRicettari',absolute:'true')}")
    			 .success(function (response) {$scope.ricettari = response.ricettari;});
@@ -79,11 +83,13 @@ angular.module('sbAdminApp')
         .success(function(response) {
         	if (response != 'none') {
 				$scope.elencosemi = response.semi;
+				$scope.totalItems = $scope.elencosemi.length;
 				$scope.titolo = 'Elenco semi in '+$filter('filter')($scope.ricettari, {idRicettario: idricettario}, true)[0].etichetta; 
 				$scope.pannello = true;
 			} else {
 			    $scope.titolo = 'Nessun seme presente nel Ricettario...';
 			    $scope.elencosemi = '';
+			    $scope.totalItems = 0;
 				$scope.pannello = true;
 			}
   		})
@@ -92,4 +98,16 @@ angular.module('sbAdminApp')
     		// or server returns response with an error status.
   		});
       };
-  });
+   $scope.setPage = function (pageNo) {
+    	$scope.currentPage = pageNo;
+  	};
+  })
+  .filter('startFrom', function () {
+	return function (input, start) {
+		if (input) {
+			start = +start;
+			return input.slice(start);
+		}
+		return [];
+	};
+});
