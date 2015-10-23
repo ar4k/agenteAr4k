@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" href="ar4k.jnlp">
+	<information>
+		<title>Ar4k Web Start</title>
+		<vendor>Rossonet s.c.a r.l.</vendor>
+		<homepage href="http://www.rossonet.org" />
+		<description>Interfaccia Ar4k</description>
+	</information>
+	<security>
+		<all-permissions/>
+	</security>
+	<resources>
+		<j2se version="1.7+" />
+		<jar href="target/standalone-0.1.jar" />
+	</resources>
+	<application-desc main-class="grails.plugin.standalone.Launcher" />
+</jnlp>
