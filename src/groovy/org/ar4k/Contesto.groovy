@@ -90,6 +90,9 @@ class Contesto {
 		for (Meme meme in memi) {
 			if (!meme.verificaAvvia()) risultato = false
 		}
+		
+		if (!risultato) log.warn("Problemi nel caricamento dei memi")
+		
 		log.debug("Importa "+utentiRuoli.size()+" utenti/ruoli")
 		
 		utentiRuoli.each{
@@ -100,6 +103,8 @@ class Contesto {
 		if (risultato) {
 			log.info("Contesto "+etichetta+" avviato.")
 			statoBootStrap = 'avviato'
+		} else {
+			log.warn("Il contesto non è stato caricato")
 		}
 		return risultato
 	}

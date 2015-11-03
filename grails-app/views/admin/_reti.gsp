@@ -25,6 +25,14 @@
 					</p>
 				</div>
 				<div class="panel text-right">
+				
+					<button class="btn btn-circle btn-success btn-xs" type="button"
+						ng-click="scansiona(focus.nodo.value.node.address)"
+						tooltip-placement="bottom"
+						tooltip="carica come vaso. Installa i componenti base e configura il nodo come Vaso Ar4k.">
+						<i class="fa fa-linux"></i>
+					</button>
+				
 					<button class="btn btn-circle btn-success btn-xs" type="button"
 						ng-click="scansiona(focus.nodo.value.node.address)"
 						tooltip-placement="bottom"

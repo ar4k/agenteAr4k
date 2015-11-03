@@ -267,6 +267,34 @@ class BootStrapService {
 						interfacciaContestoService.contesto.utentiRuoli = []
 						utentiInContesto.each{interfacciaContestoService.contesto.utentiRuoli.add(it)}
 					} catch(Exception ee) {log.warn(ee.toString())}
+					log.info("Carico sui vasi i repository con il flag caricaInBootstrap==true")
+					try{
+						interfacciaContestoService.contesto.ricettari.each{
+							if (it.caricaInBootstrap == true) {
+								if (it.clonaOvunque) {
+									interfacciaContestoService.contesto.vasi*.avviaRicettario(it)
+								}
+								interfacciaContestoService.contesto.vasoMaster.caricaSemi(it)
+								it.aggiornato = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")).toString()
+							}
+						}
+						interfacciaContestoService.contesto.ricettari.each{ ricettario ->
+							ricettario.semi.each{
+								log.info("Analizzo il seme: "+it.toString()+" con flag: "+it.meme.caricaInBootstrap)
+								if (it.meme.caricaInBootstrap == true) {
+									log.info("Carico il seme "+it.meme+" in fase di bootstrap")
+									Meme nuovoMeme = new Meme()
+									nuovoMeme = it.meme.clone()
+									// Rigenera tutti gli id casuali per non rischiare riferimenti errati nelle fasi di esecuzione
+									nuovoMeme.idMeme = UUID.randomUUID()
+									nuovoMeme.pathVaso = '~/.ar4k/ricettari/'+ ricettario.repositoryGit.nomeCartella
+									nuovoMeme.metodi.each{it.idMetodo=UUID.randomUUID()}
+									nuovoMeme.caricaProcessiActiviti(vasoMaster,interfacciaContestoService.processEngine)
+									interfacciaContestoService.contesto.memi.add(nuovoMeme)
+								}
+							}
+						}
+					}catch(Exception ee) {log.warn(ee.toString())}
 				}
 			}
 		}

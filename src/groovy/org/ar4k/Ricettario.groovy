@@ -34,6 +34,8 @@ class Ricettario {
 	String aggiornato
 	/** se vero, carica il repository su tutti i vasi  */
 	Boolean clonaOvunque = true
+	/** se vero, esegue in caricamento del repository sui vasi in bootstrap */
+	Boolean caricaInBootstrap = true
 
 
 
@@ -47,7 +49,8 @@ class Ricettario {
 			repositoryGit:repositoryGit.esporta(),
 			aggiornato: aggiornato.toString(),
 			clonaOvunque:clonaOvunque,
-			semi:semi*.esporta()
+			semi:semi*.esporta(),
+			caricaInBootstrap:caricaInBootstrap
 		]
 	}
 
@@ -60,7 +63,8 @@ class Ricettario {
 				repositoryGit:new RepositoryGit(json.repositoryGit),
 				aggiornato: json.aggiornato,
 				clonaOvunque:json.clonaOvunque,
-				semi:semi*.esporta()
+				semi:semi*.esporta(),
+				caricaInBootstrap:json.caricaInBootstrap
 				)
 		json.semi.each{ricettarioCreato.semi.add(new Seme().importa(it))}
 		return ricettarioCreato

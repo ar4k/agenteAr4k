@@ -250,7 +250,7 @@ class InterfacciaContestoService {
 	void battito() {
 		try {
 			sendMessage("activemq:topic:interfaccia.memoria", Runtime.getRuntime().freeMemory())
-			sendMessage("activemq:queue:contesto.salvataggio", contesto.esporta())
+			//sendMessage("activemq:queue:contesto.salvataggio", contesto.esporta())
 		} catch (Exception ee) {
 			log.warn "ActiveMQ non collegato: "+ee.toString()+" (Questo è normale in fase di bootstrap)"
 		}

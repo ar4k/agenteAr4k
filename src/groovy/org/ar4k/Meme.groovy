@@ -57,6 +57,8 @@ class Meme {
 	List<String> indirizziNodiCoinvolti = []
 	/** maschera disinstallazione (verrà interpretata da grails) */
 	String disinstallazione = '<div>INTERFACCIA DISINSTALLAZIONE</div>'
+	/** se vero, carica il meme in fase di bootstrap */
+	Boolean caricaInBootstrap = false
 
 	/** carica i processi disponibili nel motore Activiti */
 	Boolean caricaProcessiActiviti(Vaso vasoMaster,ProcessEngine processEngine) {
@@ -93,7 +95,8 @@ class Meme {
 			dipendenze:dipendenze,
 			funzionalita:funzionalita,
 			metodi:metodi*.esporta(),
-			indirizziNodiCoinvolti:indirizziNodiCoinvolti
+			indirizziNodiCoinvolti:indirizziNodiCoinvolti,
+			caricaInBootstrap:caricaInBootstrap
 		]
 	}
 	
@@ -112,7 +115,8 @@ class Meme {
 			autoStart:json.autoStart,
 			disinstallazione:json.disinstallazione,
 			dipendenze:json.dipendenze,
-			funzionalita:json.funzionalita
+			funzionalita:json.funzionalita,
+			caricaInBootstrap:json.caricaInBootstrap
 			)
 		json.metodi.each{memeCreato.metodi.add(new Metodo(it))}
 		json.stati.each{memeCreato.stati.add(new StatoMeme(it))}
@@ -128,7 +132,8 @@ class Meme {
 	 * Chiamato quando si avvia un interfaccia nel contesto
 	 */
 	Boolean verificaAvvia() {
-		return false
+		log.info("Implementare la procedura di avvio automatico del meme!")
+		return true
 	}
 
 	/** ritorna la maschera html relativa allo stato corrente del meme */
