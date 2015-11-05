@@ -35,7 +35,7 @@ Se non eseguito con privilegi di root, verrà chiesta l'autenticazione
 per installare Java e git.
 
 ```bash
-sh <(curl -L -s http://boot.ar4k.net/interfaccia) [cod.attivazione]
+sh <(curl -L -s http://boot.ar4k.net/laboratorio) [cod.attivazione]
 ```
 
 Se "curl" non fosse presente nel sistema, installarlo con:
