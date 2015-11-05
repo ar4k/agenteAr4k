@@ -1,5 +1,5 @@
 #agenteAr4k
-Interfaccia Java sistema AR4K
+Progetto laboratorio per lo studio delle soluzioni tecniche Ar4k.
 
 ![alt text](http://www.rossonet.org/wp-content/uploads/2015/01/logoRossonet4.png "Rossonet")
 

@@ -132,7 +132,7 @@ class Meme {
 	 * Chiamato quando si avvia un interfaccia nel contesto
 	 */
 	Boolean verificaAvvia() {
-		log.info("Implementare la procedura di avvio automatico del meme!")
+		log.warn("Implementare la procedura di avvio automatico del meme!")
 		return true
 	}
 
