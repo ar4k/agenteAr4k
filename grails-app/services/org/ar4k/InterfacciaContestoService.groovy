@@ -49,9 +49,9 @@ class InterfacciaContestoService {
 	/** Contesto applicativo Grails */	
 	GrailsApplication grailsApplication
 	/** Contesto in esecuzione */
-	Contesto contesto
+	String contestoId
 	/** Stato in esecuzione -Consul- */
-	Stato stato
+	Stato consulBind
 	/** Interfaccia corrente */
 	Interfaccia interfaccia
 	/** connessione ssh consul */

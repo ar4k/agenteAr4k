@@ -1,11 +1,10 @@
 /**
  * Bootstrap
  *
- * <p>Service per la gestione del boot dell'interfaccia agenteAr4k</p>
+ * <p>Servizio per la gestione delle procedure di bootstrap dell'interfaccia</p>
  *
  * <p style="text-justify">
- * Questo service istanzia il primo vaso a cui si collega l'interfaccia via SSH.
- * Questo vaso, per l'interfaccia è considerato master</br>
+ * Servizio invocato all'inizio del ciclo di vita del software.</br>
  * 
  * Il service, per tutto il ciclo di vita dell'interfaccia grafica, conserva lo stato e rende disponibili 
  * i metodi per cambiare il vaso master e/o il contesto chiudendo correttamente il precedente.</b>
